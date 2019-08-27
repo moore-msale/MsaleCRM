@@ -11,7 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-    // require('./../../node_modules/mdbootstrap/js/bootstrap.min.js');
+    require('mdbootstrap/js/mdb.min');
     // require('./../../node_modules/mdbootstrap/js/mdb.min.js');
 } catch (e) {}
 

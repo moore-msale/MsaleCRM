@@ -4,6 +4,44 @@
     <div class="container">
         <div class="row">
             <div class="col-12 d-flex">
+                <button class="btn peach-gradient">Peach</button>
+                <button class="btn purple-gradient">Purple</button>
+                <button class="btn blue-gradient">Blue</button>
+                <button class="btn aqua-gradient">Aqua</button>
+                <button type="button" class="btn btn-primary" data-whatever="@getbootstrap" data-toggle="modal" data-target="#sideModalTR">
+                    Launch demo modal
+                </button>
+
+            </div>
+            <!-- Side Modal Top Right -->
+
+            <!-- To change the direction of the modal animation change .right class -->
+            <div class="modal fade right" id="sideModalTR" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+
+                <!-- Add class .modal-side and then add class .modal-top-right (or other classes from list above) to set a position to the modal -->
+                <div class="modal-dialog modal-side modal-bottom-right" role="document">
+
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side Modal Top Right -->
+            <div class="col-4">
                 <!-- Card Wider -->
                 <div class="card card-cascade wider">
 
@@ -36,35 +74,8 @@
 
                 </div>
                 <!-- Card Wider -->
-
-                <!-- Card Narrower -->
-                <div class="card card-cascade narrower">
-
-                    <!-- Card image -->
-                    <div class="view view-cascade overlay">
-                        <img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(147).jpg" alt="Card image cap">
-                        <a>
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
-                    </div>
-
-                    <!-- Card content -->
-                    <div class="card-body card-body-cascade">
-
-                        <!-- Label -->
-                        <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i> Culinary</h5>
-                        <!-- Title -->
-                        <h4 class="font-weight-bold card-title">Cheat day inspirations</h4>
-                        <!-- Text -->
-                        <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi.</p>
-                        <!-- Button -->
-                        <a class="btn btn-unique">Button</a>
-
-                    </div>
-
-                </div>
-                <!-- Card Narrower -->
-
+            </div>
+            <div class="col-4">
                 <!-- Card Regular -->
                 <div class="card card-cascade">
 
@@ -102,3 +113,19 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#sideModalTR').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other
+//             methods
+//             instead.
+                var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+    </script>
+@endpush
