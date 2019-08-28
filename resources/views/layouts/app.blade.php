@@ -24,13 +24,13 @@
 <body>
     <div id="app">
         @include('_partials.header')
-        <main style="height:100vh;">
+        <main style="height: 100vh;">
             <div class="container-fluid h-100">
                 <div class="row h-100">
                     <div class="col-auto h-100 px-0" style="width:5%;">
                         @include('_partials.sidebar')
                     </div>
-                    <div class="col-11">
+                    <div class="col-11 h-100">
                         @yield('content')
                     </div>
                 </div>
