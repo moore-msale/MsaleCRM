@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -35,10 +36,16 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
+        $request->request->remove('deadline_date');
+        $request->merge(['deadline_date' => $deadline_date]);
         $task = Task::create($request->all());
 
         if ($request->ajax()){
-            return response()->json("success");
+            return response()->json([
+                'status' => "success",
+                'data' => $task
+            ], 200);
         }
 
         return back();

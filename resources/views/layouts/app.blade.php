@@ -57,14 +57,17 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('.date-format').bootstrapMaterialDatePicker({format: 'dddd DD MMMM YYYY - HH:mm'});
+            $('.date-format').bootstrapMaterialDatePicker({
+                format: 'dddd DD MMMM YYYY HH:mm',
+                minDate : new Date()
+            });
         });
     </script>
     <script>
         $('.addTask').click(e => {
             e.preventDefault();
             let btn = $(e.currentTarget);
-            let name = $('#taskname');
+            let title = $('#taskname');
             let desc = $('#taskdescription');
             let date = $('#taskdate');
 
@@ -73,8 +76,8 @@
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "title": name.val(),
-                    "decription": desc.val(),
+                    "title": title.val(),
+                    "description": desc.val(),
                     "deadline_date": date.val(),
                 },
                 success: data => {
