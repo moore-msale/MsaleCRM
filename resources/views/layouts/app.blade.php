@@ -15,22 +15,27 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-material-datetimepicker.css') }}" />
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
 <body>
     <div id="app">
         @include('_partials.header')
-        <main style="height: 100vh;">
+        <main style="height: 90vh;">
             <div class="container-fluid h-100">
                 <div class="row h-100">
-                    <div class="col-auto h-100 px-0" style="width:5%;">
+                    <div class="col-auto h-100 px-0 d-lg-block d-none" style="width:5%;">
                         @include('_partials.sidebar')
                     </div>
-                    <div class="col-11 h-100">
+                    <div class="col-lg-11 col-12 h-100">
                         @yield('content')
                     </div>
                 </div>
@@ -40,6 +45,47 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.date').bootstrapMaterialDatePicker
+            ({
+                time: false,
+                clearButton: true
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.date-format').bootstrapMaterialDatePicker({format: 'dddd DD MMMM YYYY - HH:mm'});
+        });
+    </script>
+    <script>
+        $('.addTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let name = $('#taskname');
+            let desc = $('#taskdescription');
+            let date = $('#taskdate');
+
+            $.ajax({
+                url: '{{ route('task.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title": name.val(),
+                    "decription": desc.val(),
+                    "deadline_date": date.val(),
+                },
+                success: data => {
+                    console.log(1);
+                },
+                error: () => {
+                    console.log(0);
+                }
+            })
+        })
+    </script>
 @stack('scripts')
 </body>
 </html>

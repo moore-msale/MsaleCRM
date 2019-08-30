@@ -10,4 +10,6 @@ class Task extends Model
     {
         return $this->morphTo();
     }
+    
+    protected $fillable = ['name','description','deadline_date'];
 }
