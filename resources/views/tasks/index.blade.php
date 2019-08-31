@@ -33,7 +33,9 @@
                 <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                     Звонки
                 </p>
-                <i class="fas fa-plus ml-auto fa-xs ico-done"></i>
+                <a class="ml-auto" href="" data-toggle="modal" data-target="#CallCreate">
+                    <i class="fas fa-plus fa-xs ico-done"></i>
+                </a>
             </div>
             <div class="blog-scroll">
                 @include('tasks.list', ['type' => $type])
@@ -52,7 +54,9 @@
                 <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                     ВСТРЕЧИ
                 </p>
-                <i class="fas fa-plus ml-auto fa-xs ico-done"></i>
+                <a class="ml-auto" href="" data-toggle="modal" data-target="#MeetCreate">
+                    <i class="fas fa-plus fa-xs ico-done"></i>
+                </a>
             </div>
             <div class="blog-scroll">
                 @include('tasks.list', ['type' => $type])
@@ -71,7 +75,9 @@
                 <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                     КЛИЕНТЫ
                 </p>
-                <i class="fas fa-plus ml-auto fa-xs ico-done"></i>
+                <a class="ml-auto" href="" data-toggle="modal" data-target="#ClientCreate">
+                    <i class="fas fa-plus fa-xs ico-done"></i>
+                </a>
             </div>
             <div class="blog-scroll">
                 @include('tasks.list', ['type' => $type])
