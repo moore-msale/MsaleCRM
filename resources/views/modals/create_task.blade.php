@@ -43,31 +43,4 @@
     </div>
 </div>
 
-@push('scripts')
-    <script>
-        $('.addTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
-            let title = $('#taskname');
-            let desc = $('#taskdescription');
-            let date = $('#taskdate');
 
-            $.ajax({
-                url: '{{ route('task.store') }}',
-                method: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "title": title.val(),
-                    "description": desc.val(),
-                    "deadline_date": date.val(),
-                },
-                success: data => {
-                    console.log(data);
-                },
-                error: () => {
-                    console.log(0);
-                }
-            })
-        })
-    </script>
-@endpush

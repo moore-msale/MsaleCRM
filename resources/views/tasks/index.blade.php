@@ -15,7 +15,7 @@
                     <i class="fas fa-plus fa-xs ico-done"></i>
                 </a>
             </div>
-            <div class="blog-scroll">
+            <div class="blog-scroll" id="tasks-scroll">
                 @include('tasks.list', ['type' => $type])
 
             </div>
