@@ -18,6 +18,7 @@
                     <i class="fas fa-handshake fa-4x animated rotateIn"></i>
                     <form action="" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" value="meetings" name="type">
                         <div class="md-form">
                             <input type="text" name="title" id="taskname" class="form-control">
                             <label for="form1">Заголовок</label>

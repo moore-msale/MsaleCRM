@@ -4,7 +4,7 @@
          style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>
     <div style="border-bottom:1px solid #DCDCDC;">
         <p class="deal-text sf-bold mb-3">
-            Позвонить Сергею с Оптима Банк
+            {{ $task->title ?? 'Обычное название' }}
         </p>
     </div>
     <div class="toner">
@@ -87,7 +87,7 @@
         </div>
         <div>
             <p class="sf-light textarea-font-size mt-2 mb-0 content-text">
-                СРОЧНО ПОЗВОНИТЬ СЕРГЕЮ ИЗ ОПТИМА БАНКА!!! АЙДАЙ ТЫ ЧЕ ?????!?!?!
+                {{ $task->description ?? 'Обычное описание' }}
             </p>
         </div>
     </div>

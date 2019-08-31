@@ -18,6 +18,7 @@
                     <i class="fas fa-tasks fa-4x mb-3 animated rotateIn"></i>
                     <form action="" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" value="tasks" name="type">
                         <div class="md-form">
                             <input type="text" name="title" id="taskname" class="form-control">
                             <label for="form1">Заголовок</label>
@@ -41,3 +42,32 @@
         <!--/.Content-->
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $('.addTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let title = $('#taskname');
+            let desc = $('#taskdescription');
+            let date = $('#taskdate');
+
+            $.ajax({
+                url: '{{ route('task.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title": title.val(),
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                },
+                success: data => {
+                    console.log(data);
+                },
+                error: () => {
+                    console.log(0);
+                }
+            })
+        })
+    </script>
+@endpush

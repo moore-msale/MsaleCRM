@@ -44,7 +44,10 @@ class TaskController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $task
+                'data' => $task,
+                'view' => view('tasks.tasks-card', [
+                    'task' => $task,
+                ])->render(),
             ], 200);
         }
 
