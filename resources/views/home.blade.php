@@ -20,14 +20,14 @@
 
                     <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
                         <p class="head-text sf-bold mb-3">
-                            ВЫПОЛНЕННЫЕ ЗВОНКИ
+                            НЕ УМЕРЕТЬ
                         </p>
                         <p class="work-check sf-bold mb-0">
                         <span class="first-child">
-                            30/
+                            0/
                         </span>
                             <span class="last-child">
-                            80
+                            1
                         </span>
                         </p>
                     </div>
@@ -95,7 +95,7 @@
                          style="text-transform: uppercase;">
                         <div class="position-absolute bg-danger"
                              style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>
-                        <div style="border-bottom:1px solid #DCDCDC;">
+                        <div class="main-text" style="border-bottom:1px solid #DCDCDC;">
                             <p class="deal-text sf-bold mb-3">
                                 Позвонить Сергею с Оптима Банк
                             </p>
@@ -208,7 +208,9 @@
                     <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                         Звонки
                     </p>
+                    <a class="ml-auto" href="" data-toggle="modal" data-target="#CallCreate">
                     <i class="fas fa-plus ml-auto fa-xs ico-done"></i>
+                    </a>
                 </div>
                 <div class="blog-scroll">
                     <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative mainer"
@@ -325,7 +327,9 @@
                     <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                         ВСТРЕЧИ
                     </p>
+                    <a class="ml-auto" href="" data-toggle="modal" data-target="#MeetCreate">
                     <i class="fas fa-plus ml-auto fa-xs ico-done"></i>
+                    </a>
                 </div>
                 <div class="blog-scroll">
                     <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative mainer"
@@ -443,7 +447,9 @@
                     <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                         КЛИЕНТЫ
                     </p>
+                    <a class="ml-auto" href="" data-toggle="modal" data-target="#ClientCreate">
                     <i class="fas fa-plus ml-auto fa-xs ico-done"></i>
+                    </a>
                 </div>
                 <div class="blog-scroll">
                     <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative mainer"
@@ -507,4 +513,7 @@
         </div>
     </div>
 @include('modals.create_task')
+@include('modals.create_call')
+@include('modals.create_meet')
+@include('modals.create_client')
 @endsection
