@@ -28,7 +28,9 @@
 @push('scripts')
     @push('scripts')
         <script>
-
+            $.ajax({
+                url: '{{  }}',
+            })
         </script>
         <script>
             $('.addTask').click(e => {
