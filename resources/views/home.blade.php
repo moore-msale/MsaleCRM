@@ -19,5 +19,8 @@
 
         </div>
     </div>
-    @include('modals.create_task')
+@include('modals.create_task')
+@include('modals.create_call')
+@include('modals.create_meet')
+@include('modals.create_client')
 @endsection
