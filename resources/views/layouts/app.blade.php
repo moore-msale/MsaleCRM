@@ -35,7 +35,7 @@
                     <div class="col-auto h-100 px-0 d-lg-block d-none" style="width:5%;">
                         @include('_partials.sidebar')
                     </div>
-                    <div class="col-lg-11 col-12 h-100">
+                    <div class="col-lg-14 col-15 h-100">
                         @yield('content')
                     </div>
                 </div>
