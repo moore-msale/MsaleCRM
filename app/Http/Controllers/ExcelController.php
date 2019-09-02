@@ -39,8 +39,7 @@ class ExcelController extends Controller
             return response()->json([
                 'status' => 'success',
                 'view' => view('tasks.list', [
-                    'calls3' => true,
-                    'calls' => Call::where('user_id', auth()->id())->get(),
+                    'calls3' => Call::where('user_id', auth()->id())->get(),
                 ])->render(),
             ]);
         }
