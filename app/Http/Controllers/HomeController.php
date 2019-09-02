@@ -27,12 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $tasks = Task::where('taskable_type', null)->get();
-        $customers = Task::hasMorph(
+        $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->get();
+        $customers = Task::where('user_id',auth()->id())->hasMorph(
             'taskable',
             'App\Customer'
         )->get();
-        $meetings = Task::hasMorph(
+        $meetings = Task::where('user_id',auth()->id())->hasMorph(
             'taskable',
             'App\Meeting'
         )->get();

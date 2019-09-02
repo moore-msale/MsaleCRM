@@ -226,22 +226,22 @@ body
 }
 .ico-done:hover
 {
-    color: #76ff03;
+    color: #64dd17;
     transform: rotateZ(360deg);
 }
 .ico-delete:hover
 {
-    color: #ff3d00;
+    color: #ff5252;
     transform: rotateZ(360deg);
 }
 .ico-update:hover
 {
-    color: #2196f3;
+    color: #3d5afe;
     transform: rotateZ(360deg);
 }
 .ico-edit:hover
 {
-    color: #ff6d00;
+    color: #fdd835;
     transform: rotateZ(360deg);
 }
 .ico-change:hover

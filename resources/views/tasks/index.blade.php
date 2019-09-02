@@ -1,5 +1,4 @@
-@if(isset($type))
-    @if($type == 'tasks')
+@if(isset($tasks2))
         <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn red accent-2">
                 <p class="text-white sf-bold mb-0">
@@ -12,16 +11,15 @@
                     Задачи
                 </p>
                 <a class="ml-auto" href="" data-toggle="modal" data-target="#TaskCreate">
-                    <i class="fas fa-plus fa-xs ico-done"></i>
+                    <i class="fas fa-plus fa-xs ico-delete"></i>
                 </a>
             </div>
             <div class="blog-scroll" id="tasks-scroll">
-                @include('tasks.list', ['type' => $type])
-
+                @include('tasks.list', ['tasks3' => $tasks2])
             </div>
         </div>
-    @endif
-    @if($type == 'calls')
+@endif
+@if(isset($calls2))
         <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn indigo accent-3">
                 <p class="text-white sf-bold mb-0">
@@ -34,15 +32,15 @@
                     Звонки
                 </p>
                 <a class="ml-auto" href="" data-toggle="modal" data-target="#CallCreate">
-                    <i class="fas fa-plus fa-xs ico-done"></i>
+                    <i class="fas fa-plus fa-xs ico-update"></i>
                 </a>
             </div>
             <div class="blog-scroll">
-                @include('tasks.list', ['type' => $type])
+                @include('tasks.list', ['calls3' => $calls2])
             </div>
         </div>
-    @endif
-    @if($type == 'meetings')
+@endif
+@if(isset($meetings2))
         <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn yellow darken-1">
                 <p class="text-white sf-bold mb-0">
@@ -55,19 +53,19 @@
                     ВСТРЕЧИ
                 </p>
                 <a class="ml-auto" href="" data-toggle="modal" data-target="#MeetCreate">
-                    <i class="fas fa-plus fa-xs ico-done"></i>
+                    <i class="fas fa-plus fa-xs ico-edit"></i>
                 </a>
             </div>
             <div class="blog-scroll">
-                @include('tasks.list', ['type' => $type])
+                @include('tasks.list', ['meetings3' => $meetings2])
             </div>
         </div>
-    @endif
-    @if($type == 'potentials')
+@endif
+@if(isset($customers2))
         <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn light-green accent-4">
                 <p class="text-white sf-bold mb-0">
-                    ВСЕ ПОТЕНЦИАЛЬНЫЕ ВСТРЕЧИ
+                    ВСЕ ПОТЕНЦИАЛЬНЫЕ КЛИЕНТЫ
                 </p>
             </div>
             <div class="mt-3 mx-lg-3 mx-0 d-flex align-items-center py-2 px-3"
@@ -80,8 +78,7 @@
                 </a>
             </div>
             <div class="blog-scroll">
-                @include('tasks.list', ['type' => $type])
+                @include('tasks.list', ['customers3' => $customers2])
             </div>
         </div>
-    @endif
 @endif

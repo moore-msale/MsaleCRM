@@ -1,20 +1,20 @@
-@if($type == 'tasks')
-    @for($i = 0; $i < 4; $i++)
+@if(isset($tasks3))
+    @foreach($tasks3 as $task)
         @include('tasks.tasks-card')
-    @endfor
+    @endforeach
 @endif
-@if($type == 'calls')
-    @for($i = 0; $i < 4; $i++)
+@if(isset($calls3))
+    {{--@foreach($calls as $call)--}}
         @include('tasks.calls-card')
-    @endfor
+    {{--@endforeach--}}
 @endif
-@if($type == 'meetings')
-    @for($i = 0; $i < 4; $i++)
+@if(isset($meetings3))
+    @foreach($meetings3 as $meeting)
         @include('tasks.meetings-card')
-    @endfor
+    @endforeach
 @endif
-@if($type == 'potentials')
-    @for($i = 0; $i < 4; $i++)
+@if(isset($customers3))
+    @foreach($customers3 as $customer)
         @include('tasks.potentials-card')
-    @endfor
+    @endforeach
 @endif

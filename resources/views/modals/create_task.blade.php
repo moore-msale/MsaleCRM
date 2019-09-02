@@ -31,6 +31,9 @@
                             <input type="text" name="deadline_date" id="taskdate" class="form-control date-format">
                             <label for="date">Выберите срок</label>
                         </div>
+                        <div class="md-form">
+                            <input type="hidden" name="user_id" id="taskuser" value="{{auth()->id() }}">
+                        </div>
                     </form>
                     <a type="button" class="btn btn-danger addTask">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
                 </div>

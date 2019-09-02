@@ -11,11 +11,10 @@
     <div class="container-fluid h-100">
         <div class="row h-100" style="padding-top: 2em;">
             @include('tasks.statistics')
-
-            @include('tasks.index', ['type' => 'tasks'])
-            @include('tasks.index', ['type' => 'calls'])
-            @include('tasks.index', ['type' => 'meetings'])
-            @include('tasks.index', ['type' => 'potentials'])
+            @include('tasks.index', ['tasks2' => $tasks])
+            @include('tasks.index', ['calls2' => 'calls'])
+            @include('tasks.index', ['meetings2' => $meetings])
+            @include('tasks.index', ['customers2' => $customers])
 
         </div>
     </div>
@@ -45,6 +44,7 @@
                 let title = $('#taskname');
                 let desc = $('#taskdescription');
                 let date = $('#taskdate');
+                let user = $('#taskuser');
 
                 $.ajax({
                     url: '{{ route('task.store') }}',
@@ -54,6 +54,7 @@
                         "title": title.val(),
                         "description": desc.val(),
                         "deadline_date": date.val(),
+                        "user_id": user.val(),
                     },
                     success: data => {
                         $('#TaskCreate').modal('hide');
