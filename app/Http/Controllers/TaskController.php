@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -39,6 +40,7 @@ class TaskController extends Controller
         $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
         $request->request->remove('deadline_date');
         $request->merge(['deadline_date' => $deadline_date]);
+//        $request->merge(['user_id' => Auth::user()->id()]);
         $task = Task::create($request->all());
 
         if ($request->ajax()){

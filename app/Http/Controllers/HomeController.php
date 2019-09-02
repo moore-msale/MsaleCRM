@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Call;
+use App\Customer;
+use App\Meeting;
+use App\Task;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +27,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $tasks = Task::all();
+        $potentials = Customer::all();
+        $meetings = Meeting::all();
+        $calls = Call::all();
+        return view('home',['tasks' => $tasks, 'potentials' => $potentials, 'meetings' => $meetings, 'calls' => $calls]);
     }
 }

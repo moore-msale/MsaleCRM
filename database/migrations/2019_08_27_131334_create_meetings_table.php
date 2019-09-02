@@ -15,6 +15,11 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->string('date');
+            $table->string('name')->nullable();
+            $table->boolean('active')->default(false);
+            $table->unsignedInteger('user_id')->nullable();
             $table->timestamps();
         });
     }
