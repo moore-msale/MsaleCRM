@@ -29,7 +29,13 @@
     @push('scripts')
         <script>
             $.ajax({
-                url: '{{  }}',
+                url: '{{ route('task.index') }}',
+                success: data => {
+                    console.log(data);
+                },
+                error: () => {
+                    console.log('error');
+                }
             })
         </script>
         <script>

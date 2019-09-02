@@ -1,6 +1,6 @@
 @if(isset($type))
     @if($type == 'tasks')
-        <div class="px-2 h-100 col-3">
+        <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn red accent-2">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ЗАДАЧИ
@@ -22,7 +22,7 @@
         </div>
     @endif
     @if($type == 'calls')
-        <div class="px-2 h-100 col-3">
+        <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn indigo accent-3">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ЗВОНКИ
@@ -43,7 +43,7 @@
         </div>
     @endif
     @if($type == 'meetings')
-        <div class="px-2 h-100 col-3">
+        <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn yellow darken-1">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ВСТРЕЧИ
@@ -64,7 +64,7 @@
         </div>
     @endif
     @if($type == 'potentials')
-        <div class="px-2 h-100 col-3">
+        <div class="px-0 h-100 col-3">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn light-green accent-4">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ПОТЕНЦИАЛЬНЫЕ ВСТРЕЧИ
