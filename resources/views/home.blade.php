@@ -22,6 +22,7 @@
 @include('modals.create_call')
 @include('modals.create_meet')
 @include('modals.create_client')
+@include('modals.called-modal')
 @endsection
 
 @push('scripts')
@@ -66,6 +67,15 @@
                     }
                 })
             })
+        </script>
+        <script>
+            $('.call-btn').click(function (e) {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                $('#calledModal').modal('show');
+                let href = btn.attr('href');
+                window.location.href = href;
+            });
         </script>
         <script>
             $('.addCall').click(e => {

@@ -13,9 +13,9 @@
                 {{ $call->company ?? "No company" }}
             </span>
         </p>
-        <p class="deal-text sf-bold mb-3">
+        <a href="tel:{{ $call->phone }}" class="deal-text call-btn sf-bold mb-3">
             <i class="fas fa-phone"></i></i><span class="pl-1">{{ $call->phone ?? "No phone" }}</span>
-        </p>
+        </a>
     </div>
     <div class="toner">
         <div class="icon-panel mt-1 accordion md-accordion accordion-1" id="accordionEx5"
