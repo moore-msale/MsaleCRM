@@ -27,10 +27,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-        $potentials = Customer::all();
-        $meetings = Meeting::all();
-        $calls = Call::all();
-        return view('home',['tasks' => $tasks, 'potentials' => $potentials, 'meetings' => $meetings, 'calls' => $calls]);
+        $tasks = Task::whereDoesntHasMorph(
+            'taskable',
+            ['App\Customer','App\Meeting','App\Call']
+        )->get();
+        $customers = Task::whereHasMorph(
+            'customerable',
+            ['App\Customer']
+        )->get();
+        $meetings = Task::whereHasMorph(
+            'meetingable',
+            ['App\Meeting']
+        )->get();
+        return view('home',['tasks' => $tasks, 'customers' => $customers, 'meetings' => $meetings]);
     }
 }
