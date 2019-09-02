@@ -40,7 +40,6 @@ class TaskController extends Controller
         $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
         $request->request->remove('deadline_date');
         $request->merge(['deadline_date' => $deadline_date]);
-//        $request->merge(['user_id' => Auth::user()->id()]);
         $task = Task::create($request->all());
 
         if ($request->ajax()){
