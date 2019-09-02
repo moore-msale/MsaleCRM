@@ -20,11 +20,11 @@
                         @csrf
                         <input type="hidden" value="calls" name="type">
                         <div class="md-form">
-                            <input type="text" name="excel" id="excel" class="form-control">
+                            <input type="file" name="excel" id="excel" class="form-control">
                             <label for="excel">Excel</label>
                         </div>
                     </form>
-                    <a type="button" class="btn btn-primary">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
+                    <a type="button" class="btn btn-primary addCall">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
                 </div>
             </div>
 

@@ -4,9 +4,9 @@
     @endforeach
 @endif
 @if(isset($calls3))
-    {{--@foreach($calls as $call)--}}
+    @foreach($calls3 as $call)
         @include('tasks.calls-card')
-    {{--@endforeach--}}
+    @endforeach
 @endif
 @if(isset($meetings3))
     @foreach($meetings3 as $meeting)

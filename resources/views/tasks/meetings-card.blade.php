@@ -4,10 +4,17 @@
          style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>
     <div style="border-bottom:1px solid #DCDCDC;">
         <p class="deal-text sf-bold mb-2">
-            <i class="far fa-building"></i><span class="pl-1"> ОАО 'Кыргыз Алтын'</span>
+            <i class="far fa-building"></i><span class="pl-1">{{ $meeting->taskable->customer->name }}</span>
         </p>
+        @if($meeting->taskable->customer->company)
+            <p class="deal-text sf-bold mb-2">
+                <i class="far fa-building"></i><span class="pl-1">{{ $meeting->taskable->customer->company }}</span>
+            </p>
+        @endif
         <p class="deal-text sf-bold mb-3">
-            <i class="fas fa-clock"></i></i><span class="pl-1"> 2.09.2019 15:00</span>
+            <i class="fas fa-clock"></i></i><span class="pl-1">
+                {{ \Carbon\Carbon::make($meeting->deadline_date)->format('d.m.Y H:i') }}
+            </span>
         </p>
     </div>
     <div class="toner">

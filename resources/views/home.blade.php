@@ -12,7 +12,7 @@
         <div class="row h-100" style="padding-top: 2em;">
             @include('tasks.statistics')
             @include('tasks.index', ['tasks2' => $tasks])
-            @include('tasks.index', ['calls2' => 'calls'])
+            @include('tasks.index', ['calls2' => $calls])
             @include('tasks.index', ['meetings2' => $meetings])
             @include('tasks.index', ['customers2' => $customers])
 
@@ -71,19 +71,23 @@
             $('.addCall').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
-                let excel = $('#excel');
+                let excel = $('#excel')[0].files[0];
 
+                var formData = new FormData();
+                formData.append('_token', "{{ csrf_token() }}");
+                if (excel != undefined){
+                    formData.append('excel', excel);
+                }
                 $.ajax({
                     url: '{{ route('excel.import') }}',
                     method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "excel": excel.files[0],
-                    },
+                    processData: false,
+                    contentType: false,
+                    data: formData,
                     success: data => {
-                        // $('#CallCreate').modal('hide');
+                        $('#CallCreate').modal('hide');
                         console.log(data);
-                        // let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                        let result = $('#calls-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     },
                     error: () => {
                         console.log(0);

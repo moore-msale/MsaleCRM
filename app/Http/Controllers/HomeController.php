@@ -36,10 +36,12 @@ class HomeController extends Controller
             'taskable',
             'App\Meeting'
         )->get();
+        $calls = Call::where('user_id', auth()->id())->get();
         return view('home',[
             'tasks' => $tasks,
             'customers' => $customers,
-            'meetings' => $meetings
+            'meetings' => $meetings,
+            'calls' => $calls,
         ]);
     }
 }
