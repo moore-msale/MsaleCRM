@@ -27,10 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $tasks = Task::doesntHaveMorph(
-            'taskable',
-            ['App\Customer', 'App\Meeting']
-        )->get();
+        $tasks = Task::where('taskable_type', null)->get();
         $customers = Task::hasMorph(
             'taskable',
             'App\Customer'
