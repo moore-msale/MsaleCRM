@@ -8,7 +8,6 @@
     </style>
 @endpush
 @section('content')
-    @dd([$tasks, $customers, $meetings])
     <div class="container-fluid h-100">
         <div class="row h-100" style="padding-top: 2em;">
             @include('tasks.statistics')
@@ -60,6 +59,30 @@
                         $('#TaskCreate').modal('hide');
                         console.log(data);
                         let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+            })
+        </script>
+        <script>
+            $('.addCall').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let excel = $('#excel');
+
+                $.ajax({
+                    url: '{{ route('excel.import') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "excel": excel.files[0],
+                    },
+                    success: data => {
+                        // $('#CallCreate').modal('hide');
+                        console.log(data);
+                        // let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     },
                     error: () => {
                         console.log(0);

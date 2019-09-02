@@ -20,16 +20,8 @@
                         @csrf
                         <input type="hidden" value="calls" name="type">
                         <div class="md-form">
-                            <input type="text" name="title" id="taskname" class="form-control">
-                            <label for="form1">Заголовок</label>
-                        </div>
-                        <div class="md-form">
-                            <textarea id="taskdescription" name="description" class="form-control md-textarea" rows="3"></textarea>
-                            <label for="description">Описание</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="deadline_date" id="taskdate" class="form-control date-format">
-                            <label for="date">Выберите срок</label>
+                            <input type="text" name="excel" id="excel" class="form-control">
+                            <label for="excel">Excel</label>
                         </div>
                     </form>
                     <a type="button" class="btn btn-primary">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
