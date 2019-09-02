@@ -8,7 +8,7 @@
     </style>
 @endpush
 @section('content')
-    @dd($tasks)
+    @dd([$tasks, $customers, $meetings])
     <div class="container-fluid h-100">
         <div class="row h-100" style="padding-top: 2em;">
             @include('tasks.statistics')
