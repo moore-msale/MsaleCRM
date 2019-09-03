@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         $today = Carbon::now()->setTime('00', '00');
-        $week = Carbon::now()->addWeek();
+        $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)
             ->where('deadline_date', '<=', $week)->get();
         $customers = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)
