@@ -31,9 +31,9 @@ class CallController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $customer,
+                'data' => $task,
                 'view' => view('tasks.potentials-card', [
-                    'customer' => $customer,
+                    'customer' => $task,
                 ])->render(),
             ], 200);
         }
