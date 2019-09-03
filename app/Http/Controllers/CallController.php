@@ -16,7 +16,7 @@ class CallController extends Controller
     {
         $call = Call::find($request->id);
         $customer = New Customer();
-        $customer->name = $call->title;
+        $customer->name = $call->name;
         $customer->contacts = $call->phone;
         $customer->company = $call->company;
         $customer->save();
