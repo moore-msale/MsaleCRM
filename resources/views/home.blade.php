@@ -68,6 +68,36 @@
         })
     </script>
     <script>
+        $('.addMeeting').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = $('#meetingname');
+            let desc = $('#meetingdescription');
+            let date = $('#meetingdate');
+            let user = $('#meetinguser');
+
+            $.ajax({
+                url: '{{ route('meeting.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id.val(),
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "user_id": user.val(),
+                },
+                success: data => {
+                    $('#MeetCreate').modal('hide');
+                    console.log(data);
+                    let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                },
+                error: () => {
+                    console.log(0);
+                }
+            })
+        })
+    </script>
+    <script>
         function registerCallBtn(item) {
             item.click(function (e) {
                 e.preventDefault();

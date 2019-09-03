@@ -5,16 +5,16 @@
     <div style="border-bottom:1px solid #DCDCDC;">
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-building"></i><span class="pl-1">
-                {{ $customer->name  ?? "No name" }}
+                {{ $customer->taskable->name  ?? "No name" }}
             </span>
         </p>
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-building"></i><span class="pl-1">
-                {{ $customer->company ?? "No company" }}
+                {{ $customer->taskable->company ?? "No company" }}
             </span>
         </p>
-        <a href="tel:{{ $customer->contacts }}" class="deal-text sf-bold mb-3">
-            <i class="fas fa-phone"></i></i><span class="pl-1">{{ $customer->phone ?? "No phone" }}</span>
+        <a href="tel:{{ $customer->taskable->contacts }}" class="deal-text sf-bold mb-3">
+            <i class="fas fa-phone"></i></i><span class="pl-1">{{ $customer->taskable->contacts ?? "No phone" }}</span>
         </a>
     </div>
     <div class="toner">

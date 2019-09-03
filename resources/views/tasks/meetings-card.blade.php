@@ -4,6 +4,7 @@
          style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>
     <div style="border-bottom:1px solid #DCDCDC;">
         <p class="deal-text sf-bold mb-2">
+            {{--@dd($meeting);--}}
             <i class="far fa-building"></i><span class="pl-1">{{ $meeting->taskable->customer->name }}</span>
         </p>
         @if($meeting->taskable->customer->company)

@@ -20,19 +20,23 @@
                         @csrf
                         <input type="hidden" value="meetings" name="type">
                         <div class="md-form">
-                            <input type="text" name="title" id="taskname" class="form-control">
-                            <label for="form1">Заголовок</label>
+                            <select name="name" id="meetingname" class="browser-default custom-select">
+                                <option value="{{ null }}" disabled>Клиент</option>
+                                @foreach($customers as $customer)
+                                    <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="md-form">
-                            <textarea id="taskdescription" name="description" class="form-control md-textarea" rows="3"></textarea>
+                            <textarea id="meetingdescription" name="description" class="form-control md-textarea" rows="3"></textarea>
                             <label for="description">Описание</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" name="deadline_date" id="taskdate" class="form-control date-format">
+                            <input type="text" name="deadline_date" id="meetingdate" class="form-control date-format">
                             <label for="date">Выберите срок</label>
                         </div>
                     </form>
-                    <a type="button" class="btn btn-warning">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
+                    <a type="button" class="btn btn-warning addMeeting">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
                 </div>
             </div>
 

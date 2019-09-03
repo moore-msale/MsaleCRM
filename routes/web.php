@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/call_to_customer', 'CallController@call_to_customer')->name('call_to_customer');
 
 Route::resource('task', 'TaskController');
+Route::resource('meeting', 'MeetingController');
 Route::resource('report', 'ReportController');
 Route::get('/excel/create', 'ExcelController@create')->name('excel.create');
 Route::post('/excel', 'ExcelController@import')->name('excel.import');
