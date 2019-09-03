@@ -5,7 +5,7 @@
     <div style="border-bottom:1px solid #DCDCDC;">
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-building"></i><span class="pl-1">
-                {{ $call->title  ?? "No name" }}
+                {{ $call->name  ?? "No name" }}
             </span>
         </p>
         <p class="deal-text sf-bold mb-2">

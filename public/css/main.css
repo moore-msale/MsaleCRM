@@ -301,6 +301,20 @@ body
     line-height:14px;
     color: #A5A5A5;
 }
+.report-man
+{
+    font-size: 30px;
+    color: black;
+}
+.report-border
+{
+    border-bottom: 1px solid #cccccc;
+}
+.report-cal
+{
+    font-size: 16px;
+    color:black;
+}
 @media only screen and (max-width: 700px)
 {
     .collona

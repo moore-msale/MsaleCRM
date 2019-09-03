@@ -4,8 +4,18 @@
          style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>
     <div style="border-bottom:1px solid #DCDCDC;">
         <p class="deal-text sf-bold mb-2">
-            <i class="far fa-building"></i><span class="pl-1"> ОАО 'Кыргыз Алтын'</span>
+            <i class="far fa-building"></i><span class="pl-1">
+                {{ $customer->name  ?? "No name" }}
+            </span>
         </p>
+        <p class="deal-text sf-bold mb-2">
+            <i class="far fa-building"></i><span class="pl-1">
+                {{ $customer->company ?? "No company" }}
+            </span>
+        </p>
+        <a href="tel:{{ $customer->contacts }}" class="deal-text sf-bold mb-3">
+            <i class="fas fa-phone"></i></i><span class="pl-1">{{ $customer->phone ?? "No phone" }}</span>
+        </a>
     </div>
     <div class="toner">
         <div class="icon-panel mt-1 accordion md-accordion accordion-1" id="accordionEx7"
