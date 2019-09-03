@@ -78,6 +78,32 @@
             });
         </script>
         <script>
+            $('.call_add').click(function (e) {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                console.log(btn.id);
+                {{--$.ajax({--}}
+                    {{--url: '{{ route('call_to_customer') }}',--}}
+                    {{--method: 'POST',--}}
+                    {{--data: {--}}
+                        {{--"_token": "{{ csrf_token() }}",--}}
+                        {{--"title": title.val(),--}}
+                        {{--"description": desc.val(),--}}
+                        {{--"deadline_date": date.val(),--}}
+                        {{--"user_id": user.val(),--}}
+                    {{--},--}}
+                    {{--success: data => {--}}
+                        {{--$('#TaskCreate').modal('hide');--}}
+                        {{--console.log(data);--}}
+                        {{--let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);--}}
+                    {{--},--}}
+                    {{--error: () => {--}}
+                        {{--console.log(0);--}}
+                    {{--}--}}
+                {{--})--}}
+            })
+        </script>
+        <script>
             $('.addCall').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);

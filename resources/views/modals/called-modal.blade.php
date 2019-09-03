@@ -5,7 +5,7 @@
         <div class="modal-content">
             <!--Header-->
             <div class="modal-header">
-                <p class="heading lead">Добавить звонок</p>
+                <p class="heading lead">Статус звонка</p>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="white-text">&times;</span>
@@ -16,15 +16,18 @@
             <div class="modal-body">
                 <div class="text-center">
                     <i class="fas fa-phone fa-4x animated rotateIn"></i>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" value="calls" name="type">
-                        <div class="md-form">
-                            <input type="file" name="excel" id="excel" class="form-control">
-                            <label for="excel">Excel</label>
+                    <div class="container-fluid pt-5">
+                        <div class="row">
+                            <div class="col-7">
+                                <a type="button" class="btn btn-primary call_add">Добавить в клиенты <i class="fas fa-check ml-1 text-white"></i></a>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-7">
+                                <a type="button" class="btn btn-danger call_delete">Удалить из списка <i class="fas fa-times ml-1 text-white"></i></a>
+                            </div>
                         </div>
-                    </form>
-                    <a type="button" class="btn btn-primary addCall">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
+                    </div>
+
                 </div>
             </div>
 

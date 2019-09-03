@@ -1,4 +1,4 @@
-<div class="px-0 h-auto pb-2 col-lg-3 col-15">
+<div class="px-0 h-auto pb-2 col-lg-3 col-15 d-lg-block d-none">
     <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn purple darken-4">
         <p class="text-white sf-bold mb-0">
             ПЛАН НА ДЕНЬ
