@@ -26,3 +26,4 @@ Route::resource('report', 'ReportController');
 Route::get('/excel/create', 'ExcelController@create')->name('excel.create');
 Route::post('/excel', 'ExcelController@import')->name('excel.import');
 Route::get('/delete/calls', 'CallController@cronDelete');
+Route::get('/mail', 'ReportController@mail');
