@@ -19,6 +19,7 @@
                     <div class="container-fluid pt-5">
                         <div class="row">
                             <div class="col-7">
+                                    <input type="hidden" id="caller_id">
                                 <a type="button" class="btn btn-primary call_add">Добавить в клиенты <i class="fas fa-check ml-1 text-white"></i></a>
                             </div>
                             <div class="col-1"></div>

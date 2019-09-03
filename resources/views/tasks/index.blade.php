@@ -35,7 +35,7 @@
                     <i class="fas fa-plus fa-xs ico-update"></i>
                 </a>
             </div>
-            <div class="blog-scroll">
+            <div class="blog-scroll" id="calls-scroll">
                 @include('tasks.list', ['calls3' => $calls2])
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <i class="fas fa-plus fa-xs ico-edit"></i>
                 </a>
             </div>
-            <div class="blog-scroll">
+            <div class="blog-scroll" id="meetings-scroll">
                 @include('tasks.list', ['meetings3' => $meetings2])
             </div>
         </div>
@@ -77,7 +77,7 @@
                     <i class="fas fa-plus fa-xs ico-done"></i>
                 </a>
             </div>
-            <div class="blog-scroll">
+            <div class="blog-scroll" id="customers-scroll">
                 @include('tasks.list', ['customers3' => $customers2])
             </div>
         </div>

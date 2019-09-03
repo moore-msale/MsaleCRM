@@ -23,9 +23,9 @@ class ExcelController extends Controller
             if (count($calls)) {
                 foreach ($calls as $call) {
                     $newCall = new Call();
-                    $newCall->title = $call[0];
+                    $newCall->name = $call[0];
                     $newCall->phone = $call[2];
-//                    $newCall->company = $call[1];
+                    $newCall->company = $call[1];
                     $newCall->user_id = auth()->id();
                     $newCall->save();
                 }

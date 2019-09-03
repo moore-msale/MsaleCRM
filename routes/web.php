@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/call_to_customer', 'CallController@call_to_customer')->name('call_to_customer');
 
 Route::resource('task', 'TaskController');
 Route::get('/excel/create', 'ExcelController@create')->name('excel.create');
