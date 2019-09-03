@@ -181,13 +181,13 @@ body
 
 .blog-scroll::-webkit-scrollbar
 {
-    width: 6px;
+    width: 3px;
     background-color: #F5F5F5;
 }
 
 .blog-scroll::-webkit-scrollbar-thumb
 {
-    background-color: #b2b2b2;
+    background-color: #130926;
 }
 .point
 {

@@ -46,6 +46,7 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         $(document).ready(function() {
             $('.date').bootstrapMaterialDatePicker
