@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Call;
+use App\Cron\DeleteCalls;
 use App\Customer;
 use App\Task;
 use Carbon\Carbon;
@@ -38,5 +39,11 @@ class CallController extends Controller
         }
 
         return back();
+    }
+
+    public function cronDelete()
+    {
+        DeleteCalls::delete();
+        return 0;
     }
 }
