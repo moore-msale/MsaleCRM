@@ -33,7 +33,7 @@ class HomeController extends Controller
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)
             ->where('deadline_date', '<=', $week)->where('status_id','!=','1')->get();
         $customers = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)
-            ->where('deadline_date', '<=', $week)->hasMorph(
+            ->where('deadline_date', '<=', $week)->where('status_id',1)->hasMorph(
             'taskable',
             'App\Customer'
         )->get();
