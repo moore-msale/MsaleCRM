@@ -46,6 +46,7 @@ class TaskController extends Controller
             return response()->json([
                 'status' => "success",
                 'data' => $task,
+                'inWeek' => $task->between(),
                 'view' => view('tasks.tasks-card', [
                     'task' => $task,
                 ])->render(),
