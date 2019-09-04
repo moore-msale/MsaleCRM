@@ -18,6 +18,7 @@ class CreateReportsTable extends Migration
             $table->integer('user_id');
             $table->mediumText('data');
             $table->string('type');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

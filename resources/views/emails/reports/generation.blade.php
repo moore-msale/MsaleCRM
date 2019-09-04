@@ -7,8 +7,8 @@
 @component('mail::table')
     | Звонки            | Встречи       | Example  |
     | :-------------:   |:-------------:| --------:|
-    | 40 / 100          | 3 / 6         | $10      |
-    | {{ 60 * 4 }} сом  | что то еще    | $20      |
+    | {{ count($user->reports->where('type', 'call')) }} / 100          | 3 / 6         | $10      |
+    | {{ (100 - count($user->reports->where('type', 'call'))) * 4 }} сом  | что то еще    | $20      |
 @endcomponent
 @endcomponent
 @endforeach

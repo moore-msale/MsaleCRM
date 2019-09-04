@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Call;
 use App\Cron\DeleteCalls;
 use App\Customer;
+use App\Report;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,6 +28,15 @@ class CallController extends Controller
         $task->user_id = auth()->check() ? auth()->id() : 0;
         $task->save();
         $customer->task()->save($task);
+
+        $report = new Report([
+            'user_id' => auth()->id(),
+            'type' => 'call',
+            'status' => true,
+            'data' => $call,
+        ]);
+        $report->save();
+        $call->delete();
 
         if ($request->ajax()){
             return response()->json([
