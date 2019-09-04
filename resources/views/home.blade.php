@@ -57,8 +57,9 @@
                 },
                 success: data => {
                     $('#TaskCreate').modal('hide');
-                    console.log(data);
-                    let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    if (data.inWeek) {
+                        let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    } 
                 },
                 error: () => {
                     console.log(0);
@@ -154,12 +155,10 @@
                 success: data => {
                     $('#CallCreate').modal('hide');
                     console.log(data);
-                    if (data.isWeek) {
-                        let result = $('#calls-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        result.find('.call-btn').each((e, i) => {
-                            registerCallBtn($(i));
-                        });
-                    }
+                    let result = $('#calls-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    result.find('.call-btn').each((e, i) => {
+                        registerCallBtn($(i));
+                    });
                 },
                 error: () => {
                     console.log(0);
