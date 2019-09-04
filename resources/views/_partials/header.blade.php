@@ -145,9 +145,12 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse pl-5" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav w-100">
             <li class="nav-item active">
                 <a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item ml-auto">
+                <span class="nav-link sf-medium text-white">{{ auth()->user()->name }}</span>
             </li>
         </ul>
     </div>

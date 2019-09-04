@@ -170,7 +170,7 @@ body
 }
 .blog-scroll
 {
-    height: 80%;
+    height: 70vh;
     overflow-Y: auto;
 }
 .blog-scroll::-webkit-scrollbar-track

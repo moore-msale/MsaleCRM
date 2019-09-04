@@ -29,13 +29,13 @@
 <body>
     <div id="app">
         @include('_partials.header')
-        <main style="height: 90vh;">
-            <div class="container-fluid h-100">
-                <div class="row h-100">
-                    <div class="col-auto h-100 px-0 d-lg-block d-none" style="width:5%;">
+        <main>
+            <div class="container-fluid">
+                <div class="row ">
+                    <div class="col-auto px-0 d-lg-block d-none" style="width:5%;">
                         @include('_partials.sidebar')
                     </div>
-                    <div class="col-lg-14 col-15 h-100 mt-5">
+                    <div class="col-lg-14 col-15mt-5">
                         @yield('content')
                     </div>
                 </div>

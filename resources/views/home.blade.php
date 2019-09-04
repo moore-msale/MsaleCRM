@@ -8,8 +8,8 @@
     </style>
 @endpush
 @section('content')
-    <div class="container-fluid h-100">
-        <div class="row h-100" style="padding-top: 2em;">
+    <div class="container-fluid">
+        <div class="row" style="padding-top: 2em;">
             @include('tasks.statistics')
             @include('tasks.index', ['tasks2' => $tasks])
             @include('tasks.index', ['calls2' => $calls])
