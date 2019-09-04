@@ -16,6 +16,7 @@
             <div class="modal-body">
                 <div class="text-center">
                     <i class="fas fa-phone fa-4x animated rotateIn"></i>
+                    <p>"Excel - имя - 1 колонка, компания - 2 колонка, номер- 3 колонка!"</p>
                     <form action="" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" value="calls" name="type">

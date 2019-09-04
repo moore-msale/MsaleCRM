@@ -18,12 +18,12 @@
                     <i class="fas fa-phone fa-4x animated rotateIn"></i>
                     <div class="container-fluid pt-5">
                         <div class="row">
-                            <div class="col-7">
+                            <div class="col-7 px-0">
                                     <input type="hidden" id="caller_id">
                                 <a type="button" class="btn btn-primary call_add">Добавить в клиенты <i class="fas fa-check ml-1 text-white"></i></a>
                             </div>
-                            <div class="col-1"></div>
-                            <div class="col-7">
+                            <div class="col-1 d-lg-block d-none"></div>
+                            <div class="col-7 px-0">
                                 <a type="button" class="btn btn-danger deleteCall">Удалить из списка <i class="fas fa-times ml-1 text-white"></i></a>
                             </div>
                         </div>
