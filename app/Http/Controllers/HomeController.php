@@ -31,14 +31,14 @@ class HomeController extends Controller
         $today = Carbon::now()->setTime('00', '00');
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)
-            ->where('deadline_date', '<=', $week)->get();
+            ->where('deadline_date', '<=', $week)->where('status_id','!=','1')->get();
         $customers = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)
             ->where('deadline_date', '<=', $week)->hasMorph(
             'taskable',
             'App\Customer'
         )->get();
         $meetings = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)
-            ->where('deadline_date', '<=', $week)->hasMorph(
+            ->where('deadline_date', '<=', $week)->where('status_id','!=','1')->hasMorph(
             'taskable',
             'App\Meeting'
         )->get();

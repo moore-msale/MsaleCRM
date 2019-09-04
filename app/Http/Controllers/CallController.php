@@ -56,4 +56,18 @@ class CallController extends Controller
         DeleteCalls::delete();
         return 0;
     }
+
+    public function delete(Request $request)
+    {
+        $call = Call::find($request->id);
+        $call->delete();
+
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success"
+            ]);
+        }
+
+        return back();
+    }
 }

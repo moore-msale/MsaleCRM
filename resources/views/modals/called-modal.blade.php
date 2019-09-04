@@ -24,7 +24,7 @@
                             </div>
                             <div class="col-1"></div>
                             <div class="col-7">
-                                <a type="button" class="btn btn-danger call_delete">Удалить из списка <i class="fas fa-times ml-1 text-white"></i></a>
+                                <a type="button" class="btn btn-danger deleteCall">Удалить из списка <i class="fas fa-times ml-1 text-white"></i></a>
                             </div>
                         </div>
                     </div>

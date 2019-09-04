@@ -84,9 +84,19 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request)
     {
-        //
+        $task = Task::find($request->id);
+        $task->title = $request->title;
+        $task->deadline_date = $request->date;
+        $task->save();
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success"
+            ]);
+        }
+
+        return back();
     }
 
     /**
@@ -95,8 +105,33 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function delete(Request $request)
     {
-        //
+        $task = Task::find($request->id);
+        $task->delete();
+
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success"
+        ]);
+        }
+
+        return back();
     }
+
+    public function done(Request $request)
+    {
+        $task = Task::find($request->id);
+        $task->status_id = 1;
+        $task->save();
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success"
+            ]);
+        }
+
+        return back();
+    }
+
+
 }

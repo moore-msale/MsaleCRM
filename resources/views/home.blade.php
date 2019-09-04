@@ -125,7 +125,9 @@
                 success: data => {
                     $('#calledModal').modal('hide');
                     console.log(data);
+                    $('#call-' + id).hide(200);
                     let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+
                 },
                 error: () => {
                     console.log(0);
@@ -164,5 +166,233 @@
             })
         })
         registerCallBtn($('.call-btn'));
+    </script>
+    <script>
+        $('.deleteTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let details = $('#details_delete_Task');
+            let id = btn.data('id');
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+            }
+            else {
+                $.ajax({
+                url: 'taskdelete',
+                method: 'POST',
+                data: {
+                "_token": "{{ csrf_token() }}",
+                "details": details.val(),
+                "id": id,
+                },
+                success: data => {
+                $('#task-' + id).hide(200);
+                console.log(data);
+                },
+                error: () => {
+                console.log(0);
+                }
+                })
+            }
+
+
+        })
+    </script>
+    <script>
+        $('.deleteCall').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = $('#caller_id').val();
+            console.log(id);
+                $.ajax({
+                    url: 'calldelete',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                    },
+                    success: data => {
+                        $('#calledModal').modal('hide');
+                        $('#call-' + id).hide(400);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+
+
+        })
+    </script>
+    <script>
+        $('.doneTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let details = $('#details_done_Task');
+            let id = btn.data('id');
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для завершения!","error");
+            }
+            else {
+                $.ajax({
+                    url: 'taskdone',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "details": details.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        $('#task-' + id).hide(400);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+            }
+
+
+        })
+    </script>
+    <script>
+        $('.editTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let details = $('#details_update_Task');
+            let title = $('#taskchangename');
+            let date = $('#taskchangedate');
+
+            let id = btn.data('id');
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
+            }
+            else {
+                $.ajax({
+                    url: 'taskupdate',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "details": details.val(),
+                        "title": title.val(),
+                        "date": date.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        $('#task-' + id).load("/msalecrm/home #task-" + id +" > *");
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+            }
+        })
+    </script>
+    <script>
+        $('.doneMeet').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let details = $('#details_done_Meet');
+            let id = btn.data('id');
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для завершения!","error");
+            }
+            else {
+                $.ajax({
+                    url: 'meetdone',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "details": details.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        $('#meet-' + id).hide(400);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+            }
+
+
+        })
+    </script>
+    <script>
+        $('.deleteMeet').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let details = $('#details_delete_Meet');
+            let id = btn.data('id');
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+            }
+            else {
+                $.ajax({
+                    url: 'meetdelete',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "details": details.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        $('#meet-' + id).hide(200);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+            }
+
+
+        })
+    </script>
+    <script>
+        $('.editMeet').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let details = $('#details_update_Meet');
+            let date = $('#meetchangedate');
+
+            let id = btn.data('id');
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
+            }
+            else {
+                $.ajax({
+                    url: 'meetupdate',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "details": details.val(),
+                        "date": date.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        // $('#meet-' + id).load("/msalecrm/home #task-" + id +" > *");
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+            }
+        })
     </script>
 @endpush
