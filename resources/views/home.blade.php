@@ -22,6 +22,7 @@
     @include('modals.create_meet')
     @include('modals.create_client')
     @include('modals.called-modal')
+    @include('modals.add_customer')
 @endsection
 
 @push('scripts')
@@ -114,24 +115,28 @@
             e.preventDefault();
             let btn = $(e.currentTarget);
             let id = $('#caller_id').val();
-            $.ajax({
-                url: '{{ route('call_to_customer') }}',
-                method: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id": id,
-                },
-                success: data => {
-                    $('#calledModal').modal('hide');
-                    console.log(data);
-                    $('#call-' + id).hide(200);
-                    let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+            $('#calledModal').modal('hide');
+            $('#add_customer').modal('show');
 
-                },
-                error: () => {
-                    console.log(0);
-                }
-            })
+
+            {{--$.ajax({--}}
+                {{--url: '{{ route('call_to_customer') }}',--}}
+                {{--method: 'POST',--}}
+                {{--data: {--}}
+                    {{--"_token": "{{ csrf_token() }}",--}}
+                    {{--"id": id,--}}
+                {{--},--}}
+                {{--success: data => {--}}
+                    {{--$('#calledModal').modal('hide');--}}
+                    {{--console.log(data);--}}
+                    {{--$('#call-' + id).hide(200);--}}
+                    {{--let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);--}}
+
+                {{--},--}}
+                {{--error: () => {--}}
+                    {{--console.log(0);--}}
+                {{--}--}}
+            {{--})--}}
         })
     </script>
     <script>
@@ -247,6 +252,7 @@
                     },
                     success: data => {
                         $('#task-' + id).hide(400);
+                        swal("Задача выполнена!","Отчет был отправлен","success");
                         console.log(data);
                     },
                     error: () => {
@@ -392,6 +398,43 @@
                     }
                 })
             }
+        })
+    </script>
+    <script>
+        $('.addClient').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let name = $('#clientname');
+            let phone = $('#clientphone');
+            let company = $('#clientcompany');
+            let social = $('#clientsocial');
+            let date = $('#clientdate');
+            let status = $('#clientstatus').is(':checked') ? true : false;
+
+            $.ajax({
+                url: '{{ route('customer.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "name": name.val(),
+                    "phone": phone.val(),
+                    "company": company.val(),
+                    "social": social.val(),
+                    "date": date.val(),
+                    "status": status,
+                },
+                success: data => {
+                    $('#add_customer').modal('hide');
+                    console.log(data);
+                    swal("Клиент добавлен!","Отчет был отправлен","success");
+                    if(data.view){
+                    let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    }
+                    },
+                error: () => {
+                    console.log(0);
+                }
+            })
         })
     </script>
 @endpush

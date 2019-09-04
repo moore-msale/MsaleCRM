@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -14,7 +16,12 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Task::where('user_id',auth()->id())->hasMorph(
+                'taskable',
+                'App\Customer'
+            )->get();
+
+        return view('pages.customers',['customers' => $customers]);
     }
 
     /**
@@ -35,7 +42,50 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $customer = New Customer();
+        $customer->name = $request->name;
+        $customer->company = $request->company;
+        $customer->contacts = $request->phone;
+        $customer->socials = $request->social;
+        $customer->save();
+
+        $task = new Task();
+        $task->title = $customer->name ? $customer->company : 'Empty';
+        $request->request->remove('date');
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
+        $request->request->remove('date');
+        $request->merge(['date' => $deadline_date]);
+        $task->deadline_date = $request->date;
+        $task->user_id = auth()->check() ? auth()->id() : 0;
+
+        if($request->status == "true")
+        {
+            $task->status_id = 1;
+        }
+        else
+        {
+            $task->status_id = 0;
+        }
+
+        $task->save();
+        $customer->task()->save($task);
+        if ($request->ajax() && $task->status_id == 1){
+            return response()->json([
+                'status' => "success",
+                'data' => $task,
+                'view' => view('tasks.potentials-card', [
+                    'customer' => $task,
+                ])->render(),
+            ], 200);
+        }
+        else {
+            return response()->json([
+                'status' => "success",
+                'data' => $task
+            ]);
+        }
+
+        return back();
     }
 
     /**

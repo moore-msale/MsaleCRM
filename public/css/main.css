@@ -321,4 +321,11 @@ body
     {
         width:100%;
     }
+    .deal-text
+    {
+        font-size: 14px;
+        line-height: 14px;
+        color: #000000;
+        font-family: "SF Pro Display Medium";
+    }
 }
