@@ -15,7 +15,6 @@
             @include('tasks.index', ['calls2' => $calls])
             @include('tasks.index', ['meetings2' => $meetings])
             @include('tasks.index', ['customers2' => $customers])
-
         </div>
     </div>
     @include('modals.create_task')
