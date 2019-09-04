@@ -159,10 +159,12 @@
                 success: data => {
                     $('#CallCreate').modal('hide');
                     console.log(data);
-                    let result = $('#calls-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                    result.find('.call-btn').each((e, i) => {
-                        registerCallBtn($(i));
-                    });
+                    if (data.isWeek) {
+                        let result = $('#calls-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                        result.find('.call-btn').each((e, i) => {
+                            registerCallBtn($(i));
+                        });
+                    }
                 },
                 error: () => {
                     console.log(0);

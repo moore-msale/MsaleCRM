@@ -24,8 +24,7 @@ class Task extends Model
     {
         $now = Carbon::now()->setTime('00', '00', '00');
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
-
-        if ($this->deadline_date > $now && $week < $this->deadline_date) {
+        if ($now < $this->deadline_date && $this->deadline_date < $week) {
             return true;
         }
 
