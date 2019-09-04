@@ -12,7 +12,7 @@
             </p>
             <p class="work-check sf-bold mb-0">
                         <span class="first-child">
-                            30/
+                            0/
                         </span>
                 <span class="last-child">
                             80
@@ -21,40 +21,14 @@
         </div>
         <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
             <p class="head-text sf-bold mb-3">
-                ВЫПОЛНЕННЫЕ ЗВОНКИ
+                ВЫПОЛНЕННЫЕ ВСТРЕЧИ
             </p>
             <p class="work-check sf-bold mb-0">
                         <span class="first-child">
-                            30/
+                            0/
                         </span>
                 <span class="last-child">
-                            80
-                        </span>
-            </p>
-        </div>
-        <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
-            <p class="head-text sf-bold mb-3">
-                ВЫПОЛНЕННЫЕ ЗВОНКИ
-            </p>
-            <p class="work-check sf-bold mb-0">
-                        <span class="first-child">
-                            30/
-                        </span>
-                <span class="last-child">
-                            80
-                        </span>
-            </p>
-        </div>
-        <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
-            <p class="head-text sf-bold mb-3">
-                ВЫПОЛНЕННЫЕ ЗВОНКИ
-            </p>
-            <p class="work-check sf-bold mb-0">
-                        <span class="first-child">
-                            30/
-                        </span>
-                <span class="last-child">
-                            80
+                            2
                         </span>
             </p>
         </div>

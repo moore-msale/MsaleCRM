@@ -1,5 +1,5 @@
 <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative mainer"
-     style="text-transform: uppercase;">
+     style="text-transform: uppercase;" id="customer-{{$customer->id}}">
     {{--<div class="position-absolute bg-danger"--}}
          {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
     <div style="border-bottom:1px solid #DCDCDC;">
@@ -34,9 +34,9 @@
                 <form action="" class="text-right">
                                         <textarea placeholder="Введите причину удаления"
                                                   class="w-100 grey lighten-5 border-0 sf-light textarea-font-size"
-                                                  rows="4" name="" id="" style="outline: none;"></textarea>
-                    <a href="#collapsedone{{$customer->id}}" data-toggle="collapse"
-                       class="bg-secondary px-2 py-1 border-0 confirm-but text-white btn">
+                                                  rows="4" name="" id="details_delete_Customer" style="outline: none;"></textarea>
+                    <a href="#collapsedone{{$customer->id}}" data-toggle="collapse" data-id="{{$customer->id}}"
+                       class="bg-secondary px-2 py-1 border-0 confirm-but text-white btn deleteCustomer">
                         Удалить
                     </a>
                 </form>

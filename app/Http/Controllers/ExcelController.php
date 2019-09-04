@@ -20,23 +20,20 @@ class ExcelController extends Controller
         $excel = $request->excel;
         if ($excel) {
             $calls = Excel::toCollection(CallsImport::class, $excel)->collapse();
-            $calls2 = Call::all();
             if (count($calls)) {
-                foreach ($calls2 as $call2) {
                     foreach ($calls as $call) {
-                        if($call2->company == $call[1] || $call2->phone = $call[2] )
-                        {
-                            continue;
-                        }
-                        else {
+//                        if($call2->company == $call[1] || $call2->phone = $call[2] )
+//                        {
+//                            continue;
+//                        }
+//                        else {
                             $newCall = new Call();
                             $newCall->name = $call[0];
                             $newCall->phone = $call[2];
                             $newCall->company = $call[1];
                             $newCall->user_id = auth()->id();
                             $newCall->save();
-                        }
-                    }
+//                        }
                 }
                 Session::flash('excel_status', 'success');
             }
@@ -47,6 +44,7 @@ class ExcelController extends Controller
         if ($request->ajax()) {
             return response()->json([
                 'status' => 'success',
+                'data' => $calls,
                 'view' => view('tasks.list', [
                     'calls3' => Call::where('user_id', auth()->id())->get(),
                 ])->render(),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Call;
 use App\Customer;
 use App\Task;
 use Carbon\Carbon;
@@ -42,6 +43,8 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $call = Call::find($request->id);
+        $call->delete();
         $customer = New Customer();
         $customer->name = $request->name;
         $customer->company = $request->company;
@@ -128,6 +131,22 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
+    public function delete(Request $request)
+    {
+        $task = Task::find($request->id);
+        $customer = $task->taskable;
+        $customer->delete();
+        $customer->delete();
+
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success"
+            ]);
+        }
+
+        return back();
+    }
+
     public function destroy(Customer $customer)
     {
         //

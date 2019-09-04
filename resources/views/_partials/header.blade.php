@@ -139,7 +139,7 @@
 
 
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #250054;">
-    <a class="text-white logo sf-black pt-0" style="font-size: 25px; line-height: 105%; letter-spacing: 0.05em; text-transform: uppercase;" href="#">.Moore</a>
+    <a class="text-white logo sf-black pt-0" style="font-size: 25px; line-height: 105%; letter-spacing: 0.05em; text-transform: uppercase;" href="/home">.Moore</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

@@ -405,6 +405,7 @@
         $('.addClient').click(e => {
             e.preventDefault();
             let btn = $(e.currentTarget);
+            let id = $('#caller_id').val();
             let name = $('#clientname');
             let phone = $('#clientphone');
             let company = $('#clientcompany');
@@ -417,6 +418,7 @@
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
+                    "id": id,
                     "name": name.val(),
                     "phone": phone.val(),
                     "company": company.val(),
@@ -427,15 +429,50 @@
                 success: data => {
                     $('#add_customer').modal('hide');
                     console.log(data);
+                    $('#call-' + id).hide(200);
                     swal("Клиент добавлен!","Отчет был отправлен","success");
                     if(data.view){
-                    let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                        let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     }
-                    },
+                },
                 error: () => {
                     console.log(0);
                 }
             })
         })
     </script>
+    <script>
+        $('.deleteCustomer').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let details = $('#details_delete_Customer');
+            let id = btn.data('id');
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+            }
+            else {
+                $.ajax({
+                    url: 'customerdelete',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "details": details.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        $('#customer-' + id).hide(200);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                    }
+                })
+            }
+
+
+        })
+    </script>
+
 @endpush
