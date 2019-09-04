@@ -20,19 +20,31 @@
                         @csrf
                         <input type="hidden" value="potentials" name="type">
                         <div class="md-form">
-                            <input type="text" name="title" id="taskname" class="form-control">
-                            <label for="form1">Заголовок</label>
+                            <input type="text" name="name" id="clientname" class="form-control">
+                            <label for="clientname">ФИО</label>
                         </div>
                         <div class="md-form">
-                            <textarea id="taskdescription" name="description" class="form-control md-textarea" rows="3"></textarea>
-                            <label for="description">Описание</label>
+                            <input type="text" id="clientphone" name="phone" class="form-control">
+                            <label for="clientphone">Номер телефона</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" name="deadline_date" id="taskdate" class="form-control date-format">
-                            <label for="date">Выберите срок</label>
+                            <input type="text" id="clientcompany" name="company" class="form-control">
+                            <label for="clientcompany">Компания</label>
+                        </div>
+                        <div class="md-form">
+                            <input type="text" id="clientsocial" name="social" class="form-control">
+                            <label for="clientsocial">Сайт или соц.сети</label>
+                        </div>
+                        <div class="md-form">
+                            <input type="text" name="deadline_date" id="clientdate" class="form-control date-format">
+                            <label for="clientdate">Выберите срок</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="clientstatus">
+                            <label class="custom-control-label" for="clientstatus">Потенциальный клиент?</label>
                         </div>
                     </form>
-                    <a type="button" class="btn btn-success">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
+                    <a type="button" class="btn btn-success addClient">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
                 </div>
             </div>
 

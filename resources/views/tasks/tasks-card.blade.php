@@ -4,10 +4,10 @@
          {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
     <div>
         <p class="deal-text sf-bold mb-3">
-            <i class="fas fa-pencil-alt"></i><span class="pl-1">{{ $task->title ?? 'Обычное название' }}</span>
+            <i class="fas fa-pencil-alt"></i><span class="pl-1 task-title">{{ $task->title ?? 'Обычное название' }}</span>
         </p>
         <p class="deal-text sf-bold mb-3">
-            <i class="fas fa-clock"></i><span class="pl-1">{{ $task->deadline_date ?? 'Обычное название' }}</span>
+            <i class="fas fa-clock"></i><span class="pl-1 task-date">{{ $task->deadline_date ?? 'Обычное название' }}</span>
         </p>
     </div>
     <div class="toner" style="border-top:1px solid #DCDCDC;">
@@ -30,7 +30,7 @@
                 <form action="" class="text-right">
                                         <textarea placeholder="Введите детали"
                                                   class="w-100 grey lighten-5 border-0 sf-light textarea-font-size"
-                                                  rows="4" name="" id="details_done_Task" style="outline: none;"></textarea>
+                                                  rows="4" name="" id="details_done_Task-{{$task->id}}" style="outline: none;"></textarea>
                     <a href="#collapsedone{{$task->id}}" data-toggle="collapse" data-id="{{$task->id}}"
                        class="bg-success px-2 py-1 border-0 confirm-but text-white btn doneTask">
                         Завершить
@@ -42,7 +42,7 @@
                 <form action="" class="text-right">
                                         <textarea placeholder="Введите причину удаления"
                                                   class="w-100 grey lighten-5 border-0 sf-light textarea-font-size"
-                                                  rows="4" name="details" id="details_delete_Task" style="outline: none;"></textarea>
+                                                  rows="4" name="details" id="details_delete_Task-{{$task->id}}" style="outline: none;"></textarea>
                     <a href="#collapsedelete{{$task->id}}" data-toggle="collapse"  data-id="{{$task->id}}"
                        class="bg-secondary px-2 py-1 border-0 confirm-but text-white btn deleteTask">
                         Удалить
@@ -54,14 +54,19 @@
                 <form action="" class="text-right">
                                         <textarea placeholder="Введите причину изменения"
                                                   class="w-100 grey lighten-5 border-0 sf-light textarea-font-size"
-                                                  rows="4" name="" id="details_update_Task" style="outline: none;"></textarea>
+                                                  rows="4" name="" id="details_update_Task-{{$task->id}}" style="outline: none;"></textarea>
                     <div class="md-form">
-                        <input type="text" name="name" id="taskchangename"
+                        <input type="text" name="name" id="taskchangename-{{$task->id}}"
                                class="form-control sf-light textarea-font-size"
                                value="{{ $task->title }}">
                     </div>
                     <div class="md-form">
-                        <input placeholder="Выберите дату" type="text" name="date" id="taskchangedate"
+                        <input type="text" name="desc" id="taskchangedesc-{{$task->id}}"
+                               class="form-control sf-light textarea-font-size"
+                               value="{{ $task->description }}">
+                    </div>
+                    <div class="md-form">
+                        <input placeholder="Выберите дату" type="text" name="date" id="taskchangedate-{{$task->id}}"
                                class="form-control date" value="{{$task->deadline_date}}">
                     </div>
                     <a href="#collapseedit{{$task->id}}" data-toggle="collapse" data-id="{{$task->id}}"
@@ -72,7 +77,7 @@
             </div>
         </div>
         <div>
-            <p class="sf-light textarea-font-size mt-2 mb-0 content-text">
+            <p class="sf-light textarea-font-size mt-2 mb-0 content-text task-desc">
                 {{ $task->description ?? 'Обычное описание' }}
             </p>
         </div>

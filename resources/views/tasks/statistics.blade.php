@@ -11,11 +11,11 @@
                 ВЫПОЛНЕННЫЕ ЗВОНКИ
             </p>
             <p class="work-check sf-bold mb-0">
-                        <span class="first-child">
-                            0/
+                        <span class="first-child calls_score">
+                            {{$plan->calls_score}}
                         </span>
                 <span class="last-child">
-                            80
+                            /{{$plan->calls_goal}}
                         </span>
             </p>
         </div>
@@ -24,11 +24,11 @@
                 ВЫПОЛНЕННЫЕ ВСТРЕЧИ
             </p>
             <p class="work-check sf-bold mb-0">
-                        <span class="first-child">
-                            0/
+                        <span class="first-child meets_score">
+                            {{$plan->meets_score}}
                         </span>
                 <span class="last-child">
-                            2
+                            /{{$plan->meets_goal}}
                         </span>
             </p>
         </div>

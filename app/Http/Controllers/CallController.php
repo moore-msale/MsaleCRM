@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Call;
 use App\Cron\DeleteCalls;
 use App\Customer;
+use App\Plan;
 use App\Report;
 use App\Task;
 use Carbon\Carbon;
@@ -29,11 +30,13 @@ class CallController extends Controller
         $task->save();
         $customer->task()->save($task);
 
+
         $report = new Report([
             'user_id' => auth()->id(),
             'type' => 'call',
             'status' => true,
             'data' => $call,
+            'plan' => $plan
         ]);
         $report->save();
         $call->delete();
@@ -61,10 +64,14 @@ class CallController extends Controller
     {
         $call = Call::find($request->id);
         $call->delete();
-
+        $today = Carbon::now()->setTime('00', '00');
+        $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->where('status',null)->first();
+        $plan->calls_score = $plan->calls_score + 1;
+        $plan->save();
         if ($request->ajax()){
             return response()->json([
-                'status' => "success"
+                'status' => "success",
+                'data' => $plan
             ]);
         }
 

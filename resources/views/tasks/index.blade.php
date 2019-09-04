@@ -73,7 +73,7 @@
                 <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                     КЛИЕНТЫ
                 </p>
-                <a class="ml-auto" href="" data-toggle="modal" data-target="#ClientCreate">
+                <a class="ml-auto" href="" data-toggle="modal" data-target="#addPotencial">
                     <i class="fas fa-plus fa-xs ico-done"></i>
                 </a>
             </div>

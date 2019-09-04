@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\Meeting;
+use App\Plan;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -93,13 +94,17 @@ class MeetingController extends Controller
      */
     public function update(Request $request)
     {
-        @dd($request->date->format('Y-m-d H:i:s'));
-        $task = Task::find($request->id);
-        $task->deadline_date = $request->date->format('Y-m-d H:i:s');
+        $meeting = Meeting::find($request->id);
+        $task = $meeting->task;
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
+        $request->request->remove('date');
+        $request->merge(['date' => $deadline_date]);
+        $task->deadline_date = $request->date;
         $task->save();
         if ($request->ajax()){
             return response()->json([
-                'status' => "success"
+                'status' => "success",
+                'data' => $task
             ]);
         }
 
@@ -114,8 +119,9 @@ class MeetingController extends Controller
      */
     public function delete(Request $request)
     {
-        $task = Task::find($request->id);
-        $meet = $task->taskable;
+        $meet = Meeting::find($request->id);
+        $task = $meet->task;
+
         $meet->delete();
         $task->delete();
 
@@ -130,12 +136,19 @@ class MeetingController extends Controller
 
     public function done(Request $request)
     {
-        $task = Task::find($request->id);
+
+        $meet = Meeting::find($request->id);
+        $task = $meet->task;
         $task->status_id = 1;
         $task->save();
+        $today = Carbon::now()->setTime('00', '00');
+        $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->where('status',null)->first();
+        $plan->meets_score = $plan->meets_score + 1;
+        $plan->save();
         if ($request->ajax()){
             return response()->json([
-                'status' => "success"
+                'status' => "success",
+                'data' => $plan
             ]);
         }
 

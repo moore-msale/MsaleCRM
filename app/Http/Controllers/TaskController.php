@@ -89,11 +89,13 @@ class TaskController extends Controller
     {
         $task = Task::find($request->id);
         $task->title = $request->title;
+        $task->description = $request->desc;
         $task->deadline_date = $request->date;
         $task->save();
         if ($request->ajax()){
             return response()->json([
-                'status' => "success"
+                'status' => "success",
+                'data' => $task
             ]);
         }
 

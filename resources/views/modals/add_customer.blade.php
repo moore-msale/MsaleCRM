@@ -20,29 +20,29 @@
                         @csrf
                         <input type="hidden" value="potentials" name="type">
                         <div class="md-form">
-                            <input type="text" name="name" id="clientname" class="form-control">
-                            <label for="clientname">ФИО</label>
+                            <input type="text" name="name" id="client-name" class="form-control">
+                            <label for="client-name">ФИО</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="clientphone" name="phone" class="form-control">
-                            <label for="clientphone">Номер телефона</label>
+                            <input type="text" id="client-phone" name="phone" class="form-control">
+                            <label for="client-phone">Номер телефона</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="clientcompany" name="company" class="form-control">
-                            <label for="clientcompany">Компания</label>
+                            <input type="text" id="client-company" name="company" class="form-control">
+                            <label for="client-company">Компания</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="clientsocial" name="social" class="form-control">
-                            <label for="clientsocial">Сайт или соц.сети</label>
+                            <input type="text" id="client-social" name="social" class="form-control">
+                            <label for="client-social">Сайт или соц.сети</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" name="deadline_date" id="clientdate" class="form-control date-format">
-                            <label for="clientdate">Выберите срок</label>
+                            <input type="text" name="deadline_date" id="client-date" class="form-control date-format">
+                            <label for="client-date">Выберите срок</label>
                         </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="clientstatus">
-                            <label class="custom-control-label" for="clientstatus">Потенциальный клиент?</label>
-                        </div>
+                        {{--<div class="custom-control custom-checkbox">--}}
+                            {{--<input type="checkbox" class="custom-control-input" id="client-status">--}}
+                            {{--<label class="custom-control-label" for="client-status">Потенциальный клиент?</label>--}}
+                        {{--</div>--}}
                     </form>
                     <a type="button" class="btn btn-success addClient">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
                 </div>

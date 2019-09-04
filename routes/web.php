@@ -27,6 +27,7 @@ Route::resource('customer', 'CustomerController');
 Route::post('/customerdelete','CustomerController@delete')->name('customerdelete');
 Route::post('/customerdone','CustomerController@done')->name('customerdone');
 Route::post('/customerupdate','CustomerController@update')->name('customerupdate');
+Route::post('/customerchange','CustomerController@change')->name('customerchange');
 Route::post('/taskdelete','TaskController@delete')->name('taskdelete');
 Route::post('/taskdone','TaskController@done')->name('taskdone');
 Route::post('/taskupdate','TaskController@update')->name('taskupdate');
