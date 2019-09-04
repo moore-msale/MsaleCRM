@@ -5,11 +5,11 @@
     <div style="border-bottom:1px solid #DCDCDC;">
         <div class="row">
             <div class="col-lg-15 col-11 py-lg-0 py-3">
-        <p class="deal-text sf-bold mb-2">
-            <i class="far fa-user"></i><span class="pl-1">
-                {{ $call->name  ?? "No name" }}
-            </span>
-        </p>
+        {{--<p class="deal-text sf-bold mb-2">--}}
+            {{--<i class="far fa-user"></i><span class="pl-1">--}}
+                {{--{{ $call->name  ?? "No name" }}--}}
+            {{--</span>--}}
+        {{--</p>--}}
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-building"></i><span class="pl-1">
                 {{ $call->company ?? "No company" }}

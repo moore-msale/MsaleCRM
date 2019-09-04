@@ -28,9 +28,8 @@ class ExcelController extends Controller
 //                        }
 //                        else {
                             $newCall = new Call();
-                            $newCall->name = $call[0];
-                            $newCall->phone = $call[2];
-                            $newCall->company = $call[1];
+                            $newCall->phone = $call[1];
+                            $newCall->company = $call[0];
                             $newCall->user_id = auth()->id();
                             $newCall->save();
 //                        }
