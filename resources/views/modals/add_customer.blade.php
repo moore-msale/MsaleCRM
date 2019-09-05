@@ -35,10 +35,6 @@
                             <input type="text" id="client-social" name="social" class="form-control">
                             <label for="client-social">Сайт или соц.сети</label>
                         </div>
-                        <div class="md-form">
-                            <input type="text" name="deadline_date" id="client-date" class="form-control date-format">
-                            <label for="client-date">Выберите срок</label>
-                        </div>
                         {{--<div class="custom-control custom-checkbox">--}}
                             {{--<input type="checkbox" class="custom-control-input" id="client-status">--}}
                             {{--<label class="custom-control-label" for="client-status">Потенциальный клиент?</label>--}}

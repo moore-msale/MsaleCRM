@@ -20,31 +20,27 @@
                         @csrf
                         <input type="hidden" value="potentials" name="type">
                         <div class="md-form">
-                            <input type="text" name="name" id="clientname" class="form-control">
-                            <label for="clientname">ФИО</label>
+                            <input type="text" name="name" id="client_name1" class="form-control">
+                            <label for="client_name1">ФИО</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="clientphone" name="phone" class="form-control">
-                            <label for="clientphone">Номер телефона</label>
+                            <input type="text" id="client_phone1" name="phone" class="form-control">
+                            <label for="client_phone1">Номер телефона</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="clientcompany" name="company" class="form-control">
-                            <label for="clientcompany">Компания</label>
+                            <input type="text" id="client_company1" name="company" class="form-control">
+                            <label for="client_company1">Компания</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" id="clientsocial" name="social" class="form-control">
-                            <label for="clientsocial">Сайт или соц.сети</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="deadline_date" id="clientdate" class="form-control date-format">
-                            <label for="clientdate">Выберите срок</label>
+                            <input type="text" id="client_social1" name="social" class="form-control">
+                            <label for="client_social1">Сайт или соц.сети</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="clientstatus">
-                            <label class="custom-control-label" for="clientstatus">Потенциальный клиент?</label>
+                            <input type="checkbox" class="custom-control-input" id="client_status1">
+                            <label class="custom-control-label" for="client_status1">Потенциальный клиент?</label>
                         </div>
                     </form>
-                    <a type="button" class="btn btn-success addClient">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
+                    <a type="button" class="btn btn-success addClient1">Добавить<i class="fas fa-check ml-1 text-white"></i></a>
                 </div>
             </div>
 

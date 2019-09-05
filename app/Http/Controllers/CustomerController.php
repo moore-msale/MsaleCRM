@@ -44,7 +44,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->id){
+        if(isset($request->id)){
         $call = Call::find($request->id);
         $call->delete();
             $today = Carbon::now()->setTime('00', '00');
@@ -58,19 +58,22 @@ class CustomerController extends Controller
         $customer->company = $request->company;
         $customer->contacts = $request->phone;
         $customer->socials = $request->social;
+
         $customer->save();
 
         $task = new Task();
         $task->title = $customer->name ? $customer->company : 'Empty';
-        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
-        $request->request->remove('date');
-        $request->merge(['date' => $deadline_date]);
-        $task->deadline_date = $request->date;
         $task->user_id = auth()->check() ? auth()->id() : 0;
-
+        if (!(isset($request->id)))
+        {
+            if($request->status == "true")
+            {
+                $task->status_id = 1;
+            }
+        }
         $task->save();
         $customer->task()->save($task);
-        if($request->id)
+        if(isset($request->id))
         {
             if ($request->ajax()){
                 return response()->json([
@@ -82,12 +85,28 @@ class CustomerController extends Controller
         }
         else
         {
-            if ($request->ajax()){
-                return response()->json([
-                    'status' => "success",
-                    'data' => $task
-                ], 200);
+            if($task->status_id == 1)
+            {
+                if ($request->ajax()){
+                    return response()->json([
+                        'status' => "success",
+                        'data' => $task,
+                        'view' => view('tasks.potentials-card', [
+                            'customer' => $task,
+                        ])->render(),
+                    ], 200);
+                }
             }
+            else
+            {
+                if ($request->ajax()){
+                    return response()->json([
+                        'status' => "success",
+                        'data' => $task,
+                    ], 200);
+                }
+            }
+
         }
 
 
@@ -131,6 +150,7 @@ class CustomerController extends Controller
         $customer->name = $request->name;
         $customer->company = $request->company;
         $customer->contacts = $request->phone;
+        $customer->socials = $request->social;
         $customer->save();
         $task->save();
         if(isset($customer->meeting->id)) {

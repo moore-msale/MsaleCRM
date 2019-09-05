@@ -36,9 +36,9 @@ class HomeController extends Controller
             if($plan == null)
             {
                 $plan = New Plan();
-                $plan->calls_goal = 80;
+                $plan->calls_goal = 100;
                 $plan->calls_score = 0;
-                $plan->meets_goal = 2;
+                $plan->meets_goal = 3;
                 $plan->meets_score = 0;
                 $plan->user_id = auth()->id();
                 $plan->save();

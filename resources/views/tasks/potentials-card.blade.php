@@ -5,12 +5,12 @@
     <div style="border-bottom:1px solid #DCDCDC;">
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-user"></i><span class="pl-1 cust-name">
-                {{ $customer->name  ?? "No name" }}
+                {{ $customer->taskable->name  ?? "No name" }}
             </span>
         </p>
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-building"></i><span class="pl-1 cust-company">
-                {{ $customer->company ?? "No company" }}
+                {{ $customer->taskable->company ?? "No company" }}
             </span>
         </p>
         <p class="deal-text sf-bold mb-2">

@@ -96,12 +96,14 @@
                 },
                 success: data => {
                     $('#TaskCreate').modal('hide');
+                    swal("Задача добавлена!","Отчет был отправлен","success");
                     if (data.inWeek) {
                         let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     }
                 },
                 error: () => {
                     console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                 }
             })
         })
@@ -128,10 +130,12 @@
                 success: data => {
                     $('#MeetCreate').modal('hide');
                     console.log(data);
+                    swal("Встреча добавлена!","Отчет был отправлен","success");
                     let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                 },
                 error: () => {
                     console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                 }
             })
         })
@@ -239,6 +243,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -267,6 +272,7 @@
                 },
                 error: () => {
                     console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                 }
             })
 
@@ -301,6 +307,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -344,6 +351,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -378,6 +386,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -411,6 +420,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -446,6 +456,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -460,7 +471,6 @@
             let phone = $('#client-phone');
             let company = $('#client-company');
             let social = $('#client-social');
-            let date = $('#client-date');
 
             $.ajax({
                 url: '{{ route('customer.store') }}',
@@ -472,7 +482,6 @@
                     "phone": phone.val(),
                     "company": company.val(),
                     "social": social.val(),
-                    "date": date.val(),
                 },
                 success: data => {
                     $('#add_customer').modal('hide');
@@ -484,6 +493,43 @@
                 },
                 error: () => {
                     console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+        })
+    </script>
+    <script>
+        $('.addClient1').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let name = $('#client_name1');
+            let phone = $('#client_phone1');
+            let company = $('#client_company1');
+            let social = $('#client_social1');
+            let status = $('#client_status1').is(':checked') ? true : false;
+
+            $.ajax({
+                url: '{{ route('customer.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "name": name.val(),
+                    "phone": phone.val(),
+                    "company": company.val(),
+                    "social": social.val(),
+                    "status": status
+                },
+                success: data => {
+                    $('#ClientCreate').modal('hide');
+                    console.log(data);
+                    swal("Клиент добавлен!","Отчет был отправлен","success");
+                    if(data.view){
+                        let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    }
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                 }
             })
         })
@@ -516,6 +562,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -532,6 +579,7 @@
             let name = $('#customerchangename-' + id);
             let company = $('#customerchangecompany-' + id);
             let phone = $('#customerchangephone-' + id);
+            let social = $('#customerchangesocial-' + id);
 
 
             console.log(id);
@@ -549,6 +597,7 @@
                         "name": name.val(),
                         "company": company.val(),
                         "phone": phone.val(),
+                        "social": social.val(),
                         "id": id,
                     },
                     success: data => {
@@ -556,6 +605,7 @@
                         $('#customer-' + id).find('.cust-name').html(data.data.name);
                         $('#customer-' + id).find('.cust-company').html(data.data.company);
                         $('#customer-' + id).find('.cust-phone').html(data.data.contacts);
+                        $('#customer-' + id).find('.cust-social').html(data.data.socials);
                         $('#meet-' + data.id).find('.meet-name').html(data.data.name);
                         $('#meet-' + data.id).find('.meet-company').html(data.data.company);
 
@@ -563,6 +613,7 @@
                     },
                     error: () => {
                         console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
             }
@@ -595,6 +646,7 @@
                 },
                 error: () => {
                     console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                 }
             })
         })

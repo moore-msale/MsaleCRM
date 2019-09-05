@@ -149,6 +149,9 @@
             <li class="nav-item active">
                 <a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>
+            </li>
             <li class="nav-item ml-auto">
                 <span class="nav-link sf-medium text-white">{{ auth()->user()->name }}</span>
             </li>

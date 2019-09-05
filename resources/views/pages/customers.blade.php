@@ -31,21 +31,24 @@
                                 @endif
                                 {{--<div class="position-absolute bg-danger"--}}
                                 {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
-                                <div style="border-bottom:1px solid #DCDCDC;">
-                                    <p class="deal-text sf-bold mb-2">
-                                        <i class="far fa-user"></i><span class="pl-1 cust-name">
-                {{ $customer->taskable->name  ?? "No name" }}
-            </span>
-                                    </p>
-                                    <p class="deal-text sf-bold mb-2">
-                                        <i class="far fa-building"></i><span class="pl-1 cust-company">
-                {{ $customer->taskable->company ?? "No company" }}
-            </span>
-                                    </p>
-                                    <span class="deal-text sf-bold mb-3">
-            <i class="fas fa-phone"></i><span class="pl-1 cust-phone">{{ $customer->taskable->contacts ?? "No phone" }}</span>
-        </span>
-                                </div>
+                                    <div style="border-bottom:1px solid #DCDCDC;">
+                                        <p class="deal-text sf-bold mb-2">
+                                            <i class="far fa-user"></i><span class="pl-1 cust-name">
+                                                     {{ $customer->taskable->name  ?? "No name" }}
+                                                     </span>
+                                        </p>
+                                        <p class="deal-text sf-bold mb-2">
+                                            <i class="far fa-building"></i><span class="pl-1 cust-company">
+                                                        {{ $customer->taskable->company ?? "No company" }}
+                                            </span>
+                                        </p>
+                                        <p class="deal-text sf-bold mb-2">
+                                                 <i class="fas fa-phone"></i><span class="pl-1 cust-phone">{{ $customer->taskable->contacts ?? "No phone" }}</span>
+                                            </p>
+                                        <p class="deal-text sf-bold mb-2">
+                                                    <i class="fab fa-twitter"></i><span class="pl-1 cust-social">{{ $customer->taskable->socials ?? "No socials" }}</span>
+                                        </p>
+                                    </div>
                                 <div class="toner">
                                     <div class="icon-panel mt-1 accordion md-accordion accordion-1" id="accordioncustomer{{$customer->id}}"
                                          role="tablist">
@@ -81,19 +84,25 @@
                                                     <input type="text" id="customerchangename-{{$customer->taskable->id}}" name="name"
                                                            class="form-control sf-light textarea-font-size"
                                                            value="{{$customer->taskable->name}}">
-                                                    <label for="customerchangename">ФИО</label>
+                                                    <label for="customerchangename-{{$customer->taskable->id}}">ФИО</label>
                                                 </div>
                                                 <div class="md-form">
                                                     <input type="text" id="customerchangecompany-{{$customer->taskable->id}}" name="company"
                                                            class="form-control sf-light textarea-font-size"
                                                            value="{{$customer->taskable->company}}">
-                                                    <label for="customerchangecompany">Компания</label>
+                                                    <label for="customerchangecompany-{{$customer->taskable->id}}">Компания</label>
                                                 </div>
                                                 <div class="md-form">
                                                     <input type="text" id="customerchangephone-{{$customer->taskable->id}}" name="phone"
                                                            class="form-control sf-light textarea-font-size"
                                                            value="{{$customer->taskable->contacts}}">
-                                                    <label for="customerchangephone">Номер телефона</label>
+                                                    <label for="customerchangephone-{{$customer->taskable->id}}">Номер телефона</label>
+                                                </div>
+                                                <div class="md-form">
+                                                    <input type="text" id="customerchangesocial-{{$customer->taskable->id}}" name="social"
+                                                           class="form-control sf-light textarea-font-size"
+                                                           value="{{$customer->taskable->contacts}}">
+                                                    <label for="customerchangesocial-{{$customer->taskable->id}}">Соц. сети или сайт</label>
                                                 </div>
                                                 <a href="#collapsedelete{{$customer->id}}" data-toggle="collapse" data-id="{{$customer->taskable->id}}"
                                                    class="bg-warning px-2 py-1 border-0 confirm-but text-white btn editCustomer">
