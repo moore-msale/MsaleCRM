@@ -21,7 +21,7 @@
                         <input type="hidden" value="meetings" name="type">
                         <div class="md-form">
                             <select name="name" id="potencialname" class="browser-default custom-select">
-                                <option value="{{ null }}" disabled>Клиент</option>
+                                <option value="{{ null }}">Выберите клиента...</option>
                                 @foreach(\App\Customer::all() as $customer)
                                     @if($customer->task->user_id == auth()->id())
                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
