@@ -32,7 +32,8 @@ class HomeController extends Controller
     {
 
         $today = Carbon::now()->setTime('00', '00');
-        $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->where('status',null)->first();
+        $endday = Carbon::now()->setTime('18','00','00');
+        $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->first();
             if($plan == null)
             {
                 $plan = New Plan();
@@ -43,22 +44,30 @@ class HomeController extends Controller
                 $plan->user_id = auth()->id();
                 $plan->save();
             }
-
             if($plan->calls_score >= 100 && $plan->meets_score >= 0 && $plan->status != 1)
             {
                 $plan->status = 1;
+                $plan->save();
             }
             elseif($plan->calls_score >= 66 && $plan->meets_score >= 1 && $plan->status != 1)
             {
                 $plan->status = 1;
+                $plan->save();
             }
             elseif($plan->calls_score >= 33 && $plan->meets_score >= 2 && $plan->status != 1)
             {
                 $plan->status = 1;
+                $plan->save();
             }
             elseif($plan->calls_score >= 0 && $plan->meets_score >= 3 && $plan->status != 1)
             {
                 $plan->status = 1;
+                $plan->save();
+            }
+            elseif($endday <= Carbon::now() && $plan->status != 1)
+            {
+                $plan->status = 2;
+                $plan->save();
             }
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)

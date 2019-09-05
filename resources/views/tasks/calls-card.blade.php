@@ -10,7 +10,7 @@
                 {{ $call->company ?? "No company" }}
             </span>
         </p>
-        <a href="tel:{{ $call->phone }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data class="deal-text call-btn sf-bold mb-3">
+        <a href="tel:{{ $call->phone }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" class="deal-text call-btn sf-bold mb-3">
             <i class="fas fa-phone"></i><span class="pl-1">{{ $call->phone ?? "No phone" }}</span>
         </a>
             </div>

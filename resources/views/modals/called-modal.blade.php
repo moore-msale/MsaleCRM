@@ -20,6 +20,8 @@
                         <div class="row">
                             <div class="col-7 px-0">
                                     <input type="hidden" id="caller_id">
+                                    <input type="hidden" id="caller_company">
+                                    <input type="hidden" id="caller_phone">
                                 <a type="button" class="btn btn-primary call_add">Добавить в клиенты <i class="fas fa-check ml-1 text-white"></i></a>
                             </div>
                             <div class="col-1 d-lg-block d-none"></div>

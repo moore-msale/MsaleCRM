@@ -85,8 +85,12 @@ $agent = New \Jenssegers\Agent\Agent();
                     e.preventDefault();
                     let btn = $(e.currentTarget);
                     let id = btn.data('id');
+                    let company = btn.data('parent');
+                    let phone = btn.data('parent2');
                     $('#calledModal').modal('show');
                     $('#caller_id').val(id);
+                    $('#caller_company').val(company);
+                    $('#caller_phone').val(phone);
                     let href = btn.attr('href');
                     window.location.href = href;
                 });
@@ -97,6 +101,7 @@ $agent = New \Jenssegers\Agent\Agent();
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = $('#caller_id').val();
+                $('#client-company').cal() = 
                 $('#calledModal').modal('hide');
                 $('#add_customer').modal('show');
             })
