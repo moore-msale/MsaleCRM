@@ -13,7 +13,7 @@
     ?>
 
     <div class="container-fluid">
-        <div class="row" style="padding-top: 2em;">
+        <div class="row pt-lg-4 pt-0">
             @if($agent->isPhone())
                 @include('tasks.index', ['calls2' => $calls])
                 @else
@@ -28,7 +28,7 @@
     @if($agent->isPhone())
         @include('modals.called-modal')
         @include('modals.add_customer')
-
+        @include('modals.add_1_call')
         @else
         @include('modals.create_task')
         @include('modals.create_call')

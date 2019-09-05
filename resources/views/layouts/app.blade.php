@@ -202,6 +202,40 @@ $agent = New \Jenssegers\Agent\Agent();
                 })
             })
         </script>
+        <script>
+            $('.Call_1_add').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let company = $('#call_company');
+                let phone = $('#call_number');
+
+                var formData = new FormData();
+                formData.append('_token', "{{ csrf_token() }}");
+                $.ajax({
+                    url: '{{ route('call_1_add') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "company": company.val(),
+                        "phone": phone.val(),
+                    },
+                    success: data => {
+                        $('#Call_1_add').modal('hide');
+                        console.log(data);
+                        swal("Номер добавлен!","Отчет был отправлен","success");
+                        let result = $('#calls-scroll').prepend(data.view).show('slide', {direction: 'left'}, 400);
+                        result.find('.call-btn').each((e, i) => {
+                            registerCallBtn($(i));
+                        });
+                    },
+                    error: () => {
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                        console.log(0);
+                    }
+                })
+            });
+            registerCallBtn($('.call-btn'));
+        </script>
         @else
         <script>
             $('.addTask').click(e => {

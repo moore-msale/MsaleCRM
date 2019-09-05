@@ -32,6 +32,11 @@
                         </span>
             </p>
         </div>
+        @if($plan->status == 1)
+            <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
+                <p class="mb-4 mt-4 first-child">План на день выполнен!</p>
+            </div>
+        @endif
 
     </div>
 </div>

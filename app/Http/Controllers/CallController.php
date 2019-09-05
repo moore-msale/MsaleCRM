@@ -10,6 +10,7 @@ use App\Report;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\New_;
 
 class CallController extends Controller
 {
@@ -76,5 +77,24 @@ class CallController extends Controller
         }
 
         return back();
+    }
+
+    public function add_1_call(Request $request)
+    {
+        $call = new Call();
+        $call->company = $request->company;
+        $call->phone = $request->phone;
+        $call->user_id = auth()->check() ? auth()->id() : 0;
+        $call->save();
+
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success",
+                'data' => $call,
+                'view' => view('tasks.calls-card', [
+                    'call' => $call,
+                ])->render(),
+            ], 200);
+        }
     }
 }

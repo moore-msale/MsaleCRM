@@ -23,6 +23,7 @@ Route::post('/calldelete','CallController@delete')->name('calldelete');
 
 
 Route::resource('task', 'TaskController');
+Route::post('add_1_call','CallController@add_1_call')->name('call_1_add');
 Route::resource('customer', 'CustomerController');
 Route::post('/customerdelete','CustomerController@delete')->name('customerdelete');
 Route::post('/customerdone','CustomerController@done')->name('customerdone');

@@ -1,15 +1,10 @@
-<div class="mt-3 mx-lg-3 mx-0 px-3 py-lg-3 py-0 work-desk position-relative mainer"
+<div class="mt-lg-3 mt-1 mx-lg-3 mx-0 px-3 py-lg-3 py-0 work-desk position-relative mainer"
      style="text-transform: uppercase;" id="call-{{ $call->id }}">
     {{--<div class="position-absolute bg-danger"--}}
          {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
     <div style="border-bottom:1px solid #DCDCDC;">
         <div class="row">
-            <div class="col-lg-15 col-11 py-lg-0 py-3">
-        {{--<p class="deal-text sf-bold mb-2">--}}
-            {{--<i class="far fa-user"></i><span class="pl-1">--}}
-                {{--{{ $call->name  ?? "No name" }}--}}
-            {{--</span>--}}
-        {{--</p>--}}
+            <div class="col-lg-15 col-11 py-lg-0 py-lg-3 py-1">
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-building"></i><span class="pl-1">
                 {{ $call->company ?? "No company" }}

@@ -31,9 +31,16 @@
                 <p class="text-dark sf-bold mb-0" style="font-size: 11px;">
                     Звонки
                 </p>
-                <a class="ml-auto" href="" data-toggle="modal" data-target="#CallCreate">
-                    <i class="fas fa-plus fa-xs ico-update"></i>
-                </a>
+                @if($agent->isPhone())
+                    <a class="ml-auto" href="" data-toggle="modal" data-target="#Call_1_add">
+                        <i class="fas fa-plus fa-xl ico-update"></i>
+                    </a>
+                    @else
+                    <a class="ml-auto" href="" data-toggle="modal" data-target="#CallCreate">
+                        <i class="fas fa-plus fa-xs ico-update"></i>
+                    </a>
+                    @endif
+
             </div>
             <div class="blog-scroll" id="calls-scroll">
                 @include('tasks.list', ['calls3' => $calls2])

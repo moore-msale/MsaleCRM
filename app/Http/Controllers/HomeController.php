@@ -43,6 +43,23 @@ class HomeController extends Controller
                 $plan->user_id = auth()->id();
                 $plan->save();
             }
+
+            if($plan->calls_score >= 100 && $plan->meets_score >= 0 && $plan->status != 1)
+            {
+                $plan->status = 1;
+            }
+            elseif($plan->calls_score >= 66 && $plan->meets_score >= 1 && $plan->status != 1)
+            {
+                $plan->status = 1;
+            }
+            elseif($plan->calls_score >= 33 && $plan->meets_score >= 2 && $plan->status != 1)
+            {
+                $plan->status = 1;
+            }
+            elseif($plan->calls_score >= 0 && $plan->meets_score >= 3 && $plan->status != 1)
+            {
+                $plan->status = 1;
+            }
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)
             ->where('deadline_date', '<=', $week)->where('status_id','!=','1')->get();
@@ -57,7 +74,7 @@ class HomeController extends Controller
             'App\Meeting'
         )->get();
 
-        $calls = Call::where('user_id', auth()->id())->get();
+        $calls = Call::where('user_id', auth()->id())->get()->reverse();
         return view('home',[
             'plan' => $plan,
             'tasks' => $tasks,
