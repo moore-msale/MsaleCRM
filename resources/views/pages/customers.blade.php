@@ -8,6 +8,10 @@
     </style>
 @endpush
 @section('content')
+    <?php
+    $agent = New \Jenssegers\Agent\Agent();
+    ?>
+
     <div class="container-fluid h-100">
         <div class="row h-100" style="padding-top: 2em;">
             <div class="px-0 h-auto col-lg-15 col-15">
@@ -49,6 +53,7 @@
                                                     <i class="fab fa-twitter"></i><span class="pl-1 cust-social">{{ $customer->taskable->socials ?? "No socials" }}</span>
                                         </p>
                                     </div>
+                                    @if(!$agent->isPhone())
                                 <div class="toner">
                                     <div class="icon-panel mt-1 accordion md-accordion accordion-1" id="accordioncustomer{{$customer->id}}"
                                          role="tablist">
@@ -112,6 +117,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                        @endif
                             </div>
                     </div>
                     @endforeach
