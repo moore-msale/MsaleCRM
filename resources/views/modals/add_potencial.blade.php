@@ -23,7 +23,9 @@
                             <select name="name" id="potencialname" class="browser-default custom-select">
                                 <option value="{{ null }}" disabled>Клиент</option>
                                 @foreach(\App\Customer::all() as $customer)
+                                    @if($customer->task->user_id == auth()->id())
                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
