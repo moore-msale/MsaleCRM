@@ -10,7 +10,7 @@
 @section('content')
     <div class="container-fluid h-100">
         <div class="row h-100" style="padding-top: 2em;">
-            <div class="px-0 h-auto col-lg-15 col-15 d-lg-block d-none">
+            <div class="px-0 h-auto col-lg-15 col-15">
                 <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn light-green accent-4">
                     <p class="text-white sf-bold mb-0">
                         ВСЕ КЛИЕНТЫ
@@ -22,7 +22,7 @@
                     <div class="row">
 
                     @foreach($customers as $customer)
-                            <div class="col-3">
+                            <div class="col-lg-3 col-15">
                             <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative mainer"
                                  style="text-transform: uppercase;" id="customer-{{$customer->taskable->id}}">
                                 @if($customer->status_id == 1)
