@@ -22,9 +22,15 @@
 @if(isset($calls2))
         <div class="px-0 h-auto col-lg-3 col-15">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn indigo accent-3">
-                <p class="text-white sf-bold mb-0">
+                <a href="/home" class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ЗВОНКИ
-                </p>
+                </a>
+                <a href="/waitCall" class="text-white sf-bold mb-0 mx-auto d-md-none d-block">
+                    На перезвон
+                </a>
+                <a href="/notCall" class="text-white sf-bold mb-0 ml-auto d-md-none d-block">
+                    Не ответившие
+                </a>
             </div>
             <div class="mt-3 mx-lg-3 mx-0 d-flex align-items-center py-2 px-3"
                  style="border-left:2px solid #3d5afe; box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.15);">

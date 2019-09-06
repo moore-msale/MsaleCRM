@@ -245,6 +245,62 @@ $agent = New \Jenssegers\Agent\Agent();
             });
             registerCallBtn($('.call-btn'));
         </script>
+        <script>
+            $('.waitCall').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let id = $('#caller_id').val();
+                console.log(id);
+                $.ajax({
+                    url: 'callw',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                    },
+                    success: data => {
+                        swal("Звонок добавлен в список на перезвон!","Отчет был отправлен","success");
+                        $('#calledModal').modal('hide');
+                        $('#call-' + id).hide(400);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+
+
+            })
+        </script>
+        <script>
+            $('.notCall').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let id = $('#caller_id').val();
+                console.log(id);
+                $.ajax({
+                    url: 'calln',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                    },
+                    success: data => {
+                        swal("Звонок добавлен в список не ответивших!","Отчет был отправлен","success");
+                        $('#calledModal').modal('hide');
+                        $('#call-' + id).hide(400);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+
+
+            })
+        </script>
         @else
         <script>
             $('.addTask').click(e => {
@@ -830,6 +886,65 @@ $agent = New \Jenssegers\Agent\Agent();
                         swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
+            })
+        </script>
+        <script>
+            $('.waitCall').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let id = $('#caller_id').val();
+                console.log(id);
+                $.ajax({
+                    url: 'callw',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                    },
+                    success: data => {
+                        swal("Звонок добавлен в список на перезвон!","Отчет был отправлен","success");
+                        $('#calledModal').modal('hide');
+                        $('#call-' + id).hide(400);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+
+
+            })
+        </script>
+        <script>
+            $('.notCall').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let id = $('#caller_id').val();
+                console.log(id);
+                $.ajax({
+                    url: 'calln',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                    },
+                    success: data => {
+                        swal("Звонок добавлен в список не ответивших!","Отчет был отправлен","success");
+                        $('#calledModal').modal('hide');
+                        $('#call-' + id).hide(400);
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    },
+                    check: data => {
+                        swal("Звонок не был перемещен!","Лимит на перенос в список 'Не ответившие' превышен 20 звонков.");
+                    }
+                })
+
+
             })
         </script>
     @endif

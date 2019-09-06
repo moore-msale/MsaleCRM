@@ -22,11 +22,18 @@
                                     <input type="hidden" id="caller_id">
                                     <input type="hidden" id="caller_company">
                                     <input type="hidden" id="caller_phone">
-                                <a type="button" class="btn btn-primary call_add">Добавить в клиенты <i class="fas fa-check ml-1 text-white"></i></a>
+                                <a type="button" class="btn btn-primary call_add py-2 w-100">Добавить в клиенты <i class="fas fa-check ml-1 text-white"></i></a>
+                            </div>
+                                <div class="col-1 d-lg-block d-none"></div>
+                            <div class="col-7 px-0">
+                                <a type="button" class="btn btn-danger deleteCall py-2 w-100">Удалить из списка <i class="fas fa-times ml-1 text-white"></i></a>
+                            </div>
+                            <div class="col-7 px-0">
+                                <a type="button" class="btn btn-success waitCall py-2 w-100"> На перезвон <i class="fas fa-check ml-1 text-white"></i></a>
                             </div>
                             <div class="col-1 d-lg-block d-none"></div>
                             <div class="col-7 px-0">
-                                <a type="button" class="btn btn-danger deleteCall">Удалить из списка <i class="fas fa-times ml-1 text-white"></i></a>
+                                <a type="button" class="btn btn-warning notCall py-2 w-100"> Не ответили<i class="fas fa-times ml-1 text-white"></i></a>
                             </div>
                         </div>
                     </div>

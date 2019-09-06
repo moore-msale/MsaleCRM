@@ -96,5 +96,54 @@ class CallController extends Controller
                 ])->render(),
             ], 200);
         }
+
+        return back();
     }
+
+    public function waitCall(Request $request)
+    {
+        $call = Call::find($request->id);
+        $call->active = 1;
+        $call->save();
+
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success",
+                'data' => $call,
+            ], 200);
+        }
+
+        return back();
+    }
+
+    public function notCall(Request $request)
+    {
+        $calls = Call::where('active',2);
+        $call = Call::find($request->id);
+
+        if($calls->count() >= 20)
+        {
+            if ($request->ajax()){
+                return response()->json([
+                    'status' => "check",
+                    'data' => $call,
+                ], 200);
+            }
+        }
+        if($calls->count() < 20)
+        {
+        $call->active = 2;
+        $call->save();
+
+            if ($request->ajax()){
+                return response()->json([
+                    'status' => "success",
+                    'data' => $call,
+                ], 200);
+            }
+        }
+
+        return back();
+    }
+
 }

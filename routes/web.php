@@ -41,3 +41,14 @@ Route::get('/excel/create', 'ExcelController@create')->name('excel.create');
 Route::post('/excel', 'ExcelController@import')->name('excel.import');
 Route::get('/delete/calls', 'CallController@cronDelete');
 Route::get('/mail', 'ReportController@mail');
+Route::post('/callw','CallController@waitCall')->name('callw');
+Route::post('/calln','CallController@notCall')->name('calln');
+
+
+
+Route::get('/waitCall', function () {
+    return view('pages.waitCall',['calls' => \App\Call::where('user_id', auth()->id())->where('active',1)->get()->reverse()]);
+});
+Route::get('/notCall', function () {
+    return view('pages.notCall', ['calls' => \App\Call::where('user_id', auth()->id())->where('active',2)->get()->reverse()]);
+});
