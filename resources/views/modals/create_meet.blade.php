@@ -35,7 +35,7 @@
                         </div>
                         <div class="md-form">
                             <input type="text" name="deadline_date" id="meetingdate" class="form-control date-format">
-                            <label for="date">Выберите срок</label>
+                            <label for="meetingdate">Выберите срок</label>
                         </div>
                     </form>
                     <a type="button" class="btn btn-warning addMeeting">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
