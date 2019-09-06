@@ -32,6 +32,10 @@
                             <label for="client-company"></label>
                         </div>
                         <div class="md-form">
+                            <textarea id="client-desc" name="description" class="form-control md-textarea" rows="3"></textarea>
+                            <label for="client-desc">Описание</label>
+                        </div>
+                        <div class="md-form">
                             <input type="text" id="client-social" name="social" class="form-control">
                             <label for="client-social">Сайт или соц.сети</label>
                         </div>

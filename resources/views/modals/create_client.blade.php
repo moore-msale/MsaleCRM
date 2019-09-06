@@ -35,6 +35,10 @@
                             <input type="text" id="client_social1" name="social" class="form-control">
                             <label for="client_social1">Сайт или соц.сети</label>
                         </div>
+                        <div class="md-form">
+                            <textarea id="client_desc1" name="description" class="form-control md-textarea" rows="3"></textarea>
+                            <label for="client_desc1">Описание</label>
+                        </div>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="client_status1">
                             <label class="custom-control-label" for="client_status1">Потенциальный клиент?</label>

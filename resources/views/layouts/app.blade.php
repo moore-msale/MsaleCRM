@@ -632,6 +632,7 @@ $agent = New \Jenssegers\Agent\Agent();
                 let id = $('#caller_id').val();
                 let name = $('#client-name');
                 let phone = $('#client-phone');
+                let desc = $('#client-desc');
                 let company = $('#client-company');
                 let social = $('#client-social');
 
@@ -644,6 +645,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         "name": name.val(),
                         "phone": phone.val(),
                         "company": company.val(),
+                        "desc": desc.val(),
                         "social": social.val(),
                     },
                     success: data => {
@@ -655,6 +657,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         swal("Клиент добавлен!","Отчет был отправлен","success");
                         $('#client-name').val('');
                         $('#client-phone').val('');
+                        $('#client-desc').val('');
                         $('#client-company').val('');
                         $('#client-social').val('');
                     },
@@ -672,6 +675,7 @@ $agent = New \Jenssegers\Agent\Agent();
                 let name = $('#client_name1');
                 let phone = $('#client_phone1');
                 let company = $('#client_company1');
+                let desc = $('#client_desc1');
                 let social = $('#client_social1');
                 let status = $('#client_status1').is(':checked') ? true : false;
 
@@ -684,6 +688,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         "phone": phone.val(),
                         "company": company.val(),
                         "social": social.val(),
+                        "desc": desc.val(),
                         "status": status
                     },
                     success: data => {
@@ -693,6 +698,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         $('#client_name1').val('');
                         $('#client_phone1').val('');
                         $('#client_company1').val('');
+                        $('#client_desc1').val('');
                         $('#client_social1').val('');
 
                         if(data.view){
@@ -780,7 +786,10 @@ $agent = New \Jenssegers\Agent\Agent();
                             $('#customer-' + id).find('.cust-social').html(data.data.socials);
                             $('#meet-' + data.id).find('.meet-name').html(data.data.name);
                             $('#meet-' + data.id).find('.meet-company').html(data.data.company);
-
+                            $('#details_update_Customer-' + id).val(''),
+                            $('#customerchangename-' + id).val(''),
+                            $('#customerchangecompany-' + id).val(),
+                            $('#customerchangephone-' + id).val(),
                             console.log(data);
                         },
                         error: () => {

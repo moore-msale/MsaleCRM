@@ -64,6 +64,7 @@ class CustomerController extends Controller
         $task = new Task();
         $task->title = $customer->name ? $customer->company : 'Empty';
         $task->user_id = auth()->check() ? auth()->id() : 0;
+        $task->description = $request->desc;
         if (!(isset($request->id)))
         {
             if($request->status == "true")
