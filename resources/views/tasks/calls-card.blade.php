@@ -15,7 +15,7 @@
         </a>
             </div>
             <div class="col-lg-0 col-4 d-lg-none d-flex bg-success align-items-center" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px; ">
-                <a href="tel:{{ $call->phone }}" data-id="{{ $call->id }}" class="call-btn  mx-auto">
+                <a href="tel:{{ $call->phone }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" class="call-btn  mx-auto">
                 <i class="fas fa-phone fa-2x text-white"></i>
                 </a>
             </div>

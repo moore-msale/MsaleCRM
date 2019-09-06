@@ -25,11 +25,11 @@
                         </div>
                         <div class="md-form">
                             <input type="text" id="client-phone" name="phone" class="form-control">
-                            <label for="client-phone">Номер телефона</label>
+                            <label for="client-phone"></label>
                         </div>
                         <div class="md-form">
                             <input type="text" id="client-company" name="company" class="form-control">
-                            <label for="client-company">Компания</label>
+                            <label for="client-company"></label>
                         </div>
                         <div class="md-form">
                             <input type="text" id="client-social" name="social" class="form-control">

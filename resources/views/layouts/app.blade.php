@@ -101,7 +101,11 @@ $agent = New \Jenssegers\Agent\Agent();
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = $('#caller_id').val();
-                $('#client-company').cal() = 
+                let company = $('#caller_company').val();
+                let phone = $('#caller_phone').val();
+                $('#client-company').val(company);
+                $('#client-phone').val(phone);
+
                 $('#calledModal').modal('hide');
                 $('#add_customer').modal('show');
             })

@@ -30,7 +30,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+//        $calls = Call::where('user_id', \auth()->id())->get();
+//        $newcollection = array('calls' => $calls);
+//        $calls = Call::all();
+//        dd($call);
+//        array_push($newcollection['calls'],$calls);
+//        dd($newcollection);
+//        foreach ($newcollection['calls'] as $call)
+//        {
+//            dd($call);
+//        }
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->first();
@@ -83,7 +92,7 @@ class HomeController extends Controller
             'App\Meeting'
         )->get();
 
-        $calls = Call::where('user_id', auth()->id())->get()->reverse();
+        $calls = Call::where('user_id', auth()->id())->where('created_at', '>=', $today)->get()->reverse();
         return view('home',[
             'plan' => $plan,
             'tasks' => $tasks,
