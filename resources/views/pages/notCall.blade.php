@@ -14,14 +14,14 @@
     <div class="container-fluid">
         <div class="row pt-lg-4 pt-0">
             <div class="px-0 h-auto col-lg-3 col-15">
-                <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn indigo accent-3">
-                    <a href="/home" class="text-white sf-bold mb-0 mr-auto">
+                <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center category-btn indigo accent-3">
+                    <a href="/home" class="text-white sf-bold mb-0 mr-auto px-3 py-3">
                         ВСЕ ЗВОНКИ
                     </a>
-                    <a href="/waitCall" class="text-white sf-bold mb-0 mx-auto">
+                    <a href="/waitCall" class="text-white sf-bold mb-0 mx-auto d-md-none d-block bg-success px-3 py-3 mx-0">
                         На перезвон
                     </a>
-                    <a href="/notCall" class="text-white sf-bold mb-0 ml-auto">
+                    <a href="/notCall" class="text-white sf-bold mb-0 ml-auto d-md-none d-block bg-danger px-3 py-3 mx-0">
                         Не ответившие
                     </a>
                 </div>
