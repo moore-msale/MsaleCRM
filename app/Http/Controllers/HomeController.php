@@ -92,7 +92,7 @@ class HomeController extends Controller
             'App\Meeting'
         )->get();
 
-        $calls = Call::where('user_id', auth()->id())->where('created_at', '>=', $today)->get()->reverse();
+        $calls = Call::where('user_id', auth()->id())->get()->reverse();
         return view('home',[
             'plan' => $plan,
             'tasks' => $tasks,
