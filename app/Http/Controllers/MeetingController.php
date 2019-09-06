@@ -45,7 +45,11 @@ class MeetingController extends Controller
         $meeting->save();
         $task = new Task();
         $task->title = $customer->name ? $customer->company : 'Empty';
-        $task->deadline_date = $customer->task->deadline_date;
+
+        $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
+        $request->request->remove('deadline_date');
+        $request->merge(['deadline_date' => $deadline_date]);
+        $task->deadline_date = $request->deadline_date;
         $task->user_id = auth()->check() ? auth()->id() : 0;
         $task->save();
         $meeting->task()->save($task);
