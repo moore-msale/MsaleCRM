@@ -32,6 +32,23 @@
                         </span>
             </p>
         </div>
+        <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
+            <p class="head-text sf-bold mb-3">
+                ВАШ БАЛАНС НА ДАННЫЙ МЕСЯЦ
+            </p>
+            <p class="work-check sf-bold mb-0">
+                @if($penalty < 0)
+                    <span class="first-child meets_score" style="color:red;">
+                            {{ $penalty }} сом
+                        </span>
+                    @else
+                    <span class="first-child meets_score" style="color:green;">
+                            {{ $penalty }} сом
+                        </span>
+                    @endif
+
+            </p>
+        </div>
         @if($plan->status == 1)
             <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
                 <p class="mb-4 mt-4 first-child">План на день выполнен!</p>

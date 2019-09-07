@@ -10,6 +10,7 @@ use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Foreach_;
 
 class HomeController extends Controller
 {
@@ -31,15 +32,10 @@ class HomeController extends Controller
     public function index()
     {
 //        $calls = Call::where('user_id', \auth()->id())->get();
-//        $newcollection = array('calls' => $calls);
-//        $calls = Call::all();
-//        dd($call);
-//        array_push($newcollection['calls'],$calls);
-//        dd($newcollection);
-//        foreach ($newcollection['calls'] as $call)
-//        {
-//            dd($call);
-//        }
+//        $call = Call::all()->first();
+//        $newcollection = collect(['calls' => $calls]);
+//        $result = $newcollection['calls']->push($call);
+//        $newcollection = collect(['calls' => $result]);
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->first();
@@ -78,6 +74,16 @@ class HomeController extends Controller
                 $plan->status = 2;
                 $plan->save();
             }
+        $penaltys = Plan::where('user_id',auth()->id())->where('status',2)->get();
+        $fine = 0;
+        foreach ($penaltys as $penalty) {
+            if ($penalty->created_at->month == $today->month)
+            {
+
+                $fine = $fine + 1;
+            }
+        }
+        $penalty = $fine * -400;
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)
             ->where('deadline_date', '<=', $week)->where('status_id','!=','1')->get();
@@ -99,6 +105,7 @@ class HomeController extends Controller
             'customers' => $customers,
             'meetings' => $meetings,
             'calls' => $calls,
+            'penalty' => $penalty
         ]);
     }
 }
