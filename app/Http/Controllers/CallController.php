@@ -10,6 +10,8 @@ use App\Report;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use PhpParser\Node\Expr\New_;
 
 class CallController extends Controller
@@ -64,9 +66,45 @@ class CallController extends Controller
     public function delete(Request $request)
     {
         $call = Call::find($request->id);
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+
+        if(Carbon::now() < $endday){
+        $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
+        if(!isset($report->data['calls_not']))
+        {
+            $tts = collect(['calls_not' => new Collection()]);
+            $result = $tts['calls_not']->push($call);
+            $tts = collect($result);
+            if (isset($report->data))
+            {
+                $report->data = $report->data->merge(collect(['calls_not' => $tts]));
+            }
+            else
+            {
+                $report->data = collect(['calls_not' => $tts]);
+            }
+            $report->save();
+        }
+        else
+        {
+            $tts = collect(['calls_not' => collect($report->data['calls_not'])]);
+            $result = $tts['calls_not']->push($call);
+            $tts = collect($result);
+            if (isset($report->data))
+            {
+                $report->data = $report->data->merge(collect(['calls_not' => $tts]));
+            }
+            else
+            {
+                $report->data = collect(['calls_not' => $tts]);
+            }
+            $report->save();
+        }
+        }
         $call->delete();
         $today = Carbon::now()->setTime('00', '00');
-        $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->where('status',null)->first();
+        $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->first();
         $plan->calls_score = $plan->calls_score + 1;
         $plan->save();
         if ($request->ajax()){

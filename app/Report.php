@@ -9,7 +9,7 @@ class Report extends Model
     protected $fillable = ['user_id', 'data', 'type', 'status'];
 
     protected $casts = [
-        'data' => 'array',
+        'data' => 'collection',
     ];
 
     public function user()

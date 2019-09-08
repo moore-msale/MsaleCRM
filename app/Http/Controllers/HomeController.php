@@ -6,9 +6,11 @@ use App\Call;
 use App\Customer;
 use App\Meeting;
 use App\Plan;
+use App\Report;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Foreach_;
 
@@ -31,13 +33,31 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $calls = Call::where('user_id', \auth()->id())->get();
+//        $calls = Call::all();
+//        dd($calls);
 //        $call = Call::all()->first();
-//        $newcollection = collect(['calls' => $calls]);
-//        $result = $newcollection['calls']->push($call);
-//        $newcollection = collect(['calls' => $result]);
+//        dd($call->id);
+//        $tts = collect(['calls' => new Collection()]);
+//        $result = $tts['calls']->push($call);
+//        $tts = collect(['calls' => $result]);
+//        dd($tts);
+////        dd($newcollection);
+
+
+
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
+        $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
+        dd(Report::find(30)->data);
+        if ($report == null)
+        {
+            $report = new Report();
+            $report->user_id = \auth()->id();
+            $report->type = 0;
+            $report->data = true;
+            $report->status = 0;
+            $report->save();
+        }
         $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->first();
             if($plan == null)
             {

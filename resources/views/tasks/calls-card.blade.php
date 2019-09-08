@@ -8,6 +8,7 @@
         <p class="deal-text sf-bold mb-2">
             <i class="far fa-building"></i><span class="pl-1">
                 {{ $call->company ?? "No company" }}
+                {{ $call->id ?? "No company" }}
             </span>
         </p>
         <a href="tel:{{ $call->phone }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" class="deal-text call-btn sf-bold mb-3">

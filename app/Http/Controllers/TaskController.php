@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Report;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -37,11 +39,39 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+        
         $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
         $request->request->remove('deadline_date');
         $request->merge(['deadline_date' => $deadline_date]);
         $task = Task::create($request->all());
 
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['task_store'])) {
+                $tts = collect(['task_store' => new Collection()]);
+                $result = $tts['task_store']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_store' => $tts]));
+                } else {
+                    $report->data = collect(['task_store' => $tts]);
+                }
+            } else {
+                $tts = collect(['task_store' => collect($report->data['task_store'])]);
+                $result = $tts['task_store']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_store' => $tts]));
+                } else {
+                    $report->data = collect(['task_store' => $tts]);
+                }
+            }
+            $report->save();
+        }
+        
+        
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -87,11 +117,42 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+
+
         $task = Task::find($request->id);
         $task->title = $request->title;
         $task->description = $request->desc;
         $task->deadline_date = $request->date;
         $task->save();
+
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['task_update'])) {
+                $tts = collect(['task_update' => new Collection()]);
+                $tas = collect($task);
+                $task = $tas->push($request->details);
+                $result = $tts['task_update']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_update' => $tts]));
+                } else {
+                    $report->data = collect(['task_update' => $tts]);
+                }
+            } else {
+                $tts = collect(['task_update' => collect($report->data['task_update'])]);
+                $result = $tts['task_update']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_update' => $tts]));
+                } else {
+                    $report->data = collect(['task_update' => $tts]);
+                }
+            }
+            $report->save();
+        }
+
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -110,7 +171,36 @@ class TaskController extends Controller
      */
     public function delete(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+
         $task = Task::find($request->id);
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['task_delete'])) {
+                $tts = collect(['task_delete' => new Collection()]);
+                $tas = collect($task);
+                $task = $tas->push($request->details);
+                $result = $tts['task_delete']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_delete' => $tts]));
+                } else {
+                    $report->data = collect(['task_delete' => $tts]);
+                }
+            } else {
+                $tts = collect(['task_delete' => collect($report->data['task_delete'])]);
+                $result = $tts['task_delete']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_delete' => $tts]));
+                } else {
+                    $report->data = collect(['task_delete' => $tts]);
+                }
+            }
+            $report->save();
+        }
+
         $task->delete();
 
         if ($request->ajax()){
@@ -124,9 +214,40 @@ class TaskController extends Controller
 
     public function done(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+
         $task = Task::find($request->id);
         $task->status_id = 1;
         $task->save();
+
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['task_done'])) {
+                $tts = collect(['task_done' => new Collection()]);
+                $tas = collect($task);
+                $task = $tas->push($request->details);
+                $result = $tts['task_done']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_done' => $tts]));
+                } else {
+                    $report->data = collect(['task_done' => $tts]);
+                }
+            } else {
+                $tts = collect(['task_done' => collect($report->data['task_done'])]);
+                $result = $tts['task_done']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['task_done' => $tts]));
+                } else {
+                    $report->data = collect(['task_done' => $tts]);
+                }
+            }
+            $report->save();
+        }
+
+
         if ($request->ajax()){
             return response()->json([
                 'status' => "success"

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\Meeting;
 use App\Plan;
+use App\Report;
 use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class MeetingController extends Controller
 {
@@ -39,6 +41,10 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+        
+        
         $customer = Customer::find($request->id);
         $meeting = New Meeting();
         $meeting->customer_id = $customer->id;
@@ -50,10 +56,35 @@ class MeetingController extends Controller
         $request->request->remove('deadline_date');
         $request->merge(['deadline_date' => $deadline_date]);
         $task->deadline_date = $request->deadline_date;
+        $task->description = $request->description;
         $task->user_id = auth()->check() ? auth()->id() : 0;
         $task->save();
         $meeting->task()->save($task);
 
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['meet_store'])) {
+                $tts = collect(['meet_store' => new Collection()]);
+                $result = $tts['meet_store']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_store' => $tts]));
+                } else {
+                    $report->data = collect(['meet_store' => $tts]);
+                }
+            } else {
+                $tts = collect(['meet_store' => collect($report->data['meet_store'])]);
+                $result = $tts['meet_store']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_store' => $tts]));
+                } else {
+                    $report->data = collect(['meet_store' => $tts]);
+                }
+            }
+            $report->save();
+        }
+        
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -98,6 +129,9 @@ class MeetingController extends Controller
      */
     public function update(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+
         $meeting = Meeting::find($request->id);
         $task = $meeting->task;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
@@ -105,6 +139,31 @@ class MeetingController extends Controller
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
         $task->save();
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['meet_update'])) {
+                $tts = collect(['meet_update' => new Collection()]);
+                $tas = collect($task);
+                $task = $tas->push($request->details);
+                $result = $tts['meet_update']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_update' => $tts]));
+                } else {
+                    $report->data = collect(['meet_update' => $tts]);
+                }
+            } else {
+                $tts = collect(['meet_update' => collect($report->data['meet_update'])]);
+                $result = $tts['meet_update']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_update' => $tts]));
+                } else {
+                    $report->data = collect(['meet_update' => $tts]);
+                }
+            }
+            $report->save();
+        }
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -123,11 +182,40 @@ class MeetingController extends Controller
      */
     public function delete(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+
         $meet = Meeting::find($request->id);
         $task = $meet->task;
 
         $meet->delete();
         $task->delete();
+
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['meet_delete'])) {
+                $tts = collect(['meet_delete' => new Collection()]);
+                $tas = collect($task);
+                $task = $tas->push($request->details);
+                $result = $tts['meet_delete']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_delete' => $tts]));
+                } else {
+                    $report->data = collect(['meet_delete' => $tts]);
+                }
+            } else {
+                $tts = collect(['meet_delete' => collect($report->data['meet_delete'])]);
+                $result = $tts['meet_delete']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_delete' => $tts]));
+                } else {
+                    $report->data = collect(['meet_delete' => $tts]);
+                }
+            }
+            $report->save();
+        }
 
         if ($request->ajax()){
             return response()->json([
@@ -140,12 +228,43 @@ class MeetingController extends Controller
 
     public function done(Request $request)
     {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+
+
 
         $meet = Meeting::find($request->id);
         $task = $meet->task;
         $task->status_id = 1;
         $task->save();
-        $today = Carbon::now()->setTime('00', '00');
+
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['meet_done'])) {
+                $tts = collect(['meet_done' => new Collection()]);
+                $tas = collect($task);
+                $task = $tas->push($request->details);
+                $result = $tts['meet_done']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_done' => $tts]));
+                } else {
+                    $report->data = collect(['meet_done' => $tts]);
+                }
+            } else {
+                $tts = collect(['meet_done' => collect($report->data['meet_done'])]);
+                $result = $tts['meet_done']->push($task);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['meet_done' => $tts]));
+                } else {
+                    $report->data = collect(['meet_done' => $tts]);
+                }
+            }
+            $report->save();
+        }
+
+
         $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->where('status',null)->first();
         $plan->meets_score = $plan->meets_score + 1;
         $plan->save();

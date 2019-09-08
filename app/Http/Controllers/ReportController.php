@@ -12,9 +12,12 @@ class ReportController extends Controller
 {
     public function index()
     {
-        return view('report.report');
-    }
+        $reports = Report::all()->groupBy('user_id');
 
+
+//        dd($reports[1]);
+        return view('report.report',['reports' => $reports]);
+    }
     public function mail(Request $request)
     {
         $user = User::find(1);
