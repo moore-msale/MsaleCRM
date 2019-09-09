@@ -685,7 +685,7 @@
                        Соц.сеть
                     </span>
                                                             </div>
-                                                            @foreach($report->data['custom_potencial'] as $custom)
+                                                            @foreach($report->data['custom_store'] as $custom)
                                                                 <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
                         {{ $custom['company'] }}
