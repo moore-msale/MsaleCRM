@@ -152,6 +152,11 @@
             <li class="nav-item active">
                 <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>
             </li>
+            @if(auth()->id() == 1)
+            <li class="nav-item active">
+                <a href="{{ route('report.index') }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
+            </li>
+            @endif
             <li class="nav-item ml-auto">
                 <span class="nav-link sf-medium text-white">{{ auth()->user()->name }}</span>
             </li>

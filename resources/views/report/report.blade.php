@@ -7,16 +7,22 @@
         <div class="tab-content" id="myTabContent">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 @foreach($reports->keys() as $key)
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="m-{{$key}}" data-toggle="tab" href="#man-{{$key}}" role="tab"
-                           aria-controls="home"
-                           aria-selected="true">{{ \App\User::find($key)->name }}</a>
-                    </li>
+                        @if($key == 1)
+                            @continue
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" id="m-{{$key}}" data-toggle="tab" href="#man-{{$key}}" role="tab"
+                                   aria-controls="home"
+                                   aria-selected="true">{{ \App\User::find($key)->name }}</a>
+                            </li>
+                    @endif
                 @endforeach
             </ul>
             <div class="tab-content" id="myTabContent">
                 @foreach($reports->keys() as $key)
+                    @if($key == 1)
+                        @continue
+                    @else
                     <div class="tab-pane fade" id="man-{{$key}}" role="tabpanel" aria-labelledby="home-tab">
                         <div class="pt-5 pb-5">
                             <div class="col-15 text-center">
@@ -107,19 +113,24 @@
                                                                     Завершенные задачи
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-2 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                        <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Детали
+                    </span>
+                                                        </div>
+                                                            <div class="col-4 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Время закрытия
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -128,24 +139,39 @@
                     </span>
                                                             </div>
                                                             @foreach($report->data['task_done'] as $task)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-2 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($task['title']))
                         {{ $task['title'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $task['description'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $task['0'] }}
+                            @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($task['description']))
+                        {{ $task['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['1']))
+                            {{ $task['1'] }}
+                        @endif
+                    </span>
+                                                            </div>
+                                                                <div class="col-4 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['0']))
+                        {{ $task['0'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['deadline_date']))
                        {{ $task['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -164,9 +190,14 @@
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-8 mt-3">
+                                                            <div class="col-4 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
+                    </span>
+                                                            </div>
+                                                            <div class="col-4 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Время создания
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -177,18 +208,32 @@
                                                             @foreach($report->data['task_store'] as $task)
                                                                 <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($task['title']))
                         {{ $task['title'] }}
+                        @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-8 mt-3">
+                                                                <div class="col-4 mt-3">
                     <span class="sf-light">
+                        @if(isset($task['description']))
                         {{ $task['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+
+                                                                <div class="col-4 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['0']))
+                            {{ $task['0'] }}
+                        @endif
                     </span>
                                                                 </div>
 
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($task['deadline_date']))
                        {{ $task['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -203,19 +248,25 @@
                                                                     Удаленные задачи
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Детали
+                    </span>
+                                                            </div>
+
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                       Время удаления
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -226,24 +277,39 @@
 
                                                             @foreach($report->data['task_delete'] as $task)
 
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($task['title']))
                         {{ $task['title'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $task['description'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $task['0'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
-                       {{ $task['deadline_date'] }}
+                        @if(isset($task['description']))
+                        {{ $task['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['1']))
+                        {{ $task['1'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['0']))
+                       {{ $task['0'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['deadline_date']))
+                            {{ $task['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -256,19 +322,24 @@
                                                                     Измененные задачи
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Детали
+                    </span>
+                                                            </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                       Время изменения
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -277,24 +348,39 @@
                     </span>
                                                             </div>
                                                             @foreach($report->data['task_update'] as $task)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($task['title']))
                         {{ $task['title'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $task['description'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $task['0'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($task['description']))
+                        {{ $task['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['1']))
+                            {{ $task['1'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['0']))
+                        {{ $task['0'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($task['deadline_date']))
                        {{ $task['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -354,19 +440,24 @@
                                                                     Завершенные встречи
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Детали
+                    </span>
+                                                            </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                       Время завершения
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -375,24 +466,39 @@
                     </span>
                                                             </div>
                                                             @foreach($report->data['meet_done'] as $meet)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($meet['title']))
                         {{ $meet['title'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $meet['description'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $meet['0'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($meet['description']))
+                        {{ $meet['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['2']))
+                            {{ $meet['2'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['0']))
+                        {{ $meet['0'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['deadline_date']))
                        {{ $meet['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -411,9 +517,14 @@
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-8 mt-3">
+                                                            <div class="col-4 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
+                    </span>
+                                                            </div>
+                                                            <div class="col-4 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Время создания
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -424,18 +535,31 @@
                                                             @foreach($report->data['meet_store'] as $meet)
                                                                 <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($meet['title']))
                         {{ $meet['title'] }}
+                        @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-8 mt-3">
+                                                                <div class="col-4 mt-3">
                     <span class="sf-light">
+                        @if(isset($meet['description']))
                         {{ $meet['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-4 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['0']))
+                            {{ $meet['0'] }}
+                        @endif
                     </span>
                                                                 </div>
 
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($meet['deadline_date']))
                        {{ $meet['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -449,19 +573,24 @@
                                                                     Удаленные встречи
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Детали
+                    </span>
+                                                            </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Время удаления
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -470,24 +599,39 @@
                     </span>
                                                             </div>
                                                             @foreach($report->data['meet_delete'] as $meet)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($meet['title']))
                         {{ $meet['title'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $meet['description'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $meet['0'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($meet['description']))
+                        {{ $meet['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['1']))
+                        {{ $meet['1'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['0']))
+                            {{ $meet['0'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['deadline_date']))
                        {{ $meet['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -501,19 +645,24 @@
                                                                     Измененные встречи
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Заголовок
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Описание
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Детали
+                    </span>
+                                                            </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Время изменения
                     </span>
                                                             </div>
                                                             <div class="col-3 mt-3">
@@ -522,24 +671,39 @@
                     </span>
                                                             </div>
                                                             @foreach($report->data['meet_update'] as $meet)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($meet['title']))
                         {{ $meet['title'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $meet['description'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-4 mt-3">
-                    <span class="sf-light">
-                        {{ $meet['0'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($meet['description']))
+                        {{ $meet['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['2']))
+                        {{ $meet['2'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['0']))
+                            {{ $meet['0'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($meet['deadline_date']))
                        {{ $meet['deadline_date'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -629,27 +793,37 @@
                                                                 @foreach($report->data['custom_potencial'] as $custom)
                                                                     <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($custom['company']))
                         {{ $custom['company'] }}
+                        @endif
                     </span>
                                                                     </div>
                                                                     <div class="col-2 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['name']))
                         {{ $custom['name'] }}
+                        @endif
                     </span>
                                                                     </div>
                                                                     <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['contacts']))
                         {{ $custom['contacts'] }}
+                        @endif
                     </span>
                                                                     </div>
                                                                     <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['socials']))
                        {{ $custom['socials'] }}
+                        @endif
                     </span>
                                                                     </div>
                                                                     <div class="col-4 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['task']))
                        {{ $custom['task']['description'] }}
+                        @endif
                     </span>
                                                                     </div>
                                                                 @endforeach
@@ -665,7 +839,7 @@
                                                                     Добавленно клиентов
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Компания
                     </span>
@@ -675,35 +849,55 @@
                         Имя
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Контакты
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
-                       Соц.сеть
+                        Описание
+                    </span>
+                                                            </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                       Время изменения
                     </span>
                                                             </div>
                                                             @foreach($report->data['custom_store'] as $custom)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($custom['company']))
                         {{ $custom['company'] }}
+                            @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['name']))
                         {{ $custom['name'] }}
+                            @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-4 mt-3">
+                                                                <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['contacts']))
                         {{ $custom['contacts'] }}
+                            @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-4 mt-3">
+                                                                <div class="col-3 mt-3">
                     <span class="sf-light">
-                       {{ $custom['socials'] }}
+                        @if(isset($custom['1']))
+                            {{ $custom['1']['description'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($custom['0']))
+                       {{ $custom['0'] }}
+                        @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -719,7 +913,7 @@
                                                                     Удаление потенциальных клиентов
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Компания
                     </span>
@@ -729,35 +923,55 @@
                         Имя
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Контакты
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
-                       Детали
+                        Детали
+                    </span>
+                                                            </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                       Время удаления
                     </span>
                                                             </div>
                                                             @foreach($report->data['custom_delete'] as $custom)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($custom['company']))
                         {{ $custom['company'] }}
+                            @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['name']))
                         {{ $custom['name'] }}
+                            @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-4 mt-3">
+                                                                <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['contacts']))
                         {{ $custom['contacts'] }}
+                            @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-4 mt-3">
+                                                                <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['1']))
+                            {{ $custom['1'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($custom['0']))
                        {{ $custom['0'] }}
+                            @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -773,7 +987,7 @@
                                                                     Изменение клиентов
                                                                 </p>
                                                             </div>
-                                                            <div class="col-4 mt-3 d-flex align-items-center">
+                                                            <div class="col-3 mt-3 d-flex align-items-center">
                     <span class="sf-light font-weight-bold">
                         Компания
                     </span>
@@ -783,35 +997,55 @@
                         Имя
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                         Контакты
                     </span>
                                                             </div>
-                                                            <div class="col-4 mt-3">
+                                                            <div class="col-3 mt-3">
                     <span class="sf-light font-weight-bold">
                        Детали
                     </span>
                                                             </div>
+                                                            <div class="col-3 mt-3">
+                    <span class="sf-light font-weight-bold">
+                       Время изменения
+                    </span>
+                                                            </div>
                                                             @foreach($report->data['custom_update'] as $custom)
-                                                                <div class="col-4 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                                                                <div class="col-3 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
                     <span class="sf-light">
+                        @if(isset($custom['company']))
                         {{ $custom['company'] }}
+                            @endif
                     </span>
                                                                 </div>
                                                                 <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['name']))
                         {{ $custom['name'] }}
+                            @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-4 mt-3">
+                                                                <div class="col-3 mt-3">
                     <span class="sf-light">
+                        @if(isset($custom['contacts']))
                         {{ $custom['contacts'] }}
+                            @endif
                     </span>
                                                                 </div>
-                                                                <div class="col-4 mt-3">
+                                                                <div class="col-3 mt-3">
                     <span class="sf-light">
-                       {{ $custom['0'] }}
+                        @if(isset($custom['0']))
+                            {{ $custom['0'] }}
+                        @endif
+                    </span>
+                                                                </div>
+                                                                <div class="col-3 mt-3">
+                    <span class="sf-light">
+                        @if(isset($custom['1']))
+                       {{ $custom['1'] }}
+                            @endif
                     </span>
                                                                 </div>
                                                             @endforeach
@@ -824,96 +1058,146 @@
                                                 @endif
 
 
+
                                                 @if(isset($report->data['calls']) || isset($report->data['calls_not']))
-                                                    <div class="row  pt-5 mt-5">
-                                                        <div class="col-3 pt-3 report-border">
-                                                            <p class="sf-light">
-                                                                Звонки
-                                                            </p>
+                                                <div class="accordion md-accordion accordion-1 mt-5 pt-2" id="accordioncall{{$key}}"
+                                                     role="tablist" style="border-top: 1px solid red;">
+                                                    <a data-toggle="collapse" href="#collapsecall{{$key}}" aria-expanded="false"
+                                                       aria-controls="collapsecall{{$key}}" class="text-dark font-weight-bold" style="font-size: 18px;">
+                                                        Отчет по звонкам
+                                                    </a>
+                                                    <div id="collapsecall{{$key}}" class="collapse mt-1" role="tabpanel" aria-labelledby="heading96"
+                                                         data-parent="#accordioncall{{$key}}" style="border-bottom:1px solid #DCDCDC;">
+
+                                                        <div class="row ">
+                                                            <div class="col-3 pt-3 report-border">
+                                                                <p class="sf-light">
+                                                                    Звонки
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-6 pt-3 report-border">
+                                                                <p class="sf-light">
+                                                                    @if(isset($report->data['calls']))
+                                                                        Удачных звонков : {{count($report->data['calls'])}}
+                                                                    @endif
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-6 pt-3 report-border">
+                                                                <p class="sf-light">
+                                                                    @if(isset($report->data['calls_not']))
+                                                                        Удаленно
+                                                                        звонков: {{count($report->data['calls_not'])}}
+                                                                    @endif
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-6 pt-3 report-border">
-                                                            <p class="sf-light">
-                                                                @if(isset($report->data['calls']))
-                                                                    Удачных звонков : {{count($report->data['calls'])}}
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                        <div class="col-6 pt-3 report-border">
-                                                            <p class="sf-light">
-                                                                @if(isset($report->data['calls_not']))
-                                                                    Удаленно
-                                                                    звонков: {{count($report->data['calls_not'])}}
-                                                                @endif
-                                                            </p>
-                                                        </div>
+                                                        @if(isset($report->data['calls']))
+                                                            <div class="row pb-3 report-border">
+                                                                <div class="col-15 py-3">
+                                                                    <p class="font-weight-bold mb-0" style="font-size: 20px;">
+                                                                        Удачные звонки
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-5 mt-3 d-flex align-items-center">
+                    <span class="sf-light font-weight-bold">
+                        Компания
+                    </span>
+                                                                </div>
+
+                                                                <div class="col-5 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Контакты
+                    </span>
+                                                                </div>
+                                                                <div class="col-5 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Время звонка
+                    </span>
+                                                                </div>
+                                                                @foreach($report->data['calls'] as $call)
+                                                                    <div class="col-5 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                    <span class="sf-light">
+                        @if(isset($call['company']))
+                        {{ $call['company'] }}
+                            @endif
+                    </span>
+                                                                    </div>
+                                                                    <div class="col-5 mt-3">
+                    <span class="sf-light">
+                        @if(isset($call['phone']))
+                        {{ $call['phone'] }}
+                            @endif
+                    </span>
+                                                                    </div>
+                                                                    <div class="col-5 mt-3">
+                    <span class="sf-light">
+                        @if(isset($call['0']))
+                        {{ $call['0'] }}
+                        @endif
+                    </span>
+                                                                    </div>
+                                                                @endforeach
+
+                                                            </div>
+                                                        @endif
+
+
+                                                        @if(isset($report->data['calls_not']))
+                                                            <div class="row pb-3 report-border">
+                                                                <div class="col-15 py-3">
+                                                                    <p class="font-weight-bold mb-0" style="font-size: 20px;">
+                                                                        Удаленные звонки
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-5 mt-3 d-flex align-items-center">
+                    <span class="sf-light font-weight-bold">
+                        Компания
+                    </span>
+                                                                </div>
+                                                                <div class="col-5 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Контакты
+                    </span>
+                                                                </div>
+                                                                <div class="col-5 mt-3">
+                    <span class="sf-light font-weight-bold">
+                        Время удаления
+                    </span>
+                                                                </div>
+                                                                @foreach($report->data['calls_not'] as $call)
+                                                                    <div class="col-5 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
+                    <span class="sf-light">
+                        @if(isset($call['company']))
+                        {{ $call['company'] }}
+                            @endif
+                    </span>
+                                                                    </div>
+                                                                    <div class="col-5 mt-3">
+                    <span class="sf-light">
+                        @if(isset($call['phone']))
+                        {{ $call['phone'] }}
+                            @endif
+                    </span>
+                                                                    </div>
+                                                                    <div class="col-5 mt-3">
+                    <span class="sf-light">
+                        @if(isset($call['0']))
+                        {{ $call['0'] }}
+                        @endif
+                    </span>
+                                                                    </div>
+                                                                @endforeach
+
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                    @if(isset($report->data['calls']))
-                                                        <div class="row pb-3 report-border">
-                                                            <div class="col-15 py-3">
-                                                                <p class="font-weight-bold mb-0" style="font-size: 20px;">
-                                                                    Удачные звонки
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-6 mt-3 d-flex align-items-center">
-                    <span class="sf-light font-weight-bold">
-                        Компания
-                    </span>
-                                                            </div>
-
-                                                            <div class="col-9 mt-3">
-                    <span class="sf-light font-weight-bold">
-                        Контакты
-                    </span>
-                                                            </div>
-                                                            @foreach($report->data['calls'] as $call)
-                                                                <div class="col-6 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
-                    <span class="sf-light">
-                        {{ $call['company'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-9 mt-3">
-                    <span class="sf-light">
-                        {{ $call['phone'] }}
-                    </span>
-                                                                </div>
-                                                            @endforeach
-
-                                                        </div>
-                                                    @endif
+                                                </div>
 
 
-                                                    @if(isset($report->data['calls_not']))
-                                                        <div class="row pb-3 report-border">
-                                                            <div class="col-15 py-3">
-                                                                <p class="font-weight-bold mb-0" style="font-size: 20px;">
-                                                                    Удаленные звонки
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-6 mt-3 d-flex align-items-center">
-                    <span class="sf-light font-weight-bold">
-                        Компания
-                    </span>
-                                                            </div>
-                                                            <div class="col-9 mt-3">
-                    <span class="sf-light font-weight-bold">
-                        Контакты
-                    </span>
-                                                            </div>
-                                                            @foreach($report->data['calls_not'] as $call)
-                                                                <div class="col-6 mt-3 d-flex align-items-center" style="border-left: 2px solid #64dd17">
-                    <span class="sf-light">
-                        {{ $call['company'] }}
-                    </span>
-                                                                </div>
-                                                                <div class="col-9 mt-3">
-                    <span class="sf-light">
-                        {{ $call['phone'] }}
-                    </span>
-                                                                </div>
-                                                            @endforeach
 
-                                                        </div>
-                                                    @endif
+
+
+
 
 
                                                 @endif
@@ -924,10 +1208,9 @@
                                     {{--@endif--}}
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>

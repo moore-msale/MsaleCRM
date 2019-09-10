@@ -63,9 +63,13 @@ class MeetingController extends Controller
 
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
-            if (!isset($report->data['meet_store'])) {
+            if (!isset($report->data['meet_store'])) {$item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($task);
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
                 $tts = collect(['meet_store' => new Collection()]);
-                $result = $tts['meet_store']->push($task);
+                $result = $tts['meet_store']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_store' => $tts]));
@@ -73,8 +77,10 @@ class MeetingController extends Controller
                     $report->data = collect(['meet_store' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
                 $tts = collect(['meet_store' => collect($report->data['meet_store'])]);
-                $result = $tts['meet_store']->push($task);
+                $result = $tts['meet_store']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_store' => $tts]));
@@ -142,10 +148,12 @@ class MeetingController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['meet_update'])) {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($task);
+                $item = $item->push($request->details);
                 $tts = collect(['meet_update' => new Collection()]);
-                $tas = collect($task);
-                $task = $tas->push($request->details);
-                $result = $tts['meet_update']->push($task);
+                $result = $tts['meet_update']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_update' => $tts]));
@@ -153,8 +161,12 @@ class MeetingController extends Controller
                     $report->data = collect(['meet_update' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($task);
+                $item = $item->push($request->details);
                 $tts = collect(['meet_update' => collect($report->data['meet_update'])]);
-                $result = $tts['meet_update']->push($task);
+                $result = $tts['meet_update']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_update' => $tts]));
@@ -194,10 +206,11 @@ class MeetingController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['meet_delete'])) {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['meet_delete' => new Collection()]);
-                $tas = collect($task);
-                $task = $tas->push($request->details);
-                $result = $tts['meet_delete']->push($task);
+                $result = $tts['meet_delete']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_delete' => $tts]));
@@ -205,8 +218,11 @@ class MeetingController extends Controller
                     $report->data = collect(['meet_delete' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['meet_delete' => collect($report->data['meet_delete'])]);
-                $result = $tts['meet_delete']->push($task);
+                $result = $tts['meet_delete']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_delete' => $tts]));
@@ -241,10 +257,12 @@ class MeetingController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['meet_done'])) {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($task);
+                $item = $item->push($request->details);
                 $tts = collect(['meet_done' => new Collection()]);
-                $tas = collect($task);
-                $task = $tas->push($request->details);
-                $result = $tts['meet_done']->push($task);
+                $result = $tts['meet_done']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_done' => $tts]));
@@ -252,8 +270,12 @@ class MeetingController extends Controller
                     $report->data = collect(['meet_done' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($task);
+                $item = $item->push($request->details);
                 $tts = collect(['meet_done' => collect($report->data['meet_done'])]);
-                $result = $tts['meet_done']->push($task);
+                $result = $tts['meet_done']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['meet_done' => $tts]));

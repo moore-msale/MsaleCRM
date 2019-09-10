@@ -50,8 +50,10 @@ class TaskController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['task_store'])) {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
                 $tts = collect(['task_store' => new Collection()]);
-                $result = $tts['task_store']->push($task);
+                $result = $tts['task_store']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_store' => $tts]));
@@ -59,8 +61,10 @@ class TaskController extends Controller
                     $report->data = collect(['task_store' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
                 $tts = collect(['task_store' => collect($report->data['task_store'])]);
-                $result = $tts['task_store']->push($task);
+                $result = $tts['task_store']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_store' => $tts]));
@@ -130,10 +134,11 @@ class TaskController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['task_update'])) {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['task_update' => new Collection()]);
-                $tas = collect($task);
-                $task = $tas->push($request->details);
-                $result = $tts['task_update']->push($task);
+                $result = $tts['task_update']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_update' => $tts]));
@@ -141,8 +146,11 @@ class TaskController extends Controller
                     $report->data = collect(['task_update' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['task_update' => collect($report->data['task_update'])]);
-                $result = $tts['task_update']->push($task);
+                $result = $tts['task_update']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_update' => $tts]));
@@ -178,10 +186,11 @@ class TaskController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['task_delete'])) {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['task_delete' => new Collection()]);
-                $tas = collect($task);
-                $task = $tas->push($request->details);
-                $result = $tts['task_delete']->push($task);
+                $result = $tts['task_delete']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_delete' => $tts]));
@@ -189,8 +198,11 @@ class TaskController extends Controller
                     $report->data = collect(['task_delete' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['task_delete' => collect($report->data['task_delete'])]);
-                $result = $tts['task_delete']->push($task);
+                $result = $tts['task_delete']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_delete' => $tts]));
@@ -224,10 +236,11 @@ class TaskController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['task_done'])) {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['task_done' => new Collection()]);
-                $tas = collect($task);
-                $task = $tas->push($request->details);
-                $result = $tts['task_done']->push($task);
+                $result = $tts['task_done']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_done' => $tts]));
@@ -235,8 +248,11 @@ class TaskController extends Controller
                     $report->data = collect(['task_done' => $tts]);
                 }
             } else {
+                $item = collect($task);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
                 $tts = collect(['task_done' => collect($report->data['task_done'])]);
-                $result = $tts['task_done']->push($task);
+                $result = $tts['task_done']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['task_done' => $tts]));

@@ -73,8 +73,10 @@ class CallController extends Controller
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
         if(!isset($report->data['calls_not']))
         {
+            $item = collect($call);
+            $item = $item->push(Carbon::now()->format('H:i:s'));
             $tts = collect(['calls_not' => new Collection()]);
-            $result = $tts['calls_not']->push($call);
+            $result = $tts['calls_not']->push($item);
             $tts = collect($result);
             if (isset($report->data))
             {
@@ -88,8 +90,10 @@ class CallController extends Controller
         }
         else
         {
+            $caller = collect($call);
+            $caller = $caller->push(Carbon::now()->format('H:i:s'));
             $tts = collect(['calls_not' => collect($report->data['calls_not'])]);
-            $result = $tts['calls_not']->push($call);
+            $result = $tts['calls_not']->push($caller);
             $tts = collect($result);
             if (isset($report->data))
             {

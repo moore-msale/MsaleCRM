@@ -43,12 +43,13 @@ class HomeController extends Controller
 //        dd($tts);
 ////        dd($newcollection);
 
-
+//        dd(Carbon::now()->format('H-i-s'));
 
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
-//        dd(Report::find(30)->data);
+//        dd()
+//        dd(Report::find(32)->data);
         if ($report == null)
         {
             $report = new Report();

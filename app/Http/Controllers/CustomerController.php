@@ -76,15 +76,18 @@ class CustomerController extends Controller
             if(isset($request->id)){
                 $call = Call::find($request->id);
 
-                $today = Carbon::now()->setTime('00', '00');
                 $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->first();
                 $plan->calls_score = $plan->calls_score + 1;
                 $plan->save();
 
                 $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
-                if (!isset($report->data['calls'])) {
+                if (isset($report->data['calls'])) {
+                    dd($call);
+                    $item = collect($call);
+                    $item = $item->push(Carbon::now()->format('H:i:s'));
+                    $item = $item->push($task);
                     $tts = collect(['calls' => new Collection()]);
-                    $result = $tts['calls']->push($call);
+                    $result = $tts['calls']->push($item);
                     $tts = collect($result);
                     if (isset($report->data)) {
                         $report->data = $report->data->merge(collect(['calls' => $tts]));
@@ -102,8 +105,11 @@ class CustomerController extends Controller
                     }
                 }
                 if (!isset($report->data['custom_store'])) {
+                    $item = collect($customer);
+                    $item = $item->push(Carbon::now()->format('H:i:s'));
+                    $item = $item->push($task);
                     $tts = collect(['custom_store' => new Collection()]);
-                    $result = $tts['custom_store']->push($customer);
+                    $result = $tts['custom_store']->push($item);
                     $tts = collect($result);
                     if (isset($report->data)) {
                         $report->data = $report->data->merge(collect(['custom_store' => $tts]));
@@ -111,8 +117,11 @@ class CustomerController extends Controller
                         $report->data = collect(['custom_store' => $tts]);
                     }
                 } else {
+                    $item = collect($customer);
+                    $item = $item->push(Carbon::now()->format('H:i:s'));
+                    $item = $item->push($task);
                     $tts = collect(['custom_store' => collect($report->data['custom_store'])]);
-                    $result = $tts['custom_store']->push($customer);
+                    $result = $tts['custom_store']->push($item);
                     $tts = collect($result);
                     if (isset($report->data)) {
                         $report->data = $report->data->merge(collect(['custom_store' => $tts]));
@@ -127,8 +136,11 @@ class CustomerController extends Controller
             else {
                 $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
                 if (!isset($report->data['custom_store'])) {
+                    $item = collect($customer);
+                    $item = $item->push(Carbon::now()->format('H:i:s'));
+                    $item = $item->push($task);
                     $tts = collect(['custom_store' => new Collection()]);
-                    $result = $tts['custom_store']->push($customer);
+                    $result = $tts['custom_store']->push($item);
                     $tts = collect($result);
                     if (isset($report->data)) {
                         $report->data = $report->data->merge(collect(['custom_store' => $tts]));
@@ -136,8 +148,11 @@ class CustomerController extends Controller
                         $report->data = collect(['custom_store' => $tts]);
                     }
                 } else {
+                    $item = collect($customer);
+                    $item = $item->push(Carbon::now()->format('H:i:s'));
+                    $item = $item->push($task);
                     $tts = collect(['custom_store' => collect($report->data['custom_store'])]);
-                    $result = $tts['custom_store']->push($customer);
+                    $result = $tts['custom_store']->push($item);
                     $tts = collect($result);
                     if (isset($report->data)) {
                         $report->data = $report->data->merge(collect(['custom_store' => $tts]));
@@ -148,13 +163,13 @@ class CustomerController extends Controller
                 $report->save();
             }
         }
-        if(isset($request->id))
+        if(isset($request->id) && Carbon::now() < $endday)
         {
             if ($request->ajax()){
                 return response()->json([
                     'status' => "success",
                     'data' => $task,
-                    'plan' => $plan
+                    'plan' => $plan,
                 ], 200);
             }
         }
@@ -234,9 +249,10 @@ class CustomerController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['custom_update'])) {
+                $item = collect($customer);
+                $item = $item->push($request->details);
                 $tts = collect(['custom_update' => new Collection()]);
-                $tas = collect($customer);
-                $task = $tas->push($request->details);
+                $task = $item->push(Carbon::now()->format('H:i:s'));
                 $result = $tts['custom_update']->push($task);
                 $tts = collect($result);
                 if (isset($report->data)) {
@@ -245,9 +261,10 @@ class CustomerController extends Controller
                     $report->data = collect(['custom_update' => $tts]);
                 }
             } else {
+                $item = collect($customer);
+                $item = $item->push($request->details);
                 $tts = collect(['custom_update' => collect($report->data['custom_update'])]);
-                $tas = collect($customer);
-                $task = $tas->push($request->details);
+                $task = $item->push(Carbon::now()->format('H:i:s'));
                 $result = $tts['custom_update']->push($task);
                 $tts = collect($result);
                 if (isset($report->data)) {
@@ -293,10 +310,12 @@ class CustomerController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['custom_delete'])) {
+                $item = collect($customer);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
+//                $item = $item->push($task);
                 $tts = collect(['custom_delete' => new Collection()]);
-                $tas = collect($customer);
-                $task = $tas->push($request->details);
-                $result = $tts['custom_delete']->push($task);
+                $result = $tts['custom_delete']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['custom_delete' => $tts]));
@@ -304,10 +323,12 @@ class CustomerController extends Controller
                     $report->data = collect(['custom_delete' => $tts]);
                 }
             } else {
-                $tts = collect(['custom_delete' => collect($report->data['custom_delete'])]);
-                $tas = collect($customer);
-                $task = $tas->push($request->details);
-                $result = $tts['custom_delete']->push($task);
+                $item = collect($customer);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
+//                $item = $item->push($task);
+                $tts = collect(['custom_delete' => collect($report->data['custom_delete'])]);;
+                $result = $tts['custom_delete']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['custom_delete' => $tts]));
@@ -348,17 +369,22 @@ class CustomerController extends Controller
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['custom_potencial'])) {
+                $item = collect($customer);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($task);
                 $tts = collect(['custom_potencial' => new Collection()]);
-                $result = $tts['custom_potencial']->push($customer);
+                $result = $tts['custom_potencial']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['custom_potencial' => $tts]));
                 } else {
                     $report->data = collect(['custom_potencial' => $tts]);
                 }
-            } else {
+            } else { $item = collect($customer);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($task);
                 $tts = collect(['custom_potencial' => collect($report->data['custom_potencial'])]);
-                $result = $tts['custom_potencial']->push($customer);
+                $result = $tts['custom_potencial']->push($item);
                 $tts = collect($result);
                 if (isset($report->data)) {
                     $report->data = $report->data->merge(collect(['custom_potencial' => $tts]));
