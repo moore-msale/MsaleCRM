@@ -25,6 +25,9 @@
                 <a href="/home" class="text-white sf-bold mb-0 mr-auto px-3 py-3">
                     ВСЕ ЗВОНКИ
                 </a>
+                <a href="clearCall" class="text-white sf-bold mb-0 bg-danger px-3 py-3 mx-0">
+                    Очистить список
+                </a>
                 <a href="/waitCall" class="text-white sf-bold mb-0 mx-auto d-md-none d-block bg-success px-3 py-3 mx-0">
                     На перезвон
                 </a>

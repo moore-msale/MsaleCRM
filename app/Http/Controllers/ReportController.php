@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ReportGeneration;
 use App\Report;
 use App\User;
+use foo\bar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -17,6 +18,23 @@ class ReportController extends Controller
 
 //        dd($reports[1]);
         return view('report.report',['reports' => $reports]);
+    }
+
+    public function balance(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->balance = $request->balance;
+        $user->save();
+
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success",
+                'data' => $user,
+            ], 200);
+        }
+
+        return back();
+
     }
     public function mail(Request $request)
     {

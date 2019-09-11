@@ -43,6 +43,8 @@ Route::get('/delete/calls', 'CallController@cronDelete');
 Route::get('/mail', 'ReportController@mail');
 Route::post('/callw','CallController@waitCall')->name('callw');
 Route::post('/calln','CallController@notCall')->name('calln');
+Route::get('/clearCall','CallController@call_clear')->name('clearCall');
+Route::post('/balance_change','ReportController@balance')->name('balance_change');
 
 
 

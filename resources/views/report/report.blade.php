@@ -23,9 +23,19 @@
                     @if($key == 1)
                         @continue
                     @else
+
                     <div class="tab-pane fade" id="man-{{$key}}" role="tabpanel" aria-labelledby="home-tab">
                         <div class="pt-5 pb-5">
-                            <div class="col-15 text-center">
+                            <div class="col-15">
+                                <div class="pb-5">
+                                    <form action="">
+                                        <div class="md-form">
+                                            <input type="text" name="balance" id="balance-{{$key}}" value="{{\App\User::find($key)->balance}}" class="form-control">
+                                            <label for="balance-{{$key}}">Баланс на данный месяц</label>
+                                        </div>
+                                        <button class="btn btn-success balance-change" data-id="{{$key}}">Изменить</button>
+                                    </form>
+                                </div>
                                 <div class="tab-content" id="myTabContent">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         @foreach($reports[$key] as $report)

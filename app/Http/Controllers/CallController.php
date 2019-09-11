@@ -188,4 +188,15 @@ class CallController extends Controller
         return back();
     }
 
+    public function call_clear()
+    {
+        $calls = Call::where('user_id',auth()->id())->where('active',0)->get();
+
+        foreach ($calls as $call)
+        {
+            $call->delete();
+        }
+
+        return back();
+    }
 }

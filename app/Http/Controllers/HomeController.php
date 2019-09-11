@@ -8,6 +8,7 @@ use App\Meeting;
 use App\Plan;
 use App\Report;
 use App\Task;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -44,7 +45,6 @@ class HomeController extends Controller
 ////        dd($newcollection);
 
 //        dd(Carbon::now()->format('H-i-s'));
-
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
@@ -90,21 +90,29 @@ class HomeController extends Controller
                 $plan->status = 1;
                 $plan->save();
             }
-            elseif($endday <= Carbon::now() && $plan->status != 1)
+            elseif($endday <= Carbon::now() && $plan->status != 1 && $plan->status != 3 && Carbon::now()->englishDayOfWeek != "Sunday")
             {
                 $plan->status = 2;
                 $plan->save();
             }
-        $penaltys = Plan::where('user_id',auth()->id())->where('status',2)->get();
-        $fine = 0;
-        foreach ($penaltys as $penalty) {
-            if ($penalty->created_at->month == $today->month)
+            $user = Auth::user();
+            if (Carbon::yesterday()->month != Carbon::now()->month)
             {
-
-                $fine = $fine + 1;
+                $user->balance == 0;
+                $user->save();
             }
-        }
-        $penalty = $fine * -400;
+            if(Carbon::now() > $endday)
+            {
+                if($plan->status == 2)
+                {
+                    $plan->status = 3;
+                    $plan->save();
+                    $user->balance = $user->balance - 400;
+                    $user->save();
+                }
+            }
+
+        $penalty = $user->balance;
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)
             ->where('deadline_date', '<=', $week)->where('status_id','!=','1')->get();

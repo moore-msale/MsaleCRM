@@ -54,11 +54,11 @@
             <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
                 <p class="mb-4 mt-4 first-child">План на день выполнен!</p>
             </div>
-            @elseif($plan->status == 2)
+            @elseif($plan->status == 3)
             <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
                 <img class="img-fluid" src="{{asset('images/angrychief.png')}}" alt="">
             <p class="mb-1 mt-4 first-child">Шеф разочарован в тебе...</p>
-            <p class="mb-4 mt-0 first-child" style="color:red!important;">ТЫ ТРУП!!!!</p>
+            {{--<p class="mb-4 mt-0 first-child" style="color:red!important;">ТЫ ТРУП!!!!</p>--}}
              </div>
         @endif
             {{--@endif--}}
