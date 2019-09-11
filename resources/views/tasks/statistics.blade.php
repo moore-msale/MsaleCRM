@@ -33,10 +33,12 @@
             </p>
         </div>
         {{--@if(!auth()->id() == 1)--}}
+        @if(auth()->id() != 1)
         <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
             <p class="head-text sf-bold mb-3">
                 ВАШ БАЛАНС НА ДАННЫЙ МЕСЯЦ
             </p>
+
             <p class="work-check sf-bold mb-0">
                 @if($penalty < 0)
                     <span class="first-child meets_score" style="color:red;">
@@ -49,12 +51,14 @@
                     @endif
 
             </p>
+
         </div>
+        @endif
         @if($plan->status == 1 && auth()->id() != 1)
             <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
                 <p class="mb-4 mt-4 first-child">План на день выполнен!</p>
             </div>
-            @elseif($plan->status == 3)
+            @elseif($plan->status == 3  && auth()->id() != 1)
             <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
                 <img class="img-fluid" src="{{asset('images/angrychief.png')}}" alt="">
             <p class="mb-1 mt-4 first-child">Шеф разочарован в тебе...</p>
