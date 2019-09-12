@@ -36,30 +36,7 @@ class HomeController extends Controller
     {
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
-
-        $reports = Report::where('created_at','>=',$today)->get();
-        foreach ($reports as $report)
-        {
-            foreach ($report->data['calls'] as $item)
-            {
-                if ($item == null)
-                {
-                    $item->delete();
-                }
-            }
-            foreach ($report->data['calls_not'] as $item)
-            {
-                if ($item == null)
-                {
-                    $item->delete();
-                }
-            }
-            $report->save();
-        }
-
-
-
-
+        
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
         if ($report == null)
         {
