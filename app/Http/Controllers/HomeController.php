@@ -69,12 +69,12 @@ class HomeController extends Controller
                 'custom_store' => new Collection(),
                 'custom_delete' => new Collection(),
                 'custom_potencial' => new Collection(),
-                'custom-update' => new Collection()
+                'custom_update' => new Collection()
             ]);
             $report->status = 0;
             $report->save();
         }
-        $plan = Plan::where('created_at', '>=', $today)->where('user_id',auth()->id())->first();
+        $plan = Plan::where('created_at', '>=   ', $today)->where('user_id',auth()->id())->first();
             if($plan == null)
             {
                 $plan = New Plan();
