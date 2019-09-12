@@ -81,8 +81,7 @@ class CustomerController extends Controller
                 $plan->save();
 
                 $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
-                if (isset($report->data['calls'])) {
-                    dd($call);
+                if (!isset($report->data['calls'])) {
                     $item = collect($call);
                     $item = $item->push(Carbon::now()->format('H:i:s'));
                     $item = $item->push($task);
