@@ -34,22 +34,33 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $calls = Call::all();
-//        dd($calls);
-//        $call = Call::all()->first();
-//        dd($call->id);
-//        $tts = collect(['calls' => new Collection()]);
-//        $result = $tts['calls']->push($call);
-//        $tts = collect(['calls' => $result]);
-//        dd($tts);
-////        dd($newcollection);
-
-//        dd(Carbon::now()->format('H-i-s'));
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
+
+        $reports = Report::where('created_at','>=',$today)->get();
+        foreach ($reports as $report)
+        {
+            foreach ($report->data['calls'] as $item)
+            {
+                if ($item == null)
+                {
+                    $item->delete();
+                }
+            }
+            foreach ($report->data['calls_not'] as $item)
+            {
+                if ($item == null)
+                {
+                    $item->delete();
+                }
+            }
+            $report->save();
+        }
+
+
+
+
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
-//        dd($report->data);
-//        dd(Report::find(32)->data);
         if ($report == null)
         {
             $report = new Report();

@@ -8,7 +8,7 @@
     </style>
 @endpush
 @section('content')
-    
+
     <div class="px-5 mt-5">
         <div class="tab-content" id="myTabContent">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
