@@ -1,58 +1,51 @@
 @extends('layouts.app')
+@push('styles')
+    <style>
+        body
+        {
+            background-color: #E5E5E5;
+        }
+    </style>
+@endpush
 @section('content')
-
-    {{--{{ \Carbon\Carbon::make($key)->format('d-M') }}--}}
+    {{--@dd($reports)--}}
+    {{--{{ \Carbon\Carbon::make($report->user_id)->format('d-M') }}--}}
     <div class="px-5 mt-5">
 
         <div class="tab-content" id="myTabContent">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                @foreach($reports->keys() as $key)
-                        @if($key == 1)
+                @foreach($reports as $report)
+                        @if($report->user_id == 1)
                             @continue
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" id="m-{{$key}}" data-toggle="tab" href="#man-{{$key}}" role="tab"
-                                   aria-controls="home"
-                                   aria-selected="true">{{ \App\User::find($key)->name }}</a>
+                            <li class="nav-item report-tabs mr-4">
+                            <a class="nav-link report-tabs-link" id="m-{{$report->user_id}}" data-toggle="tab" href="#man-{{$report->user_id}}" role="tab"
+                               aria-controls="home"
+                                   aria-selected="true">{{ \App\User::find($report->user_id)->name }}</a>
                             </li>
                     @endif
                 @endforeach
             </ul>
             <div class="tab-content" id="myTabContent">
-                @foreach($reports->keys() as $key)
-                    @if($key == 1)
+                @foreach($reports as $report)
+                    @if($report->user_id == 1)
                         @continue
                     @else
 
-                    <div class="tab-pane fade" id="man-{{$key}}" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade" id="man-{{$report->user_id}}" role="tabpanel" aria-labelledby="home-tab">
                         <div class="pt-5 pb-5">
                             <div class="col-15">
                                 <div class="pb-5">
                                     <form action="">
                                         <div class="md-form">
-                                            <input type="text" name="balance" id="balance-{{$key}}" value="{{\App\User::find($key)->balance}}" class="form-control">
-                                            <label for="balance-{{$key}}">Баланс на данный месяц</label>
+                                            <input type="text" name="balance" id="balance-{{$report->user_id}}" value="{{\App\User::find($report->user_id)->balance}}" class="form-control">
+                                            <label for="balance-{{$report->user_id}}">Баланс на данный месяц</label>
                                         </div>
-                                        <button class="btn btn-success balance-change" data-id="{{$key}}">Изменить</button>
+                                        <button class="btn btn-success balance-change" data-id="{{$report->user_id}}">Изменить</button>
                                     </form>
                                 </div>
-                                <div class="tab-content" id="myTabContent">
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        @foreach($reports[$key] as $report)
-                                            {{--@dd($report)--}}
-                                            {{--                    @dd(\Carbon\Carbon::make($report->created_at)->format('d-M'))--}}
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="rep-{{$report->id}}" data-toggle="tab"
-                                                   href="#report-{{$report->id}}" role="tab" aria-controls="home"
-                                                   aria-selected="true">{{\Carbon\Carbon::make($report->created_at)->format('d-M')}}</a>
-                                            </li>
-                                        @endforeach
-                                        {{--@if($reports[0])--}}
-                                        {{--@endif--}}
-                                    </ul>
-                                </div>
-                                <div class="tab-content" id="myTabContent">
-                                    @foreach($reports[$key] as $report)
+                                {{--@dd($report->user_id)--}}
+                                    @foreach($reports as $report)
 
                                         <div class="tab-pane fade" id="report-{{$report->id}}" role="tabpanel"
                                              aria-labelledby="home-tab">
@@ -60,7 +53,7 @@
                                                 <div class="row">
                                                     <div class="col-6 d-flex align-items-end report-border">
                                                         <p class="sf-black report-man">
-                                                            {{ \App\User::find($key)->name }}
+                                                            {{ \App\User::find($report->user_id)->name }}
                                                         </p>
                                                     </div>
                                                     <div class="col-9 d-flex align-items-end report-border">
@@ -1070,14 +1063,14 @@
 
 
                                                 @if(isset($report->data['calls']) || isset($report->data['calls_not']))
-                                                <div class="accordion md-accordion accordion-1 mt-5 pt-2" id="accordioncall{{$key}}"
+                                                <div class="accordion md-accordion accordion-1 mt-5 pt-2" id="accordioncall{{$report->user_id}}"
                                                      role="tablist" style="border-top: 1px solid red;">
-                                                    <a data-toggle="collapse" href="#collapsecall{{$key}}" aria-expanded="false"
-                                                       aria-controls="collapsecall{{$key}}" class="text-dark font-weight-bold" style="font-size: 18px;">
+                                                    <a data-toggle="collapse" href="#collapsecall{{$report->user_id}}" aria-expanded="false"
+                                                       aria-controls="collapsecall{{$report->user_id}}" class="text-dark font-weight-bold" style="font-size: 18px;">
                                                         Отчет по звонкам
                                                     </a>
-                                                    <div id="collapsecall{{$key}}" class="collapse mt-1" role="tabpanel" aria-labelledby="heading96"
-                                                         data-parent="#accordioncall{{$key}}" style="border-bottom:1px solid #DCDCDC;">
+                                                    <div id="collapsecall{{$report->user_id}}" class="collapse mt-1" role="tabpanel" aria-labelledby="heading96"
+                                                         data-parent="#accordioncall{{$report->user_id}}" style="border-bottom:1px solid #DCDCDC;">
 
                                                         <div class="row ">
                                                             <div class="col-3 pt-3 report-border">
@@ -1202,20 +1195,10 @@
                                                         @endif
                                                     </div>
                                                 </div>
-
-
-
-
-
-
-
-
                                                 @endif
                                             </div>
                                         </div>
                                     @endforeach
-                                    {{--@if($reports[0])--}}
-                                    {{--@endif--}}
                                 </div>
                             </div>
                         </div>
@@ -1225,5 +1208,4 @@
             </div>
         </div>
 
-    </div>
 @endsection

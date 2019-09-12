@@ -10,6 +10,7 @@ use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -20,12 +21,19 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        if(Auth::id() == 1)
+        {
+            $customers = Task::where('taskable_type','App\Customer')->get();
+        }
+        else
+        {
         $customers = Task::where('user_id',auth()->id())->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();
+        }
 
-        return view('pages.customers',['customers' => $customers]);
+        return view('pages.customer',['customers' => $customers]);
     }
 
     /**

@@ -48,14 +48,29 @@ class HomeController extends Controller
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
-//        dd()
-//        dd(Report::find(32)->data);
+//        dd($report->data);
+        dd(Report::find(32)->data);
         if ($report == null)
         {
             $report = new Report();
             $report->user_id = \auth()->id();
             $report->type = 0;
-            $report->data = true;
+            $report->data = collect([
+                'calls_not' => new Collection(),
+                'calls' => new Collection(),
+                'task_store' => new Collection(),
+                'task_done' => new Collection(),
+                'task_delete' => new Collection(),
+                'task_update' => new Collection(),
+                'meet_store' => new Collection(),
+                'meet_done' => new Collection(),
+                'meet_update' => new Collection(),
+                'meet_delete' => new Collection(),
+                'custom_store' => new Collection(),
+                'custom_delete' => new Collection(),
+                'custom_potencial' => new Collection(),
+                'custom-update' => new Collection()
+            ]);
             $report->status = 0;
             $report->save();
         }

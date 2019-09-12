@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ReportGeneration;
 use App\Report;
 use App\User;
+use Carbon\Carbon;
 use foo\bar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -13,11 +14,13 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $reports = Report::all()->groupBy('user_id');
 
+        $reports = Report::where('created_at','>=',Carbon::now()->setTime('00','00','00'))->get();
+
+//        dd($reports->keys());
 
 //        dd($reports[1]);
-        return view('report.report',['reports' => $reports]);
+        return view('report.reports',['reports' => $reports]);
     }
 
     public function balance(Request $request)
