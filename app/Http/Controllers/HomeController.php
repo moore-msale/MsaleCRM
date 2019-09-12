@@ -49,7 +49,7 @@ class HomeController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
 //        dd($report->data);
-        dd(Report::find(32)->data);
+//        dd(Report::find(32)->data);
         if ($report == null)
         {
             $report = new Report();
