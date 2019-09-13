@@ -12,14 +12,12 @@ use Illuminate\Support\Facades\Mail;
 
 class ReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
-        $reports = Report::where('created_at','>=',Carbon::now()->setTime('00','00','00'))->get();
-
-//        dd($reports->keys());
-
-//        dd($reports[1]);
+            $startDate = Carbon::make($request->date);
+            $endDate = Carbon::make($startDate)->setTime('23','59','59');
+            $reports = Report::where('created_at','>=',$startDate)->where('created_at','<=', $endDate)->get();
         return view('report.reports',['reports' => $reports]);
     }
 

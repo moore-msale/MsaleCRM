@@ -10,13 +10,28 @@
 @section('content')
 
     <div class="px-5 mt-5">
-        <div class="col-15 text-right">
-            <a class="btn btn-purple" href="">
-                Сегодня
-            </a>
-            <a class="btn btn-purple" href="">
-                Сегодня
-            </a>
+        <div class="container-fluid">
+            <div class="row justify-content-end">
+                <div class="col-2 text-right">
+                    <a class="btn btn-purple" href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}">
+                        Сегодня
+                    </a>
+                </div>
+                <div class="col-2 text-right">
+                    <a class="btn btn-purple" href="{{ route('report.index', ['date' => \Carbon\Carbon::yesterday()->toString()]) }}">
+                        Вчера
+                    </a>
+                </div>
+                <div class="col-5">
+                    <form action="{{ route('report.index') }}">
+                        <div class="md-form d-flex mt-0">
+                            <input type="text" name="date" id="date" class="date" required>
+                            <label for="date">Выберите дату</label>
+                            <button class="btn btn-purple" type="submit">Применить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="tab-content" id="myTabContent">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -116,6 +131,7 @@
                 @endforeach
             </div>
         </div>
+
     </div>
 
 @endsection
