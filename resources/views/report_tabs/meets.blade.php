@@ -32,6 +32,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['meet_done']))
                     @foreach($report->data['meet_done'] as $meet)
                         <div class="row item-data pt-3" title="{{ $meet['description'] }}">
                             <div class="col-3 px-2">
@@ -64,6 +65,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -101,6 +103,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['meet_delete']))
                     @foreach($report->data['meet_delete'] as $meet)
                         <div class="row item-data pt-3" title="{{ $meet['description'] }}">
                             <div class="col-3 px-2">
@@ -133,6 +136,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -149,17 +153,13 @@
 
                 <div class="container-fluid mt-5">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-5">
                             <p class="point-text">
                                 Компания
                             </p>
                         </div>
-                        <div class="col-3">
-                            <p class="point-text">
-                                Причина
-                            </p>
-                        </div>
-                        <div class="col-4">
+
+                        <div class="col-5">
                             <p class="point-text">
                                 Время создания
                             </p>
@@ -170,23 +170,17 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['meet_store']))
                     @foreach($report->data['meet_store'] as $meet)
                         <div class="row item-data pt-3" title="{{ $meet['description'] }}">
-                            <div class="col-3 px-2">
+                            <div class="col-5 px-2">
                                 @if(isset($meet['title']))
                                     <p>
                                         {{$meet['title']}}
                                     </p>
                                 @endif
                             </div>
-                            <div class="col-3 px-2">
-                                @if(isset($meet['2']))
-                                    <p>
-                                        {{$meet['2']}}
-                                    </p>
-                                @endif
-                            </div>
-                            <div class="col-4 px-2">
+                            <div class="col-5 px-2">
                                 @if(isset($meet['0']))
                                     <p>
                                         {{$meet['0']}}
@@ -202,6 +196,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -239,6 +234,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['meet_update']))
                     @foreach($report->data['meet_update'] as $meet)
                         <div class="row item-data pt-3" title="{{ $meet['description'] }}">
                             <div class="col-3 px-2">
@@ -271,6 +267,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>

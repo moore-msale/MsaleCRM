@@ -27,6 +27,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['task_done']))
                     @foreach($report->data['task_done'] as $task)
                         <div class="row item-data pt-3">
                             <div class="col-5 px-2">
@@ -52,6 +53,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -84,6 +86,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['task_store']))
                     @foreach($report->data['task_store'] as $task)
                         <div class="row item-data pt-3">
                             <div class="col-5 px-2">
@@ -109,6 +112,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -141,6 +145,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['task_delete']))
                     @foreach($report->data['task_delete'] as $task)
                         <div class="row item-data pt-3">
                             <div class="col-5 px-2">
@@ -166,6 +171,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -203,6 +209,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['task_update']))
                     @foreach($report->data['task_update'] as $task)
                         <div class="row item-data pt-3">
                             <div class="col-3 px-2">
@@ -235,6 +242,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>

@@ -63,10 +63,18 @@
                                             <img class="svg type-svg" src="{{ asset('images/reports/partnership.svg') }}" alt="">
 
                                             <p class="h3 font-weight-bold type-header meet-header pt-4">Встречи</p>
+                                            @if(isset($report->data['meet_delete']))
                                             <p class="type-desc mb-0">Удаленных встреч: {{ count($report->data['meet_delete']) }}</p>
+                                            @endif
+                                            @if(isset($report->data['meet_done']))
                                             <p class="type-desc mb-0">Завершенных встреч: {{ count($report->data['meet_done']) }}</p>
+                                            @endif
+                                            @if(isset($report->data['meet_store']))
                                             <p class="type-desc mb-0">Созданных встреч: {{ count($report->data['meet_store']) }}</p>
+                                            @endif
+                                            @if(isset($report->data['meet_update']))
                                             <p class="type-desc mb-0">Измененых встреч: {{ count($report->data['meet_update']) }}</p>
+                                            @endif
                                         </div>
                                     </a>
                                         </li>
@@ -74,12 +82,19 @@
                                     <a class="nav-link p-0 h-100" id="custom-{{$report->id}}" data-toggle="tab" href="#customs-{{$report->id}}" role="tab">
                                         <div class="type-tab px-3 py-4">
                                             <img class="svg type-svg" src="{{ asset('images/reports/customer.svg') }}" alt="">
-
                                             <p class="h3 font-weight-bold type-header custom-header pt-4">Клиенты</p>
+                                            @if(isset($report->data['custom_delete']))
                                             <p class="type-desc mb-0">Удаленных клиентов: {{ count($report->data['custom_delete']) }}</p>
+                                            @endif
+                                            @if(isset($report->data['custom_potencial']))
                                             <p class="type-desc mb-0">Потенциальных клиентов: {{ count($report->data['custom_potencial']) }}</p>
+                                            @endif
+                                            @if(isset($report->data['custom_store']))
                                             <p class="type-desc mb-0">Созданных клиентов: {{ count($report->data['custom_store']) }}</p>
+                                            @endif
+                                            @if(isset($report->data['custom_update']))
                                             <p class="type-desc mb-0">Измененых клиентов: {{ count($report->data['custom_update']) }}</p>
+                                                @endif
                                         </div>
                                     </a>
                                         </li>
@@ -89,8 +104,12 @@
                                             <img class="svg type-svg" src="{{ asset('images/reports/call-out.svg') }}" alt="">
 
                                             <p class="h3 font-weight-bold type-header call-header pt-4">Звонки</p>
+                                        @if(isset($report->data['calls_not']))
                                             <p class="type-desc mb-0">Удаленных звонков: {{ count($report->data['calls_not']) }}</p>
+                                        @endif
+                                        @if(isset($report->data['calls']))
                                             <p class="type-desc mb-0">Успешных звонков: {{ count($report->data['calls']) }}</p>
+                                            @endif
                                         </div>
                                     </a>
                                         </li>
@@ -100,10 +119,18 @@
                                             <img class="svg type-svg" src="{{ asset('images/reports/edit-task.svg') }}" alt="">
 
                                             <p class="h3 font-weight-bold type-header task-header pt-4">Задачи</p>
+                                        @if(isset($report->data['task_delete']))
                                             <p class="type-desc mb-0">Удаленных задач: {{ count($report->data['task_delete']) }}</p>
+                                        @endif
+                                        @if(isset($report->data['task_done']))
                                             <p class="type-desc mb-0">Завершенных задач: {{ count($report->data['task_done']) }}</p>
+                                        @endif
+                                        @if(isset($report->data['task_store']))
                                             <p class="type-desc mb-0">Созданных задач: {{ count($report->data['task_store']) }}</p>
+                                        @endif
+                                        @if(isset($report->data['task_update']))
                                             <p class="type-desc mb-0">Измененых задач: {{ count($report->data['task_update']) }}</p>
+                                            @endif
                                         </div>
                                     </a>
                                         </li>

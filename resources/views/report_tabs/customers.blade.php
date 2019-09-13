@@ -32,6 +32,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['custom_potencial']))
                     @foreach($report->data['custom_potencial'] as $custom)
                         <div class="row item-data pt-3">
                             <div class="col-3 px-2">
@@ -64,6 +65,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -101,6 +103,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['custom_delete']))
                     @foreach($report->data['custom_delete'] as $custom)
                         <div class="row item-data pt-3">
                             <div class="col-3 px-2">
@@ -133,6 +136,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -170,6 +174,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['custom_store']))
                     @foreach($report->data['custom_store'] as $custom)
                         <div class="row item-data pt-3">
                             <div class="col-3 px-2">
@@ -202,6 +207,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -239,6 +245,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['custom_update']))
                     @foreach($report->data['custom_update'] as $custom)
                         <div class="row item-data pt-3">
                             <div class="col-3 px-2">
@@ -271,6 +278,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>

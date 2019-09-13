@@ -27,6 +27,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['calls']))
                     @foreach($report->data['calls'] as $call)
                         <div class="row item-data pt-3">
                             <div class="col-5 px-2">
@@ -52,6 +53,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
@@ -84,6 +86,7 @@
                             </p>
                         </div>
                     </div>
+                    @if(isset($report->data['calls_not']))
                     @foreach($report->data['calls_not'] as $call)
                         <div class="row item-data pt-3">
                             <div class="col-5 px-2">
@@ -109,6 +112,7 @@
                             </div>
                         </div>
                     @endforeach
+                        @endif
                 </div>
             </div>
         </div>
