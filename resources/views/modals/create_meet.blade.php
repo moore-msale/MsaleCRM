@@ -22,9 +22,10 @@
                         <div class="md-form">
                             <select name="name" id="meetingname" class="browser-default custom-select">
                                 <option value="{{ null }}">Выберите клиента...</option>
-                                @foreach(\App\Customer::all() as $customer)
-                                    @if($customer->task->user_id == auth()->id())
-                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+
+                                @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $customer)
+                                    @if($customer->user_id == auth()->id())
+                                    <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }}</option>
                                     @endif
                                 @endforeach
                             </select>

@@ -11,7 +11,7 @@
     <?php
     $agent = New \Jenssegers\Agent\Agent();
     ?>
-
+    {{--@dd(\App\Task::where('taskable_type','App\Customer')->get())--}}
     <div class="container-fluid">
         <div class="row pt-lg-4 pt-0">
             @if($agent->isPhone())
