@@ -154,7 +154,7 @@
             </li>
             @if(auth()->id() == 1)
             <li class="nav-item active">
-            <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
+            <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
             </li>
             @endif
             <li class="nav-item ml-auto">
