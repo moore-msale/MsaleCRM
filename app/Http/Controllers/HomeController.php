@@ -36,7 +36,8 @@ class HomeController extends Controller
     {
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
-        
+
+
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
         if ($report == null)
         {
@@ -62,7 +63,7 @@ class HomeController extends Controller
             $report->status = 0;
             $report->save();
         }
-        $plan = Plan::where('created_at', '>=   ', $today)->where('user_id',auth()->id())->first();
+        $plan = Plan::where('created_at','>=',$today)->where('user_id',auth()->id())->first();
             if($plan == null)
             {
                 $plan = New Plan();
