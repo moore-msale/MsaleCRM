@@ -138,9 +138,13 @@
                                         <div class="type-tab px-3 py-4">
                                             <img class="svg type-svg" src="{{ asset('images/reports/wallet.svg') }}" alt="">
                                             <p class="h3 font-weight-bold type-header pt-4" style="color:#5713AE;">Баланс</p>
-                                            <p style="font-size: 25px;">
-                                                {{ \App\User::find($report->user_id)->balance }} сом
-                                            </p>
+                                            <form action="">
+                                                <div class="md-form">
+                                                    <input type="text" name="balance" id="balance-{{$report->user_id}}" value="{{\App\User::find($report->user_id)->balance}}" class="form-control">
+                                                    <label for="balance-{{$report->user_id}}">Баланс на данный месяц</label>
+                                                </div>
+                                                <button class="btn btn-purple balance-change" data-id="{{$report->user_id}}">Изменить</button>
+                                            </form>
                                         </div>
                                     </div>
                                     </ul>
