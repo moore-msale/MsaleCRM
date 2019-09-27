@@ -70,7 +70,7 @@ class ReportController extends Controller
             
             $plan = Plan::where('created_at','>=',$today)->where('user_id', $user->id)->first();
             if($plan != null) {
-                if ($plan->meets_score >= 0 && $plan->status != 1) {
+                if ($plan->calls_score >= 100 && $plan->meets_score >= 0 && $plan->status != 1) {
                     $plan->status = 1;
                     $plan->save();
                 } elseif ($plan->calls_score >= 66 && $plan->meets_score >= 1 && $plan->status != 1) {
