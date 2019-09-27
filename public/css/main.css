@@ -370,3 +370,13 @@ body
         font-family: "SF Pro Display Medium";
     }
 }
+.bt-li {
+    font-size: 12px;
+        display: flex;
+    align-items: center;
+}
+.bt-li:hover {
+    background: #6620bb;
+
+    font-size: 12px;
+}

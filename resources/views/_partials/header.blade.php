@@ -3,10 +3,10 @@
 {{--        <div class="row w-100">--}}
 {{--            <div class="col-lg-2 col-4 px-5 text-right" style="height: 8vh;">--}}
 {{--                <a href="/" style="">--}}
-{{--                    <h2 class="text-white logo sf-black pt-3 d-lg-block d-none" style="font-size: 25px; line-height: 105%; letter-spacing: 0.05em; text-transform: uppercase;">--}}
+{{--                    <h2 class="text-white logo sf-black pt-3 d-lg-block d-none" style="font-size: 25px; line-height: 105%; font-weight: 900; text-transform: uppercase;">--}}
 {{--                        .MOORE--}}
 {{--                    </h2>--}}
-{{--                    <h2 class="text-white logo sf-black pt-3 d-lg-none d-block" style="font-size: 35px; line-height: 30px; letter-spacing: 0.05em; text-transform: uppercase;">--}}
+{{--                    <h2 class="text-white logo sf-black pt-3 d-lg-none d-block" style="font-size: 35px; line-height: 30px; font-weight: 900; text-transform: uppercase;">--}}
 {{--                        .MOORE--}}
 {{--                    </h2>--}}
 {{--                </a>--}}
@@ -139,22 +139,33 @@
 
 
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #250054;">
-    <a class="text-white logo sf-black pt-0" style="font-size: 25px; line-height: 105%; letter-spacing: 0.05em; text-transform: uppercase;" href="/home">.Moore</a>
+    <a class="text-white logo sf-black pt-0" style="font-size: 25px; line-height: 105%;     font-weight: 900; text-transform: uppercase;" href="/home">.Moore</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse pl-5" id="navbarNav">
         <ul class="navbar-nav w-100">
-            <li class="nav-item active">
+            <li class="nav-item active bt-li">
                 <a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item active bt-li">
                 <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>
             </li>
             @if(auth()->id() == 1)
-            <li class="nav-item active">
+            <li class="nav-item active bt-li">
             <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
+            </li>
+            <div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>
+            <li class="nav-item active bt-li">
+            <a href="https://to-moore.com/task" target="_blank" class="nav-link sf-medium text-white">ЗАДАЧА + </a>
+            </li>
+               <li class="nav-item active bt-li">
+            <a href="https://to-moore.com/bref" target="_blank" class="nav-link sf-medium text-white">БРИФ + </a>
+            </li>
+            <div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>
+                           <li class="nav-item active bt-li">
+            <a href="http://s.to-moore.com/" target="_blank" class="nav-link sf-medium text-white">СКРИПТ </a>
             </li>
             @endif
             <li class="nav-item ml-auto">
