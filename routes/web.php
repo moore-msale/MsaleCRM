@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
         return view('pages.notCall', ['calls' => \App\Call::where('user_id', auth()->id())->where('active',2)->get()->reverse()]);
     });
 
-    Route::get('/penalty_for_the_end_day','ReportController@penalty')->name('penalty_for_the_end_day');
+
 });
+Route::get('/penalty_for_the_end_day','ReportController@penalty')->name('penalty_for_the_end_day');
 
