@@ -94,26 +94,11 @@ class HomeController extends Controller
                 $plan->status = 1;
                 $plan->save();
             }
-            elseif($endday <= Carbon::now() && $plan->status != 1 && $plan->status != 3 && Carbon::now()->englishDayOfWeek != "Sunday")
-            {
-                $plan->status = 2;
-                $plan->save();
-            }
             $user = Auth::user();
             if (Carbon::yesterday()->month != Carbon::now()->month)
             {
                 $user->balance == 0;
                 $user->save();
-            }
-            if(Carbon::now() > $endday)
-            {
-                if($plan->status == 2)
-                {
-                    $plan->status = 3;
-                    $plan->save();
-                    $user->balance = $user->balance - 400;
-                    $user->save();
-                }
             }
 
         $penalty = $user->balance;

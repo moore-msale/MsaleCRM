@@ -46,6 +46,20 @@ $agent = New \Jenssegers\Agent\Agent();
 
         </main>
     </div>
+@if($agent->isPhone())
+    @include('modals.called-modal')
+    @include('modals.add_customer')
+    @include('modals.add_1_call')
+@else
+    @include('modals.create_task')
+    @include('modals.create_call')
+    @include('modals.create_meet')
+    @include('modals.create_client')
+    @include('modals.called-modal')
+    @include('modals.add_customer')
+    @include('modals.add_potencial')
+    @include('modals.create_task_admin')
+@endif
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
@@ -330,6 +344,41 @@ $agent = New \Jenssegers\Agent\Agent();
                         $('#taskname').val('');
                         $('#taskdescription').val('');
                         $('#taskdate').val('');
+
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+            })
+        </script>
+        <script>
+            $('.addTask2').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let title = $('#taskname2');
+                let desc = $('#taskdescription2');
+                let date = $('#taskdate2');
+                let user = $('#taskuser2');
+
+                $.ajax({
+                    url: '{{ route('task.store') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "title": title.val(),
+                        "description": desc.val(),
+                        "deadline_date": date.val(),
+                        "user_id": user.val(),
+                    },
+                    success: data => {
+                        $('#TaskCreate_admin').modal('hide');
+                        swal("Задача добавлена!","Отчет был отправлен","success");
+                        $('#taskname2').val('');
+                        $('#taskdescription2').val('');
+                        $('#taskdate2').val('');
+                        $('#taskuser2').val('');
 
                     },
                     error: () => {

@@ -156,6 +156,9 @@
             <li class="nav-item active">
             <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
             </li>
+                <li class="nav-item active">
+                    <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
+                </li>
             @endif
             <li class="nav-item ml-auto">
                 <span class="nav-link sf-medium text-white">{{ auth()->user()->name }}</span>

@@ -73,5 +73,11 @@
                 </form>
             </div>
         </div>
+        <div class="desc pt-2">
+            <p class="deal-text sf-bold mb-2">
+                <i class="fas fa-pencil-alt"></i><span class="pl-1 meet-company">{{ $meeting->description }}</span>
+            </p>
+        </div>
     </div>
+
 </div>

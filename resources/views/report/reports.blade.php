@@ -53,7 +53,11 @@
                         @continue
                     @else
                         <div class="tab-pane fade" id="man-{{$report->user_id}}" role="tabpanel" aria-labelledby="home-tab">
-
+                            <div class="pb-4">
+                                <p class="h4 font-weight-bold type-header">
+                                    Отчет за {{ \Illuminate\Support\Carbon::make($report->created_at)->format('d-m-Y')  }}
+                                </p>
+                            </div>
                             <div class="container-fluid">
                                 <div class="tab-content" id="myTabContent">
                                     <ul class="nav nav-tabs row" id="myTab" role="tablist">
