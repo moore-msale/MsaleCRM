@@ -25,19 +25,7 @@
             @endif
         </div>
     </div>
-    @if($agent->isPhone())
-        @include('modals.called-modal')
-        @include('modals.add_customer')
-        @include('modals.add_1_call')
-        @else
-        @include('modals.create_task')
-        @include('modals.create_call')
-        @include('modals.create_meet')
-        @include('modals.create_client')
-        @include('modals.called-modal')
-        @include('modals.add_customer')
-        @include('modals.add_potencial')
-    @endif
+
 
 @endsection
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ReportGeneration;
+use App\Mail\SendReport;
+use App\Plan;
 use App\Report;
 use App\User;
 use Carbon\Carbon;
@@ -47,5 +49,56 @@ class ReportController extends Controller
 //        Mail::to($user)->send(new ReportGeneration($reports));
 
 //        return 0;
+    }
+
+    public function penalty()
+    {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+        $users = User::all();
+
+        foreach ($users as $user)
+        {
+            $report = Report::where('created_at','>=',$today)->where('user_id', $user->id)->first();
+            if(Carbon::now()->englishDayOfWeek != "Sunday"){
+            if($report == null)
+            {
+                $user->balance = $user->balance-400;
+                $user->save();
+            }
+            }
+            
+            $plan = Plan::where('created_at','>=',$today)->where('user_id', $user->id)->first();
+            if($plan != null) {
+                if ($plan->meets_score >= 0 && $plan->status != 1) {
+                    $plan->status = 1;
+                    $plan->save();
+                } elseif ($plan->calls_score >= 66 && $plan->meets_score >= 1 && $plan->status != 1) {
+                    $plan->status = 1;
+                    $plan->save();
+                } elseif ($plan->calls_score >= 33 && $plan->meets_score >= 2 && $plan->status != 1) {
+                    $plan->status = 1;
+                    $plan->save();
+                } elseif ($plan->calls_score >= 0 && $plan->meets_score >= 3 && $plan->status != 1) {
+                    $plan->status = 1;
+                    $plan->save();
+                } elseif ($plan->status != 1 && $plan->status != 3 && Carbon::now()->englishDayOfWeek != "Sunday") {
+                    $plan->status = 2;
+                    $plan->save();
+                }
+                if (Carbon::now() > $endday) {
+                    if ($plan->status == 2) {
+                        $plan->status = 3;
+                        $plan->save();
+                        $user->balance = $user->balance - 400;
+                        $user->save();
+                    }
+                }
+            }
+        }
+
+        $plans = Plan::where('created_at','>=',$today)->where('user_id', '=', 1)->get();
+        Mail::to('mackinkenny@gmail.com')->send(new SendReport($plans));
+        return back();
     }
 }
