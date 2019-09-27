@@ -156,6 +156,17 @@
             <li class="nav-item active">
             <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
             </li>
+                <div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>
+                <li class="nav-item active bt-li">
+                    <a href="https://to-moore.com/task" target="_blank" class="nav-link sf-medium text-white">ЗАДАЧА + </a>
+                </li>
+                <li class="nav-item active bt-li">
+                    <a href="https://to-moore.com/bref" target="_blank" class="nav-link sf-medium text-white">БРИФ + </a>
+                </li>
+                <div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>
+                <li class="nav-item active bt-li">
+                    <a href="http://s.to-moore.com/" target="_blank" class="nav-link sf-medium text-white">СКРИПТ </a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
                 </li>
