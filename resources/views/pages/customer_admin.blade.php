@@ -136,8 +136,8 @@
                         </ul>
                     </div>
                 </div>
-            </div>
 @endforeach
+    </div>
     @foreach($custs as $cust)
         @foreach($cust as $cutomer)
             @include('modals.edit_customer')
