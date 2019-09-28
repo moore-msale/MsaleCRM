@@ -906,6 +906,47 @@ $agent = New \Jenssegers\Agent\Agent();
             })
         </script>
         <script>
+            $('.editCustomer2').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                console.log(btn.data('id'));
+                let id = btn.data('id');
+                let name = $('#client_name-' + id);
+                let company = $('#client_company-' + id);
+                let phone = $('#client_phone-' + id);
+                let social = $('#client_social-' + id);
+                let desc = $('#client_desc-' + id);
+
+
+                console.log(id);
+                    $.ajax({
+                        url: 'customerupdate',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "desc": desc.val(),
+                            "name": name.val(),
+                            "company": company.val(),
+                            "phone": phone.val(),
+                            "social": social.val(),
+                            "id": id,
+                        },
+                        success: data => {
+                            swal("Данные изменены!","Отчет был отправлен!","success");
+                            $('#customer-' + id).find('.cust-name').html(data.data.name);
+                            $('#customer-' + id).find('.cust-company').html(data.data.company);
+                            $('#customer-' + id).find('.cust-contact').html(data.data.contacts);
+                            $('#customer-' + id).find('.cust-social').html(data.data.socials);
+                                console.log(data);
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                        }
+                    })
+            })
+        </script>
+        <script>
             $('.addPotencial').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);

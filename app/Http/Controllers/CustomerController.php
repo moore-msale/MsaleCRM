@@ -243,18 +243,25 @@ class CustomerController extends Controller
      */
     public function update(Request $request)
     {
+//        dd($request->all());
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
 
         $customer = Customer::find($request->id);
+
         $task = $customer->task;
         $task->title = $request->name;
         $customer->name = $request->name;
         $customer->company = $request->company;
         $customer->contacts = $request->phone;
         $customer->socials = $request->social;
+        if (isset($request->desc))
+        {
+            $task->description = $request->desc;
+        }
         $customer->save();
         $task->save();
+        if(isset($request->details)){
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['custom_update'])) {
@@ -283,6 +290,7 @@ class CustomerController extends Controller
                 }
             }
             $report->save();
+        }
         }
         if(isset($customer->meeting->id)) {
             $id = $customer->meeting->id;
