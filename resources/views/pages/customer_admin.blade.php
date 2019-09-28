@@ -139,7 +139,7 @@
 @endforeach
     </div>
     @foreach($custs as $cust)
-        @foreach($cust as $cutomer)
+        @foreach($cust as $customer)
             @include('modals.edit_customer')
         @endforeach
     @endforeach
