@@ -85,7 +85,7 @@
 
                                     @foreach($cust as $customer)
                                         {{--@dd($customer->taskable->id)--}}
-                                        <div class="row pt-3 item-data" id="customer-{{ $customer->taskable->id }}" data-toggle="modal" data-target="#EditCustomer-{{ $customer->id }}">
+                                        <div class="row pt-3 item-data {{ $customer->status_id != 0 ? 'border-greener' : '' }}" id="customer-{{ $customer->taskable->id }}" data-toggle="modal" data-target="#EditCustomer-{{ $customer->id }}">
                                             @if(auth()->id() == 1)
                                                 <div class="col-3">
                                                     <p class="cust-name">
