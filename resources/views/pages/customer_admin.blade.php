@@ -23,27 +23,22 @@
                         Имя
                     </p>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <p class="point-text">
                         Компания
                     </p>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <p class="point-text">
                         Номер телефона
                     </p>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <p class="point-text">
                         Соц.сети
                     </p>
                 </div>
 
-                <div class="col-3">
-                    <p class="point-text">
-                        Менеджер
-                    </p>
-                </div>
             @else
                 <div class="col-4">
                     <p class="point-text">
@@ -76,24 +71,19 @@
                             {{$customer->taskable->name}}
                         </p>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <p>
                             {{$customer->taskable->company}}
                         </p>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <p>
                             {{$customer->taskable->contacts}}
                         </p>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <p>
                             {{$customer->taskable->socials}}
-                        </p>
-                    </div>
-                    <div class="col-3">
-                        <p>
-                            {{\App\User::find($customer->user_id)->name}}
                         </p>
                     </div>
                 @else
