@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/calln', 'CallController@notCall')->name('calln');
     Route::get('/clearCall', 'CallController@call_clear')->name('clearCall');
     Route::post('/balance_change', 'ReportController@balance')->name('balance_change');
+    Route::get('/planer','PlanController@planer')->name('planer');
 
     Route::get('/waitCall', function () {
         return view('pages.waitCall',['calls' => \App\Call::where('user_id', auth()->id())->where('active',1)->get()->reverse()]);
