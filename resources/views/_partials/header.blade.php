@@ -156,6 +156,7 @@
             <li class="nav-item active bt-li">
             <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
             </li>
+            @endif
             <div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>
             <li class="nav-item active bt-li">
             <a href="https://to-moore.com/task" target="_blank" class="nav-link sf-medium text-white">ЗАДАЧА + </a>
@@ -170,7 +171,7 @@
                 <li class="nav-item active">
                     <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
                 </li>
-            @endif
+            
             <li class="nav-item ml-auto">
                 <span class="nav-link sf-medium text-white">{{ auth()->user()->name }}</span>
             </li>
