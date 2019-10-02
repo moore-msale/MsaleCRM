@@ -171,9 +171,23 @@
                 <li class="nav-item active">
                     <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
                 </li>
-            
-            <li class="nav-item ml-auto">
-                <span class="nav-link sf-medium text-white">{{ auth()->user()->name }}</span>
+
+            <li class="nav-item dropdown ml-auto">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ auth::user()->name }} <span class="caret"></span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item text-dark" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        {{ __('Выйти') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
             </li>
         </ul>
     </div>
