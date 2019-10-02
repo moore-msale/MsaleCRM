@@ -98,7 +98,7 @@ class ReportController extends Controller
         }
 
         $plans = Plan::where('created_at','>=',$today)->where('user_id', '!=', 1)->get();
-        Mail::to('mackinkenny@gmail.com')->send(new SendReport($plans));
+        Mail::to('buvladi@gmail.com')->send(new SendReport($plans));
         return back();
     }
 }

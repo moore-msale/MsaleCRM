@@ -97,7 +97,7 @@ class HomeController extends Controller
             $user = Auth::user();
             if (Carbon::yesterday()->month != Carbon::now()->month)
             {
-                $user->balance == 0;
+                $user->balance = 0;
                 $user->save();
             }
 
