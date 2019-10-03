@@ -740,37 +740,42 @@ $agent = New \Jenssegers\Agent\Agent();
                 let desc = $('#client-desc');
                 let company = $('#client-company');
                 let social = $('#client-social');
-
-                $.ajax({
-                    url: '{{ route('customer.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id,
-                        "name": name.val(),
-                        "phone": phone.val(),
-                        "company": company.val(),
-                        "desc": desc.val(),
-                        "social": social.val(),
-                    },
-                    success: data => {
-                        $('#add_customer').modal('hide');
-                        $('#CreateClient').modal('hide');
-                        console.log(data);
-                        $('#call-' + id).hide(200);
-                        $('.calls_score').html(data.plan.calls_score);
-                        swal("Клиент добавлен!","Отчет был отправлен","success");
-                        $('#client-name').val('');
-                        $('#client-phone').val('');
-                        $('#client-desc').val('');
-                        $('#client-company').val('');
-                        $('#client-social').val('');
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
+                if(name.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
+                    $.ajax({
+                        url: '{{ route('customer.store') }}',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": id,
+                            "name": name.val(),
+                            "phone": phone.val(),
+                            "company": company.val(),
+                            "desc": desc.val(),
+                            "social": social.val(),
+                        },
+                        success: data => {
+                            $('#add_customer').modal('hide');
+                            $('#CreateClient').modal('hide');
+                            console.log(data);
+                            $('#call-' + id).hide(200);
+                            $('.calls_score').html(data.plan.calls_score);
+                            swal("Клиент добавлен!", "Отчет был отправлен", "success");
+                            $('#client-name').val('');
+                            $('#client-phone').val('');
+                            $('#client-desc').val('');
+                            $('#client-company').val('');
+                            $('#client-social').val('');
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                        }
+                    })
+                }
             })
         </script>
         <script>
@@ -783,7 +788,11 @@ $agent = New \Jenssegers\Agent\Agent();
                 let desc = $('#client_desc1');
                 let social = $('#client_social1');
                 let status = $('#client_status1').is(':checked') ? true : false;
-
+                if(name.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
                 $.ajax({
                     url: '{{ route('customer.store') }}',
                     method: 'POST',
@@ -815,6 +824,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
+                }
             })
         </script>
         <script>
