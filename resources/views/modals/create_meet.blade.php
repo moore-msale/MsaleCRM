@@ -25,7 +25,7 @@
 
                                 @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $customer)
                                     @if($customer->user_id == auth()->id())
-                                    <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }}</option>
+                                    <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }} - {{ $customer->taskable->company }}</option>
                                     @endif
                                 @endforeach
                             </select>

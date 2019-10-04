@@ -99,8 +99,7 @@ class HomeController extends Controller
         $penalty = $user->balance;
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)->where('status_id','!=','1')->get();
-        $customers = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)
-            ->where('deadline_date', '<=', $week)->where('status_id',1)->hasMorph(
+        $customers = Task::where('user_id',auth()->id())->where('status_id',1)->hasMorph(
             'taskable',
             'App\Customer'
         )->get();

@@ -740,7 +740,7 @@ $agent = New \Jenssegers\Agent\Agent();
                 let desc = $('#client-desc');
                 let company = $('#client-company');
                 let social = $('#client-social');
-                if(name.val() == '')
+                if(desc.val() == '')
                 {
                     swal("Заполните описание!","Поле описание стало обязательным","error");
                 }
@@ -788,7 +788,7 @@ $agent = New \Jenssegers\Agent\Agent();
                 let desc = $('#client_desc1');
                 let social = $('#client_social1');
                 let status = $('#client_status1').is(':checked') ? true : false;
-                if(name.val() == '')
+                if(desc.val() == '')
                 {
                     swal("Заполните описание!","Поле описание стало обязательным","error");
                 }
