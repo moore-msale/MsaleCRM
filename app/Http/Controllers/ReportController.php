@@ -57,19 +57,17 @@ class ReportController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
         $users = User::all();
 
-        foreach ($users as $user)
-        {
-            $report = Report::where('created_at','>=',$today)->where('user_id', $user->id)->first();
-            if(Carbon::now()->englishDayOfWeek != "Sunday"){
-            if($report == null)
-            {
-                $user->balance = $user->balance-400;
-                $user->save();
+        foreach ($users as $user) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', $user->id)->first();
+            if (Carbon::now()->englishDayOfWeek != "Sunday") {
+                if ($report == null) {
+                    $user->balance = $user->balance - 400;
+                    $user->save();
+                }
             }
-            }
-            
-            $plan = Plan::where('created_at','>=',$today)->where('user_id', $user->id)->first();
-            if($plan != null) {
+
+            $plan = Plan::where('created_at', '>=', $today)->where('user_id', $user->id)->first();
+            if ($plan != null) {
                 if ($plan->calls_score >= 60 && $plan->meets_score >= 0 && $plan->status != 1) {
                     $plan->status = 1;
                     $plan->save();
@@ -79,7 +77,6 @@ class ReportController extends Controller
                 } elseif ($plan->calls_score >= 0 && $plan->meets_score >= 2 && $plan->status != 1) {
                     $plan->status = 1;
                     $plan->save();
-                }
                 } elseif ($plan->status != 1 && $plan->status != 3 && Carbon::now()->englishDayOfWeek != "Sunday") {
                     $plan->status = 2;
                     $plan->save();
@@ -92,6 +89,17 @@ class ReportController extends Controller
                         $user->save();
                     }
                 }
+            }
+            else{
+                $plan = new Plan();
+                $plan->calls_goal = 60;
+                $plan->calls_score = 0;
+                $plan->meets_goal = 60;
+                $plan->meets_score = 0;
+                $plan->status = 3;
+                $plan->user_id = $user->id;
+                $plan->save();
+            }
         }
 
         $plans = Plan::where('created_at','>=',$today)->where('user_id', '!=', 1)->get();
