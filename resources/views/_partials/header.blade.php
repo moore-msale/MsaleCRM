@@ -168,9 +168,11 @@
                            <li class="nav-item active bt-li">
             <a href="http://s.to-moore.com/" target="_blank" class="nav-link sf-medium text-white">СКРИПТ </a>
             </li>
+            @if(auth()->id() == 1)
                 <li class="nav-item active">
                     <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
                 </li>
+            @endif
 
             <li class="nav-item dropdown ml-auto">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
