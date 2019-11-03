@@ -17,9 +17,14 @@
         </p>
         {{--@dd($tasks)--}}
         <div class="row" style="border-bottom: 1px solid #DEDEDE;">
-            <div class="col-6">
+            <div class="col-2">
                 <p class="title-task">
                     Наименование задачи
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="title-task">
+                    Описание
                 </p>
             </div>
             <div class="col-2">
@@ -44,7 +49,12 @@
         @foreach($tasks as $task)
             @if($task->status_id != 1 && \App\User::find($task->user_id)->role != 'admin')
             <div class="row py-2 task-point">
-                <div class="col-6 d-flex align-items-center">
+                <div class="col-2 d-flex align-items-center">
+                    <span class="task-name">
+                        {{ $task->title }}
+                    </span>
+                </div>
+                <div class="col-4 d-flex align-items-center">
                     <span class="task-name">
                         {{$task->description}}
                     </span>
@@ -84,9 +94,14 @@
             Выполненные задачи
         </p>
         <div class="row" style="border-bottom: 1px solid #DEDEDE;">
-            <div class="col-6">
+            <div class="col-2">
                 <p class="title-task">
                     Наименование задачи
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="title-task">
+                    Описание
                 </p>
             </div>
             <div class="col-2">
@@ -111,7 +126,12 @@
         @foreach($tasks as $task)
             @if($task->status_id == 1 && \App\User::find($task->user_id)->role != 'admin')
                 <div class="row py-2 task-point">
-                    <div class="col-6 d-flex align-items-center">
+                    <div class="col-2 d-flex align-items-center">
+                    <span class="task-name">
+                        {{ $task->title }}
+                    </span>
+                    </div>
+                    <div class="col-4 d-flex align-items-center">
                     <span class="task-name">
                         {{$task->description}}
                     </span>
