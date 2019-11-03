@@ -42,7 +42,7 @@
             </div>
         </div>
         @foreach($tasks as $task)
-            @if($task->status_id != 1)
+            @if($task->status_id != 1 && \App\User::find($task->user_id)->role != 'admin')
             <div class="row py-2 task-point">
                 <div class="col-6 d-flex align-items-center">
                     <span class="task-name">
@@ -109,7 +109,7 @@
             </div>
         </div>
         @foreach($tasks as $task)
-            @if($task->status_id == 1)
+            @if($task->status_id == 1 && \App\User::find($task->user_id)->role != 'admin')
                 <div class="row py-2 task-point">
                     <div class="col-6 d-flex align-items-center">
                     <span class="task-name">
