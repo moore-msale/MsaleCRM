@@ -13,10 +13,13 @@
     ?>
     {{--@dd(\App\Task::where('taskable_type','App\Customer')->get())--}}
     <div class="container-fluid">
-        <div class="row pt-lg-4 pt-0">
+
             @if($agent->isPhone())
+            <div class="row pt-lg-4 pt-0">
                 @include('tasks.index', ['calls2' => $calls])
+            </div>
                 @else
+            <div class="row pt-lg-4 pt-0 justify-content-center">
                 @include('tasks.statistics')
                 @include('tasks.index', ['tasks2' => $tasks])
                 @include('tasks.index', ['calls2' => $calls])

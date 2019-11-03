@@ -6,11 +6,14 @@
         <p class="sf-bold pt-2 mb-0 pb-2 text-white" style="font-size:9px; line-height: 6px;">Главная</p>
         </div>
         </a>
+
+        <a href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/tasks_admin' : '#' }}">
         <div class="point mb-2">
             {{--<i class="fas fa-home fa-2x"></i>--}}
             <img class="w-50 pt-1 point-ico" src="{{ 'images/edit-task.svg' }}" alt="">
-            <p class="sf-bold pt-2 pb-2 mb-0" style="font-size:9px; line-height: 6px;">Задачи</p>
+            <p class="sf-bold pt-2 pb-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Задачи</p>
         </div>
+        </a>
         <div class="point mb-2">
             {{--<i class="fas fa-home fa-2x"></i>--}}
             <img class="w-50 pt-1 point-ico" src="{{ 'images/call.svg' }}" alt="">

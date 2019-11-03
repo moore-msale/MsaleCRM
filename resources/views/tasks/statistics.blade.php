@@ -1,72 +1,82 @@
-<div class="px-0 h-auto pb-2 col-lg-3 col-15 d-lg-block d-none">
-    <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn purple darken-4">
-        <p class="text-white sf-bold mb-0">
-            ПЛАН НА ДЕНЬ
+<div class="px-0 h-auto pb-2 col-lg-15 col-15 d-lg-block d-none">
+<div class="row justify-content-center">
+    <div class="col-3 p-3">
+        <div class="plan-collumn  shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1 ? 'light-green accent-3' : ''}}">
+        <p class="head-text sf-medium mb-3">
+            План на день
         </p>
+            <div class="d-flex">
+                <div class="w-50">
+                    <img class="img-fluid" src="{{ asset('images/call.png') }}" alt="">
+                    <p class="head-text">
+                        Звонков: <span class="font-weight-bold">{{$plan->calls_goal}}</span>
+                    </p>
+                </div>
+                <div class="w-50">
+                    <img class="img-fluid" src="{{ asset('images/meets.png') }}" alt="">
+                    <p class="head-text">
+                        Встреч: <span class="font-weight-bold">{{$plan->meets_goal}}</span>
+                    </p>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="">
-
-        <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
-            <p class="head-text sf-bold mb-3">
-                ВЫПОЛНЕННЫЕ ЗВОНКИ
+    <div class="col-3 p-3">
+        <div class="plan-collumn shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1  ? 'light-green accent-3' : ''}}">
+            <p class="head-text sf-medium mb-3">
+                Выполненных встреч
             </p>
-            <p class="work-check sf-bold mb-0">
-                        <span class="first-child calls_score">
-                            {{$plan->calls_score}}
-                        </span>
-                <span class="last-child">
-                            /{{$plan->calls_goal}}
-                        </span>
-            </p>
+            <div class="d-flex align-items-end">
+                <img class="img-fluid" src="{{ asset('images/meets.png') }}" alt="">
+                <p class="head-text">
+                    <span class="font-weight-bold meets_score" style="font-size: 40px;">{{$plan->meets_score}}</span>  Встреч
+                </p>
+            </div>
         </div>
-        <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
-            <p class="head-text sf-bold mb-3">
-                ВЫПОЛНЕННЫЕ ВСТРЕЧИ
+    </div>
+    <div class="col-3 p-3">
+        <div class="plan-collumn shadow p-3 h-100 {{ $plan->status == 1  && auth()->id() != 1 ? 'light-green accent-3' : ''}}">
+            <p class="head-text sf-medium mb-3">
+                Выполненных звонков
             </p>
-            <p class="work-check sf-bold mb-0">
-                        <span class="first-child meets_score">
-                            {{$plan->meets_score}}
-                        </span>
-                <span class="last-child">
-                            /{{$plan->meets_goal}}
-                        </span>
-            </p>
+            <div class="d-flex align-items-end">
+                <img class="img-fluid" src="{{ asset('images/call.png') }}" alt="">
+                <p class="head-text">
+                    <span class="font-weight-bold calls_score" style="font-size: 40px;">{{$plan->calls_score}}</span>  Звонков
+                </p>
+            </div>
         </div>
-        {{--@if(!auth()->id() == 1)--}}
-        @if(auth()->id() != 1)
-        <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk" style="text-transform: uppercase;">
-            <p class="head-text sf-bold mb-3">
-                ВАШ БАЛАНС НА ДАННЫЙ МЕСЯЦ
-            </p>
+    </div>
+    <div class="col-3">
+            <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 shadow work-desk plan-collumn {{ $plan->status == 1  && auth()->id() != 1 ? 'light-green accent-3' : ''}}" style="text-transform: uppercase;">
+                <p class="head-text sf-bold mb-3">
+                    ВАШ БАЛАНС НА ДАННЫЙ МЕСЯЦ
+                </p>
 
-            <p class="work-check sf-bold mb-0">
-                @if($penalty < 0)
-                    <span class="first-child meets_score" style="color:red;">
+                <p class="work-check sf-bold mb-0">
+                    @if($penalty < 0)
+                        <span class="first-child meets_score" style="color:red;">
                             {{ $penalty }} сом
                         </span>
                     @else
-                    <span class="first-child meets_score" style="color:green;">
+                        <span class="first-child meets_score" style="color:green;">
                             {{ $penalty }} сом
                         </span>
                     @endif
 
-            </p>
-
-        </div>
-        @endif
-        @if($plan->status == 1 && auth()->id() != 1)
-            <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
-                <p class="mb-4 mt-4 first-child">План на день выполнен!</p>
+                </p>
+                @if($plan->status == 1 && auth()->id() != 1)
+                <div class="head-text font-weight-bold mt-3" style="text-transform: uppercase;">
+                    <p class="">План на день выполнен!</p>
+                </div>
+                        @elseif($plan->status == 3  && auth()->id() != 1)
+                <div class="head-text font-weight-bold mt-3" style="text-transform: uppercase;">
+                    <p class="">План на день не выполнен</p>
+                </div>
+                    @endif
             </div>
-            @elseif($plan->status == 3  && auth()->id() != 1)
-            <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-check" style="text-transform: uppercase;">
-                <img class="img-fluid" src="{{asset('images/angrychief.png')}}" alt="">
-            <p class="mb-1 mt-4 first-child">Шеф разочарован в тебе...</p>
-            {{--<p class="mb-4 mt-0 first-child" style="color:red!important;">ТЫ ТРУП!!!!</p>--}}
-             </div>
-        @endif
-            {{--@endif--}}
-
 
     </div>
+</div>
 </div>

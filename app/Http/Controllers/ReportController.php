@@ -104,19 +104,19 @@ class ReportController extends Controller
         }
 
         $plans = Plan::where('created_at','>=',$today)->where('user_id', '!=', 1)->get();
-        $client = new Client();
-        foreach ($plans as $plan)
-        {
-            $user = User::find($plan->user_id)->name;
-            $url = "https://api.telegram.org/bot925882756:AAEt3HsNT_PWsK_bYFzhFqXZUaq34Ayiz0c/sendMessage?chat_id=600765954&text=$user\"";
-            $response = $client->request('POST', $url);
-            $url = "https://api.telegram.org/bot925882756:AAEt3HsNT_PWsK_bYFzhFqXZUaq34Ayiz0c/sendMessage?chat_id=600765954&text=Звонков: $plan->calls_score\"";
-            $response = $client->request('POST', $url);
-            $url = "https://api.telegram.org/bot925882756:AAEt3HsNT_PWsK_bYFzhFqXZUaq34Ayiz0c/sendMessage?chat_id=600765954&text=Встреч: $plan->meets_score\"";
-            $response = $client->request('POST', $url);
-        }
+//        $client = new Client();
+//        foreach ($plans as $plan)
+//        {
+//            $user = User::find($plan->user_id)->name;
+//            $url = "https://api.telegram.org/bot925882756:AAEt3HsNT_PWsK_bYFzhFqXZUaq34Ayiz0c/sendMessage?chat_id=600765954&text=$user\"";
+//            $response = $client->request('POST', $url);
+//            $url = "https://api.telegram.org/bot925882756:AAEt3HsNT_PWsK_bYFzhFqXZUaq34Ayiz0c/sendMessage?chat_id=600765954&text=Звонков: $plan->calls_score\"";
+//            $response = $client->request('POST', $url);
+//            $url = "https://api.telegram.org/bot925882756:AAEt3HsNT_PWsK_bYFzhFqXZUaq34Ayiz0c/sendMessage?chat_id=600765954&text=Встреч: $plan->meets_score\"";
+//            $response = $client->request('POST', $url);
+//        }
 
-//        Mail::to('buvladi@gmail.com')->send(new SendReport($plans));
+        Mail::to('buvladi@gmail.com')->send(new SendReport($plans));
         return back();
     }
 }

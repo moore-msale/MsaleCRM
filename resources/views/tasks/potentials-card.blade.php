@@ -83,10 +83,5 @@
                 </form>
             </div>
         </div>
-        <div>
-            <p class="text-dark mb-0">
-                {{ $customer->description }}
-            </p>
-        </div>
     </div>
 </div>

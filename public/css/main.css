@@ -2,7 +2,62 @@ body
 {
     background: white;
 }
+@font-face {
+    font-family: 'SF Pro Display Ultralight';
+    src: local('SF Pro Display Ultralight'), local('SF-Pro-Display-Ultralight'),
+    url('/fonts/SFProDisplay-Ultralight.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SF Pro Display Light';
+    src: local('SF Pro Display Light'), local('SF-Pro-Display-Light'),
+    url('/fonts/SFProDisplay-Light.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SF Pro Display Medium';
+    src: local('SF Pro Display Medium'), local('SF-Pro-Display-Medium'),
+    url('/fonts/SFProDisplay-Medium.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SF Pro Display Bold';
+    src: local('SF Pro Display Bold'), local('SF-Pro-Display-Bold'),
+    url('/fonts/SFProDisplay-Bold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SF Pro Display Black';
+    src: local('SF Pro Display Black'), local('SF-Pro-Display-Black'),
+    url('/fonts/SFProDisplay-Black.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
 
+.sf-ultralight
+{
+    font-family: "SF Pro Display Ultralight";
+}
+.sf-light
+{
+    font-family: "SF Pro Display Light";
+}
+.sf-medium
+{
+    font-family: "SF Pro Display Medium";
+}
+.sf-bold
+{
+    font-family: "SF Pro Display Bold";
+}
+.sf-black
+{
+    font-family: "SF Pro Display Black";
+}
 /*  ШРИФТЫ  */
 #logo
 {
@@ -334,11 +389,47 @@ body
     color:#000000;
     font-size: 13px;
 }
+.plan-collumn
+{
+    border-radius: 10px ;
+}
 .report-block
 {
     background-color:#ffffff;
     border-radius:5px;
     box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.2);
+}
+.title-task
+{
+    font-size:12px;
+    line-height: 110%;
+    color: #a8a8a8;
+}
+.task-name
+{
+    font-size: 12px;
+    line-height: 110%;
+    color:#000000;
+}
+.task-ico
+{
+    opacity:0;
+}
+.task-point
+{
+    transition: 0.4s;
+}
+.task-point:hover .task-ico
+{
+    opacity: 1;
+}
+.task-button
+{
+    border-radius: 20px;
+}
+.task-point:hover
+{
+    box-shadow: 10px 14px 40px rgba(0, 0, 0, 0.1);
 }
 .point-text
 {

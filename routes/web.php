@@ -53,8 +53,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/notCall', function () {
         return view('pages.notCall', ['calls' => \App\Call::where('user_id', auth()->id())->where('active',2)->get()->reverse()]);
     });
-
+    Route::get('/tasks_admin', function () {
+        return view('pages.Tasks.task_page', ['tasks' => \App\Task::where('taskable_type', null)->get()->reverse()]);
+    });
 
 });
 Route::get('/penalty_for_the_end_day','ReportController@penalty')->name('penalty_for_the_end_day');
+Route::get('/manager_push_notification', 'NotificationController@notification')->name('manager_push_notification');
 
