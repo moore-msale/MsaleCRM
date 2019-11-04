@@ -1,4 +1,4 @@
-<div class="row py-2 task-point" id="task-{{$task->id}}">
+<div class="row py-2 task-point" id="task-{{$task->id}}" style="{{$task->chief != null ? 'border-left: 1px solid red;' : ''}}">
     <div class="col-2 d-flex align-items-center">
                     <span class="task-name">
                         {{ $task->title }}
