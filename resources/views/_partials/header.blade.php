@@ -254,6 +254,7 @@
             let desc = $('#taskdescription2');
             let date = $('#taskdate2');
             let user = $('#taskuser2');
+            let chief = 1;
 
             $.ajax({
                 url: '{{ route('task.store') }}',
@@ -264,6 +265,7 @@
                     "description": desc.val(),
                     "deadline_date": date.val(),
                     "user_id": user.val(),
+                    "chief": chief,
                 },
                 success: data => {
                     $('#TaskCreate_admin').modal('hide');

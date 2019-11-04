@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewTask;
 use App\Report;
 use App\Task;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -74,7 +77,11 @@ class TaskController extends Controller
             }
             $report->save();
         }
-        
+
+        if(isset($request->chief))
+        {
+            Mail::to(User::find($task->user_id)->email)->send(new NewTask($task));
+        }
         
         if ($request->ajax()){
             return response()->json([
