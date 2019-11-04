@@ -29,7 +29,7 @@ class CustomerController extends Controller
             return view('pages.Customers.customer_admin',['custs' => $customers->groupBy('user_id')]);
         }
         else
-        {
+        {   
         $customers = Task::where('user_id',auth()->id())->hasMorph(
                 'taskable',
                 'App\Customer'

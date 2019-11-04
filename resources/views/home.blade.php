@@ -144,37 +144,45 @@
                 let id = $('#caller_id').val();
                 let name = $('#client-name');
                 let phone = $('#client-phone');
+                let desc = $('#client-desc');
                 let company = $('#client-company');
                 let social = $('#client-social');
-
-                $.ajax({
-                    url: '{{ route('customer.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id,
-                        "name": name.val(),
-                        "phone": phone.val(),
-                        "company": company.val(),
-                        "social": social.val(),
-                    },
-                    success: data => {
-                        $('#add_customer').modal('hide');
-                        $('#CreateClient').modal('hide');
-                        console.log(data);
-                        $('#call-' + id).hide(200);
-                        $('.calls_score').html(data.plan.calls_score);
-                        swal("Клиент добавлен!","Отчет был отправлен","success");
-                        $('#client-name').val('');
-                        $('#client-phone').val('');
-                        $('#client-company').val('');
-                        $('#client-social').val('');
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
+                if(desc.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
+                    $.ajax({
+                        url: '{{ route('customer.store') }}',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": id,
+                            "name": name.val(),
+                            "phone": phone.val(),
+                            "desc": desc.val(),
+                            "company": company.val(),
+                            "social": social.val(),
+                        },
+                        success: data => {
+                            $('#add_customer').modal('hide');
+                            $('#CreateClient').modal('hide');
+                            console.log(data);
+                            $('#call-' + id).hide(200);
+                            $('.calls_score').html(data.plan.calls_score);
+                            swal("Клиент добавлен!", "Отчет был отправлен", "success");
+                            $('#client-name').val('');
+                            $('#client-phone').val('');
+                            $('#client-company').val('');
+                            $('#client-social').val('');
+                            $('#client-desc').val('');
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                        }
+                    })
+                }
             })
         </script>
         <script>
