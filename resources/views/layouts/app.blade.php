@@ -10,7 +10,27 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-
+    <style>
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            /*background-color:grey;*/
+            /*background-image: url('https://to-moore.com/images/beeline.png');*/
+            background-repeat: no-repeat;
+            background-color: white;
+            background-position: center;
+        }
+        @media screen and (min-width: 300px) and (max-width: 700px) {
+            .preloader
+            {
+                background-size:80%;
+            }
+        }
+    </style>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -27,6 +47,7 @@
     @stack('styles')
 </head>
 <body>
+<div class="preloader"></div>
 <?php
 $agent = New \Jenssegers\Agent\Agent();
 ?>
@@ -51,6 +72,14 @@ $agent = New \Jenssegers\Agent\Agent();
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function preloader() {
+        $('.preloader').fadeOut('slow').delay(10000);
+    };
+</script>
+<script>
+    setTimeout(preloader, 500);
+</script>
     <script>
         $(document).ready(function() {
             $('.date').bootstrapMaterialDatePicker
