@@ -26,6 +26,10 @@ class StatisticController extends Controller
             $kpd = (int)$kpd;
             $statistics->push([$user->id => $kpd]);
             }
+            else
+            {
+                $statistics->push([$user->id => 0]);
+            }
         }
         return view('pages.Statistic.statistic',['statistics' => $statistics]);
     }
