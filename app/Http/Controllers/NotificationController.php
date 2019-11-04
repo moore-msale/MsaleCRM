@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ManagerNotification;
 use App\Mail\ManagerTaskNotification;
+use App\Mail\TaskPenaltyByChief;
 use App\Task;
 use App\User;
 use Carbon\Carbon;
@@ -40,6 +41,13 @@ class NotificationController extends Controller
                 $task->save();
                 }
                 }
+            }
+            if($task->status_id != 1 && User::find($task->user_id)->role != 'admin' && $task->deadline_date < $now && $task->chief == 1)
+            {
+                $user = User::find($task->user_id);
+                $user->balance = $user->balance - 200;
+                $user->save();
+                Mail::to($user->email)->send(new TaskPenaltyByChief($task));
             }
         }
     }

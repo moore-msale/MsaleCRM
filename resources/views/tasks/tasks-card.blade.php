@@ -1,6 +1,9 @@
 <div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative mainer"
-     style="text-transform: uppercase;" id="task-{{$task->id}}">
-    {{--<div class="position-absolute bg-danger"--}}
+     style="text-transform: uppercase; {{ $task->chief == 1 ? 'border-left: 2px solid red;': ''}}" id="task-{{$task->id}}">
+    @if($task->chief == 1)
+    <div class="position-absolute bg-danger" style="height:10px; width:10px; border-radius: 50%; top:10%; right:5%;"></div>
+    @endif
+        {{--<div class="position-absolute bg-danger"--}}
          {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
     <div>
         <p class="deal-text sf-bold mb-3">

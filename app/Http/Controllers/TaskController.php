@@ -81,6 +81,8 @@ class TaskController extends Controller
         if(isset($request->chief))
         {
             Mail::to(User::find($task->user_id)->email)->send(new NewTask($task));
+            $task->chief = 1;
+            $task->save();
         }
         
         if ($request->ajax()){
