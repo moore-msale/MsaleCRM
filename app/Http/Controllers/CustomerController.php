@@ -26,7 +26,7 @@ class CustomerController extends Controller
             $customers = Task::where('taskable_type','App\Customer')->get();
 //            dd($customers->groupBy('user_id'));
 
-            return view('pages.customer_admin',['custs' => $customers->groupBy('user_id')]);
+            return view('pages.Customers.customer_admin',['custs' => $customers->groupBy('user_id')]);
         }
         else
         {
@@ -34,7 +34,7 @@ class CustomerController extends Controller
                 'taskable',
                 'App\Customer'
             )->get();
-            return view('pages.customer',['customers' => $customers]);
+            return view('pages.Customers.customer',['customers' => $customers]);
         }
     }
 

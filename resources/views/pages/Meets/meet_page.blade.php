@@ -14,16 +14,21 @@
 
     <div class="container-fluid p-5">
         <p class="h2 font-weight-bold pb-5" style="font-size:23px; line-height: 27px; color:#545454">
-            Задачи
+            Встречи
         </p>
         {{--@dd($tasks)--}}
         <div class="row" style="border-bottom: 1px solid #DEDEDE;">
             <div class="col-2">
                 <p class="title-task">
-                    Наименование задачи
+                    Имя
                 </p>
             </div>
-            <div class="col-4">
+            <div class="col-2">
+                <p class="title-task">
+                    Компания
+                </p>
+            </div>
+            <div class="col-3">
                 <p class="title-task">
                     Описание
                 </p>
@@ -43,26 +48,31 @@
                     Статус выполнения
                 </p>
             </div>
-            <div class="col-3">
+            <div class="col-2">
 
             </div>
         </div>
         @foreach($tasks as $task)
             @if($task->status_id != 1 && \App\User::find($task->user_id)->role != 'admin')
-                @include('pages.Tasks.includes.task')
+                @include('pages.Meets.includes.meet')
             @endif
         @endforeach
 
         <p class="h2 font-weight-bold py-5" style="font-size:23px; line-height: 27px; color:#545454">
-            Выполненные задачи
+            Завершенные встречи
         </p>
         <div class="row" style="border-bottom: 1px solid #DEDEDE;">
             <div class="col-2">
                 <p class="title-task">
-                    Наименование задачи
+                    Имя
                 </p>
             </div>
-            <div class="col-4">
+            <div class="col-2">
+                <p class="title-task">
+                    Компания
+                </p>
+            </div>
+            <div class="col-3">
                 <p class="title-task">
                     Описание
                 </p>
@@ -82,14 +92,14 @@
                     Статус выполнения
                 </p>
             </div>
-            <div class="col-3">
+            <div class="col-2">
 
             </div>
         </div>
         <div class="content-tasker" id="content-tasker">
             @foreach($tasks as $task)
                 @if($task->status_id == 1 && \App\User::find($task->user_id)->role != 'admin')
-                    @include('pages.Tasks.includes.done_task')
+                    @include('pages.Meets.includes.done_meet')
                 @endif
             @endforeach
         </div>

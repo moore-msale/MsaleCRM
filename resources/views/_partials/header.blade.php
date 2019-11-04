@@ -146,13 +146,13 @@
     </button>
     <div class="collapse navbar-collapse pl-5" id="navbarNav">
         <ul class="navbar-nav w-100">
-            <li class="nav-item active bt-li">
-                <a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>
-            </li>
+            {{--<li class="nav-item active bt-li">--}}
+                {{--<a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>--}}
+            {{--</li>--}}
             <li class="nav-item active bt-li">
                 <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>
             </li>
-            @if(auth()->id() == 1)
+            @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
             <li class="nav-item active bt-li">
             <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
             </li>
@@ -168,7 +168,7 @@
                            <li class="nav-item active bt-li">
             <a href="http://s.to-moore.com/" target="_blank" class="nav-link sf-medium text-white">СКРИПТ </a>
             </li>
-            @if(auth()->id() == 1)
+            @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
                 <li class="nav-item active">
                     <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
                 </li>
@@ -194,3 +194,91 @@
         </ul>
     </div>
 </nav>
+@include('modals.create_client')
+@include('modals.create_task_admin')
+@push('scripts')
+    <script>
+        $('.addClient1').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let name = $('#client_name1');
+            let phone = $('#client_phone1');
+            let company = $('#client_company1');
+            let desc = $('#client_desc1');
+            let social = $('#client_social1');
+            let status = $('#client_status1').is(':checked') ? true : false;
+            if(desc.val() == '')
+            {
+                swal("Заполните описание!","Поле описание стало обязательным","error");
+            }
+            else {
+                $.ajax({
+                    url: '{{ route('customer.store') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "name": name.val(),
+                        "phone": phone.val(),
+                        "company": company.val(),
+                        "social": social.val(),
+                        "desc": desc.val(),
+                        "status": status
+                    },
+                    success: data => {
+                        $('#ClientCreate').modal('hide');
+                        console.log(data);
+                        swal("Клиент добавлен!","Отчет был отправлен","success");
+                        $('#client_name1').val('');
+                        $('#client_phone1').val('');
+                        $('#client_company1').val('');
+                        $('#client_desc1').val('');
+                        $('#client_social1').val('');
+
+                        if(data.view){
+                            let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                        }
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+            }
+        })
+    </script>
+    <script>
+        $('.addTask2').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let title = $('#taskname2');
+            let desc = $('#taskdescription2');
+            let date = $('#taskdate2');
+            let user = $('#taskuser2');
+
+            $.ajax({
+                url: '{{ route('task.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title": title.val(),
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "user_id": user.val(),
+                },
+                success: data => {
+                    $('#TaskCreate_admin').modal('hide');
+                    swal("Задача добавлена!","Отчет был отправлен","success");
+                    $('#taskname2').val('');
+                    $('#taskdescription2').val('');
+                    $('#taskdate2').val('');
+                    $('#taskuser2').val('');
+
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+        })
+    </script>
+@endpush

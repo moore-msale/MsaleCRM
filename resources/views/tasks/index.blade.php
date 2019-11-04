@@ -1,5 +1,5 @@
 @if(isset($tasks2))
-        <div class="px-0 h-auto col-lg-3 col-15 d-lg-block d-none">
+        <div class="px-0 h-auto d-lg-block d-none" style="width:25%;">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn red accent-2">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ЗАДАЧИ
@@ -20,7 +20,7 @@
         </div>
 @endif
 @if(isset($calls2))
-        <div class="px-0 h-auto col-lg-3 col-15">
+        <div class="px-0 h-auto" style="width:25%;">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center category-btn indigo accent-3">
                 <a href="/home" class="text-white sf-bold mb-0 mr-auto px-3 py-3">
                     ВСЕ ЗВОНКИ
@@ -57,7 +57,7 @@
         </div>
 @endif
 @if(isset($meetings2))
-        <div class="px-0 h-auto col-lg-3 col-15 d-lg-block d-none">
+        <div class="px-0 h-auto d-lg-block d-none" style="width:25%;">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn yellow darken-1">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ВСТРЕЧИ
@@ -78,7 +78,7 @@
         </div>
 @endif
 @if(isset($customers2))
-        <div class="px-0 h-auto col-lg-3 col-15 d-lg-block d-none">
+        <div class="px-0 h-auto d-lg-block d-none" style="width:25%;">
             <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center p-3 category-btn light-green accent-4">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ПОТЕНЦИАЛЬНЫЕ КЛИЕНТЫ

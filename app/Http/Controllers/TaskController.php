@@ -84,6 +84,7 @@ class TaskController extends Controller
                 'view' => view('tasks.tasks-card', [
                     'task' => $task,
                 ])->render(),
+
             ], 200);
         }
 
@@ -266,7 +267,10 @@ class TaskController extends Controller
 
         if ($request->ajax()){
             return response()->json([
-                'status' => "success"
+                'status' => "success",
+                'view' => view('pages.Tasks.includes.done_task', [
+                    'task' => $task,
+                ])->render(),
             ]);
         }
 
