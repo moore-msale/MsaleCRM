@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ManagerNotification;
 use App\Mail\ManagerTaskNotification;
+use App\Mail\PenaltyNotificationToChief;
 use App\Mail\TaskPenaltyByChief;
 use App\Task;
 use App\User;
@@ -46,8 +47,11 @@ class NotificationController extends Controller
             {
                 $user = User::find($task->user_id);
                 $user->balance = $user->balance - 200;
+                $task->chief = 2;
                 $user->save();
+                $task->save();
                 Mail::to($user->email)->send(new TaskPenaltyByChief($task));
+                Mail::to('buvladi@gmail.com')->send(new PenaltyNotificationToChief($task));
             }
         }
     }
