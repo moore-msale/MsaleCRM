@@ -285,31 +285,36 @@
                 let desc = $('#taskdescription');
                 let date = $('#taskdate');
                 let user = $('#taskuser');
+                if(desc.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
+                    $.ajax({
+                        url: '{{ route('task.store') }}',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "title": title.val(),
+                            "description": desc.val(),
+                            "deadline_date": date.val(),
+                            "user_id": user.val(),
+                        },
+                        success: data => {
+                            $('#TaskCreate').modal('hide');
+                            swal("Задача добавлена!", "Отчет был отправлен", "success");
+                            let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                            $('#taskname').val('');
+                            $('#taskdescription').val('');
+                            $('#taskdate').val('');
 
-                $.ajax({
-                    url: '{{ route('task.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "title": title.val(),
-                        "description": desc.val(),
-                        "deadline_date": date.val(),
-                        "user_id": user.val(),
-                    },
-                    success: data => {
-                        $('#TaskCreate').modal('hide');
-                        swal("Задача добавлена!","Отчет был отправлен","success");
-                        let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        $('#taskname').val('');
-                        $('#taskdescription').val('');
-                        $('#taskdate').val('');
-
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                        }
+                    })
+                }
             })
         </script>
 
@@ -321,31 +326,36 @@
                 let desc = $('#meetingdescription');
                 let date = $('#meetingdate');
                 let user = $('#meetinguser');
-
-                $.ajax({
-                    url: '{{ route('meeting.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id.val(),
-                        "description": desc.val(),
-                        "deadline_date": date.val(),
-                        "user_id": user.val(),
-                    },
-                    success: data => {
-                        $('#MeetCreate').modal('hide');
-                        console.log(data);
-                        swal("Встреча добавлена!","Отчет был отправлен","success");
-                        let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        $('#meetingname').val('');
-                        $('#meetingdescription').val('');
-                        $('#meetingdate').val('');
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
+                if(desc.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
+                    $.ajax({
+                        url: '{{ route('meeting.store') }}',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": id.val(),
+                            "description": desc.val(),
+                            "deadline_date": date.val(),
+                            "user_id": user.val(),
+                        },
+                        success: data => {
+                            $('#MeetCreate').modal('hide');
+                            console.log(data);
+                            swal("Встреча добавлена!", "Отчет был отправлен", "success");
+                            let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                            $('#meetingname').val('');
+                            $('#meetingdescription').val('');
+                            $('#meetingdate').val('');
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                        }
+                    })
+                }
             })
         </script>
         <script>
@@ -517,36 +527,40 @@
                 let title = $('#taskchangename-' + id);
                 let desc = $('#taskchangedesc-' + id);
                 let date = $('#taskchangedate-' + id);
-
-                console.log(id);
-                if(details.val().length < 20)
+                if(desc.val() == '')
                 {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
                 }
                 else {
-                    $.ajax({
-                        url: 'taskupdate',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
-                            "title": title.val(),
-                            "desc": desc.val(),
-                            "date": date.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            swal("Встреча изменена!","Отчет был отправлен","success");
-                            $('#task-' + id).find('.task-title').html(data.data.title);
-                            $('#task-' + id).find('.task-date').html(data.data.deadline_date);
-                            $('#task-' + id).find('.task-desc').html(data.data.description);
-                            console.log(data);
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                        }
-                    })
+                    console.log(id);
+                    if (details.val().length < 20) {
+                        swal("Неправильный ввод!", "Нужно ввести в поле 'причина' не менее 20 символов для изменения!", "error");
+                    }
+                    else {
+                        $.ajax({
+                            url: 'taskupdate',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "details": details.val(),
+                                "title": title.val(),
+                                "desc": desc.val(),
+                                "date": date.val(),
+                                "id": id,
+                            },
+                            success: data => {
+                                swal("Встреча изменена!", "Отчет был отправлен", "success");
+                                $('#task-' + id).find('.task-title').html(data.data.title);
+                                $('#task-' + id).find('.task-date').html(data.data.deadline_date);
+                                $('#task-' + id).find('.task-desc').html(data.data.description);
+                                console.log(data);
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                            }
+                        })
+                    }
                 }
             })
         </script>
@@ -802,34 +816,39 @@
                 let phone = $('#client_phone-' + id);
                 let social = $('#client_social-' + id);
                 let desc = $('#client_desc-' + id);
+                if(desc.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
 
-
-                console.log(id);
-                $.ajax({
-                    url: 'customerupdate',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "desc": desc.val(),
-                        "name": name.val(),
-                        "company": company.val(),
-                        "phone": phone.val(),
-                        "social": social.val(),
-                        "id": id,
-                    },
-                    success: data => {
-                        swal("Данные изменены!","Отчет был отправлен!","success");
-                        $('#customer-' + id).find('.cust-name').html(data.data.name);
-                        $('#customer-' + id).find('.cust-company').html(data.data.company);
-                        $('#customer-' + id).find('.cust-contact').html(data.data.contacts);
-                        $('#customer-' + id).find('.cust-social').html(data.data.socials);
-                        console.log(data);
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
+                    console.log(id);
+                    $.ajax({
+                        url: 'customerupdate',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "desc": desc.val(),
+                            "name": name.val(),
+                            "company": company.val(),
+                            "phone": phone.val(),
+                            "social": social.val(),
+                            "id": id,
+                        },
+                        success: data => {
+                            swal("Данные изменены!", "Отчет был отправлен!", "success");
+                            $('#customer-' + id).find('.cust-name').html(data.data.name);
+                            $('#customer-' + id).find('.cust-company').html(data.data.company);
+                            $('#customer-' + id).find('.cust-contact').html(data.data.contacts);
+                            $('#customer-' + id).find('.cust-social').html(data.data.socials);
+                            console.log(data);
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                        }
+                    })
+                }
             })
         </script>
         <script>
@@ -839,29 +858,34 @@
                 let id = $('#potencialname');
                 let desc = $('#potencialdescription');
                 let date = $('#potencialdate');
-
-                $.ajax({
-                    url: '{{ route('customerchange') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id.val(),
-                        "desc": desc.val(),
-                        "date": date.val(),
-                    },
-                    success: data => {
-                        $('#addPotencial').modal('hide');
-                        console.log(data);
-                        swal("Потенциальный клиент добавлен!","Отчет был отправлен","success");
-                        if(data.view){
-                            let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                if(desc.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
+                    $.ajax({
+                        url: '{{ route('customerchange') }}',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": id.val(),
+                            "desc": desc.val(),
+                            "date": date.val(),
+                        },
+                        success: data => {
+                            $('#addPotencial').modal('hide');
+                            console.log(data);
+                            swal("Потенциальный клиент добавлен!", "Отчет был отправлен", "success");
+                            if (data.view) {
+                                let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                            }
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
                         }
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
+                    })
+                }
             })
         </script>
         <script>
