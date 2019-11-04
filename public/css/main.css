@@ -4,6 +4,10 @@ body
 }
 @media screen and (min-width: 1000px)
 {
+    .collumn-4
+    {
+        width:100%;
+    }
     @font-face {
         font-family: 'SF Pro Display Ultralight';
         src: local('SF Pro Display Ultralight'), local('SF-Pro-Display-Ultralight'),
@@ -395,7 +399,11 @@ body
 }
 .plan-collumn
 {
-    border-radius: 10px ;
+    /*border-radius: 10px ;*/
+}
+.collumn-4
+{
+    width:25%;
 }
 .report-block
 {

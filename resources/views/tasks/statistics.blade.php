@@ -1,6 +1,6 @@
 <div class="px-0 h-auto pb-2 col-lg-15 col-15 d-lg-block d-none">
 <div class="row justify-content-center">
-    <div class="p-3" style="width:25%;">
+    <div class="p-3 collumn-4" style="width:25%;">
         <div class="plan-collumn  shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1 ? 'light-green accent-3' : ''}}">
         <p class="head-text sf-medium mb-3">
             План на день
