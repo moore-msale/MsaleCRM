@@ -170,3 +170,34 @@
     </div>
 
 @endsection
+@push('scripts')
+    <script>
+        $('.balance-change').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let balance = $('#balance-' + id);
+            console.log(id);
+            $.ajax({
+                url: 'balance_change',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                    "balance": balance.val(),
+                },
+                success: data => {
+                    swal("Баланс изменен",".","success");
+                    $('#balance-' + id).val(data.data.balance);
+                    console.log(data);
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                },
+            })
+
+
+        })
+    </script>
+@endpush

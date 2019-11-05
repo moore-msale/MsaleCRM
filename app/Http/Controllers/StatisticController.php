@@ -12,7 +12,7 @@ class StatisticController extends Controller
     public function index()
     {
         $statistics = collect();
-        $month = Carbon::now()->month;
+        $month = Carbon::now()->month-1;
 //        dd($month);
         $users = User::where('role','!=','admin')->get();
 
