@@ -37,7 +37,7 @@
                             <div class="col-12 d-flex align-items-center">
                                 @if($statistic[$user->id] >= 100)
                                 <div class="stat widther" style="height:20px; background:greenyellow; width: {{ $statistic[$user->id]*5 }}px;"></div>
-                                @elseif($statistic[$user->id] < 100 && $statistic[$user->id] > 50)
+                                @elseif($statistic[$user->id] < 100 && $statistic[$user->id] >= 50)
                                     <div class="stat widther" style="height:20px; background:yellow; width: {{ $statistic[$user->id]*5 }}px;"></div>
                                     @elseif($statistic[$user->id] < 50 && $statistic[$user->id] > 0)
                                     <div class="stat widther" style="height:20px; background:red; width: {{ $statistic[$user->id]*5 }}px;"></div>
