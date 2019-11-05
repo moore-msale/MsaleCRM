@@ -138,6 +138,9 @@ class TaskController extends Controller
         $task = Task::find($request->id);
         $task->title = $request->title;
         $task->description = $request->desc;
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
+        $request->request->remove('date');
+        $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
         $task->save();
 
@@ -146,7 +149,10 @@ class TaskController extends Controller
             if (!isset($report->data['task_update'])) {
                 $item = collect($task);
                 $item = $item->push(Carbon::now()->format('H:i:s'));
-                $item = $item->push($request->details);
+                if(isset($request->details))
+                {
+                    $item = $item->push($request->details);
+                }
                 $tts = collect(['task_update' => new Collection()]);
                 $result = $tts['task_update']->push($item);
                 $tts = collect($result);
@@ -158,7 +164,9 @@ class TaskController extends Controller
             } else {
                 $item = collect($task);
                 $item = $item->push(Carbon::now()->format('H:i:s'));
-                $item = $item->push($request->details);
+                if(isset($request->details)) {
+                    $item = $item->push($request->details);
+                }
                 $tts = collect(['task_update' => collect($report->data['task_update'])]);
                 $result = $tts['task_update']->push($item);
                 $tts = collect($result);

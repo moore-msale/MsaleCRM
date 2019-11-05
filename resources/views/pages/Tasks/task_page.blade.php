@@ -4,6 +4,10 @@
         .men-use {
             background: #1F0343 !important;
         }
+        .ico-delete, .ico-edit
+        {
+            display:none;
+        }
 
     </style>
 @endpush
@@ -97,7 +101,7 @@
 
 @endsection
 @foreach($tasks as $task)
-    @include('modals.done_task')
+    @include('modals.tasks.done_task')
 @endforeach
 
 @push('scripts')

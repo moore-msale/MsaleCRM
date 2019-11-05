@@ -133,6 +133,6 @@
             </div>
         </div>
     </div>
-    @include('modals.create_client')
-    @include('modals.add_customer')
+    @include('modals.customers.create_client')
+    @include('modals.customers.add_customer')
 @endsection

@@ -211,11 +211,10 @@
                 </div>
             @endforeach
     </div>
+    </div>
 
 @endsection
-@foreach($tasks as $task)
-    @include('modals.done_task')
-@endforeach
+
 
 @push('scripts')
     <script>
@@ -254,6 +253,82 @@
             }
 
 
+        })
+    </script>
+    <script>
+        $('.deleteTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let details = $('#details_delete_Task-' + id);
+
+            console.log(id);
+            if(details.val().length < 20)
+            {
+                swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+            }
+            else {
+                $.ajax({
+                    url: 'taskdelete',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "details": details.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        swal("Задача удалена!","Отчет был отправлен","success");
+                        $('#task-' + id).hide(200);
+                        $('#DeleteTask-' + id).modal('hide');
+                        console.log(data);
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+            }
+
+
+        })
+    </script>
+    <script>
+        $('.editTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let title = $('#task_name-' + id);
+            let desc = $('#task_desc-' + id);
+            let date = $('#task_date-' + id);
+            if(desc.val() == '')
+            {
+                swal("Заполните описание!","Поле описание стало обязательным","error");
+            }
+            else {
+                console.log(id);
+                    $.ajax({
+                        url: 'taskupdate',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "title": title.val(),
+                            "desc": desc.val(),
+                            "date": date.val(),
+                            "id": id,
+                        },
+                        success: data => {
+                            swal("Встреча изменена!", "Отчет был отправлен", "success");
+                            $('#task-' + id).find('.task-title').html(data.data.title);
+                            $('#task-' + id).find('.task-date').html(data.data.deadline_date);
+                            $('#task-' + id).find('.task-desc').html(data.data.description);
+                            console.log(data);
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                        }
+                    })
+            }
         })
     </script>
 @endpush

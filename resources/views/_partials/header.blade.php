@@ -194,8 +194,8 @@
         </ul>
     </div>
 </nav>
-@include('modals.create_client')
-@include('modals.create_task_admin')
+@include('modals.customers.create_client')
+@include('modals.tasks.create_task_admin')
 @push('scripts')
     <script>
         $('.addClient1').click(e => {

@@ -37,9 +37,9 @@
             </div>
         </div>
     </div>
-    @include('modals.called-modal')
-    @include('modals.add_customer')
-    @include('modals.add_1_call')
+    @include('modals.calls.called-modal')
+    @include('modals.customers.add_customer')
+    @include('modals.calls.add_1_call')
 @endsection
 
 @push('scripts')

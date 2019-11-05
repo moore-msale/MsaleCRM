@@ -30,16 +30,16 @@
     </div>
 
     @if($agent->isPhone())
-        @include('modals.called-modal')
-        @include('modals.add_customer')
-        @include('modals.add_1_call')
+        @include('modals.calls.called-modal')
+        @include('modals.customers.add_customer')
+        @include('modals.calls.add_1_call')
     @else
-        @include('modals.create_task')
-        @include('modals.create_call')
-        @include('modals.create_meet')
-        @include('modals.called-modal')
-        @include('modals.add_customer')
-        @include('modals.add_potencial')
+        @include('modals.tasks.create_task')
+        @include('modals.calls.create_call')
+        @include('modals.meets.create_meet')
+        @include('modals.calls.called-modal')
+        @include('modals.customers.add_customer')
+        @include('modals.customers.add_potencial')
     @endif
 @endsection
 
@@ -740,6 +740,44 @@
                         },
                         success: data => {
                             swal("Потенциальный клиент удален!","Отчет был отправлен","success");
+                            $('#DeleteCustomer-' + id).modal('hide');
+                            $('#customer-' + id).hide(200);
+                            console.log(data);
+                        },
+                        error: () => {
+                            console.log(0);
+                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                        }
+                    })
+                }
+
+
+            })
+        </script>
+        <script>
+            $('.doneCustomer').click(e => {
+                e.preventDefault();
+                let btn = $(e.currentTarget);
+                let id = btn.data('id');
+                let details = $('#details_done_Customer-' + id);
+
+                console.log(id);
+                if(details.val().length < 20)
+                {
+                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+                }
+                else {
+                    $.ajax({
+                        url: 'customerdone',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "details": details.val(),
+                            "id": id,
+                        },
+                        success: data => {
+                            swal("Потенциальный клиент закрыт!","Отчет был отправлен","success");
+                            $('#DoneCustomer-' + id).modal('hide');
                             $('#customer-' + id).hide(200);
                             console.log(data);
                         },
@@ -816,6 +854,7 @@
                 let phone = $('#client_phone-' + id);
                 let social = $('#client_social-' + id);
                 let desc = $('#client_desc-' + id);
+                let date = $('#client_date-' + id);
                 if(desc.val() == '')
                 {
                     swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -833,6 +872,7 @@
                             "company": company.val(),
                             "phone": phone.val(),
                             "social": social.val(),
+                            "date": date.val(),
                             "id": id,
                         },
                         success: data => {
@@ -841,6 +881,7 @@
                             $('#customer-' + id).find('.cust-company').html(data.data.company);
                             $('#customer-' + id).find('.cust-contact').html(data.data.contacts);
                             $('#customer-' + id).find('.cust-social').html(data.data.socials);
+                            $('#customer-' + id).find('.cust-desc').html(data.data.desc);
                             console.log(data);
                         },
                         error: () => {
@@ -943,8 +984,6 @@
                         swal("Звонок не был перемещен!","Лимит на перенос в список 'Не ответившие' превышен 20 звонков.");
                     }
                 })
-
-
             })
         </script>
         <script>

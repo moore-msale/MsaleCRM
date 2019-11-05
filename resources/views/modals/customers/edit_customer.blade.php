@@ -28,6 +28,10 @@
                             <label for="client_phone-{{ $customer->taskable->id }}">Номер телефона</label>
                         </div>
                         <div class="md-form">
+                            <input type="text" name="deadline_date" id="client_date-{{ $customer->taskable->id }}" class="form-control date-format" value="{{ $customer->deadline_date }}">
+                            <label for="client_date-{{ $customer->taskable->id }}">Дата выполнения</label>
+                        </div>
+                        <div class="md-form">
                             <input type="text" id="client_company-{{ $customer->taskable->id }}" name="company" class="form-control" value="{{ $customer->taskable->company }}">
                             <label for="client_company-{{ $customer->taskable->id }}">Компания</label>
                         </div>

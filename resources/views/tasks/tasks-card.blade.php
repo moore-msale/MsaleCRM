@@ -70,7 +70,7 @@
                     </div>
                     <div class="md-form">
                         <input placeholder="Выберите дату" type="text" name="date" id="taskchangedate-{{$task->id}}"
-                               class="form-control date" value="{{$task->deadline_date}}">
+                               class="form-control date-format" value="{{$task->deadline_date}}">
                     </div>
                     <a href="#collapseedit{{$task->id}}" data-toggle="collapse" data-id="{{$task->id}}"
                        class="bg-warning px-2 py-1 border-0 confirm-but text-white btn editTask">

@@ -58,7 +58,8 @@ class HomeController extends Controller
                 'custom_store' => new Collection(),
                 'custom_delete' => new Collection(),
                 'custom_potencial' => new Collection(),
-                'custom_update' => new Collection()
+                'custom_update' => new Collection(),
+                'custom_done' => new Collection()
             ]);
             $report->status = 0;
             $report->save();

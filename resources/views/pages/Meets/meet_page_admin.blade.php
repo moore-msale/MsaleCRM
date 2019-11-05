@@ -234,7 +234,7 @@
 
         @endsection
         @foreach($tasks as $task)
-            @include('modals.done_task')
+            @include('modals.tasks.done_task')
         @endforeach
 
         @push('scripts')

@@ -255,6 +255,10 @@ class CustomerController extends Controller
         $customer->company = $request->company;
         $customer->contacts = $request->phone;
         $customer->socials = $request->social;
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
+        $request->request->remove('date');
+        $request->merge(['date' => $deadline_date]);
+        $task->deadline_date = $request->date;
         if (isset($request->desc))
         {
             $task->description = $request->desc;
@@ -322,7 +326,7 @@ class CustomerController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
         $customer = Customer::find($request->id);
         $task = $customer->task;
-        $task->status_id = 0;
+        $task->status_id = 5;
         $task->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
@@ -363,6 +367,53 @@ class CustomerController extends Controller
         }
 
         return back();
+    }
+
+    public function done(Request $request)
+    {
+        $today = Carbon::now()->setTime('00', '00');
+        $endday = Carbon::now()->setTime('18','00','00');
+        $customer = Customer::find($request->id);
+        $task = $customer->task;
+        $task->status_id = 2;
+        $task->save();
+        if(Carbon::now() < $endday) {
+            $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
+            if (!isset($report->data['custom_done'])) {
+                $item = collect($customer);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
+//                $item = $item->push($task);
+                $tts = collect(['custom_done' => new Collection()]);
+                $result = $tts['custom_done']->push($item);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['custom_done' => $tts]));
+                } else {
+                    $report->data = collect(['custom_done' => $tts]);
+                }
+            } else {
+                $item = collect($customer);
+                $item = $item->push(Carbon::now()->format('H:i:s'));
+                $item = $item->push($request->details);
+//                $item = $item->push($task);
+                $tts = collect(['custom_done' => collect($report->data['custom_done'])]);;
+                $result = $tts['custom_done']->push($item);
+                $tts = collect($result);
+                if (isset($report->data)) {
+                    $report->data = $report->data->merge(collect(['custom_done' => $tts]));
+                } else {
+                    $report->data = collect(['custom_done' => $tts]);
+                }
+            }
+            $report->save();
+        }
+
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success"
+            ]);
+        }
     }
 
     public function destroy(Customer $customer)
