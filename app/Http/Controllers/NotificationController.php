@@ -20,7 +20,7 @@ class NotificationController extends Controller
     {
         $now = Carbon::now();
         $next = Carbon::now()->addHours(2);
-        $tasks = Task::all();
+        $tasks = Task::where('taskable_type',null)->get();
 
         foreach ($tasks as $task)
         {
