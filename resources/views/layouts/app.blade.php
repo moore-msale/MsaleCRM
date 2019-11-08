@@ -66,7 +66,7 @@ $agent = New \Jenssegers\Agent\Agent();
             </div>
 
         </main>
-        <div class="position-absolute" style="bottom:4%; right:4%;">
+        <div class="position-fixed" style="bottom:1%; right:1%;">
             <p>
                 Версия: 1.5.1
             </p>
