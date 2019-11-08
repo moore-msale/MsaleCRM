@@ -35,7 +35,7 @@
 {{--                        @dd(\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->first()->meets_score)--}}
 {{--                        @dd(\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->get()->first()->meets_score)--}}
                         @if((\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->first()) != null)
-                        <span class="font-weight-bold meets_score" style="font-size: 15px;">{{\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->first()->meets_score}}</span>  Встреч
+                        <span class="font-weight-bold meets_score" style="font-size: 15px;">{{\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->first()->meets_score}}</span>  Встреч(-и,-а)
                         @else
                             <span class="font-weight-bold meets_score" style="font-size: 15px;">0</span>  Встреч(-и,-а)
 
@@ -55,7 +55,7 @@
                             {{ $user->name }}
                         </span>
                         @if((\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->first()) != null)
-                        <span class="font-weight-bold calls_score" style="font-size: 15px;">{{\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->get()->first()->calls_score}}</span>  Звонков
+                        <span class="font-weight-bold calls_score" style="font-size: 15px;">{{\App\Plan::where('user_id', $user->id)->where('created_at', '>', \Carbon\Carbon::now()->setTime('00','00','00'))->get()->first()->calls_score}}</span>  Звонка(-ов)
                         @else
                             <span class="font-weight-bold meets_score" style="font-size: 15px;">0</span> Звонка(-ов)
                         @endif
