@@ -59,47 +59,50 @@ class ReportController extends Controller
         $users = User::all();
 
         foreach ($users as $user) {
-            $report = Report::where('created_at', '>=', $today)->where('user_id', $user->id)->first();
-            if (Carbon::now()->englishDayOfWeek != "Sunday") {
-                if ($report == null) {
-                    $user->balance = $user->balance - 400;
-                    $user->save();
-                }
-            }
-
-            $plan = Plan::where('created_at', '>=', $today)->where('user_id', $user->id)->first();
-            if ($plan != null) {
-                if ($plan->calls_score >= 60 && $plan->meets_score >= 0 && $plan->status != 1) {
-                    $plan->status = 1;
-                    $plan->save();
-                } elseif ($plan->calls_score >= 30 && $plan->meets_score >= 1 && $plan->status != 1) {
-                    $plan->status = 1;
-                    $plan->save();
-                } elseif ($plan->calls_score >= 0 && $plan->meets_score >= 2 && $plan->status != 1) {
-                    $plan->status = 1;
-                    $plan->save();
-                } elseif ($plan->status != 1 && $plan->status != 3 && Carbon::now()->englishDayOfWeek != "Sunday") {
-                    $plan->status = 2;
-                    $plan->save();
-                }
-                if (Carbon::now() > $endday) {
-                    if ($plan->status == 2) {
-                        $plan->status = 3;
-                        $plan->save();
+            if($user->role != 'admin') {
+                $report = Report::where('created_at', '>=', $today)->where('user_id', $user->id)->first();
+                if (Carbon::now()->englishDayOfWeek != "Sunday") {
+                    if ($report == null) {
                         $user->balance = $user->balance - 400;
                         $user->save();
                     }
                 }
-            }
-            else{
-                $plan = new Plan();
-                $plan->calls_goal = 60;
-                $plan->calls_score = 0;
-                $plan->meets_goal = 60;
-                $plan->meets_score = 0;
-                $plan->status = 3;
-                $plan->user_id = $user->id;
-                $plan->save();
+
+                $plan = Plan::where('created_at', '>=', $today)->where('user_id', $user->id)->first();
+                if (Carbon::now()->englishDayOfWeek != "Sunday") {
+                    if ($plan != null) {
+                        if ($plan->calls_score >= 60 && $plan->meets_score >= 0 && $plan->status != 1) {
+                            $plan->status = 1;
+                            $plan->save();
+                        } elseif ($plan->calls_score >= 30 && $plan->meets_score >= 1 && $plan->status != 1) {
+                            $plan->status = 1;
+                            $plan->save();
+                        } elseif ($plan->calls_score >= 0 && $plan->meets_score >= 2 && $plan->status != 1) {
+                            $plan->status = 1;
+                            $plan->save();
+                        } elseif ($plan->status != 1 && $plan->status != 3 && Carbon::now()->englishDayOfWeek != "Sunday") {
+                            $plan->status = 2;
+                            $plan->save();
+                        }
+                        if (Carbon::now() > $endday) {
+                            if ($plan->status == 2) {
+                                $plan->status = 3;
+                                $plan->save();
+                                $user->balance = $user->balance - 400;
+                                $user->save();
+                            }
+                        }
+                    } else {
+                        $plan = new Plan();
+                        $plan->calls_goal = 60;
+                        $plan->calls_score = 0;
+                        $plan->meets_goal = 60;
+                        $plan->meets_score = 0;
+                        $plan->status = 3;
+                        $plan->user_id = $user->id;
+                        $plan->save();
+                    }
+                }
             }
         }
 

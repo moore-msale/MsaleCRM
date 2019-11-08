@@ -8,139 +8,485 @@
     </style>
 @endpush
 @section('content')
+    {{--@dd($customers)--}}
     <?php
     $agent = New \Jenssegers\Agent\Agent();
     ?>
     <div class="container-fluid p-5">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        @foreach($custs as $cust)
-            @if($cust->first()->user_id == 1)
-                @continue
-            @else
+        <ul class="nav nav-tabs pb-5" id="myTab" role="tablist">
+            <li class="nav-item report-tabs mr-4">
+                <a class="nav-link report-tabs-link active" id="manage-customer" data-toggle="tab" href="#manage-customer-content" role="tab"
+                   aria-controls="home"
+                   aria-selected="true">Все Клиенты</a>
+            </li>
+            @foreach(\App\User::where('role','!=','admin')->get() as $user)
                 <li class="nav-item report-tabs mr-4">
-                    <a class="nav-link report-tabs-link" id="m-{{$cust->first()->user_id}}" data-toggle="tab" href="#man-{{$cust->first()->user_id}}" role="tab"
+                    <a class="nav-link report-tabs-link" id="manage-customer-{{$user->id}}" data-toggle="tab" href="#manage-customer-content-{{$user->id}}" role="tab"
                        aria-controls="home"
-                       aria-selected="true">{{ \App\User::find($cust->first()->user_id)->name }}</a>
+                       aria-selected="true">{{ $user->name }}</a>
                 </li>
-            @endif
-        @endforeach
-    </ul>
-    </div>
-    <div class="tab-content" id="myTabContent">
-@foreach($custs as $cust)
-            <div class="tab-pane fade" id="man-{{$cust->first()->user_id}}" role="tabpanel" aria-labelledby="home-tab">
+            @endforeach
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade active show" id="manage-customer-content" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-content" id="myTabContent">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item col-15 pl-0 pr-3">
+                            <ul class="nav nav-tabs pb-5" id="myTab" role="tablist">
+                                <li class="nav-item report-tabs mr-4">
+                                    <a class="nav-link report-tabs-link active" id="customer" data-toggle="tab" href="#customer-now" role="tab"
+                                       aria-controls="home"
+                                       aria-selected="true">Клиенты</a>
+                                </li>
+                                <li class="nav-item report-tabs mr-4">
+                                    <a class="nav-link report-tabs-link" id="donecustomer" data-toggle="tab" href="#customer-done" role="tab"
+                                       aria-controls="home"
+                                       aria-selected="true">Потенциальные клиенты</a>
+                                </li>
+                                <li class="nav-item report-tabs mr-4">
+                                    <a class="nav-link report-tabs-link" id="sadcustomer" data-toggle="tab" href="#customer-sad" role="tab"
+                                       aria-controls="home"
+                                       aria-selected="true">Неудачные клиенты</a>
+                                </li>
+                                <li class="nav-item report-tabs mr-4">
+                                    <a class="nav-link report-tabs-link" id="readycustomer" data-toggle="tab" href="#customer-ready" role="tab"
+                                       aria-controls="home"
+                                       aria-selected="true">Завершенные клиенты</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade active show" id="customer-now" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-content" id="myTabContent">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item col-15 pl-0 pr-3 pb-5">
+                                                <p class="h2 font-weight-bold pb-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                    Клиенты
+                                                </p>
+                                                {{--@dd($customers)--}}
+                                                <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Имя
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="title-task">
+                                                            Описание
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Менеджер
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Сроки
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Статус выполнения
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3">
+
+                                                    </div>
+                                                </div>
+                                                @foreach($customers as $customer)
+
+                                                    @if($customer->status_id == 0 && \App\User::find($customer->user_id)->role != 'admin')
+                                                        @include('pages.Customers.includes.customer')
+                                                    @endif
+                                                @endforeach
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="customer-done" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-content" id="myTabContent">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item col-15 pl-0 pr-3 pb-5">
+                                                <p class="h2 font-weight-bold pb-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                    Потенциальные клиенты
+                                                </p>
+                                                <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Имя
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="title-task">
+                                                            Описание
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Менеджер
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Сроки
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Статус выполнения
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3">
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="content-tasker" id="content-tasker">
+                                                    @foreach($customers as $customer)
+                                                        @if($customer->status_id == 1 && \App\User::find($customer->user_id)->role != 'admin')
+                                                            @include('pages.Customers.includes.done_customer')
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="customer-sad" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-content" id="myTabContent">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item col-15 pl-0 pr-3 pb-5">
+                                                <p class="h2 font-weight-bold pb-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                    Неудачные клиенты
+                                                </p>
+                                                <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Имя
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="title-task">
+                                                            Описание
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Менеджер
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Сроки
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Статус выполнения
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3">
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="content-tasker" id="content-tasker">
+                                                    @foreach($customers as $customer)
+                                                        @if($customer->status_id == 5 && \App\User::find($customer->user_id)->role != 'admin')
+                                                            @include('pages.Customers.includes.lost_customer')
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="customer-ready" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-content" id="myTabContent">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item col-15 pl-0 pr-3 pb-5">
+                                                <p class="h2 font-weight-bold py-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                    Завершенные клиенты
+                                                </p>
+                                                <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Имя
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <p class="title-task">
+                                                            Описание
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Менеджер
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Сроки
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <p class="title-task">
+                                                            Статус выполнения
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-3">
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="content-tasker" id="content-tasker">
+                                                    @foreach($customers as $customer)
+                                                        @if($customer->status_id == 2 && \App\User::find($customer->user_id)->role != 'admin')
+                                                            @include('pages.Customers.includes.ready_customer')
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            @foreach(\App\User::where('role','!=','admin')->get() as $user)
+                <div class="tab-pane fade" id="manage-customer-content-{{$user->id}}" role="tabpanel" aria-labelledby="home-tab">
                     <div class="tab-content" id="myTabContent">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item col-15 pl-0 pr-3">
-                                <div class="p-5">
-                                    <p class="h2 font-weight-bold" style="font-size:23px; line-height: 27px; color:#3f2fd2;">
-                                        {{ \App\User::find($cust->first()->user_id)->name }}
-                                    </p>
-                                    <div class="row pt-4" style="border-bottom: 1px solid #eeeeee;">
-                                        @if(auth()->id() == 1)
-                                            <div class="col-3">
-                                                <p class="point-text">
-                                                    Имя
-                                                </p>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="point-text">
-                                                    Компания
-                                                </p>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="point-text">
-                                                    Номер телефона
-                                                </p>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="point-text">
-                                                    Соц.сети
-                                                </p>
-                                            </div>
+                                <ul class="nav nav-tabs pb-5" id="myTab" role="tablist">
+                                    <li class="nav-item report-tabs mr-4">
+                                        <a class="nav-link report-tabs-link active" id="customer-{{ $user->id }}" data-toggle="tab" href="#customer-now-{{$user->id}}" role="tab"
+                                           aria-controls="home"
+                                           aria-selected="true">Клиенты</a>
+                                    </li>
+                                    <li class="nav-item report-tabs mr-4">
+                                        <a class="nav-link report-tabs-link" id="donecustomer-{{$user->id}}" data-toggle="tab" href="#customer-done-{{ $user->id }}" role="tab"
+                                           aria-controls="home"
+                                           aria-selected="true">Потенциальные клиенты</a>
+                                    </li>
+                                    <li class="nav-item report-tabs mr-4">
+                                        <a class="nav-link report-tabs-link" id="sadcustomer-{{$user->id}}" data-toggle="tab" href="#customer-sad-{{ $user->id }}" role="tab"
+                                           aria-controls="home"
+                                           aria-selected="true">Неудачные клиенты</a>
+                                    </li>
+                                    <li class="nav-item report-tabs mr-4">
+                                        <a class="nav-link report-tabs-link" id="readycustomer-{{$user->id}}" data-toggle="tab" href="#customer-ready-{{ $user->id }}" role="tab"
+                                           aria-controls="home"
+                                           aria-selected="true">Завершенные клиенты</a>
+                                    </li>
+                                </ul>
 
-                                        @else
-                                            <div class="col-4">
-                                                <p class="point-text">
-                                                    Имя
-                                                </p>
-                                            </div>
-                                            <div class="col-3">
-                                                <p class="point-text">
-                                                    Компания
-                                                </p>
-                                            </div>
-                                            <div class="col-3">
-                                                <p class="point-text">
-                                                    Номер телефона
-                                                </p>
-                                            </div>
-                                            <div class="col-5">
-                                                <p class="point-text">
-                                                    Соц.сети
-                                                </p>
-                                            </div>
-                                        @endif
-                                    </div>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade active show" id="customer-now-{{ $user->id }}" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="tab-content" id="myTabContent">
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item col-15 pl-0 pr-3">
+                                                    <p class="h2 font-weight-bold pb-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                        Задачи
+                                                    </p>
+                                                    {{--@dd($customers)--}}
+                                                    <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Имя
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <p class="title-task">
+                                                                Описание
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Менеджер
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Сроки
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Статус выполнения
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-3">
 
-                                    @foreach($cust as $customer)
-                                        {{--@dd($customer->taskable->id)--}}
-                                        <div class="row pt-3 item-data {{ $customer->status_id == 1 ? 'border-greener' : '' }}" style="{{ $customer->status_id == 5 ? 'background:#ff8a80;' : '' }}" id="customer-{{ $customer->taskable->id }}" data-toggle="modal" data-target="#EditCustomer-{{ $customer->id }}">
-                                            @if(auth()->id() == 1)
-                                                <div class="col-3">
-                                                    <p class="cust-name">
-                                                        {{$customer->taskable->name}}
-                                                    </p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="cust-company">
-                                                        {{$customer->taskable->company}}
-                                                    </p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="cust-contact">
-                                                        {{$customer->taskable->contacts}}
-                                                    </p>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="cust-social">
-                                                        {{$customer->taskable->socials}}
-                                                    </p>
-                                                </div>
-                                            @else
-                                                <div class="col-4">
-                                                    <p>
-                                                        {{$customer->taskable->name}}
-                                                    </p>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p>
-                                                        {{$customer->taskable->company}}
-                                                    </p>
-                                                </div>
-                                                <div class="col-3">
-                                                    <p>
-                                                        {{$customer->taskable->contacts}}
-                                                    </p>
-                                                </div>
-                                                <div class="col-5">
-                                                    <p>
-                                                        {{$customer->taskable->socials}}
-                                                    </p>
-                                                </div>
-                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    @foreach($customers as $customer)
+                                                        @if($customer->status_id == 0 && \App\User::find($customer->user_id)->role != 'admin' && $customer->user_id == $user->id)
+                                                            @include('pages.Customers.includes.customer')
+                                                        @endif
+                                                    @endforeach
+
+                                                </li>
+                                            </ul>
                                         </div>
-                                @endforeach
+                                    </div>
+                                    <div class="tab-pane fade" id="customer-done-{{$user->id}}" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="tab-content" id="myTabContent">
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item col-15 pl-0 pr-3">
+                                                    <p class="h2 font-weight-bold py-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                        Потенциальные клиенты
+                                                    </p>
+                                                    <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Наименование задачи
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <p class="title-task">
+                                                                Описание
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Менеджер
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Сроки
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Статус выполнения
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-3">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="content-tasker" id="content-tasker">
+                                                        @foreach($customers as $customer)
+                                                            @if($customer->status_id == 1 && \App\User::find($customer->user_id)->role != 'admin' && $customer->user_id == $user->id)
+                                                                @include('pages.Customers.includes.done_customer')
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="customer-sad-{{$user->id}}" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="tab-content" id="myTabContent">
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item col-15 pl-0 pr-3">
+                                                    <p class="h2 font-weight-bold py-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                        Неудачные клиенты
+                                                    </p>
+                                                    <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Имя
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <p class="title-task">
+                                                                Описание
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Менеджер
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Сроки
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Статус выполнения
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-3">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="content-tasker" id="content-tasker">
+                                                        @foreach($customers as $customer)
+                                                            @if($customer->status_id == 5 && \App\User::find($customer->user_id)->role != 'admin' && $customer->user_id == $user->id)
+                                                                @include('pages.Customers.includes.lost_customer')
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="customer-ready-{{$user->id}}" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="tab-content" id="myTabContent">
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item col-15 pl-0 pr-3 pb-5">
+                                                    <p class="h2 font-weight-bold py-5" style="font-size:23px; line-height: 27px; color:#545454">
+                                                        Завершенные
+                                                    </p>
+                                                    <div class="row" style="border-bottom: 1px solid #DEDEDE;">
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Имя
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <p class="title-task">
+                                                                Описание
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Менеджер
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Сроки
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <p class="title-task">
+                                                                Статус выполнения
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-3">
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="content-tasker" id="content-tasker">
+                                                        @foreach($customers as $customer)
+                                                            @if($customer->status_id == 2 && \App\User::find($customer->user_id)->role != 'admin' && $customer->user_id == $user->id)
+                                                                @include('pages.Customers.includes.ready_customer')
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </li>
                         </ul>
                     </div>
+
                 </div>
-@endforeach
+            @endforeach
+        </div>
     </div>
-    @foreach($custs as $cust)
-        @foreach($cust as $customer)
-            @include('modals.customers.edit_customer')
-        @endforeach
-    @endforeach
 @endsection

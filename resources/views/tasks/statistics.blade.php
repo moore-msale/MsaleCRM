@@ -57,24 +57,24 @@
                 <p class="work-check sf-bold mb-0">
                     @if($penalty < 0)
                         <span class="first-child" style="color:red;">
-                            {{ $penalty }} сом
+                            <span class="balance-real">{{ $penalty }}</span> сом
                         </span>
                     @else
                         <span class="first-child" style="color:green;">
-                            {{ $penalty }} сом
+                            <span class="balance-real">{{ $penalty }}</span> сом
                         </span>
                     @endif
 
                 </p>
                 @if($plan->status == 1 && auth()->id() != 1)
-                <div class="head-text font-weight-bold mt-3" style="text-transform: uppercase;">
-                    <p class="">План на день выполнен!</p>
-                </div>
-                        @elseif($plan->status == 3  && auth()->id() != 1)
-                <div class="head-text font-weight-bold mt-3" style="text-transform: uppercase;">
-                    <p class="">План на день не выполнен</p>
-                </div>
-                    @endif
+                    <div class="head-text font-weight-bold mt-3" style="text-transform: uppercase;">
+                        <p class="">План на день выполнен!</p>
+                    </div>
+                @elseif($plan->status == 3  && auth()->id() != 1)
+                    <div class="head-text font-weight-bold mt-3" style="text-transform: uppercase;">
+                        <p class="">План на день не выполнен</p>
+                    </div>
+                @endif
             </div>
 
     </div>

@@ -11,7 +11,7 @@
     <?php
     $agent = New \Jenssegers\Agent\Agent();
     ?>
-    {{--@dd(\App\Task::where('taskable_type','App\Customer')->get())--}}
+    {{--@dd(\Carbon\Carbon::now())--}}
     <div class="container-fluid">
 
             @if($agent->isPhone())
@@ -20,7 +20,11 @@
             </div>
                 @else
             <div class="row pt-lg-4 pt-0 justify-content-center">
-                @include('tasks.statistics')
+                @if(\Illuminate\Support\Facades\Auth::user()->role == "admin")
+                @include('tasks.statistics-admin')
+                @else
+                    @include('tasks.statistics')
+                @endif
                 @include('tasks.index', ['tasks2' => $tasks])
                 @include('tasks.index', ['calls2' => $calls])
                 @include('tasks.index', ['meetings2' => $meetings])
@@ -28,7 +32,11 @@
             @endif
         </div>
     </div>
-
+    <?php
+//        \Illuminate\Support\Facades\Cookie::forever('timer','100');
+//            session(['timer' => 100]);
+//        dd(session('timer'));
+    ?>
     @if($agent->isPhone())
         @include('modals.calls.called-modal')
         @include('modals.customers.add_customer')
@@ -45,6 +53,7 @@
 
 @push('scripts')
     @if($agent->isPhone())
+
         <script>
             function registerCallBtn(item) {
                 item.click(function (e) {
@@ -276,7 +285,50 @@
             })
         </script>
     @else
+        {{--<script>--}}
+            {{--setInterval(function(){--}}
+                        {{--let data = '{{ \Illuminate\Support\Facades\Auth::user()->balance }}';--}}
+                {{--let user_id = '{{ auth()->id() }}';--}}
+                {{--let balance = parseInt($('.balance-real').html());--}}
+                {{--console.log(balance);--}}
+                {{--$.ajax({--}}
+                    {{--url: '{{ route('balance_get') }}',--}}
+                    {{--method: 'POST',--}}
+                    {{--data: {--}}
+                        {{--"_token": "{{ csrf_token() }}",--}}
+                        {{--"user_id": user_id,--}}
+                    {{--},--}}
+                    {{--success: data => {--}}
+                        {{--if(data.balance != balance)--}}
+                        {{--{--}}
+                            {{--console.log('okey');--}}
+                            {{--$('.balance-real').html(data.balance);--}}
+                        {{--}--}}
+                        {{--// $('#TaskCreate').modal('hide');--}}
+                        {{--// swal("Задача добавлена!", "Отчет был отправлен", "success");--}}
+                        {{--// let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);--}}
+                        {{--// $('#taskname').val('');--}}
+                        {{--// $('#taskdescription').val('');--}}
+                        {{--// $('#taskdate').val('');--}}
 
+                    {{--},--}}
+                    {{--error: () => {--}}
+                        {{--console.log(0);--}}
+                        {{--// swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");--}}
+                    {{--}--}}
+                {{--});--}}
+
+                {{--// console.log(balance);--}}
+                {{--// console.log(data2);--}}
+                {{--// if(data == balance)--}}
+                {{--// {--}}
+                {{--//     console.log('да');--}}
+                {{--// }--}}
+                {{--// else {--}}
+                {{--//     console.log('нет');--}}
+                {{--// }--}}
+            {{--}, 5000);--}}
+        {{--</script>--}}
         <script>
             $('.addTask').click(e => {
                 e.preventDefault();

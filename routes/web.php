@@ -66,7 +66,22 @@ Route::group(['middleware' => ['auth']], function () {
         return view('pages.Meets.meet_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->where('user_id', auth()->id())->get()->reverse()]);
     });
     Route::get('/statistic','StatisticController@index')->name('statistic');
+    Route::post('/balance_get', 'AjaxController@balance_get')->name('balance_get');
 
+
+
+    //admin routes
+    Route::post('/DoneTaskAdmin', 'AdminController@done_task')->name('DoneTaskAdmin');
+    Route::post('/DeleteTaskAdmin', 'AdminController@delete_task')->name('DeleteTaskAdmin');
+    Route::post('/EditTaskAdmin', 'AdminController@edit_task')->name('EditTaskAdmin');
+
+    Route::post('/DoneMeetAdmin', 'AdminController@done_meet')->name('DoneMeetAdmin');
+    Route::post('/DeleteMeetAdmin', 'AdminController@delete_meet')->name('DeleteMeetAdmin');
+    Route::post('/EditMeetAdmin', 'AdminController@edit_meet')->name('EditMeetAdmin');
+
+    Route::post('/DoneCustomerAdmin', 'AdminController@done_customer')->name('DoneCustomerAdmin');
+    Route::post('/DeleteCustomerAdmin', 'AdminController@delete_customer')->name('DeleteCustomerAdmin');
+    Route::post('/EditCustomerAdmin', 'AdminController@edit_customer')->name('EditCustomerAdmin');
 });
 Route::get('/penalty_for_the_end_day','ReportController@penalty')->name('penalty_for_the_end_day');
 Route::get('/manager_push_notification', 'NotificationController@notification')->name('manager_push_notification');

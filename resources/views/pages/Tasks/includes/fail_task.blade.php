@@ -1,4 +1,4 @@
-<div class="row py-2 task-point" id="donetask-{{$task->id}}" style="{{$task->chief != null ? 'border-left: 1px solid red;' : ''}}">
+<div class="row py-2 task-point" id="failtask-{{$task->id}}" style="{{$task->chief != null ? 'border-left: 1px solid red;' : ''}}">
     <div class="col-2 d-flex align-items-center">
                     <span class="task-name">
                         {{ $task->title }}
@@ -20,8 +20,8 @@
                     </span>
     </div>
     <div class="col-2 text-center">
-            <button class="btn py-2 px-3 task-name task-button text-white" style="background:#3BD654; opacity: 1;" disabled>
-                Выполнено
+            <button class="btn py-2 px-3 task-name task-button text-white" style="background:#d60300; opacity: 1;" disabled>
+                Просрочено
             </button>
     </div>
     <div class="col-3 d-flex align-items-center justify-content-center">
@@ -30,3 +30,6 @@
     </div>
 </div>
 
+{{--@include('modals.tasks.done_task')--}}
+@include('modals.tasks.delete_task')
+@include('modals.tasks.edit_task')

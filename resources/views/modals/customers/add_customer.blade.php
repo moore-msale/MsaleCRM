@@ -32,7 +32,7 @@
                             <label for="client-company"></label>
                         </div>
                         <div class="md-form">
-                            <textarea id="client-desc" n    ame="description" class="form-control md-textarea" rows="3"></textarea>
+                            <textarea id="client-desc" name="description" class="form-control md-textarea" rows="3"></textarea>
                             <label for="client-desc">Описание</label>
                         </div>
                         <div class="md-form">

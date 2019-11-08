@@ -21,12 +21,12 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        if(Auth::id() == 1)
+        if(Auth::user()->role == 'admin')
         {
-            $customers = Task::where('taskable_type','App\Customer')->get();
+            $customers = Task::where('taskable_type','App\Customer')->where('user_id', '!=', 1)->get()->reverse();
 //            dd($customers->groupBy('user_id'));
 
-            return view('pages.Customers.customer_admin',['custs' => $customers->groupBy('user_id')]);
+            return view('pages.Customers.customer_admin',['customers' => $customers]);
         }
         else
         {   

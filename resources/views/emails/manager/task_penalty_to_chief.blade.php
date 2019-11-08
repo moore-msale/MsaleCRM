@@ -8,6 +8,13 @@
         <strong class="TTLight">Дата завершения:</strong> {{ $task->deadline_date }}<br>
         <strong class="TTLight">Менеджер:</strong> {{ \App\User::find($task->user_id)->name }}<br>
 
+        @if($task->chief == 2)
+            <br>
+            <strong class="TTLight">Задача от шефа:</strong> Да <br>
+        @else
+            <br>
+            <strong class="TTLight">Задача от шефа:</strong> Нет <br>
+        @endif
         <br>
         <br>
 
