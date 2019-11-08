@@ -138,58 +138,67 @@
 
 
 
-<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #250054;">
-    <a class="text-white logo sf-black pt-0" style="font-size: 25px; line-height: 105%;     font-weight: 900; text-transform: uppercase;" href="/home">.Moore</a>
+<nav class="navbar navbar-expand-lg fixed-top py-2" style="box-shadow: none; background-color: #fefefe; padding-left:5%; padding-right:5%;">
+    <a class="text-white logo sf-black pt-0" style="font-size: 25px; line-height: 105%;     font-weight: 900; text-transform: uppercase;" href="/home">
+        <img src="{{ asset('images/logo.svg') }}" alt="">
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse pl-5" id="navbarNav">
-        <ul class="navbar-nav w-100">
+        <ul class="navbar-nav mx-auto">
             {{--<li class="nav-item active bt-li">--}}
                 {{--<a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>--}}
             {{--</li>--}}
-            <li class="nav-item active bt-li">
-                <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>
-            </li>
+            {{--<li class="nav-item active bt-li">--}}
+                {{--<a class="nav-link sf-medium text-dark" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>--}}
+            {{--</li>--}}
             @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
-            <li class="nav-item active bt-li">
-            <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-white">ОТЧЕТЫ</a>
+            <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
+            <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-dark">ОТЧЕТЫ</a>
             </li>
             @endif
-            <div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>
-            <li class="nav-item active bt-li">
-            <a href="https://to-moore.com/task" target="_blank" class="nav-link sf-medium text-white">ЗАДАЧА + </a>
+            {{--<div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>--}}
+            <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
+            <a href="https://to-moore.com/task" target="_blank" class="nav-link sf-medium text-dark">ЗАДАЧА+ </a>
             </li>
-               <li class="nav-item active bt-li">
-            <a href="https://to-moore.com/bref" target="_blank" class="nav-link sf-medium text-white">БРИФ + </a>
+               <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
+            <a href="https://to-moore.com/bref" target="_blank" class="nav-link sf-medium text-dark">БРИФ+ </a>
             </li>
-            <div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>
-                           <li class="nav-item active bt-li">
-            <a href="http://s.to-moore.com/" target="_blank" class="nav-link sf-medium text-white">СКРИПТ </a>
+            {{--<div style="width: 1px;height: auto; background: #ffffff8a;   margin-left: 1%;margin-right: 1%;"></div>--}}
+                           <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
+            <a href="http://s.to-moore.com/" target="_blank" class="nav-link sf-medium text-dark">СКРИПТ </a>
             </li>
-            @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
-                <li class="nav-item active">
-                    <a class="nav-link sf-medium text-white" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
-                </li>
-            @endif
-
+            {{--@if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')--}}
+                {{--<li class="nav-item active">--}}
+                    {{--<a class="nav-link sf-medium text-dark" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>--}}
+                {{--</li>--}}
+            {{--@endif--}}
+        </ul>
+        <ul class="navbar-nav">
             <li class="nav-item dropdown ml-auto">
-                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <div class="user_point d-flex">
+                    <div class="avatar mr-3 d-flex align-items-center">
+                        <span class="mx-auto text-white text-uppercase" style="font-size:18px;">{{ mb_strcut(auth::user()->name, 0, 1) }}</span>
+                    </div>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ auth::user()->name }} <span class="caret"></span>
                 </a>
-
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item text-dark" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item text-dark" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                        {{ __('Выйти') }}
-                    </a>
+                            {{ __('Выйти') }}
+                        </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>
                 </div>
+
+
             </li>
         </ul>
     </div>

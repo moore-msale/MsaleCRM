@@ -207,12 +207,16 @@ body
     height:60px;
     width:60px;
 }
-.point:hover
+.point p
 {
-    background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;
-    border-radius:50%;
-
+    color: #5713AE;
 }
+/*.point:hover*/
+/*{*/
+    /*background: linear-gradient(40deg,#ff6ec4,#7873f5)!important;*/
+    /*border-radius:50%;*/
+
+/*}*/
 .point-ico
 {
     width:25px!important;
@@ -477,9 +481,23 @@ body
     align-items: center;
 }
 .bt-li:hover {
-    background: #6620bb;
-
+    /*background: #6620bb;*/
+    border-bottom: 2px solid #772FD2!important;
     font-size: 12px;
+}
+.user_point
+{
+    width:150px;
+    box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
+    padding:5%;
+}
+.avatar
+{
+    width:42px;
+    height:42px;
+    background: linear-gradient(180deg, #772FD2 0%, #A72FD2 100%);
+    border-radius: 50%;
 }
 .border-greener
 {
