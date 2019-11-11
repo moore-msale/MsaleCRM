@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/balance_change', 'ReportController@balance')->name('balance_change');
     Route::get('/planer','PlanController@planer')->name('planer');
 
+
     Route::get('/waitCall', function () {
         return view('pages.waitCall',['calls' => \App\Call::where('user_id', auth()->id())->where('active',1)->get()->reverse()]);
     });
@@ -67,7 +68,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::get('/statistic','StatisticController@index')->name('statistic');
     Route::post('/balance_get', 'AjaxController@balance_get')->name('balance_get');
-
+    Route::get('/profile', 'UserController@profile')->name('profile');
 
 
     //admin routes

@@ -343,7 +343,10 @@ body
     border-radius: 2px!important;
     font-weight: bold;
     color:#5713AE!important;
-    border:1px solid #5713AE!important;
+    border:none;
+    font-family: "SF Pro Display Light";
+    background-color: #fefefe!important;
+    border-bottom:1px solid #5713AE!important;
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.15);
 }
 .type-tab

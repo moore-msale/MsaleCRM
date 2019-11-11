@@ -11,7 +11,7 @@
     <?php
     $agent = New \Jenssegers\Agent\Agent();
     ?>
-    {{--@dd(\Carbon\Carbon::now())--}}
+{{--    @dd(\App\User::find(3))--}}
     <div class="container-fluid">
 
             @if($agent->isPhone())
