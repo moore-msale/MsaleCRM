@@ -10,7 +10,7 @@
 }
 
 .sidenav {
-    height: 100%;
+    height: 313px;
     background-color: #5713ae;
     overflow-x: hidden;
     padding-top: 20px;
@@ -46,6 +46,7 @@
         z-index: 1;
         top: 0;
         left: 0;
+        height: 100%;
     }
 
     .login-form{
