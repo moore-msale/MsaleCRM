@@ -151,9 +151,9 @@
             {{--<li class="nav-item active bt-li">--}}
                 {{--<a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>--}}
             {{--</li>--}}
-            {{--<li class="nav-item active bt-li">--}}
-                {{--<a class="nav-link sf-medium text-dark" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>--}}
-            {{--</li>--}}
+            <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
+                <a class="nav-link sf-medium text-dark" data-toggle="modal" data-target="#ClientCreate">ДОБАВИТЬ КЛИЕНТА</a>
+            </li>
             @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
             <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
             <a href="{{ route('report.index', ['date' => \Carbon\Carbon::today()->toString()]) }}" class="nav-link sf-medium text-dark">ОТЧЕТЫ</a>
@@ -170,11 +170,11 @@
                            <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
             <a href="http://s.to-moore.com/" target="_blank" class="nav-link sf-medium text-dark">СКРИПТ </a>
             </li>
-            {{--@if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')--}}
-                {{--<li class="nav-item active">--}}
-                    {{--<a class="nav-link sf-medium text-dark" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>--}}
-                {{--</li>--}}
-            {{--@endif--}}
+            @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                <li class="nav-item active bt-li px-2" style="border-bottom:2px solid #EBEBEB;">
+                    <a class="nav-link sf-medium text-dark" data-toggle="modal" data-target="#TaskCreate_admin">ДОБАВИТЬ ЗАДАЧУ</a>
+                </li>
+            @endif
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item dropdown ml-auto">
@@ -186,9 +186,9 @@
                     {{ auth::user()->name }} <span class="caret"></span>
                 </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item text-dark" href="{{ route('profile') }}">
-                            {{ __('Личный кабинет') }}
-                        </a>
+                        {{--<a class="dropdown-item text-dark" href="{{ route('profile') }}">--}}
+                            {{--{{ __('Личный кабинет') }}--}}
+                        {{--</a>--}}
                         <a class="dropdown-item text-dark" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
