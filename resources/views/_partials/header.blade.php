@@ -179,9 +179,14 @@
         <ul class="navbar-nav">
             <li class="nav-item dropdown ml-auto">
                 <div class="user_point d-flex">
-                    <div class="avatar mr-3 d-flex align-items-center">
-                        <span class="mx-auto text-white text-uppercase" style="font-size:18px;">{{ mb_strcut(auth::user()->name, 0, 1) }}</span>
-                    </div>
+                    @if(\Illuminate\Support\Facades\Auth::user()->avatar == null)
+                        <div class="avatar mr-3 d-flex align-items-center">
+                            <span class="mx-auto text-white text-uppercase" style="font-size:18px;">{{ mb_strcut(auth::user()->name, 0, 1) }}</span>
+                        </div>
+                    @else
+                        <div class="avatar" style="background-image: url({{ asset('users/'.\Illuminate\Support\Facades\Auth::user()->avatar) }}); background-size:cover; background-position: center center;">
+                        </div>
+                    @endif
                 <a id="navbarDropdown" class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                     {{ auth::user()->name }} <span class="caret"></span>
                 </a>
