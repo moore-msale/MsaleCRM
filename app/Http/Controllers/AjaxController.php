@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use App\User;
 use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
-    public function balance_get(Request $request)
+    public function searchTask(Request $request)
     {
-        $user = User::find($request->user_id);
+        $search = $request->search;
+        $result = collect(['Задачи' => Task::where('title', 'like', "%$search%")->where('taskable_type', null)->get()]);
 
-        if ($request->ajax()){
+        if ($request->ajax()) {
             return response()->json([
-                'status' => "success",
-                'balance' => $user->balance,
-            ], 200);
+                'html' => view('_partials.search-result-ajax', [
+                    'result' => $result,
+//                    'count' => count($result->collapse()),
+                ])->render(),
+            ]);
         }
+        return view('_partials.search-result', [
+            'result' => $result,
+        ]);
     }
 }

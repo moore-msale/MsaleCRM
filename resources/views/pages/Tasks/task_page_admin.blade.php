@@ -14,6 +14,11 @@
     ?>
     {{--@dd(session('timer'));--}}
     <div class="container-fluid p-5">
+        <div class="py-1 position-relative">
+            <div class="search-task" style="position: absolute; top:10%; right:10%;">
+                <input id="search" class="form-control" type="text" placeholder="Поиск задач">
+            </div>
+        </div>
             <ul class="nav nav-tabs pb-5" id="myTab" role="tablist">
                 <li class="nav-item report-tabs mr-4">
                     <a class="nav-link report-tabs-link active" id="manage-task" data-toggle="tab" href="#manage-task-content" role="tab"
@@ -28,6 +33,8 @@
                         </li>
                 @endforeach
             </ul>
+
+
 
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade active show" id="manage-task-content" role="tabpanel" aria-labelledby="home-tab">

@@ -14,8 +14,15 @@ class UserController extends Controller
     public function profile()
     {
         $user = Auth::user();
+        if($user->role == 'admin')
+        {
+            return view('pages.Users.profile_admin', ['user' => $user]);
+        }
+        else
+        {
+            return view('pages.Users.profile', ['user' => $user]);
+        }
 
-        return view('pages.Users.profile_admin', ['user' => $user]);
     }
 
     public function editUser(Request $request)
@@ -31,9 +38,9 @@ class UserController extends Controller
             $user->password = Hash::make($request['password']);
         }
 
-
+        $user->save();
         if($file = $request->file('scan_pas')){
-            $name = 'user_pas'.$user->id.$file->getClientOriginalName();
+            $name = 'user_pas'.$user->id.$user->email;
             if ($file->move('passport', $name))
             {
                 $user->scan_pas = mb_strtolower($name);
@@ -41,7 +48,7 @@ class UserController extends Controller
             }
         }
         if($file = $request->file('scan2_pas')){
-            $name = 'user_pas2'.$user->id.$file->getClientOriginalName();
+            $name = 'user_pas2'.$user->id.$user->email;
             if ($file->move('passport', $name))
             {
                 $user->scan2_pas = mb_strtolower($name);
@@ -49,7 +56,7 @@ class UserController extends Controller
             }
         }
         if($file = $request->file('avatar')){
-            $name = 'user_img'.$user->id.$file->getClientOriginalName();
+            $name = 'user_img'.$user->id.$user->email;
             if ($file->move('users', $name))
             {
                 $user->avatar = mb_strtolower($name);
