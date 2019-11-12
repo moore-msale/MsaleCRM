@@ -142,9 +142,16 @@
                             <p class="pt-4 sf-medium" style="font-size:20px;">
                                 {{ $manager->name }}
                             </p>
-                            <p class="sf-medium">
-                                Администратор
-                            </p>
+                            @if($manager->role != 'admin')
+                                <p class="sf-medium">
+                                    Менеджер
+                                </p>
+                            @else
+                                <p class="sf-medium">
+                                    Администратор
+                                </p>
+                            @endif
+
                         </div>
                         <div class="text-left pt-3">
                             @if(isset($manager->lastname))
