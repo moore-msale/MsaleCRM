@@ -5,13 +5,15 @@
             <a class="nav-link active" id="users" data-toggle="tab" href="#user" role="tab" aria-controls="home" aria-selected="true">Ваши данные</a>
         </li>
 
-        @foreach(\App\User::where('role', '!=', 'admin')->get() as $manager)
-            @if($manager->status!='blocked')
-                <li class="nav-item">
-                    <a class="nav-link" id="users-{{$manager->id}}" data-toggle="tab" href="#user-{{$manager->id}}" role="tab" aria-controls="home" aria-selected="true">{{ $manager->lastname }} {{ $manager->name }}</a>
-                </li>
-            @endif
+        @foreach(\App\User::where('role', '!=', 'admin')->where('status','=','active')->get() as $manager)
+            <li class="nav-item">
+                <a class="nav-link" id="users-{{$manager->id}}" data-toggle="tab" href="#user-{{$manager->id}}" role="tab" aria-controls="home" aria-selected="true">{{ $manager->lastname }} {{ $manager->name }}</a>
+            </li>
         @endforeach
+
+        <li class="nav-item ml-md-auto">
+            <a class="nav-link" id="users" href="/archive" role="tab" aria-controls="home">Архив</a>
+        </li>        
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="users">
@@ -127,7 +129,7 @@
                 </div>
             </div>
         </div>
-        @foreach(\App\User::where('role', '!=', 'admin')->get() as $manager)
+        @foreach(\App\User::where('role', '!=', 'admin')->where('status','=','active')->get() as $manager)
         <div class="tab-pane fade" id="user-{{ $manager->id }}" role="tabpanel" aria-labelledby="users-{{$manager->id}}">
             <div class="container-fluid h-100 pt-5">
                 <div class="row justify-content-center h-100">

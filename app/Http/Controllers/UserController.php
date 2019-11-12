@@ -75,6 +75,16 @@ class UserController extends Controller
         return back();
 
     }
+    public function archive()
+    {
+        $user = Auth::user();
+        $users = User::where('status','!=','active');
+        if($user->role == 'admin')
+        {
+            return view('pages.Users.archive_users', ['users' => $users]);
+        }
+
+    }
 
     public function blockUser($id){
         $user = User::find($id);

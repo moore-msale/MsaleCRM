@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', 'UserController@profile')->name('profile');
     Route::post('/editUser', 'UserController@editUser')->name('editUser');
     Route::get('/blockuser/{id}','UserController@blockUser')->name('blockuser');
+    Route::get('/archive','UserController@archive')->name('archive');
 
 
     //admin routes
