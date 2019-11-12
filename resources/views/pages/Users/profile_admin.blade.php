@@ -6,9 +6,11 @@
         </li>
 
         @foreach(\App\User::where('role', '!=', 'admin')->get() as $manager)
-        <li class="nav-item">
-            <a class="nav-link" id="users-{{$manager->id}}" data-toggle="tab" href="#user-{{$manager->id}}" role="tab" aria-controls="home" aria-selected="true">{{ $manager->lastname }} {{ $manager->name }}</a>
-        </li>
+            @if($manager->status!='blocked')
+                <li class="nav-item">
+                    <a class="nav-link" id="users-{{$manager->id}}" data-toggle="tab" href="#user-{{$manager->id}}" role="tab" aria-controls="home" aria-selected="true">{{ $manager->lastname }} {{ $manager->name }}</a>
+                </li>
+            @endif
         @endforeach
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -131,6 +133,9 @@
                 <div class="row justify-content-center h-100">
                     <div class="col-4 p-3 shadow">
                         <div class="text-center" style="border-bottom:1px solid #bbbbbb;">
+                            
+                            <a href="blockuser/{{$manager->id}}">Заблокировать</a>
+
                             <p class="pt-4 sf-medium" style="font-size:20px;">
                                 Личные данные
                             </p>

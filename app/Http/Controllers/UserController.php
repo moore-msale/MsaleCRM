@@ -75,4 +75,12 @@ class UserController extends Controller
         return back();
 
     }
+
+    public function blockUser($id){
+        $user = User::find($id);
+        $user->status = 'blocked';
+        $user->save();
+        return back();
+    }
+
 }

@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/balance_get', 'AjaxController@balance_get')->name('balance_get');
     Route::get('/profile', 'UserController@profile')->name('profile');
     Route::post('/editUser', 'UserController@editUser')->name('editUser');
+    Route::get('/blockuser/{id}','UserController@blockUser')->name('blockuser');
 
 
     //admin routes
