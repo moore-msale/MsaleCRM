@@ -33,7 +33,7 @@
                 <form action="" class="text-right">
                                         <textarea placeholder="Введите детали"
                                                   class="w-100 grey lighten-5 border-0 sf-light textarea-font-size"
-                                                  rows="4" name="" id="details_done_Task-{{$task->id}}" style="outline: none;"></textarea>
+                                                  rows="4" name="sometext" id="details_done_Task-{{$task->id}}" style="outline: none;"></textarea>
                     <a href="#collapsedone{{$task->id}}" data-toggle="collapse" data-id="{{$task->id}}"
                        class="bg-success px-2 py-1 border-0 confirm-but text-white btn doneTask">
                         Завершить

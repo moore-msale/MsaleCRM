@@ -68,6 +68,7 @@
                     $('#caller_phone').val(phone);
                     let href = btn.attr('href');
                     window.location.href = href;
+
                 });
             }
         </script>
@@ -217,6 +218,7 @@
                         swal("Номер добавлен!","Отчет был отправлен","success");
                         let result = $('#calls-scroll').prepend(data.view).show('slide', {direction: 'left'}, 400);
                         result.find('.call-btn').each((e, i) => {
+                            console.log($(i));
                             registerCallBtn($(i));
                         });
                     },
@@ -369,7 +371,15 @@
                 }
             })
         </script>
-
+        <script>
+            function registerDoneMeetBtn(e) {
+                e.preventDefault();
+                let btn = $(this);
+                let href = btn.attr('href');
+                window.location.href = e.target;
+ 
+            }
+        </script>
         <script>
             $('.addMeeting').click(e => {
                 e.preventDefault();
@@ -398,6 +408,9 @@
                             console.log(data);
                             swal("Встреча добавлена!", "Отчет был отправлен", "success");
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                            result.each(function() {
+                                $(this).find('.doneMeet', 'click',(e) => doneMeet(e));
+                            });
                             $('#meetingname').val('');
                             $('#meetingdescription').val('');
                             $('#meetingdate').val('');
@@ -540,7 +553,7 @@
                 let btn = $(e.currentTarget);
                 let id = btn.data('id');
                 let details = $('#details_done_Task-' + id);
-
+                console.log('something');
                 console.log(id);
                 if(details.val().length < 20)
                 {
@@ -617,12 +630,12 @@
             })
         </script>
         <script>
-            $('.doneMeet').click(e => {
+                $('.doneMeet').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = btn.data('id');
+                 console.log('something');
                 let details = $('#details_done_Meet-' + id);
-
                 console.log(id);
                 if(details.val().length < 20)
                 {
