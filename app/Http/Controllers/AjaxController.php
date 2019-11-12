@@ -15,9 +15,8 @@ class AjaxController extends Controller
 
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('_partials.search-result-ajax', [
+                'html' => view('_partials.search_result', [
                     'result' => $result,
-//                    'count' => count($result->collapse()),
                 ])->render(),
             ]);
         }
