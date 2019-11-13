@@ -17,16 +17,16 @@
         <div class="icon-panel mt-1 accordion md-accordion accordion-1" id="accordiontask{{$task->id}}"
              role="tablist">
             <a data-toggle="collapse" href="#collapsedone{{$task->id}}" aria-expanded="false"
-               aria-controls="collapsedone{{$task->id}}">
-                <i class="far fa-check-circle fa-sm mr-1 ico-done" title="Завершить задачу"></i>
+               aria-controls="collapsedone{{$task->id}}" class="taskDone">
+                <i class="far fa-check-circle fa-sm mr-1 ico-done" title="Завершить задачу" onclick="doneTask()"></i>
             </a>
             <a data-toggle="collapse" href="#collapsedelete{{$task->id}}" aria-expanded="false"
-               aria-controls="collapsedelete{{$task->id}}">
-                <i class="far fa-times-circle fa-sm mr-1 ico-delete" title="Удалить задачу"></i>
+               aria-controls="collapsedelete{{$task->id}}" class="taskDelete">
+                <i class="far fa-times-circle fa-sm mr-1 ico-delete" title="Удалить задачу" onclick="deleteTask()"></i>
             </a>
             <a data-toggle="collapse" href="#collapseedit{{$task->id}}" aria-expanded="false"
-               aria-controls="collapseedit{{$task->id}}">
-                <i class="fas fa-pencil-alt fa-sm mr-1 ico-edit" title="Изменить описание"></i>
+               aria-controls="collapseedit{{$task->id}}" class="taskEdit">
+                <i class="fas fa-pencil-alt fa-sm mr-1 ico-edit" title="Изменить описание" onclick="editTask()"></i>
             </a>
             <div id="collapsedone{{$task->id}}" class="collapse mt-1" role="tabpanel" aria-labelledby="heading96"
                  data-parent="#accordiontask{{$task->id}}" style="border-bottom:1px solid #DCDCDC;">

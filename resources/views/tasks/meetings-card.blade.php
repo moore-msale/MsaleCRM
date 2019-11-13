@@ -22,16 +22,16 @@
         <div class="icon-panel mt-1 accordion md-accordion accordion-1" id="accordionmeet{{$meeting->id}}"
              role="tablist">
             <a data-toggle="collapse" href="#collapsedone{{$meeting->id}}" aria-expanded="false"
-               aria-controls="collapsedone{{$meeting->id}}">
+               aria-controls="collapsedone{{$meeting->id}}" class="meetDone" onclick="doneMeet()">
                 <i class="far fa-check-circle fa-sm mr-1 ico-done" title="Завершить задачу"></i>
             </a>
             <a data-toggle="collapse" href="#collapsedelete{{$meeting->id}}" aria-expanded="false"
-               aria-controls="collapsedelete{{$meeting->id}}">
+               aria-controls="collapsedelete{{$meeting->id}}" class="meetDelete" onclick="deleteMeet()">
                 <i class="far fa-times-circle fa-sm mr-1 ico-delete" title="Удалить задачу"></i>
             </a>
             <a data-toggle="collapse" href="#collapseupdate{{$meeting->id}}" aria-expanded="false"
-               aria-controls="collapseupdate{{$meeting->id}}">
-                <i class="far fa-calendar fa-sm mr-1 ico-update" title="Изменить дату"></i>
+               aria-controls="collapseupdate{{$meeting->id}}" class="meetEdit">
+                <i class="far fa-calendar fa-sm mr-1 ico-update" title="Изменить дату" onclick="editMeet()"></i>
             </a>
             <div id="collapsedone{{$meeting->id}}" class="collapse mt-1" role="tabpanel" aria-labelledby="heading96"
                  data-parent="#accordionmeet{{$meeting->id}}" style="border-bottom:1px solid #DCDCDC;">

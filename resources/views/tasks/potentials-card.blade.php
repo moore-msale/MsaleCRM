@@ -16,8 +16,15 @@
         </span>
         </div>
         <div class="ml-auto">
-                <i class="far fa-check-circle fa-sm mr-2 ico-done" data-toggle="modal" data-target="#DoneCustomer-{{ $customer->taskable->id }}"  title="Завершить задачу"></i>
-                <i class="far fa-times-circle fa-sm mr-1 ico-delete" data-toggle="modal" data-target="#DeleteCustomer-{{ $customer->taskable->id }}" title="Удалить задачу"></i>
+
+            <a class="customerDone">
+                <i class="far fa-check-circle fa-sm mr-2 ico-done" data-toggle="modal" data-target="#DoneCustomer-{{ $customer->taskable->id }}"  title="Завершить задачу" onclick="doneCustomer()"></i>
+            </a>
+
+            <a class="customerDelete">
+                <i class="far fa-times-circle fa-sm mr-1 ico-delete" data-toggle="modal" data-target="#DeleteCustomer-{{ $customer->taskable->id }}" title="Удалить задачу" onclick="deleteCustomer()"></i>
+            </a>
+
         </div>
     </div>
 </div>

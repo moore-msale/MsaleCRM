@@ -356,6 +356,16 @@
                             $('#TaskCreate').modal('hide');
                             swal("Задача добавлена!", "Отчет был отправлен", "success");
                             let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                            result.find('.taskDone').each((e,i) => {
+                                doneTask($(i));
+                            });
+                            result.find('.taskDelete').each((e,i) => {
+                                deleteTask($(i));
+                            });
+
+                            result.find('.taskEdit').each((e,i) => {
+                                editTask($(i));
+                            });
                             $('#taskname').val('');
                             $('#taskdescription').val('');
                             $('#taskdate').val('');
@@ -368,16 +378,6 @@
                     })
                 }
             })
-        </script>
-        <script>
-            function registerMeetDoneBtn(item) {
-                item.click(function (e) {
-                    e.preventDefault();
-                    let btn = $(e.currentTarget);
-                    let href = btn.attr('href');
-                    window.location.href = href;
-                });   
-            }
         </script>
         <script>
             $('.addMeeting').click(e => {
@@ -407,8 +407,15 @@
                             console.log(data);
                             swal("Встреча добавлена!", "Отчет был отправлен", "success");
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                            result.find('.doneMeet').each((e, i) => {
-                                registerCallBtn($(i));
+                            result.find('.meetDone').each((e,i) => {
+                                doneMeet($(i));
+                            });
+                            result.find('.meetDelete').each((e,i) => {
+                                deleteMeet($(i));
+                            });
+
+                            result.find('.meetEdit').each((e,i) => {
+                                editMeet($(i));
                             });
                             $('#meetingname').val('');
                             $('#meetingdescription').val('');
@@ -484,40 +491,42 @@
             registerCallBtn($('.call-btn'));
         </script>
         <script>
-            $('.deleteTask').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = btn.data('id');
-                let details = $('#details_delete_Task-' + id);
+            function deleteTask(){
+                $('.deleteTask').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let id = btn.data('id');
+                    let details = $('#details_delete_Task-' + id);
 
-                console.log(id);
-                if(details.val().length < 20)
-                {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
-                }
-                else {
-                    $.ajax({
-                        url: 'taskdelete',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            swal("Задача удалена!","Отчет был отправлен","success");
-                            $('#task-' + id).hide(200);
-                            console.log(data);
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                        }
-                    })
-                }
+                    console.log(id);
+                    if(details.val().length < 20)
+                    {
+                        swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+                    }
+                    else {
+                        $.ajax({
+                            url: 'taskdelete',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "details": details.val(),
+                                "id": id,
+                            },
+                            success: data => {
+                                swal("Задача удалена!","Отчет был отправлен","success");
+                                $('#task-' + id).hide(200);
+                                console.log(data);
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            }
+                        })
+                    }
 
 
-            })
+                })
+            }
         </script>
         <script>
             $('.deleteCall').click(e => {
@@ -548,7 +557,8 @@
             })
         </script>
         <script>
-            $('.doneTask').click(e => {
+            function doneTask(){
+                $('.doneTask').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = btn.data('id');
@@ -581,60 +591,63 @@
                 }
 
 
-            })
+                })    
+            }
         </script>
         <script>
-            $('.editTask').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = btn.data('id');
-                let details = $('#details_update_Task-' + id);
-                let title = $('#taskchangename-' + id);
-                let desc = $('#taskchangedesc-' + id);
-                let date = $('#taskchangedate-' + id);
-                if(desc.val() == '')
-                {
-                    swal("Заполните описание!","Поле описание стало обязательным","error");
-                }
-                else {
-                    console.log(id);
-                    if (details.val().length < 20) {
-                        swal("Неправильный ввод!", "Нужно ввести в поле 'причина' не менее 20 символов для изменения!", "error");
+            function editTask(){
+                $('.editTask').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let id = btn.data('id');
+                    let details = $('#details_update_Task-' + id);
+                    let title = $('#taskchangename-' + id);
+                    let desc = $('#taskchangedesc-' + id);
+                    let date = $('#taskchangedate-' + id);
+                    if(desc.val() == '')
+                    {
+                        swal("Заполните описание!","Поле описание стало обязательным","error");
                     }
                     else {
-                        $.ajax({
-                            url: 'taskupdate',
-                            method: 'POST',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "details": details.val(),
-                                "title": title.val(),
-                                "desc": desc.val(),
-                                "date": date.val(),
-                                "id": id,
-                            },
-                            success: data => {
-                                swal("Встреча изменена!", "Отчет был отправлен", "success");
-                                $('#task-' + id).find('.task-title').html(data.data.title);
-                                $('#task-' + id).find('.task-date').html(data.data.deadline_date);
-                                $('#task-' + id).find('.task-desc').html(data.data.description);
-                                console.log(data);
-                            },
-                            error: () => {
-                                console.log(0);
-                                swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
-                            }
-                        })
+                        console.log(id);
+                        if (details.val().length < 20) {
+                            swal("Неправильный ввод!", "Нужно ввести в поле 'причина' не менее 20 символов для изменения!", "error");
+                        }
+                        else {
+                            $.ajax({
+                                url: 'taskupdate',
+                                method: 'POST',
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    "details": details.val(),
+                                    "title": title.val(),
+                                    "desc": desc.val(),
+                                    "date": date.val(),
+                                    "id": id,
+                                },
+                                success: data => {
+                                    swal("Встреча изменена!", "Отчет был отправлен", "success");
+                                    $('#task-' + id).find('.task-title').html(data.data.title);
+                                    $('#task-' + id).find('.task-date').html(data.data.deadline_date);
+                                    $('#task-' + id).find('.task-desc').html(data.data.description);
+                                    console.log(data);
+                                },
+                                error: () => {
+                                    console.log(0);
+                                    swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                                }
+                            })
+                        }
                     }
-                }
-            })
+                })
+            }
         </script>
         <script>
-            $('.doneMeet').click(e => {
+            function doneMeet(){
+                $('.doneMeet').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = btn.data('id');
-                 console.log('something');
                 let details = $('#details_done_Meet-' + id);
                 console.log(id);
                 if(details.val().length < 20)
@@ -662,77 +675,82 @@
                         }
                     })
                 }
-            })
+                })
+            }      
         </script>
         <script>
-            $('.deleteMeet').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = btn.data('id');
-                let details = $('#details_delete_Meet-' + id);
+            function deleteMeet(){
+                $('.deleteMeet').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let id = btn.data('id');
+                    let details = $('#details_delete_Meet-' + id);
 
-                console.log(id);
-                if(details.val().length < 20)
-                {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
-                }
-                else {
-                    $.ajax({
-                        url: 'meetdelete',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            swal("Встреча удалена!","Отчет был отправлен","success");
-                            $('#meet-' + id).hide(200);
-                            console.log(data);
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                        }
-                    })
-                }
-            })
+                    console.log(id);
+                    if(details.val().length < 20)
+                    {
+                        swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+                    }
+                    else {
+                        $.ajax({
+                            url: 'meetdelete',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "details": details.val(),
+                                "id": id,
+                            },
+                            success: data => {
+                                swal("Встреча удалена!","Отчет был отправлен","success");
+                                $('#meet-' + id).hide(200);
+                                console.log(data);
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            }
+                        })
+                    }
+                })
+            }
         </script>
         <script>
-            $('.editMeet').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = btn.data('id');
-                let details = $('#details_update_Meet-' + id);
-                let date = $('#meetchangedate-' + id);
+            function editMeet(){
+                $('.editMeet').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let id = btn.data('id');
+                    let details = $('#details_update_Meet-' + id);
+                    let date = $('#meetchangedate-' + id);
 
 
-                if(details.val().length < 20)
-                {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
-                }
-                else {
-                    $.ajax({
-                        url: 'meetupdate',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
-                            "date": date.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            swal("Встреча изменена!","Отчет был отправлен","success");
-                            $('#meet-' + id).find('.meet-date').html(data.data.deadline_date);
-                            console.log(data);
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                        }
-                    })
-                }
-            })
+                    if(details.val().length < 20)
+                    {
+                        swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
+                    }
+                    else {
+                        $.ajax({
+                            url: 'meetupdate',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "details": details.val(),
+                                "date": date.val(),
+                                "id": id,
+                            },
+                            success: data => {
+                                swal("Встреча изменена!","Отчет был отправлен","success");
+                                $('#meet-' + id).find('.meet-date').html(data.data.deadline_date);
+                                console.log(data);
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            }
+                        })
+                    }
+                })
+            }
         </script>
         <script>
             $('.addClient').click(e => {
@@ -783,130 +801,134 @@
             })
         </script>
         <script>
-            $('.deleteCustomer').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = btn.data('id');
-                let details = $('#details_delete_Customer-' + id);
+            function deleteCustomer(){
+                $('.deleteCustomer').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let id = btn.data('id');
+                    let details = $('#details_delete_Customer-' + id);
 
-                console.log(id);
-                if(details.val().length < 20)
-                {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
-                }
-                else {
-                    $.ajax({
-                        url: 'customerdelete',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            swal("Потенциальный клиент удален!","Отчет был отправлен","success");
-                            $('#DeleteCustomer-' + id).modal('hide');
-                            $('#customer-' + id).hide(200);
-                            console.log(data);
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                        }
-                    })
-                }
-
-
-            })
-        </script>
-        <script>
-            $('.doneCustomer').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = btn.data('id');
-                let details = $('#details_done_Customer-' + id);
-
-                console.log(id);
-                if(details.val().length < 20)
-                {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
-                }
-                else {
-                    $.ajax({
-                        url: 'customerdone',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            swal("Потенциальный клиент закрыт!","Отчет был отправлен","success");
-                            $('#DoneCustomer-' + id).modal('hide');
-                            $('#customer-' + id).hide(200);
-                            console.log(data);
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                        }
-                    })
-                }
-
-
-            })
-        </script>
-        <script>
-            $('.editCustomer').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = btn.data('id');
-                let details = $('#details_update_Customer-' + id);
-                let name = $('#customerchangename-' + id);
-                let company = $('#customerchangecompany-' + id);
-                let phone = $('#customerchangephone-' + id);
-                let social = $('#customerchangesocial-' + id);
-
-
-                console.log(id);
-                if(details.val().length < 20)
-                {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
-                }
-                else {
-                    $.ajax({
-                        url: 'customerupdate',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
-                            "name": name.val(),
-                            "company": company.val(),
-                            "phone": phone.val(),
-                            "social": social.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            swal("Данные изменены!","Отчет был отправлен!","success");
-                            $('#customer-' + id).find('.cust-name').html(data.data.name);
-                            $('#customer-' + id).find('.cust-company').html(data.data.company);
-                            $('#customer-' + id).find('.cust-phone').html(data.data.contacts);
-                            $('#customer-' + id).find('.cust-social').html(data.data.socials);
-                            $('#meet-' + data.id).find('.meet-name').html(data.data.name);
-                            $('#meet-' + data.id).find('.meet-company').html(data.data.company);
-                            $('#details_update_Customer-' + id).val(''),
-                                $('#customerchangename-' + id).val(''),
-                                $('#customerchangecompany-' + id).val(),
-                                $('#customerchangephone-' + id).val(),
+                    console.log(id);
+                    if(details.val().length < 20)
+                    {
+                        swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+                    }
+                    else {
+                        $.ajax({
+                            url: 'customerdelete',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "details": details.val(),
+                                "id": id,
+                            },
+                            success: data => {
+                                swal("Потенциальный клиент удален!","Отчет был отправлен","success");
+                                $('#DeleteCustomer-' + id).modal('hide');
+                                $('#customer-' + id).hide(200);
                                 console.log(data);
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                        }
-                    })
-                }
-            })
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            }
+                        })
+                    }
+                })
+            }
+        </script>
+        <script>
+            function doneCustomer(){
+                $('.doneCustomer').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let id = btn.data('id');
+                    let details = $('#details_done_Customer-' + id);
+
+                    console.log(id);
+                    if(details.val().length < 20)
+                    {
+                        swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для удаления!","error");
+                    }
+                    else {
+                        $.ajax({
+                            url: 'customerdone',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "details": details.val(),
+                                "id": id,
+                            },
+                            success: data => {
+                                swal("Потенциальный клиент закрыт!","Отчет был отправлен","success");
+                                $('#DoneCustomer-' + id).modal('hide');
+                                $('#customer-' + id).hide(200);
+                                console.log(data);
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            }
+                        })
+                    }
+
+
+                })
+            }
+        </script>
+        <script>
+            function editCustomer(){
+                $('.editCustomer').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let id = btn.data('id');
+                    let details = $('#details_update_Customer-' + id);
+                    let name = $('#customerchangename-' + id);
+                    let company = $('#customerchangecompany-' + id);
+                    let phone = $('#customerchangephone-' + id);
+                    let social = $('#customerchangesocial-' + id);
+
+
+                    console.log(id);
+                    if(details.val().length < 20)
+                    {
+                        swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
+                    }
+                    else {
+                        $.ajax({
+                            url: 'customerupdate',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "details": details.val(),
+                                "name": name.val(),
+                                "company": company.val(),
+                                "phone": phone.val(),
+                                "social": social.val(),
+                                "id": id,
+                            },
+                            success: data => {
+                                swal("Данные изменены!","Отчет был отправлен!","success");
+                                $('#customer-' + id).find('.cust-name').html(data.data.name);
+                                $('#customer-' + id).find('.cust-company').html(data.data.company);
+                                $('#customer-' + id).find('.cust-phone').html(data.data.contacts);
+                                $('#customer-' + id).find('.cust-social').html(data.data.socials);
+                                $('#meet-' + data.id).find('.meet-name').html(data.data.name);
+                                $('#meet-' + data.id).find('.meet-company').html(data.data.company);
+                                $('#details_update_Customer-' + id).val(''),
+                                    $('#customerchangename-' + id).val(''),
+                                    $('#customerchangecompany-' + id).val(),
+                                    $('#customerchangephone-' + id).val(),
+                                    console.log(data);
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            }
+                        })
+                    }
+                })
+            }
         </script>
         <script>
             $('.editCustomer2').click(e => {
@@ -984,6 +1006,12 @@
                             swal("Потенциальный клиент добавлен!", "Отчет был отправлен", "success");
                             if (data.view) {
                                 let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                                result.find('.customerDone').each((e,i) => {
+                                    doneCustomer($(i));
+                                });
+                                result.find('.customerDelete').each((e,i) => {
+                                    deleteCustomer($(i));
+                                });
                             }
                         },
                         error: () => {
