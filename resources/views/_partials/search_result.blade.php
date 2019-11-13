@@ -7,13 +7,13 @@
                 <div class="collapse collapse-multi show" id="collapseAjax{{ $loop->index }}">
                     @foreach($items as $value)
                         @if(\App\User::find($value->user_id)->role != 'admin')
-                        <a class="nav-link products px-2" data-toggle="modal" data-target="#search_task-{{$value->id}}">
+                        <div class="nav-link products px-2" data-toggle="modal" data-target="#search_task-{{$value->id}}">
                 <span class="d-flex align-items-center border-bottom pb-2">
                     <span class="col">
                         {{ $value->title }}
                     </span>
                 </span>
-                        </a>
+                        </div>
                         @endif
                     @endforeach
                 </div>
