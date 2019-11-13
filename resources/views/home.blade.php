@@ -369,7 +369,16 @@
                 }
             })
         </script>
-
+        <script>
+            function registerMeetDoneBtn(item) {
+                item.click(function (e) {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let href = btn.attr('href');
+                    window.location.href = href;
+                });   
+            }
+        </script>
         <script>
             $('.addMeeting').click(e => {
                 e.preventDefault();
@@ -398,6 +407,9 @@
                             console.log(data);
                             swal("Встреча добавлена!", "Отчет был отправлен", "success");
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                            result.find('.doneMeet').each((e, i) => {
+                                registerCallBtn($(i));
+                            });
                             $('#meetingname').val('');
                             $('#meetingdescription').val('');
                             $('#meetingdate').val('');
@@ -409,6 +421,7 @@
                     })
                 }
             })
+            registerMeetDoneBtn($('.doneMeet'));
         </script>
         <script>
             function registerCallBtn(item) {
@@ -540,7 +553,7 @@
                 let btn = $(e.currentTarget);
                 let id = btn.data('id');
                 let details = $('#details_done_Task-' + id);
-
+                console.log('something');
                 console.log(id);
                 if(details.val().length < 20)
                 {
@@ -621,8 +634,8 @@
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = btn.data('id');
+                 console.log('something');
                 let details = $('#details_done_Meet-' + id);
-
                 console.log(id);
                 if(details.val().length < 20)
                 {
