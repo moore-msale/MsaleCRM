@@ -17,7 +17,12 @@
         <div class="py-1 position-relative">
             <div class="search-task" style="position: absolute; top:10%; right:10%;">
                 <input id="search" class="form-control" type="text" placeholder="Поиск задач">
+                <div class="position-relative">
+                    <div class="position-absolute search-result shadow" id="search-result" style="left: 0; top: 50%;">
+                    </div>
+                </div>
             </div>
+
         </div>
             <ul class="nav nav-tabs pb-5" id="myTab" role="tablist">
                 <li class="nav-item report-tabs mr-4">
@@ -404,7 +409,9 @@
     @include('modals.tasks.done_task_admin')
     @include('modals.tasks.delete_task_admin')
     @include('modals.tasks.edit_task_admin')
+    @include('modals.tasks.search_task_modal')
 @endforeach
+
 @endsection
 
 
@@ -589,5 +596,71 @@
                     })
             }
         })
+    </script>
+    <script>
+        let result = $('#search-result');
+
+        result.parent().hide(0);
+        $('#search').on('keyup click', function () {
+            let value = $(this).val();
+            console.log(value);
+            if (value != '' && value.length >= 3) {
+                // let searchBtn = $('#search-btn');
+                // searchBtn.prop('href', '');
+                // searchBtn.prop('href', '/search?search=' + value);
+                $.ajax({
+                    url: '{!! route('search_task') !!}',
+                    data: {'search': value},
+                    success: (data) => {
+                        console.log(data);
+                        result = result.html(data.html);
+                        result.parent().slideDown(400);
+                        result.siblings('span').css('opacity', 1);
+                        // result.find('.collapse').each((e, i) => {
+                        //     registerCollapse($(i));
+                        // });
+                        // registerCollapse(result);
+                    },
+                    error: () => {
+                        console.log('error');
+                    }
+                });
+            } else {
+                result.parent().slideUp(400);
+                result.empty();
+            }
+        });
+
+        // function registerCollapse(i)
+        // {
+        //     i.on('show.bs.collapse', e => {
+        //         let btn = $(e.currentTarget);
+        //         let icons = $(btn.siblings('.collapses').find('span')[1]).find('i');
+        //         let firstIcon = $(icons[0]);
+        //         let secondIcon = $(icons[1]);
+        //         firstIcon.addClass('d-none');
+        //         secondIcon.removeClass('d-none');
+        //         console.log(icons);
+        //     });
+        //     i.on('hide.bs.collapse', e => {
+        //         let btn = $(e.currentTarget);
+        //         let icons = $(btn.siblings('.collapses').find('span')[1]).find('i');
+        //         let firstIcon = $(icons[0]);
+        //         let secondIcon = $(icons[1]);
+        //         secondIcon.addClass('d-none');
+        //         firstIcon.removeClass('d-none');
+        //         console.log(icons);
+        //     });
+        // }
+
+        // $('.collapse.collapse-multi').on('show.bs.collapse', e => {
+        //     console.log(e);
+        // });
+
+        $(document).click(function(event) {
+            if (!$(event.target).is("#search, #search-result, #search-result-ajax, .collapse, .products")) {
+                $("#search-result").parent().slideUp(400);
+            }
+        });
     </script>
 @endpush

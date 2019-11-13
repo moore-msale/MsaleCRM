@@ -6,16 +6,20 @@
 
                 <div class="collapse collapse-multi show" id="collapseAjax{{ $loop->index }}">
                     @foreach($items as $value)
-                        <a class="nav-link products px-4" href="{{ route('book.show', $value->id) }}">
+                        @if(\App\User::find($value->user_id)->role != 'admin')
+                        <div class="nav-link products px-2" data-toggle="modal" data-target="#search_task-{{$value->id}}">
                 <span class="d-flex align-items-center border-bottom pb-2">
                     <span class="col">
-                        {{ $value->name }}
+                        {{ $value->title }}
                     </span>
                 </span>
-                        </a>
+                        </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
+
+
         @endforeach
 
         {{--@if(count($result->collapse()) > 10)--}}
