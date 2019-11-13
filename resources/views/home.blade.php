@@ -68,7 +68,6 @@
                     $('#caller_phone').val(phone);
                     let href = btn.attr('href');
                     window.location.href = href;
-
                 });
             }
         </script>
@@ -218,7 +217,6 @@
                         swal("Номер добавлен!","Отчет был отправлен","success");
                         let result = $('#calls-scroll').prepend(data.view).show('slide', {direction: 'left'}, 400);
                         result.find('.call-btn').each((e, i) => {
-                            console.log($(i));
                             registerCallBtn($(i));
                         });
                     },
@@ -372,12 +370,13 @@
             })
         </script>
         <script>
-            function registerDoneMeetBtn(e) {
-                e.preventDefault();
-                let btn = $(this);
-                let href = btn.attr('href');
-                window.location.href = e.target;
- 
+            function registerMeetDoneBtn(item) {
+                item.click(function (e) {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let href = btn.attr('href');
+                    window.location.href = href;
+                });   
             }
         </script>
         <script>
@@ -408,8 +407,8 @@
                             console.log(data);
                             swal("Встреча добавлена!", "Отчет был отправлен", "success");
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                            result.each(function() {
-                                $(this).find('.doneMeet', 'click',(e) => doneMeet(e));
+                            result.find('.doneMeet').each((e, i) => {
+                                registerCallBtn($(i));
                             });
                             $('#meetingname').val('');
                             $('#meetingdescription').val('');
@@ -422,6 +421,7 @@
                     })
                 }
             })
+            registerMeetDoneBtn($('.doneMeet'));
         </script>
         <script>
             function registerCallBtn(item) {
@@ -630,7 +630,7 @@
             })
         </script>
         <script>
-                $('.doneMeet').click(e => {
+            $('.doneMeet').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = btn.data('id');
