@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'company' => $data['company'],
             'phone' => $data['phone'],
+            'role'=>'admin',
         ]);
 
         if($data['company']!='msalecrm'){
@@ -84,6 +85,7 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
                 'company' => $data['company'],
                 'phone' => $data['phone'],
+                'role'=>'admin',
             ]);
         }
         return $user;

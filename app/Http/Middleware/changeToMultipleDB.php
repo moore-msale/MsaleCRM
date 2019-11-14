@@ -15,8 +15,8 @@ class changeToMultipleDB
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->company != 'multipledb'){
-            config(['database.connections.mysql.database' => 'multipledb']);
+        if($request->user()->company != 'msalecrm'){
+            config(['database.connections.mysql.database' => 'msalecrm']);
             DB::reconnect();
             return $next($request);
         }
