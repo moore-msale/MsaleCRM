@@ -1,97 +1,54 @@
 @extends('layouts.app2')
 
 @section('content')
+
 <style type="text/css">
-    
-.main-head{
-    height: 150px;
-    background: #FFF;
-   
+body{
+    background-color: #772FD2;
 }
-
-.sidenav {
-    height: 313px;
-    background-color: #5713ae;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-
 .main {
-    padding: 0px 30px;
+    padding: 7% 0;
 }
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-}
-
-@media screen and (max-width: 450px) {
-    .login-form{
-        margin-top: 10%;
-    }
-
-    .register-form{
-        margin-top: 10%;
-    }
-}
-
-@media screen and (min-width: 768px){
-    .main{
-        margin-left: 40%; 
-    }
-
-    .sidenav{
-        width: 40%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        height: 100%;
-    }
-
-    .login-form{
-        margin-top: 50%;
-    }
-
-    .register-form{
-        margin-top: 20%;
-    }
-}
-
-
-.login-main-text{
-    margin-top: 20%;
-    padding: 60px;
-    color: #fff;
-}
-
-.login-main-text h2{
-    font-weight: 300;
-}
-
 .btn-purple{
     background-color: #5713ae !important;
     color: #fff;
     margin: 0!important;
+    padding: 12px;
+    font-family: SF Pro Display;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.haveAccount{
+    font-family: SF Pro Display;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-decoration-line: underline;
+    color: #FFFFFF;
+    opacity: 0.5;
+}
+.border-secondary{
+    border: 0.3px solid #FFFFFF;
+}
+.confirm{
+    color: #FFFFFF;
+    opacity: 0.5;
 }
 </style>
-
-<div class="sidenav">
-    <div class="login-main-text">
-        <h2>Страница авторизации</h2>
-        <h1>Moore.crm</h1>
-    </div>
-</div>
-
-<div class="main">
- <div class="col-md-6 col-sm-12">
-    <div class="login-form">
-        <form method="POST" action="{{ route('login') }}">
+<div class="main container">
+    <div class="row justify-content-center">
+        <div class="col-5 text-right pr-5 border-right border-secondary">
+            <img src="{{asset('images/loginLogo.svg')}}">
+        </div> 
+        <div class="col-6 pt-5 pl-5">
+            <div class="login-form col-11">
+              <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <div class="form-group row">
-                    <label for="email" class="col-form-label">{{ __('E-Mail') }}</label>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 border-0" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Emali">
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -100,8 +57,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="password" class="col-form-label">{{ __('Пароль') }}</label>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 border-0" name="password" required autocomplete="current-password" placeholder="Пароль">
 
                     @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -109,29 +65,23 @@
                         </span>
                     @enderror
                 </div>
-
-                <div class="form-group row">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                        <label class="form-check-label" for="remember">
-                            {{ __('Remember Me') }}
-                        </label>
+                    <div class="form-group row mt-5">
+                        <div class="col pl-0">
+                            <button type="submit" class="btn btn-purple">
+                                {{ __('войти') }}
+                            </button>
+                        </div>
+                        <div class="col text-right pt-3 mt-1">
+                            <a href="/register" class="haveAccount">нет аккаунта?</a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group row mb-0">
-                        <button type="submit" class="btn btn-purple">
-                            {{ __('войти') }}
-                        </button>
-
-                        {{--@if (Route::has('password.request'))--}}
-                            {{--<a class="btn btn-link" href="{{ route('password.request') }}">--}}
-                                {{--{{ __('Forgot Your Password?') }}--}}
-                            {{--</a>--}}
-                        {{--@endif--}}
-                </div>
-            </form>
+                    <div class="form-group row">
+                        <p class="confirm">
+                            Нажимая на кнопку, вы даете согласие на обработку персональных данных
+                        </p>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

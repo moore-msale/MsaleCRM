@@ -53,7 +53,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
             'company'=>['required','string','unique:users'],
         ]);
     }
@@ -72,8 +72,10 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'company' => $data['company'],
         ]);
-        $this->createDB($data['company']);
-        $this->migrateTables($data['company']);
+        if($data['company']!='msalecrm'){
+            $this->createDB($data['company']);
+            $this->migrateTables($data['company']);
+        }
         return $user;
     }
 
@@ -88,9 +90,7 @@ class RegisterController extends Controller
     }
 
     public function migrateTables($company){
-
         Artisan::call('migrate:install');
         Artisan::call('migrate');
-    
     }
 }

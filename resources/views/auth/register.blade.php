@@ -3,88 +3,53 @@
 @section('content')
 
 <style type="text/css">
-    
-.main-head{
-    height: 150px;
-    background: #FFF;
-   
+body{
+    background-color: #772FD2;
 }
-
-.sidenav {
-    height: 100%;
-    background-color: #5713ae;
-    overflow-x: hidden;
-    padding-top: 20px;
-}
-
-
 .main {
-    padding: 0px 30px;
+    padding: 7% 0;
 }
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-}
-
-@media screen and (max-width: 450px) {
-    .login-form{
-        margin-top: 10%;
-    }
-
-    .register-form{
-        margin-top: 10%;
-    }
-}
-
-@media screen and (min-width: 768px){
-    .main{
-        margin-left: 40%; 
-    }
-
-    .sidenav{
-        width: 40%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-    }
-    .register-form{
-        margin-top: 20%;
-    }
-}
-
-
-.login-main-text{
-    margin-top: 20%;
-    padding: 60px;
-    color: #fff;
-}
-
-.login-main-text h2{
-    font-weight: 300;
-}
-
 .btn-purple{
     background-color: #5713ae !important;
     color: #fff;
     margin: 0!important;
+    padding: 12px;
+    font-family: SF Pro Display;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+.haveAccount{
+    font-family: SF Pro Display;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    text-decoration-line: underline;
+    color: #FFFFFF;
+    opacity: 0.5;
+}
+
+.border-secondary{
+    border: 0.3px solid #FFFFFF;
+}
+.confirm{
+    color: #FFFFFF;
+    opacity: 0.5;
 }
 </style>
-<div class="sidenav">
-    <div class="login-main-text">
-        <h2>Страница регистрации</h2>
-        <h1>Moore.crm</h1>
-    </div>
-</div>
-<div class="main">
-    <div class="col-md-6 col-sm-12">
-        <div class="login-form">
+<div class="main container">
+    <div class="row justify-content-center">
+        <div class="col-5 text-right pr-5 border-right border-secondary">
+            <img src="{{asset('images/loginLogo.svg')}}">
+        </div> 
+    <div class="col-6 pl-5">
+        <div class="login-form col-11">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group row">
-                    <label for="name" class="col-form-label">{{ __('Имя') }}</label>
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror rounded-0 border-0" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Имя">
                     @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -93,52 +58,16 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="email" class="col-form-label">{{ __('E-Mail') }}</label>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 border-0" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
                     @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
                 </div>
-                <div class="form-group row">
-                    <label for="phone" class="col-form-label">{{ __('Номер телефона') }}</label>
-                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required>
-                    
-                    @error('phone')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
 
-                <div class="form-group row">
-                    <label for="company" class="col-form-label">{{ __('Компания') }}</label>
-                    <input id="company" type="text" class="form-control @error('company') is-invalid @enderror" name="company" required>
-                    
-                    @error('company')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="form-group row">
-                    <label for="employees" class="col-form-label">{{ __('Сотрудники') }}</label>
-                    <input id="employees" type="text" class="form-control @error('employees') is-invalid @enderror" name="employees" required>
-                    
-                    @error('employees')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-
-                <div class="form-group row">
-                    <label for="password" class="col-form-label">{{ __('Пароль') }}</label>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                 <div class="form-group row">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 border-0" name="password" required autocomplete="new-password" placeholder="пароль">
 
                     @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -148,16 +77,53 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="password-confirm" class="col-form-label">{{ __('Потвердить пароль') }}</label>
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                    <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror rounded-0 border-0" name="phone"  value="{{ old('phone') }}" required placeholder="телефон">
+                    
+                    @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+
                 <div class="form-group row">
-                    <button type="submit" class="btn btn-purple">
-                        {{ __('Регистрация') }}
-                    </button>
+                    <input id="company" type="text" class="form-control @error('company') is-invalid @enderror rounded-0 border-0" name="company" value="{{ old('company') }}" required placeholder="компания">
+                    
+                    @error('company')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group row">
+                    <input id="employees" type="number" class="form-control @error('employees') is-invalid @enderror rounded-0 border-0" name="employees" value="{{ old('employees') }}" required placeholder="Сотрудники">
+                    
+                    @error('employees')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group row mt-5">
+                    <div class="col pl-0">
+                        <button type="submit" class="btn btn-purple">
+                            {{ __('Регистрация') }}
+                        </button>
+                    </div>
+                    <div class="col pt-3 pl-3">
+                        <a href="/login" class="haveAccount">есть аккаунт?</a>
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <p class="confirm">
+                        Нажимая на кнопку, вы даете согласие на обработку персональных данных
+                    </p>
                 </div>
             </form>
         </div>
+    </div>
     </div>
 </div>
 @endsection
