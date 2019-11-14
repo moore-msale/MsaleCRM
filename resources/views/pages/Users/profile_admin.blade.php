@@ -1,5 +1,12 @@
 @extends('layouts.app')
 @section('content')
+<style type="text/css">
+.bg-grey{
+    background-color: #e9ecef;
+    opacity: 1;
+}
+ }
+</style>
     <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
         <li class="nav-item">
             <h3>Управление учетными записями</h3>
@@ -46,31 +53,39 @@
                                 <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{$user->id}}">
-                                    <div class="md-form">
-                                        <input type="text" name="name" id="name-{{$user->id}}" class="form-control" value="{{ $user->name }}" placeholder="Имя">
+                                    <div class="form-group">
+                                        <input type="text" name="name" id="name-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $user->name }}" placeholder="Имя">
                                     </div>
-                                    <div class="md-form">
-                                        <input type="text" name="lastname" id="lastname-{{$user->id}}" class="form-control" value="{{ $user->lastname }}" placeholder="Фамилия">
+                                    <div class="form-group">
+                                        <input type="text" name="lastname" id="lastname-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $user->lastname }}" placeholder="Фамилия">
                                     </div>
-                                    <div class="md-form">
-                                        <input type="text" name="address" id="address-{{$user->id}}" class="form-control" value="{{ $user->address }}" placeholder="Адрес">
+                                    <div class="form-group">
+                                        <input type="text" name="address" id="address-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->address }}" placeholder="Адрес">
                                     </div>
-                                    <div class="md-form">
-                                        <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control" value="{{ $user->phone }}" placeholder="Номер">
+                                    <div class="form-group">
+                                        <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->phone }}" placeholder="Номер">
                                     </div>
-                                    <div class="md-form">
-                                        <input type="text" name="email" id="email-{{$user->id}}" class="form-control" value="{{ $user->email }}" placeholder="Email">
+                                    <div class="form-group">
+                                        <input type="text" name="email" id="email-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->email }}" placeholder="Email">
                                     </div>
-                                    <div class="md-form">
-                                        <input type="text" name="role" id="role-{{$user->role}}" class="form-control" value="{{ $user->role }}" placeholder="Должность">
+                                    <div class="form-group">
+                                        <input type="text" name="role" id="role-{{$user->role}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->role }}" placeholder="Должность">
                                     </div>
-                                    <div class="md-form">
-                                        <input type="text" name="password" id="password-{{$user->password}}" class="form-control" value="{{ $user->password }}" placeholder="Пароль">
+                                    <div class="form-group">
+                                        <input type="text" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Пароль">
                                     </div>
                                     <h2 class="text-muted">+ ежедневный план</h2>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество звонков">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Last name">
+                                            </div>
+                                        </div>
                                     <h2 class="text-muted">+ личные данные</h2>
                                     <button class="btn btn-primary" type="submit">
-                                        Изменить
+                                        добавить
                                     </button>
                                 </form>
                             </div>
