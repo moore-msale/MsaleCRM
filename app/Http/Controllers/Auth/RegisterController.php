@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'company'=>['required','string','unique:users'],
+            'phone'=>['required','string','unique:users'],
         ]);
     }
 
@@ -71,10 +72,19 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'company' => $data['company'],
+            'phone' => $data['phone'],
         ]);
+        
         if($data['company']!='msalecrm'){
             $this->createDB($data['company']);
             $this->migrateTables($data['company']);
+            User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'company' => $data['company'],
+                'phone' => $data['phone'],
+            ]);
         }
         return $user;
     }
