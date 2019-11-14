@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -52,6 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'company'=>['required','string','unique:users'],
         ]);
     }
 
@@ -63,10 +66,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'company' => $data['company'],
         ]);
+        $this->createDB($data['company']);
+        $this->migrateTables($data['company']);
+        return $user;
+    }
+
+    public function createDB($company){
+        if(!defined('STDIN'))  define('STDIN',  fopen('php://stdin',  'rb'));
+        
+        if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'wb'));
+        
+        if(!defined('STDERR')) define('STDERR', fopen('php://stderr', 'wb'));
+        
+        Artisan::call('db:create', ['name' => $company]);
+    }
+
+    public function migrateTables($company){
+
+        Artisan::call('migrate:install');
+        Artisan::call('migrate');
+    
     }
 }

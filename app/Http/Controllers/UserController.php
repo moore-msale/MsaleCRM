@@ -11,6 +11,13 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class UserController extends Controller
 {
+
+     public function __construct()
+    {
+        $this->middleware('changeToMultipledb');
+    } 
+
+    
     public function profile()
     {
         $user = Auth::user();

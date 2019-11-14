@@ -48,11 +48,6 @@
         top: 0;
         left: 0;
     }
-
-    .login-form{
-        margin-top: 50%;
-    }
-
     .register-form{
         margin-top: 20%;
     }
@@ -107,6 +102,39 @@
                         </span>
                     @enderror
                 </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-form-label">{{ __('Номер телефона') }}</label>
+                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required>
+                    
+                    @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group row">
+                    <label for="company" class="col-form-label">{{ __('Компания') }}</label>
+                    <input id="company" type="text" class="form-control @error('company') is-invalid @enderror" name="company" required>
+                    
+                    @error('company')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="form-group row">
+                    <label for="employees" class="col-form-label">{{ __('Сотрудники') }}</label>
+                    <input id="employees" type="text" class="form-control @error('employees') is-invalid @enderror" name="employees" required>
+                    
+                    @error('employees')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+
 
                 <div class="form-group row">
                     <label for="password" class="col-form-label">{{ __('Пароль') }}</label>

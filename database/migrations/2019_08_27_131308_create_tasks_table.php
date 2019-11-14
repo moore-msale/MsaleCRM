@@ -22,6 +22,8 @@ class CreateTasksTable extends Migration
             $table->timestamp('appointment_date')->nullable();
             $table->timestamp('deadline_date')->nullable();
             $table->integer('user_id')->nullable();
+            $table->integer('taskable_id')->nullable();
+            $table->string('taskable_type')->nullable();
             $table->timestamps();
         });
     }
