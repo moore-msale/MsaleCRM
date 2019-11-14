@@ -80,11 +80,32 @@
                                                 <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество звонков">
                                             </div>
                                             <div class="col">
-                                                <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Last name">
+                                                <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество встреч">
                                             </div>
                                         </div>
                                     <h2 class="text-muted">+ личные данные</h2>
-                                    <button class="btn btn-primary" type="submit">
+                                    <div class="form-group">
+                                        <input type="file" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Загрузить фото профиля"  accept="image/*">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="file" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Загрузить фото паспорта(переднию часть)"accept="image/*">
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey custom-file-input" placeholder="Загрузить фото паспорта(задниию часть)" accept="image/*"aria-describedby="inputGroupFileAddon01" id="scan2_pas-{{ $user->id }}">
+                                             <label class="custom-file-label" for="scan2_pas-{{ $user->id }}">Выбрать</label>
+                                        </div>
+                                    </div>
+                                    <div class="input-group pt-2">
+                                        <div class="custom-file rounded-0 border-0">
+                                            <input type="file" class="custom-file-input" id="scan2_pas-{{$user->id}}" name="scan2_pas"
+                                                   aria-describedby="inputGroupFileAddon01" accept="image/*"
+                                                   >
+                                            <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan2_pas-{{ $user->id }}">Загрузить фото паспорта(переднию часть)</label>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-secondary btn-block" type="submit">
                                         добавить
                                     </button>
                                 </form>
