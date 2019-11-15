@@ -71,10 +71,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/balance_get', 'AjaxController@balance_get')->name('balance_get');
     Route::get('/profile', 'UserController@profile')->name('profile');
     Route::post('/editUser', 'UserController@editUser')->name('editUser');
+    Route::post('/adduser','UserController@addUser')->name('addUser');
     Route::get('/blockuser/{id}','UserController@blockUser')->name('blockuser');
     Route::get('/activateuser/{id}','UserController@activateUser')->name('activateuser');
     Route::get('/deleteuser/{id}','UserController@deleteUser')->name('deleteuser');
-    Route::get('/archive','UserController@archive')->name('archive');
 
 
     //admin routes
@@ -92,4 +92,3 @@ Route::group(['middleware' => ['auth']], function () {
 });
 Route::get('/penalty_for_the_end_day','ReportController@penalty')->name('penalty_for_the_end_day');
 Route::get('/manager_push_notification', 'NotificationController@notification')->name('manager_push_notification');
-

@@ -1,245 +1,280 @@
 @extends('layouts.app')
 @section('content')
 <style type="text/css">
+
 .bg-grey{
     background-color: #e9ecef;
     opacity: 1;
 }
+.custom-file-label:after {
+    content: "Выбрать"!important;
+    background: #C4C4C4;
+    border-radius: 0!important;
+    width: 95px;
+    text-align: center;
+}
+.display-5{
+    font-size: 32px;
  }
+ .upload-avatar{
+    cursor: pointer!important;
+ }
+}
 </style>
     <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
-        <li class="nav-item">
-            <h3>Управление учетными записями</h3>
-        </li>
-
-        @foreach(\App\User::where('role', '!=', 'admin')->where('status','=','active')->get() as $manager)
-            <li class="nav-item">
-                <a class="nav-link" id="users-{{$manager->id}}" data-toggle="tab" href="#user-{{$manager->id}}" role="tab" aria-controls="home" aria-selected="true">{{ $manager->lastname }} {{ $manager->name }}</a>
-            </li>
-        @endforeach
-
-        <li class="nav-item ml-md-auto">
-            <a class="nav-link" id="users" href="/archive" role="tab" aria-controls="home">Архив</a>
-        </li>        
+        <h3>Управление учетными записями</h3>
     </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="users">
-            <div class="h-100 pt-5">
-                <div class="row pl-5 h-100">
-                    <div class="col-4 p-3 mr-4">
-                       <div class="tab row">
+    <div class="tab-content row" id="myTabContent">
+        <div class="h-100 pt-5 col-4">
+            <div class="row pl-5 h-100">
+                <div class="p-3 mr-4">
+                   <div class="tab row nab nav-tabs" role="tablist">
                         <div class="col">
-                            <button class="btn dropdown-btn rounded-0 border-0 dropdown-toggle btn-block text-left" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Изменить ползователя</button>
+                            <button class="btn dropdown-btn rounded-0 border-0 dropdown-toggle btn-block text-left bg-white" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Изменить ползователя</button>
                             <div class="collapse mt-2" id="collapseExample">
-                                <div class="card card-body">
-                                    <p>Something</p>
+                                <div class="card card-body bg-white">
+                                    @foreach(\App\User::where('role', '!=', 'admin')->where('status','=','active')->where('company','=',$user->company)->get() as $manager)
+                                            <a class="nav-link" data-toggle="tab" href="#user-{{$manager->id}}" role="tab">{{ $manager->lastname }} {{ $manager->name }}</a>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                         <div class="w-100"></div>
                         <div class="col mt-2">
-                            <button class="btn rounded-0 border-0 btn-block text-left" onclick="openCity(event, 'Paris')">+ Пользователь</button>
+                           <a class="nav-link btn rounded-0 border-0 btn-block text-left bg-white" href="#newuser" data-toggle="tab" role="tab">+ Пользователь</a>
                         </div>
                         <div class="w-100"></div>
                         <div class="col mt-2">
-                            <button class="btn rounded-0 border-0 btn-block text-left" onclick="openCity(event, 'Tokyo')">- Архив пользователей</button>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-7 p-3 shadow">
-                        <div>
-                            <h2>+ Новый пользователь</h2>
-                            <div class="mt-5 p-5">
-                                <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{$user->id}}">
-                                    <div class="form-group">
-                                        <input type="text" name="name" id="name-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $user->name }}" placeholder="Имя">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="lastname" id="lastname-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $user->lastname }}" placeholder="Фамилия">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="address" id="address-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->address }}" placeholder="Адрес">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->phone }}" placeholder="Номер">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="email" id="email-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->email }}" placeholder="Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="role" id="role-{{$user->role}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $user->role }}" placeholder="Должность">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Пароль">
-                                    </div>
-                                    <h2 class="text-muted">+ ежедневный план</h2>
-                                        <div class="row">
-                                            <div class="col">
-                                                <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество звонков">
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество встреч">
-                                            </div>
-                                        </div>
-                                    <h2 class="text-muted">+ личные данные</h2>
-                                    <div class="form-group">
-                                        <input type="file" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Загрузить фото профиля"  accept="image/*">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="file" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Загрузить фото паспорта(переднию часть)"accept="image/*">
-                                    </div>
-
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey custom-file-input" placeholder="Загрузить фото паспорта(задниию часть)" accept="image/*"aria-describedby="inputGroupFileAddon01" id="scan2_pas-{{ $user->id }}">
-                                             <label class="custom-file-label" for="scan2_pas-{{ $user->id }}">Выбрать</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group pt-2">
-                                        <div class="custom-file rounded-0 border-0">
-                                            <input type="file" class="custom-file-input" id="scan2_pas-{{$user->id}}" name="scan2_pas"
-                                                   aria-describedby="inputGroupFileAddon01" accept="image/*"
-                                                   >
-                                            <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan2_pas-{{ $user->id }}">Загрузить фото паспорта(переднию часть)</label>
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-outline-secondary btn-block" type="submit">
-                                        добавить
-                                    </button>
-                                </form>
-                            </div>
+                            <a class="nav-link btn rounded-0 border-0 btn-block text-left bg-white"  href="#archive" data-toggle="tab" role="tab">- Архив пользователей</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @foreach(\App\User::where('role', '!=', 'admin')->where('status','=','active')->get() as $manager)
-        <div class="tab-pane fade" id="user-{{ $manager->id }}" role="tabpanel" aria-labelledby="users-{{$manager->id}}">
-            <div class="container-fluid h-100 pt-5">
-                <div class="row justify-content-center h-100">
-                    <div class="col-4 p-3 shadow">
-                        <div class="text-center" style="border-bottom:1px solid #bbbbbb;">
-                            
-                            <a href="blockuser/{{$manager->id}}">Заблокировать</a>
-
-                            <p class="pt-4 sf-medium" style="font-size:20px;">
-                                Личные данные
-                            </p>
-                            <div class="row justify-content-center">
-                                <div class="col-8" style="background-image: url({{isset($manager->avatar) ? asset('users/'. $manager->avatar) : '/users/default.png'}}); background-size: cover; height: 200px; border-radius:50%; background-position: center center;">
-                                    {{--<img class="w-100" src="{{ asset('users/'.$user->avatar) }}" alt="">--}}
-                                </div>
-                            </div>
-                            <p class="pt-4 sf-medium" style="font-size:20px;">
-                                {{ $manager->name }}
-                            </p>
-                            @if($manager->role != 'admin')
-                                <p class="sf-medium">
-                                    Менеджер
-                                </p>
-                            @else
-                                <p class="sf-medium">
-                                    Администратор
-                                </p>
-                            @endif
-
+        <div class="col-7 pt-5 p-3 tab-pane fade in active" id="newuser"> 
+                    <div class="shadow bg-white">
+                        <div class="mt-2 pl-5 pt-5">
+                            <h2>+ Новый пользователь</h2>
                         </div>
-                        <div class="text-left pt-3">
-                            @if(isset($manager->lastname))
-                            <p class="sf-medium">
-                                <span class="sf-light">Фамилия:</span> {{$manager->lastname}}
-                            </p>
-                            @endif
-                            @if(isset($manager->phone))
-                            <p class="sf-medium">
-                                <span class="sf-light">Номер телефона:</span> {{$manager->phone}}
-                            </p>
-                                @endif
-                            @if(isset($manager->address))
-                            <p class="sf-medium">
-                                <span class="sf-light">Адрес:</span> {{$manager->address}}
-                            </p>
-                                @endif
-                            @if(isset($manager->scan_pas))
-                            <p class="sf-medium">
-                                <a href="{{asset('passport/'.$manager->scan_pas)}}" data-fancybox="passport-{{$manager->id}}" class="sf-light">Скан паспорта</a>
-                                <a href="{{asset('passport/'.$manager->scan2_pas)}}" data-fancybox="passport-{{$manager->id}}" class="d-none"></a>
-                            </p>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-6 p-3 shadow">
-                        <div>
-                            <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
+                        <div class="mt-5 p-5">
+                            <form action="{{route('addUser')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" name="id" value="{{$manager->id}}">
-                                <div class="md-form">
-                                    <input type="text" name="name" id="name-{{$manager->id}}" class="form-control" value="{{ $manager->name }}">
-                                    <label for="name-{{$manager->id}}">Ваше имя</label>
+                                <input type="hidden" name="id" value="{{$user->id}}">
+                                <div class="position-absolute" style="top:21%;right:-21%; width: 150px;height: 150px;">
+                                    <label for="upload-avatar" class="upload-avatar"><img src="{{asset('images/defaultAvatar.png')}}"></label>
+                                    <input type="file" name="photo" id="upload-avatar" hidden/>
                                 </div>
-                                <div class="md-form">
-                                    <input type="text" name="lastname" id="lastname-{{$manager->id}}" class="form-control" value="{{ $manager->lastname }}">
-                                    <label for="lastname-{{$manager->id}}">Ваша фамилия</label>
+                                <div class="form-group">
+                                    <input type="text" name="name" id="name-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Имя">
                                 </div>
-                                <div class="md-form">
-                                    <input type="text" name="address" id="address-{{$manager->id}}" class="form-control" value="{{ $manager->address }}">
-                                    <label for="address-{{$manager->id}}">Ваше место жительства</label>
+                                <div class="form-group">
+                                    <input type="text" name="lastname" id="lastname-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Фамилия">
                                 </div>
-                                <div class="md-form">
-                                    <input type="text" name="phone" id="phone-{{$manager->id}}" class="form-control" value="{{ $manager->phone }}">
-                                    <label for="phone-{{$manager->id}}">Ваш номер телефона</label>
+                                <div class="form-group">
+                                    <input type="text" name="address" id="address-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Адрес">
                                 </div>
-                                <div class="md-form">
-                                    <input type="text" name="email" id="email-{{$manager->id}}" class="form-control" value="{{ $manager->email }}">
-                                    <label for="email-{{$manager->id}}">Email</label>
+                                <div class="form-group">
+                                    <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Номер">
                                 </div>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupFileAddon01">Изменить Аватар</span>
+                                <div class="form-group">
+                                    <input type="text" name="email" id="email-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="role" id="role-{{$user->role}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Должность">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Пароль">
+                                </div>
+                                <div class="mt-5">
+                                    <h2 class="text-muted">+ ежедневный план</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество звонков">
                                     </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="avatar-{{$manager->id}}" name="avatar"
-                                               aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                        <label class="custom-file-label" for="avatar-{{ $manager->id }}">Выберите файл</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество встреч">
                                     </div>
+                                </div>
+                                <div class="mt-5">
+                                    <h2 class="text-muted">+ личные данные</h2>
                                 </div>
                                 <div class="input-group pt-2">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupFileAddon01">Скан паспорта (передний вид)</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="scan_pas-{{$manager->id}}" name="scan_pas"
+                                    <div class="custom-file rounded-0 border-0">
+                                        <input type="file" class="custom-file" id="avatar-{{$user->id}}" name="avatar"
                                                aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                        <label class="custom-file-label" for="scan_pas-{{ $manager->id }}">Выберите файл</label>
+                                        <label class="custom-file-label rounded-0 border-0 bg-grey" for="avatar-{{ $user->id }}">Загрузить фото профиля</label>
                                     </div>
                                 </div>
-                                <div class="input-group pt-2">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupFileAddon01">Скан паспорта (задний вид)</span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="scan2_pas-{{$manager->id}}" name="scan2_pas"
+    
+                                 <div class="input-group pt-2">
+                                    <div class="custom-file rounded-0 border-0">
+                                        <input type="file" class="custom-file" id="scan_pas-{{$user->id}}" name="scan_pas"
                                                aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                        <label class="custom-file-label" for="scan2_pas-{{ $manager->id }}">Выберите файл</label>
+                                        <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan_pas-{{ $user->id }}">Загрузить фото паспорта(задниию часть)</label>
                                     </div>
                                 </div>
-                                <div class="md-form">
-                                    <input type="text" name="password" id="password-{{ $manager->id }}" class="form-control">
-                                    <label for="password-{{ $manager->id }}">Пароль</label>
+                                <div class="input-group pt-2 mb-5">
+                                    <div class="custom-file rounded-0 border-0">
+                                        <input type="file" class="custom-file" id="scan2_pas-{{$user->id}}" name="scan2_pas"
+                                               aria-describedby="inputGroupFileAddon01" accept="image/*">
+                                        <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan2_pas-{{ $user->id }}">Загрузить фото паспорта(переднию часть)</label>
+                                    </div>
                                 </div>
-
-                                <button class="btn btn-primary" type="submit">
-                                    Изменить
+                                <button class="btn btn-outline-secondary btn-block" type="submit">
+                                    добавить
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
-            </div>
+        @foreach(\App\User::where('role', '!=', 'admin')->where('status','=','active')->where('company','=',$user->company)->get() as $manager)
+        <div class="tab-pane fade col-7 pt-5" id="user-{{ $manager->id }}" role="tabpanel" aria-labelledby="users-{{$manager->id}}">
+             <div class="shadow bg-white">
+                    <div class="mt-2 p-5">
+                        <div class="row">
+                            <div class="col text-left">
+                                <h2 class="mb-0 pt-2">+ профиль</h2>  
+                            </div>
+                            <div class="col text-right">
+                                <a href="blockuser/{{$manager->id}}" class="text-danger display-5 border-bottom border-danger">-деактивировать</a>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$manager->id}}">
+                            <div class="position-absolute mt-2" style="top:22%;right:-21.5%; width: 150px;height: 150px; cursor: pointer;">
+                                <label for="upload-avatar" class="upload-avatar">
+                                    @if($manager->avatar)
+                                        <img src="{{asset('images/$manager->avatar')}}">
+                                    @else
+                                        <img src="{{asset('images/defaultAvatar.png')}}">
+                                    @endif
+                                </label>
+                                <input type="file" name="photo" id="upload-avatar" hidden/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="name" id="name-{{$manager->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $manager->name }}" placeholder="Имя">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="lastname" id="lastname-{{$manager->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $manager->lastname }}" placeholder="Фамилия">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="address" id="address-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->address }}" placeholder="Адрес">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="phone" id="phone-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->phone }}" placeholder="Номер">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="email" id="email-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->email }}" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="role" id="role-{{$manager->role}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->role }}" placeholder="Должность">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="password" id="password-{{$manager->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Пароль">
+                            </div>
+                            <div class="mt-5">
+                                <h2 class="text-muted">+ ежедневный план</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество звонков">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество встреч">
+                                </div>
+                            </div>
+                            <div class="mt-5">
+                                <h2 class="text-muted">+ личные данные</h2>
+                            </div>
+                            <div class="input-group pt-2">
+                                <div class="custom-file rounded-0 border-0">
+                                    <input type="file" class="custom-file" id="avatar-{{$manager->id}}" name="avatar"
+                                           aria-describedby="inputGroupFileAddon01" accept="image/*">
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="avatar-{{ $manager->id }}">Загрузить фото профиля</label>
+                                </div>
+                            </div>
+
+                             <div class="input-group pt-2">
+                                <div class="custom-file rounded-0 border-0">
+                                    <input type="file" class="custom-file" id="scan_pas-{{$manager->id}}" name="scan_pas"
+                                           aria-describedby="inputGroupFileAddon01" accept="image/*">
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan_pas-{{ $manager->id }}">Загрузить фото паспорта(задниию часть)</label>
+                                </div>
+                            </div>
+                            <div class="input-group pt-2 mb-5">
+                                <div class="custom-file rounded-0 border-0">
+                                    <input type="file" class="custom-file" id="scan2_pas-{{$manager->id}}" name="scan2_pas"
+                                           aria-describedby="inputGroupFileAddon01" accept="image/*">
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan2_pas-{{ $manager->id }}">Загрузить фото паспорта(переднию часть)</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-secondary btn-block" type="submit">
+                                Изменить
+                            </button>
+                        </form>
+                    </div>
+                </div>
         </div>
         @endforeach
+         <div class="tab-pane fade col-9 pt-5" id="archive" role="tabpanel" aria-labelledby="archive">
+            <div class="mt-1">
+                 <div class="mt-1">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Имя</th>
+                      <th scope="col">Фамилия</th>
+                      <th scope="col">Адрес</th>
+                      <th scope="col">Телефон</th>
+                      <th scope="col">E-mail</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    @foreach(\App\User::where('role', '!=', 'admin')->where('company','=',$user->company)->where('status', '!=', 'active')->get() as $manager)
+                    <tr>
+                        <th scope="row">{{$manager->id}}</th>
+                        <td>
+                            @if(isset($manager->name))
+                                <p>{{$manager->name}}</p>
+                            @endif 
+                        </td>
+                        <td>
+                            @if(isset($manager->lastname))
+                                <p>{{$manager->lastname}}</p>
+                            @endif 
+                        </td>
+                        <td>
+                            @if(isset($manager->address))
+                                <p>{{$manager->address}}</p>
+                            @endif
+                        </td>
+                        <td>
+                            @if(isset($manager->phone))
+                                <p>{{$manager->phone}}</p>
+                            @endif
+                        </td>
+                        <td>
+                            @if(isset($manager->email))
+                                <p>{{$manager->email}}</p>
+                            @endif
+                        </td>
+                        <td class="text-right pr-0">
+                            <a href="activateuser/{{$manager->id}}" class="text-success border-right btn-lg">+</a>
+                            <a href="deleteuser/{{$manager->id}}" class="text-danger btn-lg pr-0">x</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            </div>       
+        </div>
     </div>
 
 
@@ -249,6 +284,9 @@
 @endsection
 @push('scripts')
     <script>
+        $('.nav-link').on('click', function() {
+          $('.nav-link').removeClass('active');
+        });
         $('.editUser').click(e => {
             e.preventDefault();
             let btn = $(e.currentTarget);

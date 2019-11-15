@@ -79,14 +79,6 @@ class RegisterController extends Controller
         if($data['company']!='msalecrm'){
             $this->createDB($data['company']);
             $this->migrateTables($data['company']);
-            User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'company' => $data['company'],
-                'phone' => $data['phone'],
-                'role'=>'admin',
-            ]);
         }
         return $user;
     }

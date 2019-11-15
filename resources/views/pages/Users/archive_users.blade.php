@@ -1,10 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
-        <li class="nav-item ml-md-auto">
-            <a class="nav-link" id="users" href="/profile" role="tab" aria-controls="home">Назад</a>
-        </li>            
-    </ul>
 <div class="container">
     <table class="table">
       <thead>
