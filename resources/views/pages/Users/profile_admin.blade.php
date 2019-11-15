@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 <style type="text/css">
-
 .bg-grey{
     background-color: #e9ecef;
     opacity: 1;
@@ -14,96 +13,126 @@
     text-align: center;
 }
 .display-5{
-    font-size: 32px;
+    font-size: 23px;
  }
+.display-5-5{
+    font-size: 18px;  
+}
+ .display-6{
+    font-size: 12px;  
+ }
+
  .upload-avatar{
     cursor: pointer!important;
  }
 }
 </style>
     <ul class="nav nav-tabs pt-5" id="myTab" role="tablist">
-        <h3>Управление учетными записями</h3>
+        <h5 class="text-dark sf-medium">УПРАВЛЕНИЕ УЧЕТНЫМИ ЗАПИСЯМИ</h5>
     </ul>
     <div class="tab-content row" id="myTabContent">
-        <div class="h-100 pt-5 col-4">
-            <div class="row pl-5 h-100">
+        <div class="h-100 pt-4 col-3">
+            <div class="row pl-1 h-100">
                 <div class="p-3 mr-4">
                    <div class="tab row nab nav-tabs" role="tablist">
                         <div class="col">
-                            <button class="btn dropdown-btn rounded-0 border-0 dropdown-toggle btn-block text-left bg-white" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Изменить ползователя</button>
+                            <button class="btn dropdown-btn rounded-0 border-0 dropdown-toggle btn-block text-left bg-white p-2 pl-3" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Изменить ползователя</button>
                             <div class="collapse mt-2" id="collapseExample">
                                 <div class="card card-body bg-white">
                                     @foreach(\App\User::where('role', '!=', 'admin')->where('status','=','active')->where('company','=',$user->company)->get() as $manager)
-                                            <a class="nav-link" data-toggle="tab" href="#user-{{$manager->id}}" role="tab">{{ $manager->lastname }} {{ $manager->name }}</a>
+                                            <a class="nav-link sf-medium" data-toggle="tab" href="#user-{{$manager->id}}" role="tab">{{ $manager->lastname }} {{ $manager->name }}</a>
                                     @endforeach
                                 </div>
                             </div>
                         </div>
                         <div class="w-100"></div>
                         <div class="col mt-2">
-                           <a class="nav-link btn rounded-0 border-0 btn-block text-left bg-white" href="#newuser" data-toggle="tab" role="tab">+ Пользователь</a>
+                           <a class="nav-link btn rounded-0 border-0 btn-block text-left bg-white active sf-medium p-2 pl-3" href="#newuser" data-toggle="tab" role="tab">+ Пользователь</a>
                         </div>
                         <div class="w-100"></div>
                         <div class="col mt-2">
-                            <a class="nav-link btn rounded-0 border-0 btn-block text-left bg-white"  href="#archive" data-toggle="tab" role="tab">- Архив пользователей</a>
+                            <a class="nav-link btn rounded-0 border-0 btn-block text-left bg-white sf-medium p-2 pl-3"  href="#archive" data-toggle="tab" role="tab">- Архив пользователей</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-7 pt-5 p-3 tab-pane fade in active" id="newuser"> 
+        <div class="col-7 pt-4 p-3 tab-pane fade active show" id="newuser"> 
                     <div class="shadow bg-white">
-                        <div class="mt-2 pl-5 pt-5">
-                            <h2>+ Новый пользователь</h2>
+                        <div class="mt-1 pl-5 pt-4">
+                            <p class="sf-medium display-5">+ Новый пользователь</p>
                         </div>
-                        <div class="mt-5 p-5">
+                        <div class="mt-4 p-5">
                             <form action="{{route('addUser')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{$user->id}}">
+                                <input type="hidden" name="company" value="{{$user->company}}">
                                 <div class="position-absolute" style="top:21%;right:-21%; width: 150px;height: 150px;">
                                     <label for="upload-avatar" class="upload-avatar"><img src="{{asset('images/defaultAvatar.png')}}"></label>
-                                    <input type="file" name="photo" id="upload-avatar" hidden/>
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" name="name" id="name-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Имя">
+                                <div class="form-group mb-2">
+                                    <input type="text" name="name" id="name-{{$user->id}}" class="display-6 form-control rounded-0 border-0 bg-grey @error('name') is-invalid @enderror" placeholder="Имя" value="{{ old('name') }}">
+                                     @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" name="lastname" id="lastname-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Фамилия">
+                                <div class="form-group mb-2">
+                                    <input type="text" name="lastname" id="lastname-{{$user->id}}" class="display-6 form-control rounded-0 border-0 bg-grey" placeholder="Фамилия" value="{{ old('lastname') }}">
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" name="address" id="address-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Адрес">
+                                <div class="form-group mb-2">
+                                    <input type="text" name="address" id="address-{{$user->id}}" class="display-6 form-control rounded-0 border-0  bg-grey" placeholder="Адрес" value="{{ old('address') }}">
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Номер">
+                                <div class="form-group mb-2">
+                                    <input type="text" name="phone" id="phone-{{$user->id}}" class="display-6 form-control rounded-0 border-0  bg-grey @error('phone') is-invalid @enderror" placeholder="Номер" value="{{ old('phone') }}">
+                                    @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" name="email" id="email-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Email">
+                                <div class="form-group mb-2">
+                                    <input type="text" name="email" id="email-{{$user->id}}" class="display-6 form-control rounded-0 border-0  bg-grey @error('email') is-invalid @enderror" placeholder="Email"
+                                    value="{{ old('email') }}">
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" name="role" id="role-{{$user->role}}" class="form-control rounded-0 border-0  bg-grey" placeholder="Должность">
+                                <div class="form-group mb-2">
+                                    <input type="text" name="role" id="role-{{$user->role}}" class="display-6 form-control rounded-0 border-0  bg-grey" placeholder="Должность"
+                                    value="{{ old('role') }}">
                                 </div>
-                                <div class="form-group">
-                                    <input type="text" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Пароль">
+                                <div class="form-group mb-2">
+                                    <input type="text" name="password" id="password-{{$user->password}}" class="display-6 form-control rounded-0 border-0 bg-grey @error('password') is-invalid @enderror" placeholder="Пароль"
+                                    value="{{ old('password') }}">
+                                     @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                <div class="mt-5">
-                                    <h2 class="text-muted">+ ежедневный план</h2>
+                                <div class="mt-4">
+                                    <h2 class="text-muted sf-medium display-5-5">+ ежедневный план</h2>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество звонков">
+                                        <input type="text" class="form-control rounded-0 border-0 bg-grey display-6" name="calls" placeholder="Количество звонков" value="{{ old('calls') }}">
                                     </div>
                                     <div class="col">
-                                        <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество встреч">
+                                        <input type="text" class="form-control rounded-0 border-0 bg-grey display-6" placeholder="Количество встреч" name="meetings" value="{{ old('meetings') }}">
                                     </div>
                                 </div>
                                 <div class="mt-5">
-                                    <h2 class="text-muted">+ личные данные</h2>
+                                    <h2 class="text-muted sf-medium display-5-5">+ личные данные</h2>
                                 </div>
                                 <div class="input-group pt-2">
                                     <div class="custom-file rounded-0 border-0">
                                         <input type="file" class="custom-file" id="avatar-{{$user->id}}" name="avatar"
                                                aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                        <label class="custom-file-label rounded-0 border-0 bg-grey" for="avatar-{{ $user->id }}">Загрузить фото профиля</label>
+                                        <label class="custom-file-label rounded-0 border-0 bg-grey sf-medium display-6" for="avatar-{{ $user->id }}">Загрузить фото профиля</label>
                                     </div>
                                 </div>
     
@@ -111,14 +140,14 @@
                                     <div class="custom-file rounded-0 border-0">
                                         <input type="file" class="custom-file" id="scan_pas-{{$user->id}}" name="scan_pas"
                                                aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                        <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan_pas-{{ $user->id }}">Загрузить фото паспорта(задниию часть)</label>
+                                        <label class="custom-file-label rounded-0 border-0 bg-grey sf-medium display-6" for="scan_pas-{{ $user->id }}">Загрузить фото паспорта(задниию часть)</label>
                                     </div>
                                 </div>
                                 <div class="input-group pt-2 mb-5">
                                     <div class="custom-file rounded-0 border-0">
                                         <input type="file" class="custom-file" id="scan2_pas-{{$user->id}}" name="scan2_pas"
                                                aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                        <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan2_pas-{{ $user->id }}">Загрузить фото паспорта(переднию часть)</label>
+                                        <label class="custom-file-label rounded-0 border-0 bg-grey sf-medium display-6" for="scan2_pas-{{ $user->id }}">Загрузить фото паспорта(переднию часть)</label>
                                     </div>
                                 </div>
                                 <button class="btn btn-outline-secondary btn-block" type="submit">
@@ -134,10 +163,10 @@
                     <div class="mt-2 p-5">
                         <div class="row">
                             <div class="col text-left">
-                                <h2 class="mb-0 pt-2">+ профиль</h2>  
+                                <h2 class="mb-0 pt-2 sf-medium">+ профиль</h2>  
                             </div>
                             <div class="col text-right">
-                                <a href="blockuser/{{$manager->id}}" class="text-danger display-5 border-bottom border-danger">-деактивировать</a>  
+                                <a href="blockuser/{{$manager->id}}" class="text-danger display-5 border-bottom border-danger sf-medium">-деактивировать</a>  
                             </div>
                         </div>
                     </div>
@@ -148,53 +177,52 @@
                             <div class="position-absolute mt-2" style="top:22%;right:-21.5%; width: 150px;height: 150px; cursor: pointer;">
                                 <label for="upload-avatar" class="upload-avatar">
                                     @if($manager->avatar)
-                                        <img src="{{asset('images/$manager->avatar')}}">
+                                        <img src="{{asset('users/'.$manager->avatar)}}" width="150" height="150">
                                     @else
                                         <img src="{{asset('images/defaultAvatar.png')}}">
                                     @endif
                                 </label>
-                                <input type="file" name="photo" id="upload-avatar" hidden/>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="name" id="name-{{$manager->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $manager->name }}" placeholder="Имя">
+                                <input type="text" name="name" id="name-{{$manager->id}}" class="form-control rounded-0 border-0 bg-grey sf-medium" value="{{ $manager->name }}" placeholder="Имя">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="lastname" id="lastname-{{$manager->id}}" class="form-control rounded-0 border-0 bg-grey" value="{{ $manager->lastname }}" placeholder="Фамилия">
+                                <input type="text" name="lastname" id="lastname-{{$manager->id}}" class="form-control rounded-0 border-0 bg-grey sf-medium" value="{{ $manager->lastname }}" placeholder="Фамилия">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="address" id="address-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->address }}" placeholder="Адрес">
+                                <input type="text" name="address" id="address-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium" value="{{ $manager->address }}" placeholder="Адрес">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="phone" id="phone-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->phone }}" placeholder="Номер">
+                                <input type="text" name="phone" id="phone-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium" value="{{ $manager->phone }}" placeholder="Номер">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="email" id="email-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->email }}" placeholder="Email">
+                                <input type="text" name="email" id="email-{{$manager->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium" value="{{ $manager->email }}" placeholder="Email">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="role" id="role-{{$manager->role}}" class="form-control rounded-0 border-0  bg-grey" value="{{ $manager->role }}" placeholder="Должность">
+                                <input type="text" name="role" id="role-{{$manager->role}}" class="form-control rounded-0 border-0  bg-grey sf-medium" value="{{ $manager->role }}" placeholder="Должность">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="password" id="password-{{$manager->password}}" class="form-control rounded-0 border-0 bg-grey" placeholder="Пароль">
+                                <input type="text" name="password" id="password-{{$manager->password}}" class="form-control rounded-0 border-0 bg-grey sf-medium" placeholder="Пароль">
                             </div>
                             <div class="mt-5">
-                                <h2 class="text-muted">+ ежедневный план</h2>
+                                <h2 class="text-muted sf-medium">+ ежедневный план</h2>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество звонков">
+                                    <input type="text" class="form-control rounded-0 border-0 bg-grey sf-medium" placeholder="Количество звонков">
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control rounded-0 border-0 bg-grey" placeholder="Количество встреч">
+                                    <input type="text" class="form-control rounded-0 border-0 bg-grey sf-medium" placeholder="Количество встреч">
                                 </div>
                             </div>
                             <div class="mt-5">
-                                <h2 class="text-muted">+ личные данные</h2>
+                                <h2 class="text-muted sf-medium">+ личные данные</h2>
                             </div>
                             <div class="input-group pt-2">
                                 <div class="custom-file rounded-0 border-0">
                                     <input type="file" class="custom-file" id="avatar-{{$manager->id}}" name="avatar"
                                            aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="avatar-{{ $manager->id }}">Загрузить фото профиля</label>
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="avatar-{{ $manager->id }} sf-medium">Загрузить фото профиля</label>
                                 </div>
                             </div>
 
@@ -202,17 +230,17 @@
                                 <div class="custom-file rounded-0 border-0">
                                     <input type="file" class="custom-file" id="scan_pas-{{$manager->id}}" name="scan_pas"
                                            aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan_pas-{{ $manager->id }}">Загрузить фото паспорта(задниию часть)</label>
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan_pas-{{ $manager->id }} sf-medium">Загрузить фото паспорта(задниию часть)</label>
                                 </div>
                             </div>
                             <div class="input-group pt-2 mb-5">
                                 <div class="custom-file rounded-0 border-0">
                                     <input type="file" class="custom-file" id="scan2_pas-{{$manager->id}}" name="scan2_pas"
                                            aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan2_pas-{{ $manager->id }}">Загрузить фото паспорта(переднию часть)</label>
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey" for="scan2_pas-{{ $manager->id }} sf-medium">Загрузить фото паспорта(переднию часть)</label>
                                 </div>
                             </div>
-                            <button class="btn btn-outline-secondary btn-block" type="submit">
+                            <button class="btn btn-outline-secondary btn-block sf-medium" type="submit">
                                 Изменить
                             </button>
                         </form>
@@ -226,13 +254,13 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th scope="col">ID</th>
-                      <th scope="col">Имя</th>
-                      <th scope="col">Фамилия</th>
-                      <th scope="col">Адрес</th>
-                      <th scope="col">Телефон</th>
-                      <th scope="col">E-mail</th>
-                      <th scope="col"></th>
+                      <th scope="col sf-medium">ID</th>
+                      <th scope="col sf-medium">Имя</th>
+                      <th scope="col sf-medium">Фамилия</th>
+                      <th scope="col sf-medium">Адрес</th>
+                      <th scope="col sf-medium">Телефон</th>
+                      <th scope="col sf-medium">E-mail</th>
+                      <th scope="col sf-medium"></th>
                     </tr>
                   </thead>
                   <tbody> 
@@ -241,27 +269,27 @@
                         <th scope="row">{{$manager->id}}</th>
                         <td>
                             @if(isset($manager->name))
-                                <p>{{$manager->name}}</p>
+                                <p class="sf-medium">{{$manager->name}}</p>
                             @endif 
                         </td>
                         <td>
                             @if(isset($manager->lastname))
-                                <p>{{$manager->lastname}}</p>
+                                <p class="sf-medium">{{$manager->lastname}}</p>
                             @endif 
                         </td>
                         <td>
                             @if(isset($manager->address))
-                                <p>{{$manager->address}}</p>
+                                <p class="sf-medium">{{$manager->address}}</p>
                             @endif
                         </td>
                         <td>
                             @if(isset($manager->phone))
-                                <p>{{$manager->phone}}</p>
+                                <p class="sf-medium">{{$manager->phone}}</p>
                             @endif
                         </td>
                         <td>
                             @if(isset($manager->email))
-                                <p>{{$manager->email}}</p>
+                                <p class="sf-medium">{{$manager->email}}</p>
                             @endif
                         </td>
                         <td class="text-right pr-0">

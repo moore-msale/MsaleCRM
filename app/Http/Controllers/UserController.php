@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -31,7 +32,46 @@ class UserController extends Controller
         }
 
     }
-
+    public function addUser(Request $request){
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'phone'=>['required','string','unique:users'],
+            'avatar'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+        ]);
+        $user = new User;
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        $user->password = Hash::make($request['password']);
+        $user->company = $request['company'];
+        $user->phone = $request['phone'];
+        $user->role= $request['role'];
+        $user->address= $request['address'];
+        if($file = $request->file('scan_pas')){
+            $name = 'user_pas'.$user->id.$user->email;
+            if ($file->move('passport', $name))
+            {
+                $user->scan_pas = mb_strtolower($name);
+            }
+        }
+        if($file = $request->file('scan2_pas')){
+            $name = 'user_pas2'.$user->id.$user->email;
+            if ($file->move('passport', $name))
+            {
+                $user->scan2_pas = mb_strtolower($name);
+            }
+        }
+        if($file = $request->file('avatar')){
+            $name = 'user_img'.$user->id.$user->email;
+            if ($file->move('users', $name))
+            {
+                $user->avatar = mb_strtolower($name);
+            }
+        }
+        $user->save();
+        return back();
+    }
     public function editUser(Request $request)
     {
 //        dd($request->file('avatar'));
