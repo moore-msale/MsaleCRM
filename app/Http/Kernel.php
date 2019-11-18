@@ -61,7 +61,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'changeDB' =>\App\Http\Middleware\changeDB::class,
-        'changeToMultipledb'=>\App\Http\Middleware\changeToMultipledb::class,
+        'changeToMsalecrm'=>\App\Http\Middleware\changeToMsalecrm::class,
     ];
 
     /**

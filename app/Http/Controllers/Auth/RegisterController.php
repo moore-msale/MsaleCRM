@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Company;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -52,9 +53,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:companies'],
             'password' => ['required', 'string', 'min:8'],
-            'company'=>['required','string'],
+            'company'=>['required','string', 'unique:companies'],
             'phone'=>['required','string','unique:users'],
         ]);
     }
@@ -67,6 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -75,10 +77,17 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'role'=>'admin',
         ]);
-
         if($data['company']!='msalecrm'){
             $this->createDB($data['company']);
             $this->migrateTables($data['company']);
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'company' => $data['company'],
+                'phone' => $data['phone'],
+                'role'=>'admin',
+            ]);
         }
         return $user;
     }
