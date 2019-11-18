@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/balance_change', 'ReportController@balance')->name('balance_change');
     Route::get('/planer','PlanController@planer')->name('planer');
     Route::get('/search_task','AjaxController@searchTask')->name('search_task');
+    Route::get('/search_customer','AjaxController@searchCustomer')->name('search_customer');
+    Route::get('/something','AjaxController@something')->name('something');
 
 
     Route::get('/waitCall', function () {
@@ -67,7 +69,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/meets', function () {
         return view('pages.Meets.meet_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->where('user_id', auth()->id())->get()->reverse()]);
     });
+
+    Route::post('/customer_filter', 'CustomerController@filter')->name('customer_filter');
     Route::get('/statistic','StatisticController@index')->name('statistic');
+    Route::get('/settings','HomeController@settings')->name('settings');
     Route::post('/balance_get', 'AjaxController@balance_get')->name('balance_get');
     Route::get('/profile', 'UserController@profile')->name('profile');
     Route::post('/editUser', 'UserController@editUser')->name('editUser');

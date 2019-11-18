@@ -15,7 +15,7 @@
     <div class="container-fluid">
 
             @if($agent->isPhone())
-            <div class="row pt-lg-4 pt-0">
+            <div class="row">
                 @include('tasks.index', ['calls2' => $calls])
             </div>
                 @else
@@ -26,9 +26,9 @@
                     @include('tasks.statistics')
                 @endif
                 @include('tasks.index', ['tasks2' => $tasks])
-                @include('tasks.index', ['calls2' => $calls])
                 @include('tasks.index', ['meetings2' => $meetings])
                 @include('tasks.index', ['customers2' => $customers])
+                    @include('tasks.index', ['calls2' => $calls])
             @endif
         </div>
     </div>
@@ -49,9 +49,97 @@
         @include('modals.customers.add_customer')
         @include('modals.customers.add_potencial')
     @endif
+    @include('modals.customers.create_client')
+    @include('modals.tasks.create_task_admin')
 @endsection
 
 @push('scripts')
+    <script>
+        $('.addClient1').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let name = $('#client_name1');
+            let phone = $('#client_phone1');
+            let company = $('#client_company1');
+            let desc = $('#client_desc1');
+            let social = $('#client_social1');
+            let status = $('#client_status1').is(':checked') ? true : false;
+            if(desc.val() == '')
+            {
+                swal("Заполните описание!","Поле описание стало обязательным","error");
+            }
+            else {
+                $.ajax({
+                    url: '{{ route('customer.store') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "name": name.val(),
+                        "phone": phone.val(),
+                        "company": company.val(),
+                        "social": social.val(),
+                        "desc": desc.val(),
+                        "status": status
+                    },
+                    success: data => {
+                        $('#ClientCreate').modal('hide');
+                        console.log(data);
+                        swal("Клиент добавлен!","Отчет был отправлен","success");
+                        $('#client_name1').val('');
+                        $('#client_phone1').val('');
+                        $('#client_company1').val('');
+                        $('#client_desc1').val('');
+                        $('#client_social1').val('');
+
+                        if(data.view){
+                            let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                        }
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+            }
+        })
+    </script>
+    <script>
+        $('.addTask2').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let title = $('#taskname2');
+            let desc = $('#taskdescription2');
+            let date = $('#taskdate2');
+            let user = $('#taskuser2');
+            let chief = 1;
+
+            $.ajax({
+                url: '{{ route('task.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title": title.val(),
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "user_id": user.val(),
+                    "chief": chief,
+                },
+                success: data => {
+                    $('#TaskCreate_admin').modal('hide');
+                    swal("Задача добавлена!","Отчет был отправлен","success");
+                    $('#taskname2').val('');
+                    $('#taskdescription2').val('');
+                    $('#taskdate2').val('');
+                    $('#taskuser2').val('');
+
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+        })
+    </script>
     @if($agent->isPhone())
 
         <script>
@@ -285,6 +373,46 @@
             })
         </script>
     @else
+        <script>
+            let result = $('#search-result');
+
+            result.parent().hide(0);
+            $('#search').on('keyup click', function () {
+                let value = $(this).val();
+                console.log(value);
+                if (value != '' && value.length >= 1) {
+                    // let searchBtn = $('#search-btn');
+                    // searchBtn.prop('href', '');
+                    // searchBtn.prop('href', '/search?search=' + value);
+                    $.ajax({
+                        url: '{!! route('search_customer') !!}',
+                        data: {'search': value},
+                        success: (data) => {
+                            console.log(data);
+                            result = result.html(data.html);
+                            result.parent().slideDown(400);
+                            result.siblings('span').css('opacity', 1);
+                            // result.find('.collapse').each((e, i) => {
+                            //     registerCollapse($(i));
+                            // });
+                            // registerCollapse(result);
+                        },
+                        error: () => {
+                            console.log('error');
+                        }
+                    });
+                } else {
+                    result.parent().slideUp(400);
+                    result.empty();
+                }
+            });
+
+            $(document).click(function(event) {
+                if (!$(event.target).is("#search, #search-result, #search-result-ajax, .collapse, .products")) {
+                    $("#search-result").parent().slideUp(400);
+                }
+            });
+        </script>
         {{--<script>--}}
             {{--setInterval(function(){--}}
                         {{--let data = '{{ \Illuminate\Support\Facades\Auth::user()->balance }}';--}}

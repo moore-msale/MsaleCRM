@@ -1,6 +1,6 @@
 body
 {
-    background: white;
+    background-color:#F5F6FA;
 }
 
 @media screen and (min-width: 1000px)
@@ -140,11 +140,10 @@ body
 }
 .category-btn
 {
-    font-size:11px;
+    font-size:13px;
     line-height: 13px;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.15);
-    border-radius:3px;
 }
 .work-desk
 {
@@ -158,6 +157,29 @@ body
     line-height: 12px;
     text-transform: uppercase;
     color: #000000;
+}
+.stats-title
+{
+    font-size:13px;
+    color:#000000;
+}
+.stats-head
+{
+    font-size: 13px;
+    color: #772FD2;
+}
+.stats-score
+{
+    font-size: 36px;
+    color:#000000;
+    opacity: 0.5;
+    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+}
+.stats-score2
+{
+    font-size: 36px;
+    color:#772FD2;
+    text-shadow: 0px 4px 5px rgba(119, 47, 210, 0.3);
 }
 .work-check
 {
@@ -194,18 +216,15 @@ body
 {
     background-color: #130926;
 }
-.point
-{
-    transition: 0.2s;
-}
 .sidebar
 {
-    width:60px;
+    width:65px;
 }
 .point
 {
     height:60px;
     width:60px;
+    transition: 0.2s;
 }
 .point p
 {
@@ -464,6 +483,14 @@ body
 {
     background-color:#F4F4F4;
 }
+.drop-point
+{
+    transition: 0.2s;
+}
+.drop-point:hover
+{
+    background: rgba(196, 196, 196, 0.23);
+}
 @media only screen and (max-width: 700px)
 {
     .collona
@@ -501,10 +528,70 @@ body
     height:42px;
     background: linear-gradient(180deg, #772FD2 0%, #A72FD2 100%);
     border-radius: 50%;
+    border:1px solid #ffffff;
+}
+.notific
+{
+    width:42px;
+    height:42px;
+    background: white;
+    border-radius: 50%;
+}
+.notif-point
+{
+    height:8px;
+    width:8px;
+    background-color: #FF0000;
+    position: absolute;
+    border-radius: 50%;
+    top:25%;
+    right:30%;
 }
 .border-greener
 {
     border-left:3px solid greenyellow;
+}
+.input-new
+{
+    border-radius: 0px;
+    background: rgba(151, 151, 151, 0.1);
+}
+.input-new-title
+{
+    font-size:24px;
+}
+.new-button
+{
+    border: 1px solid #772fd2;
+    width:100%;
+    height:100%;
+    background: transparent;
+    color: #772fd2;
+    font-family: "SF Pro Display Light";
+    transition: 0.3s;
+}
+.new-button:hover
+{
+    transform: scaleY(1.05);
+    box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.13);
+}
+#search
+{
+    border-radius:0px;
+    border:0;
+}
+.button-new
+{
+    border: 1px solid #000000;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);
+    padding: 10px 27px;
+    background:transparent;
+    transition: 0.3s;
+}
+.button-new:hover
+{
+    border:1px solid #fefefe;
+    background: white;
 }
 @media screen and (max-width: 1000px) {
     .collumn-4

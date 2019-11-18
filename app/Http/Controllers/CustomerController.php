@@ -23,19 +23,43 @@ class CustomerController extends Controller
     {
         if(Auth::user()->role == 'admin')
         {
-            $customers = Task::where('taskable_type','App\Customer')->where('user_id', '!=', 1)->get()->reverse();
+            $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
 //            dd($customers->groupBy('user_id'));
 
-            return view('pages.Customers.customer_admin',['customers' => $customers]);
+            return view('pages.Customers.customer_page_admin',['customers' => $customers]);
         }
         else
         {   
-        $customers = Task::where('user_id',auth()->id())->hasMorph(
+        $customers = Task::all()->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();
             return view('pages.Customers.customer',['customers' => $customers]);
         }
+    }
+
+    public function filter(Request $request)
+    {
+//        dd($request->all());
+
+        if($request->status != null && $request->manager != null)
+        {
+            $customers = Task::where('taskable_type', 'App\Customer')->where('user_id',$request->manager)->where('status_id',$request->status)->get()->reverse();
+        }
+        elseif($request->status != null)
+        {
+            $customers = Task::where('taskable_type', 'App\Customer')->where('status_id',$request->status)->get()->reverse();
+        }
+        elseif($request->manager != null)
+        {
+            $customers = Task::where('taskable_type', 'App\Customer')->where('user_id',$request->manager)->get()->reverse();
+        }
+        else
+        {
+            $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
+        }
+
+        return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
     }
 
     /**

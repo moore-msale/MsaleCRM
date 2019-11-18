@@ -15,10 +15,10 @@
     {{--@dd(session('timer'));--}}
     <div class="container-fluid p-5">
         <div class="py-1 position-relative">
-            <div class="search-task" style="position: absolute; top:10%; right:10%;">
+            <div class="search-task" style="position: absolute; top:10%; right:0%;">
                 <input id="search" class="form-control" type="text" placeholder="Поиск задач">
-                <div class="position-relative">
-                    <div class="position-absolute search-result shadow" id="search-result" style="left: 0; top: 50%;">
+                <div class="position-relative pt-1">
+                    <div class="position-absolute search-result shadow" id="search-result" style="right: 0; top: 160%;">
                     </div>
                 </div>
             </div>

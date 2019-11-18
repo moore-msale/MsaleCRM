@@ -7,6 +7,7 @@ use App\Customer;
 use App\Meeting;
 use App\Plan;
 use App\Report;
+use App\Status;
 use App\Task;
 use App\User;
 use Carbon\Carbon;
@@ -36,6 +37,7 @@ class HomeController extends Controller
     {
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
+        $tomorrow = Carbon::tomorrow()->setTime('00','00','00');
 
 
         $report = Report::where('created_at','>=',$today)->where('user_id', \auth()->id())->first();
@@ -102,14 +104,14 @@ class HomeController extends Controller
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)->where('status_id','!=','1')->get();
         if(Auth::user()->role == 'admin')
         {
-            $customers = Task::where('status_id',1)->hasMorph(
+            $customers = Task::where('status_id','!=', null)->where('deadline_date', '>=',$today)->where('deadline_date', '<=' ,$tomorrow)->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();
         }
         else
         {
-            $customers = Task::where('user_id',auth()->id())->where('status_id',1)->hasMorph(
+            $customers = Task::where('user_id',auth()->id())->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();
@@ -129,5 +131,12 @@ class HomeController extends Controller
             'calls' => $calls,
             'penalty' => $penalty
         ]);
+    }
+
+    public function settings()
+    {
+        $statuses = Status::all();
+
+        return view('pages.settings.settings',['statuses' => $statuses]);
     }
 }

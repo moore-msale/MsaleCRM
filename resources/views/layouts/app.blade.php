@@ -53,14 +53,14 @@
 $agent = New \Jenssegers\Agent\Agent();
 ?>
     <div id="app">
-        @include('_partials.header')
+        {{--@include('_partials.header')--}}
         <main >
             <div class="container-fluid">
                 <div class="row ">
                     <div class="col-auto px-0 d-lg-block d-none" style="width:5%;">
                         @include('_partials.sidebar')
                     </div>
-                    <div class="col-lg-14 col-15 pt-5">
+                    <div class="col-lg-14 col-15 pt-0">
                         @yield('content')
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-<div class="modal fade right" id="search_task-{{$task->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade right" id="search_customer-{{$task->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
@@ -14,7 +14,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="potentials" name="type">
-                        <input type="text" name="name" id="task_name-{{ $task->id }}" class="form-control input-new" value="{{$task->title}}" placeholder="Введите имя">
+                    <input type="text" name="name" id="task_name-{{ $task->id }}" class="form-control input-new" value="{{$task->title}}" placeholder="Введите имя">
                     <div class="md-form">
                         <input type="text" name="deadline_date" id="task_date-{{ $task->id }}" class="form-control date-format" value="{{ $task->deadline_date }}">
                         <label for="task_date-{{ $task->id }}">Дата выполнения</label>

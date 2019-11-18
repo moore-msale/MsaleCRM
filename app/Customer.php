@@ -16,4 +16,10 @@ class Customer extends Model
     {
         return $this->hasOne(Meeting::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
 }
