@@ -2,87 +2,243 @@
 
 @section('content')
 
-<style type="text/css">
-body{
-    background-color: #772FD2;
++<style type="text/css">
+ 
+.sidenav {
+    background: linear-gradient(212.75deg, #772FD2 -1.49%, #3C1E61 100%);
+    padding-top: 20px;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+
 }
 .main {
-    padding: 7% 0;
+    padding: 0px 30px;
+    margin-left: 50%; 
 }
-.btn-purple{
-    background-color: #5713ae !important;
-    color: #fff;
-    margin: 0!important;
-    padding: 12px;
-    font-family: SF Pro Display;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
+
+@media screen and (max-width: 720px){
+    
+
 }
 .haveAccount{
+    width: 137px;
+    height: 21px;
     font-family: SF Pro Display;
     font-style: normal;
     font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    text-decoration-line: underline;
+
+    color: #000000;
+
+    opacity: 0.5;
+}
+.login-main-text{
+    margin-top:20%;
+}
+.hover-purple{
+    width: 300px;
+    height: 50px;
+}
+.hover-purple:hover,.hover-purple:active,.hover-purple:focus{
+    border-color: #8F39FC;
+    outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+.btn-purple{
+    background: #8F39FC;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+    font-family: SF Pro Display;
+    font-style: normal;
+    font-weight: 300;
     font-size: 16px;
     line-height: 19px;
-    text-decoration-line: underline;
-    color: #FFFFFF;
-    opacity: 0.5;
 }
-.border-secondary{
-    border: 0.3px solid #FFFFFF;
+.btn-purple:not([disabled]):not(.disabled).active{
+    background-color: #FFFFFF!important;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+
+}  
+.main-head{
+    font-family: SF Pro Display;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 100%;
+    color: #FFFFFF;
+
+    opacity: 0.7;
 }
 .confirm{
-    color: #FFFFFF;
-    opacity: 0.5;
+    font-family: SF Pro Display;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    opacity: 0.4;
+}
+.nav-link{
+    width: 137px;
+    height: 50px;
 }
 </style>
-<div class="main container">
-    <div class="row justify-content-center">
-        <div class="col-5 text-right pr-5 border-right border-secondary">
-            <img src="{{asset('images/loginLogo.svg')}}">
-        </div> 
-        <div class="col-6 pt-5 pl-5">
-            <div class="login-form col-11">
-              <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <div class="form-group row">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 border-0" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Emali">
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
 
-                <div class="form-group row">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 border-0" name="password" required autocomplete="current-password" placeholder="Пароль">
-
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-                    <div class="form-group row mt-5">
-                        <div class="col pl-0">
-                            <button type="submit" class="btn btn-purple">
-                                {{ __('войти') }}
-                            </button>
-                        </div>
-                        <div class="col text-right pt-3 mt-1">
-                            <a href="/register" class="haveAccount">нет аккаунта?</a>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <p class="confirm">
-                            Нажимая на кнопку, вы даете согласие на обработку персональных данных
-                        </p>
-                    </div>
-                </form>
+<div class="sidenav h-100">
+    <div class="login-main-text row pl-5 ml-5">
+        <div class="col text-right pl-5 ml-5">
+            <img class="pl-5 ml-5" src="{{asset('images/loginLogo.svg')}}">
+            <div class="text-center pl-5">
+                <h2 class="main-head">Правильное <br>управление <br>продажами </h2>
             </div>
+        </div>
+        <div class="col tab nab nav-tabs text-right mt-5 pt-5" role="tablist">
+                <a class="btn btn-purple nav-link border-0 rounded-0 p-3 m-0 active text-left" href="#login" data-toggle="tab" role="tab">Вход</a>
+                <br>
+                <a class="btn btn-purple nav-link border-0 rounded-0 pr-2 pl-3 pb-3 pt-3 m-0 text-left"  href="#register" data-toggle="tab" role="tab">Регистрация</a>
         </div>
     </div>
 </div>
+<div class="tab-content">
+<div class="main tab-pane fade show  active" id="login" role="tabpanel" aria-labelledby="login" aria-selected="true" aria-controls="login">
+ <div class="col-md-6 col-sm-12 pt-5 mt-5">
+    <div class="login-form pt-5 mt-5">
+        <form class="pt-2" method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="form-group row">
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 hover-purple" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Emali">
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group row">
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 hover-purple" name="password" required autocomplete="current-password" placeholder="Пароль">
+
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+                <div class="form-group row mt-5">
+                    <div class="col pl-0">
+                        <button type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2">
+                            {{ __('вход') }}
+                        </button>
+                    </div>
+                    <div class="col text-right pt-3 mt-1">
+                        <a href="#register" class="haveAccount nav-link" href="#register" data-toggle="tab" role="tab">нет аккаунта?</a>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <p class="confirm">
+                        Нажимая на кнопку, вы даете согласие на обработку персональных данных
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="main tab-pane fade" id="register"  role="tabpanel" aria-labelledby="register" aria-selected="false" aria-controls="login">
+    <div class="col-md-6 col-sm-12 mt-5">
+    <div class="login-form pt-5">
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <div class="form-group row">
+                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror rounded-0 hover-purple" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Имя">
+                @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group row">
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 hover-purple" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+             <div class="form-group row">
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 hover-purple" name="password" required autocomplete="new-password" placeholder="пароль">
+
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group row">
+                <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror rounded-0 hover-purple" name="phone"  value="{{ old('phone') }}" required placeholder="телефон">
+                
+                @error('phone')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group row">
+                <input id="company" type="text" class="form-control @error('company') is-invalid @enderror rounded-0 hover-purple" name="company" value="{{ old('company') }}" required placeholder="компания">
+                
+                @error('company')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group row">
+                <input id="employees" type="number" class="form-control @error('employees') is-invalid @enderror rounded-0 hover-purple" name="employees" value="{{ old('employees') }}" required placeholder="Сотрудники">
+                
+                @error('employees')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <div class="form-group row mt-5">
+                <div class="col pl-0">
+                    <button type="submit" class="btn btn-purple">
+                        {{ __('Регистрация') }}
+                    </button>
+                </div>
+                <div class="col pt-3 pl-3">
+                    <a href="/login" class="haveAccount nav-link" href="#login" data-toggle="tab" role="tab">есть аккаунт?</a>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <p class="confirm">
+                    Нажимая на кнопку, вы даете согласие на обработку персональных данных
+                </p>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    $('.nav-link').on('click', function() {
+      $('.nav-link').removeClass('active');
+    });
+</script>
+
 @endsection
