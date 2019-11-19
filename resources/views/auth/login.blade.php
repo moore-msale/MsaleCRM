@@ -2,14 +2,13 @@
 
 @section('content')
 
-+<style type="text/css">
+<style type="text/css">
  
 .sidenav {
     background: linear-gradient(212.75deg, #772FD2 -1.49%, #3C1E61 100%);
-    padding-top: 21vh;
-    padding-left: 30vh;
+    padding-top: 32vh;
+    padding-left: 10%;
     width: 50%;
-    min-width: 300px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -27,13 +26,33 @@
     margin-left: 50%;
 }
 .login-form{
-    width: 250px!important;
-    margin-top: 32vh;
+    margin-top: 20vh;
 }
 
-@media screen and (max-width: 720px){
-    
-
+.login{
+    margin-top: 32vh;
+}
+.login img{
+    width: 20vh!important;
+}
+@media screen and (max-width: 1200px){
+    body{
+        background:#772FD2;
+    }
+    .main.show{
+        display: flex!important;
+        margin-left: 0%;
+    }
+    .hover-purple{
+        height: 40px!important;
+    }
+    .login-form{
+        display: flex!important;
+        margin-top: 0vh;
+    }
+    .login{
+        margin-top: 0vh;
+    }   
 }
 .haveAccount{
     width: 137px;
@@ -46,16 +65,11 @@
     display: flex;
     align-items: center;
     text-decoration-line: underline;
-
     color: #000000;
-
     opacity: 0.5;
 }
-.login-main-text{
-    margin-top:20%;
-}
 .hover-purple{
-    width: 300px;
+    width: 300px!important;
     height: 50px;
 }
 .hover-purple:hover,.hover-purple:active,.hover-purple:focus{
@@ -86,7 +100,6 @@
     font-size: 25px;
     line-height: 100%;
     color: #FFFFFF;
-
     opacity: 0.7;
 }
 .confirm{
@@ -105,11 +118,10 @@
     height: 50px;
 }
 </style>
-
-<div class="sidenav h-100">
+<div class="sidenav h-100 d-none d-xl-block">
     <div class="login-main-text row">
         <div class="col text-right">
-            <img src="{{asset('images/loginLogo.svg')}}">
+                <img src="{{asset('images/loginLogo.svg')}}">
             <div class="text-center pl-5">
                 <h2 class="main-head">Правильное <br>управление <br>продажами </h2>
             </div>
@@ -122,13 +134,14 @@
     </div>
 </div>
 <div class="tab-content">
-<div class="main tab-pane fade show  active" id="login" role="tabpanel" aria-labelledby="login" aria-selected="true" aria-controls="login">
- <div class="col-md-6 col-sm-12">
-    <div class="login-form">
+<div class="main tab-pane fade show  active row justify-content-center" id="login" role="tabpanel" aria-labelledby="login" aria-selected="true" aria-controls="login">
+ <div class="col-md-7 col-sm-auto login text-center">
+    <img class="d-xl-none" src="{{asset('images/loginLogo.svg')}}">
+    <div class="login-form justify-content-center">
         <form class="mb-4 pb-3" method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="form-group row mb-2">
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 hover-purple" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Emali">
+            <div class="form-group row mb-2 justify-content-center">
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 hover-purple " name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Emali">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -136,7 +149,7 @@
                 @enderror
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row justify-content-center">
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 hover-purple" name="password" required autocomplete="current-password" placeholder="Пароль">
 
                 @error('password')
@@ -145,14 +158,14 @@
                     </span>
                 @enderror
             </div>
-                <div class="form-group row mt-5">
-                    <div class="col pl-0">
-                        <button type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2">
-                            {{ __('вход') }}
-                        </button>
-                    </div>
-                    <div class="col text-right mt-1">
-                        <a href="#register" class="haveAccount nav-link" data-toggle="tab" role="tab">нет аккаунта?</a>
+                <div class="form-group row mt-4 justify-content-center">
+                    <div class=" pl-0 pr-0" style="width: 310px!important">
+                        <div class="float-left">
+                            <input type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2 float-left" value="{{ __('вход') }}">
+                         </div>
+                         <div class="float-right ">     
+                            <a href="#register" class="haveAccount nav-link" data-toggle="tab" role="tab">нет аккаунта?</a>
+                         </div>
                     </div>
                 </div>
                 <div class="form-group row mb-0">
@@ -164,9 +177,10 @@
         </div>
     </div>
 </div>
-<div class="main tab-pane fade" id="register"  role="tabpanel" aria-labelledby="register" aria-selected="false" aria-controls="login">
-    <div class="col-md-6 col-sm-12">
-    <div class="login-form pt-5">
+<div class="main tab-pane fade "  id="register"  role="tabpanel" aria-labelledby="register" aria-selected="false" aria-controls="register">
+    <div class="col-md-7 col-sm-auto  text-center">
+    <img class="d-xl-none" src="{{asset('images/loginLogo.svg')}}">
+    <div class="login-form register">
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <div class="form-group row mb-2">
@@ -188,7 +202,7 @@
             </div>
 
              <div class="form-group row mb-2">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 hover-purple" name="password" required autocomplete="new-password" placeholder="пароль">
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 hover-purple" name="password" required autocomplete="new-password" placeholder="Придумайте пароль">
 
                 @error('password')
                     <span class="invalid-feedback" role="alert">
@@ -226,14 +240,14 @@
                     </span>
                 @enderror
             </div>
-            <div class="form-group row mt-5">
-                <div class="col pl-0">
-                    <button type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2">
-                        {{ __('НАЧАТь') }}
-                    </button>
-                </div>
-                <div class="col pt-2 pr-0 pl-0 mt-1">
-                    <a href="#login" class="haveAccount nav-link pr-0 pl-0" data-toggle="tab" role="tab">есть аккаунта?</a>
+            <div class="form-group row mt-4 justify-content-center">
+                <div class="col pl-0" style="width: 310px!important">
+                    <div class="float-left">
+                        <input type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2" value="{{ __('НАЧАТь') }}">
+                    </div>
+                    <div class="pt-2 pr-0 pl-0 float-right">
+                        <a href="#login" class="haveAccount nav-link pr-0 pl-0" data-toggle="tab" role="tab">есть аккаунта?</a>
+                    </div>
                 </div>
             </div>
             <div class="form-group row mb-0">
@@ -244,12 +258,16 @@
         </form>
         </div>
     </div>
+    </div>
 </div>
-<div class="help-links row pl-5 pb-3 fixed-bottom">
-    <div class="col-5">поддержка: help@moocrm.com</div>
-    <div class="col-7">по вопросам сотрудничества: go@moocrm.com</div>
-    <div class="col-2 text-right">telegram</div>
 </div>
+    <div class="d-none d-xl-block">
+        <div class="help-links row pl-5 pb-3 fixed-bottom">
+            <div class="col-5">поддержка: help@moocrm.com</div>
+            <div class="col-7">по вопросам сотрудничества: go@moocrm.com</div>
+            <div class="col-2 text-right">telegram</div>
+        </div>
+    </div>
 </div>
 <script>
     $('.nav-link').on('click', function() {
