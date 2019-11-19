@@ -174,6 +174,7 @@
                         <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{$manager->id}}">
+                            <input type="hidden" name="company" value="{{$manager->company}}">
                             <div class="position-absolute mt-2" style="top:22%;right:-21.5%; width: 150px;height: 150px; cursor: pointer;">
                                 <label for="upload-avatar" class="upload-avatar">
                                     @if($manager->avatar)

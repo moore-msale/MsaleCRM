@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('changeDB');
+    } 
     /**
      * Display a listing of the resource.
      *
