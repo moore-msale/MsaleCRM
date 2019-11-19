@@ -6,17 +6,29 @@
  
 .sidenav {
     background: linear-gradient(212.75deg, #772FD2 -1.49%, #3C1E61 100%);
-    padding-top: 20px;
+    padding-top: 21vh;
+    padding-left: 30vh;
     width: 50%;
+    min-width: 300px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
+}
 
+.sidenav img{
+    width: 296px;
 }
 .main {
     padding: 0px 30px;
     margin-left: 50%; 
+}
+.help-links{
+    margin-left: 50%;
+}
+.login-form{
+    width: 250px!important;
+    margin-top: 32vh;
 }
 
 @media screen and (max-width: 720px){
@@ -95,14 +107,14 @@
 </style>
 
 <div class="sidenav h-100">
-    <div class="login-main-text row pl-5 ml-5">
-        <div class="col text-right pl-5 ml-5">
-            <img class="pl-5 ml-5" src="{{asset('images/loginLogo.svg')}}">
+    <div class="login-main-text row">
+        <div class="col text-right">
+            <img src="{{asset('images/loginLogo.svg')}}">
             <div class="text-center pl-5">
                 <h2 class="main-head">Правильное <br>управление <br>продажами </h2>
             </div>
         </div>
-        <div class="col tab nab nav-tabs text-right mt-5 pt-5" role="tablist">
+        <div class="col tab nab nav-tabs text-right pt-5" role="tablist">
                 <a class="btn btn-purple nav-link border-0 rounded-0 p-3 m-0 active text-left" href="#login" data-toggle="tab" role="tab">Вход</a>
                 <br>
                 <a class="btn btn-purple nav-link border-0 rounded-0 pr-2 pl-3 pb-3 pt-3 m-0 text-left"  href="#register" data-toggle="tab" role="tab">Регистрация</a>
@@ -111,11 +123,11 @@
 </div>
 <div class="tab-content">
 <div class="main tab-pane fade show  active" id="login" role="tabpanel" aria-labelledby="login" aria-selected="true" aria-controls="login">
- <div class="col-md-6 col-sm-12 pt-5 mt-5">
-    <div class="login-form pt-5 mt-5">
-        <form class="pt-2" method="POST" action="{{ route('login') }}">
+ <div class="col-md-6 col-sm-12">
+    <div class="login-form">
+        <form class="mb-4 pb-3" method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 hover-purple" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Emali">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -139,11 +151,11 @@
                             {{ __('вход') }}
                         </button>
                     </div>
-                    <div class="col text-right pt-3 mt-1">
-                        <a href="#register" class="haveAccount nav-link" href="#register" data-toggle="tab" role="tab">нет аккаунта?</a>
+                    <div class="col text-right mt-1">
+                        <a href="#register" class="haveAccount nav-link" data-toggle="tab" role="tab">нет аккаунта?</a>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-0">
                     <p class="confirm">
                         Нажимая на кнопку, вы даете согласие на обработку персональных данных
                     </p>
@@ -153,11 +165,11 @@
     </div>
 </div>
 <div class="main tab-pane fade" id="register"  role="tabpanel" aria-labelledby="register" aria-selected="false" aria-controls="login">
-    <div class="col-md-6 col-sm-12 mt-5">
+    <div class="col-md-6 col-sm-12">
     <div class="login-form pt-5">
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror rounded-0 hover-purple" name="name" value="{{ old('name') }}" required autocomplete="name" placeholder="Имя">
                 @error('name')
                     <span class="invalid-feedback" role="alert">
@@ -166,7 +178,7 @@
                 @enderror
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0 hover-purple" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -175,7 +187,7 @@
                 @enderror
             </div>
 
-             <div class="form-group row">
+             <div class="form-group row mb-2">
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror rounded-0 hover-purple" name="password" required autocomplete="new-password" placeholder="пароль">
 
                 @error('password')
@@ -185,7 +197,7 @@
                 @enderror
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror rounded-0 hover-purple" name="phone"  value="{{ old('phone') }}" required placeholder="телефон">
                 
                 @error('phone')
@@ -195,7 +207,7 @@
                 @enderror
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <input id="company" type="text" class="form-control @error('company') is-invalid @enderror rounded-0 hover-purple" name="company" value="{{ old('company') }}" required placeholder="компания">
                 
                 @error('company')
@@ -205,7 +217,7 @@
                 @enderror
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <input id="employees" type="number" class="form-control @error('employees') is-invalid @enderror rounded-0 hover-purple" name="employees" value="{{ old('employees') }}" required placeholder="Сотрудники">
                 
                 @error('employees')
@@ -214,18 +226,17 @@
                     </span>
                 @enderror
             </div>
-
             <div class="form-group row mt-5">
                 <div class="col pl-0">
-                    <button type="submit" class="btn btn-purple">
-                        {{ __('Регистрация') }}
+                    <button type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2">
+                        {{ __('НАЧАТь') }}
                     </button>
                 </div>
-                <div class="col pt-3 pl-3">
-                    <a href="/login" class="haveAccount nav-link" href="#login" data-toggle="tab" role="tab">есть аккаунт?</a>
+                <div class="col pt-2 pr-0 pl-0 mt-1">
+                    <a href="#login" class="haveAccount nav-link pr-0 pl-0" data-toggle="tab" role="tab">есть аккаунта?</a>
                 </div>
             </div>
-            <div class="form-group row mt-2">
+            <div class="form-group row mb-0">
                 <p class="confirm">
                     Нажимая на кнопку, вы даете согласие на обработку персональных данных
                 </p>
@@ -233,6 +244,11 @@
         </form>
         </div>
     </div>
+</div>
+<div class="help-links row pl-5 pb-3 fixed-bottom">
+    <div class="col-5">поддержка: help@moocrm.com</div>
+    <div class="col-7">по вопросам сотрудничества: go@moocrm.com</div>
+    <div class="col-2 text-right">telegram</div>
 </div>
 </div>
 <script>
