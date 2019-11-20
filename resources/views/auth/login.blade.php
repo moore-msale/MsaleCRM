@@ -3,9 +3,21 @@
 @section('content')
 
 <style type="text/css">
- body{
+@font-face {
     font-family: SF Pro Display;
+url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.eot");
+    src: url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.ttf") format("truetype"),
+url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Display") format("svg");
+}
+ body,button, input, optgroup, select, textarea {
+    font-family: SF Pro Display!important;
     font-style: normal;
+     -webkit-font-family: SF Pro Display!important;
+     -moz-font-family: SF Pro Display!important;
+     -ms-font-family: SF Pro Display!important;
  }
 .sidenav {
     background: linear-gradient(212.75deg, #772FD2 -1.49%, #3C1E61 100%);
@@ -23,7 +35,7 @@
 }
 .main {
     padding: 0px 30px;
-    margin-left: 50%; 
+    margin-left: 50%;
 }
 .help-links{
     margin-left: 50%;
@@ -56,7 +68,7 @@
     }
     .login{
         margin-top: 0vh;
-    }   
+    }
 }
 .haveAccount{
     width: 137px;
@@ -91,7 +103,7 @@
 .btn-purple:not([disabled]):not(.disabled).active{
     background-color: #FFFFFF!important;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-}  
+}
 .main-head{
     font-weight: 300;
     font-size: 25px;
@@ -157,8 +169,8 @@
                         <div class="float-left">
                             <input type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2 float-left" value="{{ __('вход') }}">
                          </div>
-                         <div class="float-right">     
-                            <a href="#register" class="haveAccount nav-link" data-toggle="tab" role="tab">нет аккаунта?</a>
+                         <div class="float-right">
+                            <a href="#register" class="haveAccount nav-link pr-0 pl-0" data-toggle="tab" role="tab">нет аккаунта?</a>
                          </div>
                     </div>
                 </div>
@@ -207,7 +219,7 @@
 
             <div class="form-group row mb-2 justify-content-center">
                 <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror rounded-0 hover-purple" name="phone"  value="{{ old('phone') }}" required placeholder="телефон">
-                
+
                 @error('phone')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -217,7 +229,7 @@
 
             <div class="form-group row mb-2 justify-content-center">
                 <input id="company" type="text" class="form-control @error('company') is-invalid @enderror rounded-0 hover-purple" name="company" value="{{ old('company') }}" required placeholder="компания">
-                
+
                 @error('company')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -227,7 +239,7 @@
 
             <div class="form-group row mb-2 justify-content-center">
                 <input id="employees" type="number" class="form-control @error('employees') is-invalid @enderror rounded-0 hover-purple" name="employees" value="{{ old('employees') }}" required placeholder="Сотрудники">
-                
+
                 @error('employees')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -235,7 +247,7 @@
                 @enderror
             </div>
             <div class="form-group row mt-4 justify-content-center">
-                <div class=" pl-0" style="width: 300px!important">
+                <div class=" pl-0" style="width: 310px!important">
                     <div class="float-left">
                         <input type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2" value="{{ __('НАЧАТь') }}">
                     </div>
