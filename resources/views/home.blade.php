@@ -16,6 +16,7 @@
 
             @if($agent->isPhone())
             <div class="row">
+
                 @include('tasks.index', ['calls2' => $calls])
             </div>
                 @else
@@ -54,6 +55,19 @@
 @endsection
 
 @push('scripts')
+    {{--<script>--}}
+        {{--$('.stats-score2').click( function () {--}}
+            {{--Swal.fire({--}}
+                {{--position: 'top-end',--}}
+                {{--icon: 'success',--}}
+                {{--title: 'Изменения сохранены',--}}
+                {{--showConfirmButton: false,--}}
+                {{--timer: 700--}}
+            {{--})--}}
+        {{--});--}}
+
+
+    {{--</script>--}}
     <script>
         $('.addClient1').click(e => {
             e.preventDefault();

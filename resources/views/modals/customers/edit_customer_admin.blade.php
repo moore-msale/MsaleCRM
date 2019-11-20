@@ -50,13 +50,38 @@
         {{--</div>--}}
     {{--</div>--}}
 {{--</div>--}}
+@push('styles')
+    <style>
+        @media screen and (min-width: 992px)
+        {
+        .modal .modal-full-height
+        {
+            width:700px;!important;
+            max-width: 700px;!important;
+        }
+        }
 
+    </style>
+@endpush
 <div class="modal fade right" id="EditCustomerAdmin-{{ $customer->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
     <div class="modal-dialog modal-full-height modal-right" role="document">
-        <div class="modal-content px-2">
+        <div class="modal-content px-2 w-50">
+            <div class="modal-header border-0">
+                <h4 class="modal-title w-100 sf-light" style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
+            </div>
+            <div class="modal-body" style="height: 80vh; overflow-y: auto">
+                <div id="history_block-{{ $customer->id }}">
+                    @include('history.includes.history')
+                </div>
+
+            </div>
+            {{--<div class="modal-footer justify-content-center">--}}
+            {{--</div>--}}
+        </div>
+        <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light" id="myModalLabel">+{{ $customer->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -67,12 +92,12 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="potentials" name="type">
-                    <input type="text" name="name" id="client_name-{{ $customer->taskable->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$customer->taskable->name}}" placeholder="Введите ФИО">
-                    <input type="text" id="client_phone-{{ $customer->taskable->id }}" name="phone" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->contacts }}" placeholder="Введите контакты">
-                    <input type="text" name="deadline_date" id="client_date-{{ $customer->taskable->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->deadline_date }}" placeholder="Выберите дату">
-                    <input type="text" id="client_company-{{ $customer->taskable->id }}" name="company" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->company }}" placeholder="Введите компанию">
-                    <input type="text" id="client_social-{{ $customer->taskable->id }}" name="social" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->socials }}" placeholder="Введите соц.сеть или сайт">
-                    <select class="browser-default custom-select border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                    <input type="text" name="name" id="client_name-{{ $customer->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$customer->taskable->name}}" placeholder="Введите ФИО">
+                    <input type="text" id="client_phone-{{ $customer->id }}" name="phone" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->contacts }}" placeholder="Введите контакты">
+                    <input type="text" name="deadline_date" id="client_date-{{ $customer->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->deadline_date }}" placeholder="Выберите дату">
+                    <input type="text" id="client_company-{{ $customer->id }}" name="company" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->company }}" placeholder="Введите компанию">
+                    <input type="text" id="client_social-{{ $customer->id }}" name="social" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->socials }}" placeholder="Введите соц.сеть или сайт">
+                    <select class="browser-default custom-select border-0 mt-2" id="client_manager-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{ \App\User::find($customer->user_id)->id }}">{{ \App\User::find($customer->user_id)->name }}</option>
                         @foreach(\App\User::all() as $user)
                             @if($user->id == \App\User::find($customer->user_id)->id)
@@ -81,7 +106,7 @@
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>
-                    <select class="browser-default custom-select border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                    <select class="browser-default custom-select border-0 mt-2" id="client_status-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         @if($customer->status_id == 0)
                             <option value="0">В работе</option>
                         @endif
@@ -96,9 +121,9 @@
                             <option value="{{ $stat->id }}">{{ $stat->name }}</option>
                         @endforeach
                     </select>
-                    <textarea id="client_desc-{{ $customer->taskable->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3"> {{$customer->description}}</textarea>
+                    <textarea id="client_desc-{{ $customer->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$customer->description}}</textarea>
                 </form>
-                <button type="button" class="w-100 sf-light editCustomer mt-5" data-id="{{$customer->id}}" style="border:1px solid #000000; background: transparent; box-shadow: none; padding:10px 0px;">Изменить</button>
+                <button type="button" class="w-100 sf-light editCustomer mt-5 space-button" data-id="{{$customer->id}}">Изменить</button>
 
             </div>
             {{--<div class="modal-footer justify-content-center">--}}
@@ -106,3 +131,4 @@
         </div>
     </div>
 </div>
+

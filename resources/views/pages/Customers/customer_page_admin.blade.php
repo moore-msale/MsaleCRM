@@ -98,23 +98,23 @@
                 </div>
             </div>
             @foreach($customers as $customer)
-            <div class="row py-2 sf-light">
-                <div class="col-2" style="border-right:1px solid #dedede;">
+            <div class="row py-2 sf-light" id="customer-{{$customer->id}}">
+                <div class="col-2 cust-name" style="border-right:1px solid #dedede;">
                     {{ $customer->title }}
                 </div>
-                <div class="col-2" style="border-right:1px solid #dedede;">
+                <div class="col-2 cust-company" style="border-right:1px solid #dedede;">
                     {{ $customer->taskable->company }}
                 </div>
-                <div class="col-3" style="border-right:1px solid #dedede;">
-                    {{ $customer->description }}
+                <div class="col-3 cust-desc" style="border-right:1px solid #dedede;">
+                    {{ str_limit($customer->description, $limit = 30, $end = '...') }}
                 </div>
-                <div class="col-1" style="border-right:1px solid #dedede;">
+                <div class="col-1 cust-manager" style="border-right:1px solid #dedede;">
                     {{ \App\User::find($customer->user_id)->name }}
                 </div>
-                <div class="col-2">
-                    {{ $customer->deadline_date }}
+                <div class="col-2 cust-date">
+                    {{ \Carbon\Carbon::parse($customer->deadline_date)->format('M d - H:i') }}
                 </div>
-                <div class="col-2">
+                <div class="col-2 cust-status">
                     @if(isset($customer->status))
                     <button style="width:100%; height:100%; color:white; background: {{ $customer->status->color }}; border-radius: 20px; border:0px;" disabled>
                         {{ $customer->status->name }}
@@ -126,18 +126,17 @@
                     @endif
                 </div>
                 <div class="col-2">
-                    {{ $customer->created_at }}
+{{--                    @dd(\Carbon\Carbon::parse($customer->created_at))--}}
+                    {{ \Carbon\Carbon::parse($customer->created_at)->format('M d - H:i') }}
                 </div>
-                <div class="col-1">
-                    <div class="btn-group dropleft">
-                        <i class="fas fa-ellipsis-v" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
+                    <div class="btn-group dropleft col-1">
+                        <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
                         <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
                             <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
-                            <p class="mb-0 drop-point sf-medium pl-2" style="cursor:pointer;">удалить</p>
+                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$customer->id}}" style="cursor:pointer;">удалить</p>
 
                         </div>
                     </div>
-                </div>
             </div>
             @endforeach
         </div>
@@ -146,10 +145,18 @@
 
     @foreach(\App\Task::where('taskable_type','App\Customer')->get() as $customer)
         @include('modals.customers.edit_customer_admin')
+        @include('modals.customers.delete_customer_admin')
     @endforeach
 @endsection
 
 @push('scripts')
+    @foreach($customers as $customer)
+        <script>
+            $('#client_status-' + "{{$customer->id}}").on('change', function () {
+                $('#client_desc-' + "{{$customer->id}}").val('');
+            })
+        </script>
+    @endforeach
     <script>
         let result = $('#search-result');
 
@@ -200,11 +207,23 @@
                 let company = $('#client_company-' + id);
                 let phone = $('#client_phone-' + id);
                 let social = $('#client_social-' + id);
+                let manager = $('#client_manager-' + id);
+                let status = $('#client_status-' + id);
+                let desc = $('#client_desc-' + id);
 
-
-                // console.log(id);
+                if(desc.val().length < 20)
+                {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        title: 'Заполните описание, описание должно быть больше 20 символов!',
+                        showConfirmButton: true,
+                        // timer: 700
+                    });
+                }
+                else {
                     $.ajax({
-                        url: 'customerupdate',
+                        url: 'EditCustomerAdmin',
                         method: 'POST',
                         data: {
                             "_token": "{{ csrf_token() }}",
@@ -213,27 +232,75 @@
                             "company": company.val(),
                             "phone": phone.val(),
                             "social": social.val(),
+                            "manager": manager.val(),
+                            "status": status.val(),
+                            "desc": desc.val(),
                             "id": id,
                         },
                         success: data => {
-                            swal("Данные изменены!","Отчет был отправлен!","success");
-                            $('#customer-' + id).find('.cust-name').html(data.data.name);
-                            $('#customer-' + id).find('.cust-company').html(data.data.company);
-                            $('#customer-' + id).find('.cust-phone').html(data.data.contacts);
-                            $('#customer-' + id).find('.cust-social').html(data.data.socials);
-                            $('#meet-' + data.id).find('.meet-name').html(data.data.name);
-                            $('#meet-' + data.id).find('.meet-company').html(data.data.company);
-                            $('#details_update_Customer-' + id).val(''),
-                                $('#customerchangename-' + id).val(''),
-                                $('#customerchangecompany-' + id).val(),
-                                $('#customerchangephone-' + id).val(),
-                                console.log(data);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Данные изменены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            $('#customer-' + id).find('.cust-name').html(data.customer.name);
+                            $('#customer-' + id).find('.cust-company').html(data.customer.company);
+                            $('#customer-' + id).find('.cust-desc').html(data.customer.description);
+                            $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
+                            $('#customer-' + id).find('.cust-manager').html(data.user);
+                            $('#history_block-' + id).html(data.html);
                         },
                         error: () => {
                             console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Произошла ошибка!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                         }
                     })
+                }
+
             })
 </script>
+    <script>
+        $('.deleteCustomer').click(e => {
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            $.ajax({
+                url: 'DeleteCustomerAdmin',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Клиент удален!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    $('#DeleteCustomer-' + id).modal('hide');
+                    $('#customer-' + id).hide();
+                },
+                error: () => {
+                    console.log(0);
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Произошла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                }
+            })
+
+        })
+    </script>
 @endpush

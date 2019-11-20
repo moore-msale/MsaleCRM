@@ -137,6 +137,6 @@ class HomeController extends Controller
     {
         $statuses = Status::all();
 
-        return view('pages.settings.settings',['statuses' => $statuses]);
+        return view('pages.settings.settings',['statuses' => $statuses])->with('alert', 'hello');
     }
 }

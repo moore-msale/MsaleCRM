@@ -20,7 +20,7 @@
 
 <div class="px-0 h-auto pb-2 col-lg-15 col-15 d-lg-block d-none">
     <div class="row justify-content-center px-3">
-        <div class="" style="width:45%;">
+        <div class="pl-3" style="width:45%;">
             <div class="search">
                 <input id="search" class="form-control" style="height:45px;" type="text" placeholder="Поиск по клиентам">
                 <div class="position-relative pt-1">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="justify-content-end d-flex" style="width: 55%">
+        <div class="justify-content-end d-flex pr-3" style="width: 55%">
             <button class="button-new mr-3" data-toggle="modal" data-target="#ClientCreate">
                 + клиент
             </button>
@@ -45,7 +45,7 @@
             </a>
         </div>
     </div>
-    <div class="row justify-content-center pt-3">
+    <div class="row justify-content-center pt-3 px-3">
 
         <div class="p-3 " style="width:25%;">
             <div class="plan-collumn bg-white shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1 ? 'light-green accent-3' : ''}}">
