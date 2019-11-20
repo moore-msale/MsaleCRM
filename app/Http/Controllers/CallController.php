@@ -17,7 +17,10 @@ use PhpParser\Node\Expr\New_;
 class CallController extends Controller
 {
     //
-
+    public function __construct()
+    {
+        $this->middleware('changeDB');
+    } 
     public function call_to_customer(Request $request)
     {
         $call = Call::find($request->id);

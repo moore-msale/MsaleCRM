@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Mail;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('changeDB');
+    } 
 
     public function notification()
     {

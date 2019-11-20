@@ -18,6 +18,10 @@ class MeetingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('changeDB');
+    } 
     public function index()
     {
         //
