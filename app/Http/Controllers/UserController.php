@@ -9,15 +9,12 @@ use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
 
-     public function __construct()
-    {
-        $this->middleware('changeToMultipledb');
-    } 
-
+   
     
     public function profile()
     {
@@ -70,6 +67,10 @@ class UserController extends Controller
             }
         }
         $user->save();
+        $this->chandeDB($request['company']);
+        $newuser = $user->replicate();
+        $newuser->id = $user->id;
+        $newuser->save();
         return back();
     }
     public function editUser(Request $request)
@@ -112,6 +113,10 @@ class UserController extends Controller
         }
 
         $user->save();
+        $this->chandeDB($request['company']);
+        $newuser = User::find($request->id);
+        $newuser = $user->replicate();
+        $newuser->save();
 //        if ($request->ajax()){
 //            return response()->json([
 //                'status' => "success",
@@ -126,6 +131,10 @@ class UserController extends Controller
         $user = User::find($id);
         $user->status = 'blocked';
         $user->save();
+        $this->chandeDB($user['company']);
+        $newuser = User::find($id);
+        $newuser->status = 'blocked';
+        $newuser->save();
         return back();
     }
 
@@ -134,13 +143,25 @@ class UserController extends Controller
         $user = User::find($id);
         $user->status = 'active';
         $user->save();
+        $this->chandeDB($user['company']);
+        $newuser = User::find($id);
+        $newuser->status = 'active';
+        $newuser->save();
         return back();
     }
 
     public function deleteUser($id){
         $user = User::find($id);
+        $company = $user['company']; 
         $user->delete();
+        $this->chandeDB($company);
+        $newuser = User::find($id);
+        $newuser->delete();
         return back();
+    }
+    public function chandeDB($name){
+        config(['database.connections.mysql.database' => $name]);
+        DB::reconnect();
     }
 
 }

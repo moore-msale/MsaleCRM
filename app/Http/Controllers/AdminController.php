@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('changeDB');
+    } 
     public function done_task(Request $request)
     {
         $task = Task::find($request->id);

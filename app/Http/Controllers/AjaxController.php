@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class AjaxController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('changeDB');
+    } 
     public function searchTask(Request $request)
     {
         $search = $request->search;

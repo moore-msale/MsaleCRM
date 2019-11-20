@@ -1,123 +1,119 @@
 @extends('layouts.app')
 @section('content')
+<style type="text/css">
+.bg-grey{
+    background-color: #e9ecef;
+    opacity: 1;
+}
+.custom-file-label:after {
+    content: "Выбрать"!important;
+    background: #C4C4C4;
+    border-radius: 0!important;
+    width: 95px;
+    text-align: center;
+}
+.display-5{
+    font-size: 23px;
+ }
+.display-5-5{
+    font-size: 18px;  
+}
+ .display-6{
+    font-size: 12px;  
+ }
 
-    <div class="container-fluid h-100 pt-5">
-        <div class="row justify-content-center h-100">
-            <div class="col-4 p-3 shadow">
-                <div class="text-center" style="border-bottom:1px solid #bbbbbb;">
-                    <p class="pt-4 sf-medium" style="font-size:20px;">
-                        Личные данные
-                    </p>
-                    <div class="row justify-content-center">
-                        <div class="col-8" style="background-image: url({{isset($user->avatar) ? asset('users/'. $user->avatar) : '/users/default.png'}}); background-size: cover; height: 200px; border-radius:50%; background-position: center center;">
-                            {{--<img class="w-100" src="{{ asset('users/'.$user->avatar) }}" alt="">--}}
+ .upload-avatar{
+    cursor: pointer!important;
+ }
+}
+</style>
+<div class="row pl-1 h-100">
+    <div class="col-3"></div>
+    <div class="col-7 pt-5" id="user-{{ $user->id }}" role="tabpanel" aria-labelledby="users-{{$user->id}}">
+             <div class="shadow bg-white">
+                    <div class="mt-1 pl-5 pt-4">
+                        <div class="row">
+                            <div class="col text-left">
+                                <h2 class="display-5 sf-medium">+ профиль</h2>  
+                            </div>
                         </div>
                     </div>
-                    <p class="pt-4 sf-medium" style="font-size:20px;">
-                        {{ $user->name }}
-                    </p>
-                    @if($user->role != 'admin')
-                        <p class="sf-medium">
-                            Менеджер
-                        </p>
-                    @else
-                        <p class="sf-medium">
-                            Администратор
-                        </p>
-                    @endif
+                    <div class="mt-4 p-5">
+                        <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$user->id}}">
+                            <div class="position-absolute mt-2" style="top:22%;right:-21.5%; width: 150px;height: 150px; cursor: pointer;">
+                                <label for="upload-avatar" class="upload-avatar">
+                                    @if($user->avatar)
+                                        <img src="{{asset('users/'.$user->avatar)}}" width="150" height="150">
+                                    @else
+                                        <img src="{{asset('images/defaultAvatar.png')}}">
+                                    @endif
+                                </label>
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" name="name" id="name-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey sf-medium display-6" value="{{ $user->name }}" placeholder="Имя">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" name="lastname" id="lastname-{{$user->id}}" class="form-control rounded-0 border-0 bg-grey sf-medium display-6" value="{{ $user->lastname }}" placeholder="Фамилия">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" name="address" id="address-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->address }}" placeholder="Адрес">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->phone }}" placeholder="Номер">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" name="email" id="email-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->email }}" placeholder="Email">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" name="role" id="role-{{$user->role}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->role }}" placeholder="Должность">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey sf-medium display-6" placeholder="Пароль">
+                            </div>
+                            <div class="mt-5">
+                                <h2 class="text-muted sf-medium display-5-5">+ ежедневный план</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="text" class="form-control rounded-0 border-0 bg-grey sf-medium" placeholder="Количество звонков">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control rounded-0 border-0 bg-grey sf-medium" placeholder="Количество встреч">
+                                </div>
+                            </div>
+                            <div class="mt-5">
+                                <h2 class="text-muted sf-medium display-5-5">+ личные данные</h2>
+                            </div>
+                            <div class="input-group pt-2">
+                                <div class="custom-file rounded-0 border-0">
+                                    <input type="file" class="custom-file" id="avatar-{{$user->id}}" name="avatar"
+                                           aria-describedby="inputGroupFileAddon01" accept="image/*">
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="avatar-{{ $user->id }} sf-medium">Загрузить фото профиля</label>
+                                </div>
+                            </div>
 
+                             <div class="input-group pt-2">
+                                <div class="custom-file rounded-0 border-0">
+                                    <input type="file" class="custom-file" id="scan_pas-{{$user->id}}" name="scan_pas"
+                                           aria-describedby="inputGroupFileAddon01" accept="image/*">
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="scan_pas-{{ $user->id }} sf-medium">Загрузить фото паспорта(задниию часть)</label>
+                                </div>
+                            </div>
+                            <div class="input-group pt-2 mb-5">
+                                <div class="custom-file rounded-0 border-0">
+                                    <input type="file" class="custom-file" id="scan2_pas-{{$user->id}}" name="scan2_pas"
+                                           aria-describedby="inputGroupFileAddon01" accept="image/*">
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="scan2_pas-{{ $user->id }} sf-medium">Загрузить фото паспорта(переднию часть)</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-secondary btn-block sf-medium" type="submit">
+                                Изменить
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="text-left pt-3">
-                    @if(isset($user->lastname))
-                        <p class="sf-medium">
-                            <span class="sf-light">Фамилия:</span> {{$user->lastname}}
-                        </p>
-                    @endif
-                    @if(isset($user->phone))
-                        <p class="sf-medium">
-                            <span class="sf-light">Номер телефона:</span> {{$user->phone}}
-                        </p>
-                    @endif
-                    @if(isset($user->address))
-                        <p class="sf-medium">
-                            <span class="sf-light">Адрес:</span> {{$user->address}}
-                        </p>
-                    @endif
-                    @if(isset($user->scan_pas))
-                        <p class="sf-medium">
-                            <a href="{{asset('passport/'.$user->scan_pas)}}" data-fancybox="passport-{{$user->id}}" class="sf-light">Скан паспорта</a>
-                            <a href="{{asset('passport/'.$user->scan2_pas)}}" data-fancybox="passport-{{$user->id}}" class="d-none"></a>
-                        </p>
-                    @endif
-                </div>
-            </div>
-            <div class="col-6 p-3 shadow">
-                <div>
-                    <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="id" value="{{$user->id}}">
-                        <div class="md-form">
-                            <input type="text" name="name" id="name-{{$user->id}}" class="form-control" value="{{ $user->name }}">
-                            <label for="name-{{$user->id}}">Ваше имя</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="lastname" id="lastname-{{$user->id}}" class="form-control" value="{{ $user->lastname }}">
-                            <label for="lastname-{{$user->id}}">Ваша фамилия</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="address" id="address-{{$user->id}}" class="form-control" value="{{ $user->address }}">
-                            <label for="address-{{$user->id}}">Ваше место жительства</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control" value="{{ $user->phone }}">
-                            <label for="phone-{{$user->id}}">Ваш номер телефона</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="email" id="email-{{$user->id}}" class="form-control" value="{{ $user->email }}">
-                            <label for="email-{{$user->id}}">Email</label>
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupFileAddon01">Изменить Аватар</span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="avatar-{{$user->id}}" name="avatar"
-                                       aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                <label class="custom-file-label" for="avatar-{{ $user->id }}">Выберите файл</label>
-                            </div>
-                        </div>
-                        <div class="input-group pt-2">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupFileAddon01">Скан паспорта (передний вид)</span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="scan_pas-{{$user->id}}" name="scan_pas"
-                                       aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                <label class="custom-file-label" for="scan_pas-{{ $user->id }}">Выберите файл</label>
-                            </div>
-                        </div>
-                        <div class="input-group pt-2">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupFileAddon01">Скан паспорта (задний вид)</span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="scan2_pas-{{$user->id}}" name="scan2_pas"
-                                       aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                <label class="custom-file-label" for="scan2_pas-{{ $user->id }}">Выберите файл</label>
-                            </div>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="password" id="password-{{ $user->id }}" class="form-control">
-                            <label for="password-{{ $user->id }}">Пароль</label>
-                        </div>
-
-                        <button class="btn btn-primary" type="submit">
-                            Изменить
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
-    </div>
-
+</div>
 @endsection
