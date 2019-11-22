@@ -472,13 +472,13 @@
             {{--}, 5000);--}}
         {{--</script>--}}
         <script>
-            $('.addTask').click(e => {
+            $('.createTask').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
-                let title = $('#taskname');
-                let desc = $('#taskdescription');
-                let date = $('#taskdate');
-                let user = $('#taskuser');
+                let title = $('#task_name');
+                let desc = $('#task_desc');
+                let date = $('#task_date');
+                let status = $('#task_status');
                 if(desc.val() == '')
                 {
                     swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -492,11 +492,17 @@
                             "title": title.val(),
                             "description": desc.val(),
                             "deadline_date": date.val(),
-                            "user_id": user.val(),
+                            "status": status.val(),
                         },
                         success: data => {
                             $('#TaskCreate').modal('hide');
-                            swal("Задача добавлена!", "Отчет был отправлен", "success");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Задача добавлена!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                             let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                             result.find('.taskDone').each((e,i) => {
                                 doneTask($(i));
@@ -508,9 +514,9 @@
                             result.find('.taskEdit').each((e,i) => {
                                 editTask($(i));
                             });
-                            $('#taskname').val('');
-                            $('#taskdescription').val('');
-                            $('#taskdate').val('');
+                            $('#task_name').val('');
+                            $('#task_desc').val('');
+                            $('#task_date').val('');
 
                         },
                         error: () => {
@@ -1142,12 +1148,18 @@
             $('.addPotencial').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
-                let id = $('#potencialname');
-                let desc = $('#potencialdescription');
-                let date = $('#potencialdate');
+                let id = $('#customer_name');
+                let desc = $('#customer_desc');
+                let date = $('#customer_date');
                 if(desc.val() == '')
                 {
-                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        title: 'Заполните описание, описание должно быть больше 20 символов!',
+                        showConfirmButton: true,
+                        // timer: 700
+                    });
                 }
                 else {
                     $.ajax({
@@ -1162,9 +1174,15 @@
                         success: data => {
                             $('#addPotencial').modal('hide');
                             console.log(data);
-                            swal("Потенциальный клиент добавлен!", "Отчет был отправлен", "success");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Потенциальный клиент добавлен!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                             if (data.view) {
-                                let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                                let result = $('#customers-scroll').prepend(data.view).show('slide', {direction: 'left'}, 400);
                                 result.find('.customerDone').each((e,i) => {
                                     doneCustomer($(i));
                                 });
@@ -1175,7 +1193,13 @@
                         },
                         error: () => {
                             console.log(0);
-                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Произошла ошибка!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                         }
                     })
                 }
