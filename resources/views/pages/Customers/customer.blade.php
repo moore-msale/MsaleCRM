@@ -10,6 +10,7 @@
 @section('content')
     <?php
     $agent = New \Jenssegers\Agent\Agent();
+
     ?>
 
     <div class="container-fluid p-5 mt-5 report-block">

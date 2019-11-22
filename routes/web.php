@@ -58,10 +58,10 @@ Route::group(['middleware' => ['auth']], function () {
         return view('pages.notCall', ['calls' => \App\Call::where('user_id', auth()->id())->where('active',2)->get()->reverse()]);
     });
     Route::get('/tasks_admin', function () {
-        return view('pages.Tasks.task_page_admin', ['tasks' => \App\Task::where('taskable_type', null)->get()->reverse()]);
+        return view('pages.Tasks.task_page_admin', ['tasks' => \App\Task::where('taskable_type', '')->get()->reverse()]);
     });
     Route::get('/tasks', function () {
-        return view('pages.Tasks.task_page', ['tasks' => \App\Task::where('taskable_type', null)->where('user_id',auth()->id())->get()->reverse()]);
+        return view('pages.Tasks.task_page', ['tasks' => \App\Task::where('taskable_type', '')->where('user_id',auth()->id())->get()->reverse()]);
     });
     Route::get('/meets_admin', function () {
         return view('pages.Meets.meet_page_admin', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->get()->reverse() ]);

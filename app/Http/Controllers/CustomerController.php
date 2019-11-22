@@ -12,12 +12,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class CustomerController extends Controller
+class   CustomerController extends Controller
 {
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +33,7 @@ class CustomerController extends Controller
             return view('pages.Customers.customer_page_admin',['customers' => $customers]);
         }
         else
-        {   
+        {
         $customers = Task::all()->hasMorph(
                 'taskable',
                 'App\Customer'

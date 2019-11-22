@@ -14,31 +14,75 @@
     ?>
     {{--@dd(session('timer'));--}}
     <div class="container-fluid p-5">
-        <div class="py-1 position-relative">
-            <div class="search-task" style="position: absolute; top:10%; right:0%;">
-                <input id="search" class="form-control" type="text" placeholder="Поиск задач">
-                <div class="position-relative pt-1">
-                    <div class="position-absolute search-result shadow" id="search-result" style="right: 0; top: 160%;">
+        <div class="menu-bar">
+            <form class="row" action="{{ route('task_filter')}}" method="POST"  enctype="multipart/form-data">
+                @csrf
+                <div class="col-2">
+                    <select name="manager" id="meetingname" class="browser-default custom-select border-0 sf-light">
+                        <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
+                        @if(isset($manager))
+                            <option value="{{ null }}">Все менеджеры</option>
+                        @endif
+                        @foreach(\App\User::all() as $user)
+                            @if(isset($manager) && $user->id == $manager)
+                                @continue
+                            @endif
+                            <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->lastname }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select name="status" id="meetingname" class="browser-default custom-select border-0 sf-light   ">
+                        @if(isset($status) && $status == 0)
+                            <option value="0">Без статуса</option>
+                        @else
+                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все статусы'}}</option>
+                            <option value="0">Без статуса</option>
+                        @endif
+                        @if(isset($status) )
+                            <option value="{{ null }}">Все статусы</option>
+                        @endif
+
+                        @foreach(\App\Status::where('type','customer')->get() as $status1)
+                            @if(isset($status) && $status1->id == $status)
+
+                                @continue
+                            @endif
+                            <option value="{{ $status1->id }}">{{ $status1->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button class="new-button">
+                        Применить
+                    </button>
+                </div>
+                <div class="col-9 text-right d-flex align-items-center justify-content-end">
+                        <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClientAdmin" style="color:#000000;">
+                            + добавить клиента
+                        </span>
+                    <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTaskAdmin" style="color:#000000;">
+                                + добавить задачу
+                            </span>
+                    <span class="button-create" style="color:#000000;" data-toggle="modal" data-target="#CreateMeetAdmin">
+                                + добавить встречу
+                            </span>
+
+                </div>
+            </form>
+
+            <div class="row pt-4">
+                <div class="col-6">
+                    <div class="search">
+                        <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск по клиентам">
+                        <div class="position-relative">
+                            <div class="position-absolute search-result shadow bg-white" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-            <ul class="nav nav-tabs pb-5" id="myTab" role="tablist">
-                <li class="nav-item report-tabs mr-4">
-                    <a class="nav-link report-tabs-link active" id="manage-task" data-toggle="tab" href="#manage-task-content" role="tab"
-                       aria-controls="home"
-                       aria-selected="true">Все задачи</a>
-                </li>
-                @foreach(\App\User::where('role','!=','admin')->get() as $user)
-                        <li class="nav-item report-tabs mr-4">
-                            <a class="nav-link report-tabs-link" id="manage-task-{{$user->id}}" data-toggle="tab" href="#manage-task-content-{{$user->id}}" role="tab"
-                               aria-controls="home"
-                               aria-selected="true">{{ $user->name }}</a>
-                        </li>
-                @endforeach
-            </ul>
-
 
 
         <div class="tab-content" id="myTabContent">
@@ -98,10 +142,53 @@
                                                         Статус выполнения
                                                     </p>
                                                 </div>
+
+                                                <div class="col-2">
+                                                    <p class="title-task">
+                                                        Дата создания
+                                                    </p>
+                                                </div>
                                                 <div class="col-3">
 
                                                 </div>
                                             </div>
+                                            @foreach($tasks as $task)
+                                                <div class="row py-2 sf-light position-relative" id="task-{{$task->id}}">
+                                                    <div class="col-2 cust-name">
+                                                        {{ $task->title }}
+                                                    </div>
+                                                    <div class="col-4 cust-company">
+                                                        {{ str_limit($task->description, $limit = 25, $end = '...') }}
+                                                    </div>
+                                                    <div class="col-2 cust-manager">
+                                                        {{ \App\User::find($task->user_id)->name }}
+                                                    </div>
+                                                    <div class="col-2 cust-date">
+                                                        {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
+                                                    </div>
+                                                    <div class="col-2 cust-status">
+                                                        @if(isset($task->status))
+                                                            <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
+                                                                {{ $task->status->name }}
+                                                            </button>
+                                                        @else
+                                                            <button style="width:100%; height:100%; color:white; background: #3B79D6; border-radius: 20px; border:0px;" disabled>
+                                                                В работе
+                                                            </button>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-2 cust-date">
+                                                        {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
+                                                    </div>
+                                                    <div class="btn-group dropleft col-1">
+                                                        <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
+                                                        <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
+                                                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                                                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$task->id}}" style="cursor:pointer;">удалить</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                             <div class="task_content" id="task_content">
                                             @foreach($tasks as $task)
                                                 @if($task->status_id == 0 && \App\User::find($task->user_id)->role != 'admin')
