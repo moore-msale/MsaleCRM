@@ -74,8 +74,8 @@
                     <select class="browser-default custom-select border-0 mt-2 sf-light" id="customer_name" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{null}}">Выберите клиента...</option>
                         @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $customer)
-                            @if($customer->user_id == auth()->id())
-                                <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }} - {{ $customer->taskable->company }} | {{ isset($customer) }} Статус : {{ $customer->status->name }}</option>
+                            @if(!isset($customer->status) ||  $customer->status->name != 'Потенциальный')
+                                <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }} - {{ $customer->taskable->company }} | Статус : {{ isset($customer->status) ? $customer->status->name : 'В работе' }}</option>
                             @endif
                         @endforeach
                     </select>
