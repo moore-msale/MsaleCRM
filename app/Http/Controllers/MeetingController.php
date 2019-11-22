@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\History;
 use App\Meeting;
 use App\Plan;
 use App\Report;
@@ -61,7 +62,7 @@ class MeetingController extends Controller
         $request->merge(['deadline_date' => $deadline_date]);
         $task->deadline_date = $request->deadline_date;
         $task->description = $request->description;
-        $task->user_id = auth()->check() ? auth()->id() : 0;
+        $task->user_id = $request->user_id;
         $task->save();
         $meeting->task()->save($task);
 
@@ -94,6 +95,22 @@ class MeetingController extends Controller
             }
             $report->save();
         }
+
+        $history = new History();
+        $history->description = $task->description;
+        $history->action = 'Встреча';
+        $history->date = $request->deadline_date;
+        if(isset($task->status->name))
+        {
+            $history->status = $task->status->name;
+        }
+        else
+        {
+            $history->status = 'В работе';
+        }
+        $history->user_id = $task->user_id;
+        $history->customer_id = $customer->id;
+        $history->save();
         
         if ($request->ajax()){
             return response()->json([

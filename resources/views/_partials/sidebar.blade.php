@@ -1,5 +1,10 @@
-<div class="h-100 position-fixed pt-2" style="background-color: #772FD2;">
-    <div class="text-center text-white sidebar">
+@push('styles')
+
+
+@endpush
+
+<div class="h-100 position-fixed pt-2" style="background-color: #772FD2; z-index: 9999;">
+    <div class="text-center text-white sidebar position-relative">
 
         <img class="mb-1" src="{{ asset('images/logo.svg') }}" alt="">
 
@@ -8,12 +13,12 @@
             <span class="mx-auto text-white text-uppercase w-100" style="font-size:18px;">{{ mb_strcut(auth::user()->name, 0, 1) }}</span>
         </div>
 
-        <div class="notific mx-auto mt-3 d-flex align-items-center justify-content-center position-relative">
-            <img src="{{ asset('images/notif.svg') }}" alt="">
-            <div class="notif-point"></div>
-        </div>
+        {{--<div class="notific mx-auto mt-3 d-flex align-items-center justify-content-center position-relative">--}}
+            {{--<img src="{{ asset('images/notif.svg') }}" alt="">--}}
+            {{--<div class="notif-point"></div>--}}
+        {{--</div>--}}
         
-        <div class="my-3">
+        <div class="py-3 menu-burger" id="menu-burger" style="cursor: pointer;">
             <img src="{{ asset('images/humburger.svg') }}" alt="">
         </div>
 
@@ -62,6 +67,7 @@
         @endif
 
     </div>
+
     <div class="position-absolute pl-2 sf-light" style="bottom:0%; color: #fefefe; font-size: 12px;">
         <p class="mb-0">
             Version:
@@ -70,4 +76,12 @@
             1.5.4
         </p>
     </div>
+    <div id="mySidenav" class="sidenav d-md-block d-none">
+        <img class="position-absolute close-menu" style="top:2%; right:5%; cursor: pointer;" src="{{ asset('images/x.svg') }}" alt="">
+        <a class="sf-light pl-5" href="/">добавить задачу менеджеру</a>
+        <a class="sf-light pl-5" href="https://to-moore.com/bref">заполнить бриф</a>
+        <a class="sf-light pl-5" href="https://to-moore.com/task">добавить задачу программистам</a>
+        <a class="sf-light pl-5" href="http://s.to-moore.com/">перейти в скрипт продаж</a>
+    </div>
 </div>
+

@@ -28,7 +28,7 @@
                 <a href="/home" class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ЗВОНКИ
                 </a>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#TaskCreate">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CallCreate">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
                 {{--<a href="clearCall" class="text-white sf-bold mb-0 bg-danger px-3 py-3 mx-0">--}}
@@ -68,7 +68,7 @@
                 <p class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ВСТРЕЧИ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#MeetCreate">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CreateMeet">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
             </div>
@@ -93,7 +93,7 @@
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ПОТЕНЦИАЛЬНЫЕ КЛИЕНТЫ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#addPotencial">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#AddPotencial">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
             </div>

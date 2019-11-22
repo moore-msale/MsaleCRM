@@ -522,16 +522,22 @@
             })
         </script>
         <script>
-            $('.addMeeting').click(e => {
+            $('.createMeet').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
-                let id = $('#meetingname');
-                let desc = $('#meetingdescription');
-                let date = $('#meetingdate');
-                let user = $('#meetinguser');
+                let id = $('#meet_name');
+                let desc = $('#meet_desc');
+                let date = $('#meet_date');
+                let user = $('#meet_user');
                 if(desc.val() == '')
                 {
-                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        title: 'Заполните описание, описание должно быть больше 20 символов!',
+                        showConfirmButton: true,
+                        // timer: 700
+                    });
                 }
                 else {
                     $.ajax({
@@ -545,9 +551,15 @@
                             "user_id": user.val(),
                         },
                         success: data => {
-                            $('#MeetCreate').modal('hide');
-                            console.log(data);
-                            swal("Встреча добавлена!", "Отчет был отправлен", "success");
+                            $('#CreateMeetAdmin').modal('hide');
+                            // console.log(data);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Встреча создана!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                             result.find('.meetDone').each((e,i) => {
                                 doneMeet($(i));
@@ -555,17 +567,22 @@
                             result.find('.meetDelete').each((e,i) => {
                                 deleteMeet($(i));
                             });
-
                             result.find('.meetEdit').each((e,i) => {
                                 editMeet($(i));
                             });
-                            $('#meetingname').val('');
-                            $('#meetingdescription').val('');
-                            $('#meetingdate').val('');
+                            $('#meet_name').val('');
+                            $('#meet_desc').val('');
+                            $('#meet_date').val('');
                         },
                         error: () => {
                             console.log(0);
-                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Произошла ошибка!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                         }
                     })
                 }
