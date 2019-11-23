@@ -14,7 +14,7 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
     public function done_task(Request $request)
     {
         $task = Task::find($request->id);
@@ -58,37 +58,17 @@ class AdminController extends Controller
         $task->title = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
+        $task->status_id = $request->status;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
-//        dd($request->date);
         $task->deadline_date = $request->date;
         $task->save();
-        $user = User::find($task->user_id)->name;
-        if($task->status_id == 0)
-        {
-            $view = view('pages.Tasks.includes.task_admin', [
-            'task' => $task,
-        ])->render();
-        }
-        elseif ($task->status_id == 1)
-        {
-            $view = view('pages.Tasks.includes.done_task_admin', [
-                'task' => $task,
-            ])->render();
-        }
-        elseif ($task->status_id == 2)
-        {
-            $view = view('pages.Tasks.includes.fail_task_admin', [
-                'task' => $task,
-            ])->render();
-        }
+
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
                 'data' => $task,
-                'view' => $view,
-                'user' => $user,
             ]);
         }
 

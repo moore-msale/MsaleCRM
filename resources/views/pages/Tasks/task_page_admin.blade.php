@@ -13,7 +13,7 @@
 //    dd(session('timer'));
     ?>
     {{--@dd(session('timer'));--}}
-   
+
      <div class="container-fluid py-5 px-3">
         <div class="menu-bar">
                 <form class="row" action="{{ route('task_filter')}}" method="POST"  enctype="multipart/form-data">
@@ -96,50 +96,51 @@
 
                 </div>
             </div>
-            @foreach($tasks as $task)
-              @if(\App\User::find($task->user_id)->role = 'admin')
-                    <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}" style="border: 0.5px solid rgba(255, 0, 0, 0.5)!important;">
-                @else
-                    <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
-                @endif
-                    <div class="col-2 cust-name" style="border-right:1px solid #dedede;">
-                        {{ $task->title }}
-                    </div>
-                    <div class="col-4 cust-company" style="border-right:1px solid #dedede;">
-                        {{ str_limit($task->description, $limit = 25, $end = '...') }}
-                    </div>
-                    <div class="col-2 cust-manager" style="border-right:1px solid #dedede;">
-                        {{ \App\User::find($task->user_id)->name }}
-                    </div>
-                    <div class="col-2 cust-date">
-                        {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
-                    </div>
-                    <div class="col-2 cust-status">
-                        @if(isset($task->status))
-                            <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
-                                {{ $task->status->name }}
-                            </button>
-                        @else
-                            <button style="width:100%; height:100%; color:white; background: #3B79D6; border-radius: 20px; border:0px;" disabled>
-                                В работе
-                            </button>
-                        @endif
-                    </div>
-                    <div class="col-2 cust-date">
-                        {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
-                    </div>
-                    <div class="btn-group dropleft col-1">
-                        <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
-                        <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
-                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTaskAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
-                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">удалить</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+
+             @foreach($tasks as $task)
+                 @if(\App\User::find($task->user_id)->role = 'admin')
+                     <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}" style="border: 0.5px solid rgba(255, 0, 0, 0.5)!important;">
+                         @else
+                             <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
+                                 @endif
+                                 <div class="col-2 task-name" style="border-right:1px solid #dedede;">
+                                     {{ $task->title }}
+                                 </div>
+                                 <div class="col-4 task-company" style="border-right:1px solid #dedede;">
+                                     {{ str_limit($task->description, $limit = 25, $end = '...') }}
+                                 </div>
+                                 <div class="col-2 task-manager" style="border-right:1px solid #dedede;">
+                                     {{ \App\User::find($task->user_id)->name }}
+                                 </div>
+                                 <div class="col-2 task-date">
+                                     {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
+                                 </div>
+                                 <div class="col-2 task-status">
+                                     @if(isset($task->status))
+                                         <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
+                                             {{ $task->status->name }}
+                                         </button>
+                                     @else
+                                         <button style="width:100%; height:100%; color:white; background: #3B79D6; border-radius: 20px; border:0px;" disabled>
+                                             В работе
+                                         </button>
+                                     @endif
+                                 </div>
+                                 <div class="col-2 task-date">
+                                     {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
+                                 </div>
+                                 <div class="btn-group dropleft col-1">
+                                     <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
+                                     <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
+                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTaskAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">удалить</p>
+                                     </div>
+                                 </div>
+                             </div>
+                             @endforeach
         </div>
         </div>
-    </div>           
+    </div>
 @foreach($tasks as $task)
     @include('modals.tasks.done_task_admin')
     @include('modals.tasks.delete_task_admin')
@@ -229,8 +230,6 @@
             let btn = $(e.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
-
-
             console.log(id);
                 $.ajax({
                     url: 'DeleteTaskAdmin',
@@ -240,23 +239,14 @@
                         "id": id,
                     },
                     success: data => {
-                        if(data.data.status_id == 0)
-                        {
-                            $('#task-now-' + user).find('.task-' + data.data.id).hide(200);
-                            $('#task-now').find('.task-' + data.data.id).hide(200);
-                        }
-                        else if(data.data.status_id == 1)
-                        {
-                            $('#task-done-' + user).find('.donetask-' + data.data.id).hide(200);
-                            $('#task-done').find('.donetask-' + data.data.id).hide(200);
-                        }
-                        else if(data.data.status_id == 2)
-                        {
-                            $('#task-fail-' + user).find('.failtask-' + data.data.id).hide(200);
-                            $('#task-fail').find('.failtask-' + data.data.id).hide(200);
-                        }
-                        swal("Задача удалена!","Отчет был отправлен","success");
-                        $('#task-' + id).hide(200);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Задача удалена!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                        $('#task-' + id).hide();
                         $('#DeleteTaskAdmin-' + id).modal('hide');
                         console.log(data);
                     },
@@ -277,12 +267,12 @@
             let desc = $('#task_desc-' + id);
             let date = $('#task_date-' + id);
             let manage = $('#task_manage-' + id);
+            let status = $('#task_status-' + id);
             if(desc.val() == '')
             {
                 swal("Заполните описание!","Поле описание стало обязательным","error");
             }
             else {
-                // console.log(id);
                     $.ajax({
                         url: 'EditTaskAdmin',
                         method: 'POST',
@@ -292,80 +282,33 @@
                             "desc": desc.val(),
                             "date": date.val(),
                             "manage": manage.val(),
+                            "status": status.val(),
                             "id": id,
                         },
                         success: data => {
                             $('#EditTaskAdmin-' + id).modal('hide');
-                            swal("Задача изменена!", "Отчет был отправлен", "success");
-                            if(data.data.user_id == user) {
-                                if (data.data.status_id == 0)
-                                {
-                                    $('#task-now').find('.task-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-now').find('.task-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-now').find('.task-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                    $('#task-now-' + user).find('.task-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-now-' + user).find('.task-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-now-' + user).find('.task-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                }
-                                else if(data.data.status_id == 1)
-                                {
-                                    $('#task-done').find('.donetask-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-done').find('.donetask-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-done').find('.donetask-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                    $('#task-done-' + user).find('.donetask-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-done-' + user).find('.donetask-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-done-' + user).find('.donetask-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                }
-                                else if(data.data.status_id == 2)
-                                {
-                                    $('#task-fail').find('.failtask-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-fail').find('.failtask-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-fail').find('.failtask-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                    $('#task-fail-' + user).find('.failtask-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-fail-' + user).find('.failtask-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-fail-' + user).find('.failtask-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                }
-                            }
-                            else
-                            {
-                                if(data.data.status_id == 0)
-                                {
-                                    $('#EditTaskAdmin-' + id).modal('hide');
-                                    $('#task-now-' + user).find('.task-' + data.data.id).hide(200);
-                                    let result = $('#task_content-' + data.data.user_id).append(data.view).show('slide',{direction: 'left'}, 400);
-                                    $('#task-now').find('.task-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-now').find('.task-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-now').find('.task-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                    $('#task-now').find('.task-' + data.data.id).find('.task-manager').html(data.user);
-                                }
-                                else if(data.data.status_id == 1)
-                                {
-                                    $('#EditTaskAdmin-' + id).modal('hide');
-                                    $('#task-done-' + user).find('.donetask-' + data.data.id).hide(200);
-                                    let result = $('#done_task-' + data.data.user_id).append(data.view).show('slide',{direction: 'left'}, 400);
-                                    $('#task-done').find('.donetask-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-done').find('.donetask-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-done').find('.donetask-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                    $('#task-done').find('.donetask-' + data.data.id).find('.task-manager').html(data.user);
-                                }
-                                else if(data.data.status_id == 2)
-                                {
-                                    $('#EditTaskAdmin-' + id).modal('hide');
-                                    $('#task-fail-' + user).find('.failtask-' + data.data.id).hide(200);
-                                    let result = $('#fail_task-' + data.data.user_id).append(data.view).show('slide', {direction: 'left'}, 400);
-                                    $('#task-fail').find('.failtask-' + data.data.id).find('.task-title').html(data.data.title);
-                                    $('#task-fail').find('.failtask-' + data.data.id).find('.task-desc').html(data.data.description);
-                                    $('#task-fail').find('.failtask-' + data.data.id).find('.task-date').html(data.data.deadline_date);
-                                    $('#task-fail').find('.failtask-' + data.data.id).find('.task-manager').html(data.user);
-                                }
-
-                            }
-
-                            // console.log(data);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Данные изменены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            $('#task-' + id).find('.task-name').html(data.name);
+                            $('#task-' + id).find('.task-company').html(data.company);
+                            $('#task-' + id).find('.task-desc').html(data.description);
+                            $('#task-' + id).find('.task-date').html(data.deadline_date);
+                            $('#task-' + id).find('.task-manager').html(data.user);
                         },
                         error: () => {
                             console.log(0);
-                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Что-то пошло не так!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                         }
                     })
             }

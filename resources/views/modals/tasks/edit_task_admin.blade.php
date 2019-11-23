@@ -22,7 +22,7 @@
             </div>
             <div class="modal-body" style="height: 80vh; overflow-y: auto">
                 <div id="history_block-{{ $task->id }}">
-                    
+
                 </div>
 
             </div>
