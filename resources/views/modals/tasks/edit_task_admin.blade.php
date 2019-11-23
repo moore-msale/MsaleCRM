@@ -1,52 +1,78 @@
-<div class="modal fade" id="EditTaskAdmin-{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-success" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-                <p class="heading lead">Изменение задачи</p>
+@push('styles')
+    <style>
+        @media screen and (min-width: 992px)
+        {
+        .modal .modal-full-height
+        {
+            width:700px;!important;
+            max-width: 700px;!important;
+        }
+        }
 
+    </style>
+@endpush
+<div class="modal fade right" id="EditTaskAdmin-{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-full-height modal-right" role="document">
+        <div class="modal-content px-2 w-50">
+            <div class="modal-header border-0">
+                <h4 class="modal-title w-100 sf-light" style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
+            </div>
+            <div class="modal-body" style="height: 80vh; overflow-y: auto">
+                <div id="history_block-{{ $task->id }}">
+                    
+                </div>
+
+            </div>
+            {{--<div class="modal-footer justify-content-center">--}}
+            {{--</div>--}}
+        </div>
+        <div class="modal-content px-2 w-50">
+            <div class="modal-header border-0">
+                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+{{ $task->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text">&times;</span>
+                    <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
             </div>
-
-            <!--Body-->
             <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-tasks fa-4x animated rotateIn"></i>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" value="potentials" name="type">
-                        <div class="md-form">
-                            <input type="text" name="name" id="task_name-{{ $task->id }}" class="form-control" value="{{$task->title}}">
-                            <label for="task_name-{{ $task->id }}">Название</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="deadline_date" id="task_date-{{ $task->id }}" class="form-control date-format" value="{{ $task->deadline_date }}">
-                            <label for="task_date-{{ $task->id }}">Дата выполнения</label>
-                        </div>
-                        <div class="md-form">
-                            <textarea id="task_desc-{{ $task->id }}" name="description" class="form-control md-textarea" rows="3"> {{$task->description}}</textarea>
-                            <label for="task_desc-{{ $task->id }}">Описание</label>
-                        </div>
-                        <div class="md-form">
-                            <select name="name" id="task_manage-{{ $task->id }}" name="manager" class="browser-default custom-select">
-{{--                                <option value="{{ $task->user_id }}">{{ \App\User::find($task->user_id)->name }}</option>--}}
-                                @foreach(\App\User::where('role','!=', 'admin')->get() as $user)
-                                    @if($task->user_id == $user->id)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @else
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </form>
-                    <a type="button" class="btn btn-success editTask" data-id="{{ $task->id }}" data-parent="{{ $task->user_id }}" >Изменить<i class="fas fa-check ml-1 text-white"></i></a>
-                </div>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" value="potentials" name="type">
+                    <input type="text" name="name" id="task_name-{{ $task->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$task->title}}" placeholder="Название">
+                    <input type="text" name="deadline_date" id="task_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
+                    <select class="browser-default custom-select border-0 mt-2" id="task_manager-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        <option value="{{ \App\User::find($task->user_id)->id }}">{{ \App\User::find($task->user_id)->name }}</option>
+                        @foreach(\App\User::all() as $user)
+                            @if($user->id == \App\User::find($task->user_id)->id)
+                                @continue
+                            @endif
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                    <select class="browser-default custom-select border-0 mt-2" id="task_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        @if($task->status_id == 0)
+                            <option value="0">В работе</option>
+                        @endif
+                        @if(isset($task->status))
+                                <option value="{{ \App\Status::find($task->status_id)->id }}">{{ \App\Status::find($task->status_id)->name }}</option>
+                                <option value="0">В работе</option>
+                            @endif
+                        @foreach(\App\Status::where('type','task')->get() as $stat)
+                            @if(isset($task->status) && $stat->id == \App\Status::find($task->status_id)->id)
+                                @continue
+                            @endif
+                            <option value="{{ $stat->id }}">{{ $stat->name }}</option>
+                        @endforeach
+                    </select>
+                    <textarea id="task_desc-{{ $task->description }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
+                </form>
+                <button type="button" class="w-100 sf-light editTask mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
+
             </div>
+            {{--<div class="modal-footer justify-content-center">--}}
+            {{--</div>--}}
         </div>
     </div>
 </div>

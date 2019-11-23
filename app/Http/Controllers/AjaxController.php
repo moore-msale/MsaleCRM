@@ -15,7 +15,7 @@ class AjaxController extends Controller
     public function searchTask(Request $request)
     {
         $search = $request->search;
-        $result = collect(['Задачи' => Task::where('taskable_type', null)->where('title', 'like', "%$search%")->get()]);
+        $result = collect(['Задачи' => Task::where('taskable_type', '')->where('title', 'like', "%$search%")->get()]);
 
 //        $result = $result['Задачи']->merge(collect(Task::where('taskable_type', null)->where('description','like',"%$search%")->get()));
 //        $result = $result->merge(collect(Task::where('taskable_type', null)->where('deadline_date','like',"%$search%")->get()));
@@ -28,7 +28,7 @@ class AjaxController extends Controller
 
         if ($request->ajax()) {
             return response()->json([
-                'html' => view('_partials.search_result', [
+                'html' => view('_partials.search_result_task', [
                     'result' => $result,
                     'count' => $count,
                 ])->render(),

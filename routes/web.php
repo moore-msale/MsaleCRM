@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/meets', function () {
         return view('pages.Meets.meet_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->where('user_id', auth()->id())->get()->reverse()]);
     });
-
+    Route::post('/task_filter', 'TaskController@filter')->name('task_filter');
     Route::post('/customer_filter', 'CustomerController@filter')->name('customer_filter');
     Route::get('/statistic','StatisticController@index')->name('statistic');
     Route::get('/settings','HomeController@settings')->name('settings');
