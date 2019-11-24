@@ -1,23 +1,18 @@
-<div class="modal fade" id="DeleteMeetAdmin-{{$task->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade " id="DeleteMeetAdmin-{{$task->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-danger" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <!--Content-->
         <div class="modal-content">
             <!--Header-->
+
             <!--Body-->
             <div class="modal-body">
-                <div class="container-fluid">
-                    <p class="h3 text-center sf-medium py-5">
+                <div class="text-center">
+                    <p class="h3 sf-light pb-4 pt-2">
                         Удалить встречу?
                     </p>
-                    <div class="row">
-                        <div class="text-center" style="width:50%;">
-                            <a type="button" class="btn btn-danger deleteMeet" data-id="{{ $task->id}}" data-parent="{{ $task->user_id }}" >Да<i class="fas fa-check ml-1 text-white"></i></a>
-                        </div>
-                        <div class="text-center" style="width:50%;">
-                            <a type="button" class="btn btn-danger" data-dismiss="modal" >Нет<i class="fas fa-times ml-1 text-white"></i></a>
-                        </div>
-                    </div>
+                    <button type="button" class="sf-light deleteMeet mt-4 w-25 space-button" data-id="{{$task->id}}">Да</button>
+                    <button type="button" class="sf-light mt-4 w-25 space-button" data-dismiss="modal" aria-label="Close">Нет</button>
                 </div>
             </div>
         </div>

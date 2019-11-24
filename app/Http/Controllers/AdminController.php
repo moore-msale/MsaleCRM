@@ -59,16 +59,16 @@ class AdminController extends Controller
         $task->description = $request->desc;
         $task->user_id = $request->manage;
         $task->status_id = $request->status;
-        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
-        $request->request->remove('date');
-        $request->merge(['date' => $deadline_date]);
-        $task->deadline_date = $request->date;
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
+        $task->deadline_date = $deadline_date;
         $task->save();
-
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $task,
+                'task' => $task,
+                'user' => User::find($task->user_id)->name,
+                'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
+                'status'=>$task->status,
             ]);
         }
 
@@ -117,33 +117,20 @@ class AdminController extends Controller
     public function edit_meet(Request $request)
     {
         $task = Task::find($request->id);
+        $task->title = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
-        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
-        $request->request->remove('date');
-        $request->merge(['date' => $deadline_date]);
-//        dd($request->date);
-        $task->deadline_date = $request->date;
+        $task->status_id = $request->status;
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
+        $task->deadline_date = $deadline_date;
         $task->save();
-        $user = User::find($task->user_id)->name;
-        if($task->status_id == 0)
-        {
-            $view = view('pages.Meets.includes.meet_admin', [
-                'task' => $task,
-            ])->render();
-        }
-        elseif ($task->status_id == 1)
-        {
-            $view = view('pages.Meets.includes.done_meet_admin', [
-                'task' => $task,
-            ])->render();
-        }
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $task,
-                'view' => $view,
-                'user' => $user,
+                'meet' => $task,
+                'user' => User::find($task->user_id)->name,
+                'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
+                'status'=>$task->status,
             ]);
         }
 

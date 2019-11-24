@@ -1,48 +1,58 @@
-<div class="modal fade" id="EditMeetAdmin-{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-success" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-                <p class="heading lead">Изменение встречи</p>
+@push('styles')
+    <style>
+        @media screen and (min-width: 992px)
+        {
+        .modal .modal-full-height
+        {
+            width:360px;!important;
+            max-width: 350px;!important;
+        }
+        }
 
+    </style>
+@endpush
+<div class="modal fade right" id="EditMeetAdmin-{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-full-height modal-right" role="document">
+        <div class="modal-content px-2 w-100">
+            <div class="modal-header border-0">
+                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+{{ $task->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text">&times;</span>
+                    <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
             </div>
-
-            <!--Body-->
             <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-handshake fa-4x animated rotateIn"></i>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" value="potentials" name="type">
-                        <div class="md-form">
-                            <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format" value="{{ $task->deadline_date }}">
-                            <label for="meet_date-{{ $task->id }}">Дата выполнения</label>
-                        </div>
-                        <div class="md-form">
-                            <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea" rows="3"> {{$task->description}}</textarea>
-                            <label for="meet_desc-{{ $task->id }}">Описание</label>
-                        </div>
-                        <div class="md-form">
-                            <select name="name" id="meet_manage-{{ $task->id }}" name="manager" class="browser-default custom-select">
-                                {{--                                <option value="{{ $task->user_id }}">{{ \App\User::find($task->user_id)->name }}</option>--}}
-                                @foreach(\App\User::where('role','!=', 'admin')->get() as $user)
-                                    @if($task->user_id == $user->id)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @else
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    </form>
-                    <a type="button" class="btn btn-success editMeet" data-id="{{ $task->id }}" data-parent="{{ $task->user_id }}" >Изменить<i class="fas fa-check ml-1 text-white"></i></a>
-                </div>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="text" name="name" id="meet_name-{{ $task->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$task->title}}" placeholder="Компания">
+                    <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
+                    <select class="browser-default custom-select border-0 mt-2" id="meet_manager-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        <option value="{{ \App\User::find($task->user_id)->id }}">{{ \App\User::find($task->user_id)->name }}</option>
+                        @foreach(\App\User::all() as $user)
+                            @if($user->id == \App\User::find($task->user_id)->id)
+                                @continue
+                            @endif
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                    <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        @foreach(\App\Status::where('type','meet')->get() as $stat)
+                            @if($task->status_id == $stat->id)
+                                <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
+                                @continue
+                            @endif
+                                <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
+                        @endforeach
+                    </select>
+                    <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
+                </form>
+                <button type="button" class="w-100 sf-light editMeet mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
+
             </div>
+            {{--<div class="modal-footer justify-content-center">--}}
+            {{--</div>--}}
         </div>
     </div>
 </div>

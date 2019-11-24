@@ -26,7 +26,29 @@ class MeetingController extends Controller
     {
         //
     }
+     public function filter(Request $request)
+    {
+//        dd($request->all());
 
+        if($request->status != null && $request->manager != null)
+        {
+            $tasks = Task::where('taskable_type', 'App\Meeting')->where('user_id',$request->manager)->where('status_id',$request->status)->get()->reverse();
+        }
+        elseif($request->status != null)
+        {
+            $tasks = Task::where('taskable_type', 'App\Meeting')->where('status_id',$request->status)->get()->reverse();
+        }
+        elseif($request->manager != null)
+        {
+            $tasks = Task::where('taskable_type', 'App\Meeting')->where('user_id',$request->manager)->get()->reverse();
+        }
+        else
+        {
+            $tasks = Task::where('taskable_type','App\Meeting')->get()->reverse();
+        }
+
+        return view('pages.Meets.meet_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
+    }
     /**
      * Show the form for creating a new resource.
      *

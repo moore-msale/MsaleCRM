@@ -4,8 +4,8 @@
         {
         .modal .modal-full-height
         {
-            width:700px;!important;
-            max-width: 700px;!important;
+            width:360px;!important;
+            max-width: 350px;!important;
         }
         }
 
@@ -16,20 +16,7 @@
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
     <div class="modal-dialog modal-full-height modal-right" role="document">
-        <div class="modal-content px-2 w-50">
-            <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light" style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
-            </div>
-            <div class="modal-body" style="height: 80vh; overflow-y: auto">
-                <div id="history_block-{{ $task->id }}">
-
-                </div>
-
-            </div>
-            {{--<div class="modal-footer justify-content-center">--}}
-            {{--</div>--}}
-        </div>
-        <div class="modal-content px-2 w-50">
+        <div class="modal-content px-2 w-100">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light" id="myModalLabel">+{{ $task->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -39,7 +26,6 @@
             <div class="modal-body">
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" value="potentials" name="type">
                     <input type="text" name="name" id="task_name-{{ $task->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$task->title}}" placeholder="Название">
                     <input type="text" name="deadline_date" id="task_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
                     <select class="browser-default custom-select border-0 mt-2" id="task_manager-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
@@ -66,7 +52,7 @@
                             <option value="{{ $stat->id }}">{{ $stat->name }}</option>
                         @endforeach
                     </select>
-                    <textarea id="task_desc-{{ $task->description }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
+                    <textarea id="task_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>
                 <button type="button" class="w-100 sf-light editTask mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
 

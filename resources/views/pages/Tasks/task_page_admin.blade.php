@@ -106,13 +106,13 @@
                                  <div class="col-2 task-name" style="border-right:1px solid #dedede;">
                                      {{ $task->title }}
                                  </div>
-                                 <div class="col-4 task-company" style="border-right:1px solid #dedede;">
+                                 <div class="col-4 task-desc" style="border-right:1px solid #dedede;">
                                      {{ str_limit($task->description, $limit = 25, $end = '...') }}
                                  </div>
                                  <div class="col-2 task-manager" style="border-right:1px solid #dedede;">
                                      {{ \App\User::find($task->user_id)->name }}
                                  </div>
-                                 <div class="col-2 task-date">
+                                 <div class="col-2 task-deadline">
                                      {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                                  </div>
                                  <div class="col-2 task-status">
@@ -133,7 +133,7 @@
                                      <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
                                      <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
                                          <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTaskAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
-                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">удалить</p>
+                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
                                      </div>
                                  </div>
                              </div>
@@ -266,7 +266,7 @@
             let title = $('#task_name-' + id);
             let desc = $('#task_desc-' + id);
             let date = $('#task_date-' + id);
-            let manage = $('#task_manage-' + id);
+            let manage = $('#task_manager-' + id);
             let status = $('#task_status-' + id);
             if(desc.val() == '')
             {
@@ -285,8 +285,7 @@
                             "status": status.val(),
                             "id": id,
                         },
-                        success: data => {
-                            $('#EditTaskAdmin-' + id).modal('hide');
+                        success: data => {                          
                             Swal.fire({
                                 position: 'top-end',
                                 icon: 'success',
@@ -294,11 +293,22 @@
                                 showConfirmButton: false,
                                 timer: 700
                             });
-                            $('#task-' + id).find('.task-name').html(data.name);
-                            $('#task-' + id).find('.task-company').html(data.company);
-                            $('#task-' + id).find('.task-desc').html(data.description);
-                            $('#task-' + id).find('.task-date').html(data.deadline_date);
+                            console.log(data);
+                            $('#task-' + id).find('.task-name').html(data.task.title);
+                            $('#task-' + id).find('.task-deadline').html(data.deadline_date);
                             $('#task-' + id).find('.task-manager').html(data.user);
+                            if (data.task.description.length > 25)
+                                $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...'); 
+                            else
+                                $('#task-' + id).find('.task-desc').html(data.task.description);
+
+                            if(data.status){
+                                $('#task-' + id).find('.task-status button').html(data.status.name).css("background-color",data.status.color);    
+                            }else{
+                                $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
+                            }
+                            
+
                         },
                         error: () => {
                             console.log(0);

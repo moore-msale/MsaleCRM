@@ -252,7 +252,7 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
                         <input type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2" value="{{ __('НАЧАТь') }}">
                     </div>
                     <div class=" float-right">
-                        <a href="#login" class="haveAccount nav-link pr-0 pl-0" data-toggle="tab" role="tab">есть аккаунта?</a>
+                        <a href="#login" class="haveAccount nav-link pr-0 pl-0" data-toggle="tab" role="tab">есть аккаунт?</a>
                     </div>
                 </div>
             </div>

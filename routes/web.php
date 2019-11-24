@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/balance_change', 'ReportController@balance')->name('balance_change');
     Route::get('/planer','PlanController@planer')->name('planer');
     Route::get('/search_task','AjaxController@searchTask')->name('search_task');
+    Route::get('/search_meet','AjaxController@searchMeet')->name('search_meet');
     Route::get('/search_customer','AjaxController@searchCustomer')->name('search_customer');
     Route::get('/something','AjaxController@something')->name('something');
 
@@ -70,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         return view('pages.Meets.meet_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->where('user_id', auth()->id())->get()->reverse()]);
     });
     Route::post('/task_filter', 'TaskController@filter')->name('task_filter');
+    Route::post('/meet_filter', 'MeetingController@filter')->name('meet_filter');
     Route::post('/customer_filter', 'CustomerController@filter')->name('customer_filter');
     Route::get('/statistic','StatisticController@index')->name('statistic');
     Route::get('/settings','HomeController@settings')->name('settings');

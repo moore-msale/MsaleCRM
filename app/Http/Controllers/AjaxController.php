@@ -12,6 +12,8 @@ class AjaxController extends Controller
     {
         $this->middleware('changeDB');
     } 
+
+
     public function searchTask(Request $request)
     {
         $search = $request->search;
@@ -40,6 +42,27 @@ class AjaxController extends Controller
         ]);
     }
 
+
+     public function searchMeet(Request $request)
+        {
+            $search = $request->search;
+            $result = collect(['Встречи' => Task::where('taskable_type', 'App\Meeting')->where('title', 'like', "%$search%")->get()]);
+
+            $count = count($result);
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'html' => view('_partials.search_result_meet', [
+                        'result' => $result,
+                        'count' => $count,
+                    ])->render(),
+                ]);
+            }
+
+            return view('_partials.search-result', [
+                'result' => $result,
+            ]);
+        }
 
     public function searchCustomer(Request $request)
     {
