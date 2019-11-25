@@ -164,7 +164,6 @@ class AdminController extends Controller
     {
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
-
         $task = Task::find($request->id);
         $customer = $task->taskable;
         $task->title = $request->name;
@@ -172,16 +171,21 @@ class AdminController extends Controller
         $customer->company = $request->company;
         $customer->contacts = $request->contacts;
         $customer->socials = $request->socials;
-        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
-        $request->request->remove('date');
-        $request->merge(['date' => $deadline_date]);
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
+        $task->deadline_date = $deadline_date;
         $task->deadline_date = $request->date;
         $task->description = $request->desc;
         $task->user_id = $request->manager;
         $task->status_id = $request->status;
+
+       /* if($task==$task2 and $customer==$customer2){
+            return response()->json([
+                'status' => "error",
+            ]);
+        }*/
+
         $customer->save();
         $task->save();
-
         $history = new History();
         $history->description = $task->description;
         $history->user_id = Auth::id();
@@ -207,6 +211,8 @@ class AdminController extends Controller
                 'html' => view('history.includes.history', ['customer' => $task])->render(),
                 'user' => User::find($task->user_id)->name,
                 'task' => $task,
+                'task2'=>$task2,
+                'customer2'=>$customer,
             ]);
         }
 

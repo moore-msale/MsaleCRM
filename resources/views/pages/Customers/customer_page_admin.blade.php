@@ -238,19 +238,31 @@
                             "id": id,
                         },
                         success: data => {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Данные изменены!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                            $('#customer-' + id).find('.cust-name').html(data.customer.name);
-                            $('#customer-' + id).find('.cust-company').html(data.customer.company);
-                            $('#customer-' + id).find('.cust-desc').html(data.customer.description);
-                            $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
-                            $('#customer-' + id).find('.cust-manager').html(data.user);
-                            $('#history_block-' + id).html(data.html);
+                            if(data.status == 'success'){
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Данные изменены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                $('#customer-' + id).find('.cust-name').html(data.customer.name);
+                                $('#customer-' + id).find('.cust-company').html(data.customer.company);
+                                $('#customer-' + id).find('.cust-desc').html(data.customer.description);
+                                $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
+                                $('#customer-' + id).find('.cust-manager').html(data.user);
+                                $('#history_block-' + id).html(data.html);
+                                console.log(data);
+                            }else{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'error',
+                                    title: 'Изменение не найдены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
+                            }
                         },
                         error: () => {
                             console.log(0);
