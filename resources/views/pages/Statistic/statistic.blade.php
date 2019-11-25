@@ -156,20 +156,21 @@
                 <p class="statistic-links display-7">общий коэффициент клиентов которые отказались на встрече по всем менеджерам</p>
             </div>
         </div>
-
-        <div class="row content-block-3 mt-3 d-flex justify-content-center sf-medium">
-            <div class="col-4 shadow mr-3 row  pb-4">
-                <div>
+        <div class="row content-block-2 mt-3 d-flex justify-content-center  sf-medium">
+            <div class="col-4 shadow row mr-3">
+                <div class="col pl-0 mt-2 pr-0">
                     <h6 class="mt-1">+ потенциальный прогноз продаж за ноябрь</h6>
                     <p class="statistic-links display-7 mb-1">план расчитывыется исходя из общего числа потенциальных клиентов и суммы</p>
                     <hr class="w-100 pr-1 mb-4 mt-3">
                     <h6 class="statistic-links text-uppercase mt-2 display-6 w-100 h-auto">горячих клиентов</h6>
                     <p class="success-text display-5 mb-0 mt-0 underline"><span class="count">175</span></p>
                     <h6 class="statistic-links text-uppercase mt-2 display-6 w-100">На сумму</h6>
+                    <div style="word-wrap: break-word;">
                     <p class="purple-text display-5 mb-0 underline mt-0"><span class="count">2000000000</span>руб</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-11 shadow w-100 d-flex justify-content-center chart" style="flex: 0 0 74.1%;max-width: none; height: 350px;">
+            <div class="col-12 shadow" style="flex: 0 0 73.599999%;max-width: none; height: 8%;">
                 <canvas id="myChart"></canvas>
             </div>
         </div>
