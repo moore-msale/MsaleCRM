@@ -116,7 +116,7 @@
                 <div class="position-absolute" style="width:10px; height:10px; background-color: #772FD2; top:3%; right:0%; border-radius: 50%;"></div>
                 @endif
                     <div class="col-2 cust-name" style="border-right:1px solid #dedede;">
-                    {{ $customer->title }}
+                    {{ $customer->taskable->name }}
                 </div>
                 <div class="col-2 cust-company" style="border-right:1px solid #dedede;">
                     {{ $customer->taskable->company }}

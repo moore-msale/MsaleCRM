@@ -1172,7 +1172,7 @@
                             "date": date.val(),
                         },
                         success: data => {
-                            $('#addPotencial').modal('hide');
+                            $('#AddPotencial').modal('hide');
                             console.log(data);
                             Swal.fire({
                                 position: 'top-end',
@@ -1190,6 +1190,9 @@
                                     deleteCustomer($(i));
                                 });
                             }
+                            $('#customer_name').val('');
+                            $('#customer_desc').val('');
+                            $('#customer_date').val('');
                         },
                         error: () => {
                             console.log(0);

@@ -101,10 +101,10 @@ class HomeController extends Controller
 
         $penalty = $user->balance;
         $week = Carbon::now()->addWeek()->setTime('23', '59', '59');
-        $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)->where('status_id','!=','1')->get();
+        $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)->where('status_id','==',0)->get();
         if(Auth::user()->role == 'admin')
         {
-            $customers = Task::where('status_id','!=', null)->where('deadline_date', '>=',$today)->where('deadline_date', '<=' ,$tomorrow)->hasMorph(
+            $customers = Task::where('status_id','=', 1)->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();
@@ -117,7 +117,7 @@ class HomeController extends Controller
             )->get();
         }
 
-        $meetings = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)->where('status_id','!=','1')->hasMorph(
+        $meetings = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)->where('status_id','==',0)->hasMorph(
             'taskable',
             'App\Meeting'
         )->get();

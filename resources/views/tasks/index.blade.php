@@ -34,12 +34,12 @@
                 {{--<a href="clearCall" class="text-white sf-bold mb-0 bg-danger px-3 py-3 mx-0">--}}
                     {{--Х--}}
                 {{--</a>--}}
-                <a href="/waitCall" class="text-white sf-bold mb-0 mx-auto d-md-none d-block bg-success px-3 py-3 mx-0">
-                    На перезвон
-                </a>
-                <a href="/notCall" class="text-white sf-bold mb-0 ml-auto d-md-none d-block bg-danger px-3 py-3 mx-0">
-                    Не ответившие
-                </a>
+                {{--<a href="/waitCall" class="text-white sf-bold mb-0 mx-auto d-md-none d-block bg-success px-3 py-3 mx-0">--}}
+                    {{--На перезвон--}}
+                {{--</a>--}}
+                {{--<a href="/notCall" class="text-white sf-bold mb-0 ml-auto d-md-none d-block bg-danger px-3 py-3 mx-0">--}}
+                    {{--Не ответившие--}}
+                {{--</a>--}}
             </div>
             {{--<div class="mt-3 mx-lg-3 mx-0 d-flex align-items-center py-2 px-3"--}}
                  {{--style="border-left:2px solid #3d5afe; box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.15);">--}}
