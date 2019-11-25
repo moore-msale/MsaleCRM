@@ -45,6 +45,8 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-material-datetimepicker.css') }}" />
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <link href="{{ asset('css/Chart.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Chart.min.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
 <body>
@@ -150,7 +152,10 @@ $agent = New \Jenssegers\Agent\Agent();
 
 </script>
 
-
+<script src="{{ asset('js/Chart.js') }}"></script>
+<script src="{{ asset('js/Chart.min.js') }}"></script>
+<script src="{{ asset('js/Chart.bundle.js') }}"></script>
+<script src="{{ asset('js/Chart.bundle.min.js') }}"></script>
     @stack('scripts')
 </body>
 </html>

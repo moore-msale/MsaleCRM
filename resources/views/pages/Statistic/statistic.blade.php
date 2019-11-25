@@ -56,6 +56,13 @@
             font-weight: 300;
             font-size: 12px;
         }
+        .slash{
+            opacity: 0.4;
+            color: #000000;
+            line-height: 1px;
+            font-weight: normal;
+        }
+
     </style>
 @endpush
 @section('content')
@@ -89,41 +96,41 @@
                 </div>
             </div>
         </div>
-       
-       <div class="single-item mt-4 row">
+
+       <div class="single-item mt-2 row">
            <h4 class="sf-medium black-and-bold">+ выполнение еждневного плана</h4>
-       </div>   
+       </div>
 
         <div class="row content-block-1 mt-2 d-flex justify-content-center sf-medium">
             <div class="col-4 shadow row mr-3 p-0" >
                 <div class="col-9 mt-2">
                     <h6 class="statistic-links text-uppercase display-6">Общий план</h6>
-                    <p class="purple-text mb-0">Звонки</p> 
-                    <p class="display-5"><span class="purple-text count">120</span>/<span class="statistic-links count">117</span> </p>
+                    <p class="purple-text mb-0">Звонки</p>
+                    <p class="display-5"><span class="purple-text count">120</span><span class="slash mx-3">/</span><span class="statistic-links count">117</span> </p>
                 </div>
-                <div class="col-6 pl-0 text-center h-100 d-flex align-items-center justify-content-center" style="background: #C4C4C4;">
+                <div class="col-6 pl-0 text-center h-100 d-flex align-items-center justify-content-center" style="background: rgba(196, 195, 195, 0.15);">
                     <div>
-                        <p class="purple-text black-and-bold mb-0">Встречи</p> 
-                        <p class="display-5"><span class="statistic-links count">6</span>/<span class="count purple-text">1</span></p>
+                        <p class="purple-text black-and-bold mb-0">Встречи</p>
+                        <p class="display-5"><span class="statistic-links count">6</span><span class="slash mx-3">/</span><span class="count purple-text">1</span></p>
                     </div>
-                </div>              
+                </div>
             </div>
             <div class="col-4 shadow mr-3 pb-2">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">Встречи выполнены \ назначены</h6>
-                <p class="display-3 mb-0"><span class="statistic-links count">4</span>/<span class="count statistic-links">8</span></p>
-                <a class="statistic-links underline" href="/meetings">перейти во встречи</a>
+                <p class="display-3 mb-0"><span class="count purple-text">4</span><span class="slash mx-3">/</span><span class="count statistic-links">8</span></p>
+                <a class="statistic-links underline" href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/meets_admin' : '/meets' }}">перейти во встречи</a>
             </div>
             <div class="col-4 shadow mr-3">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">Звонков успешных \ неуспешныx</h6>
-                <p class="display-3 mb-0"><span class="count purple-text">112</span>/<span class="statistic-links count">592</span></p>
-                <a class="statistic-links underline" href="/calls">перейти в звонки</a>
+                <p class="display-3 mb-0"><span class="count purple-text">112</span><span class="slash mx-3">/</span><span class="statistic-links count">592</span></p>
+                <a class="statistic-links underline" href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/calls_admin' : '/calls' }}">перейти в звонки</a>
             </div>
             <div class="col-4 shadow">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">+ клиентов / потенциальных</h6>
-                <p class="display-3 mb-0"><span class="count purple-text">15</span>/<span class="success-text count">2</span></p>
-                <a class="statistic-links underline" href="/calls">перейти в клиенты</a>
+                <p class="display-3 mb-0"><span class="count purple-text">15</span><span class="slash mx-3">/</span><span class="success-text count">2</span></p>
+                <a class="statistic-links underline" href="/customer">перейти в клиенты</a>
             </div>
-        </div> 
+        </div>
 
         <div class="row content-block-2 mt-3 d-flex justify-content-center  sf-medium">
             <div class="col-4 shadow row mr-3">
@@ -131,7 +138,7 @@
                     <h6 class="statistic-links text-uppercase display-6">эффективность отдела продаж за ноябрь</h6>
                     <p class="purple-text display-3 mb-0"><span class="count">23</span>%</p>
                     <p class="statistic-links display-7">резултат выведен исходя из общей результативности каждого менеджера и также всех действий</p>
-                </div>                 
+                </div>
             </div>
             <div class="col-4 shadow mr-3">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">эффективность звонков за ноябрь</h6>
@@ -148,22 +155,22 @@
                 <p class="display-3 danger-text mb-0"><span class="count">79</span>%</p>
                 <p class="statistic-links display-7">общий коэффициент клиентов которые отказались на встрече по всем менеджерам</p>
             </div>
-        </div> 
+        </div>
 
         <div class="row content-block-3 mt-3 d-flex justify-content-center sf-medium">
             <div class="col-4 shadow mr-3 row  pb-4">
-                <h6 class="mt-1">+ потенциальный прогноз продаж за ноябрь</h6>
-                <p class="statistic-links display-7 mb-1">план расчитывыется исходя из общего числа потенциальных клиентов и суммы</p>
-                <hr class="w-100 pr-1 mb-2 mt-0">
-                <h6 class="statistic-links text-uppercase mt-2 display-6 w-100">горячих клиентов</h6>
-                <p class="success-text display-5 mb-0"><span class="count">175</span></p> 
-                <h6 class="statistic-links text-uppercase mt-2 display-6 w-100">На сумму</h6>
-                <p class="purple-text display-5 mb-0 underline"><span class="count">2000000000</span>руб</p>      
+                <div>
+                    <h6 class="mt-1">+ потенциальный прогноз продаж за ноябрь</h6>
+                    <p class="statistic-links display-7 mb-1">план расчитывыется исходя из общего числа потенциальных клиентов и суммы</p>
+                    <hr class="w-100 pr-1 mb-4 mt-3">
+                    <h6 class="statistic-links text-uppercase mt-2 display-6 w-100 h-auto">горячих клиентов</h6>
+                    <p class="success-text display-5 mb-0 mt-0 underline"><span class="count">175</span></p>
+                    <h6 class="statistic-links text-uppercase mt-2 display-6 w-100">На сумму</h6>
+                    <p class="purple-text display-5 mb-0 underline mt-0"><span class="count">2000000000</span>руб</p>
+                </div>
             </div>
-            <div class="col-11 shadow w-100 d-flex justify-content-left" style="flex: 0 0 74.1%;max-width: none;">
-                <p class="pr-5">+потенциальные</p>
-                <p class="pr-5">+встречи</p>
-                <p class="pr-5">+звонки</p>
+            <div class="col-11 shadow w-100 d-flex justify-content-center chart" style="flex: 0 0 74.1%;max-width: none; height: 350px;">
+                <canvas id="myChart"></canvas>
             </div>
         </div>
     </div>
@@ -184,6 +191,65 @@
                 easing: 'swing',
                 step: function (now) {
                     $(this).text(Math.ceil(now));
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+                    datasets: [{
+                        label: '+Потенциальные',
+                        data: [1, 19, 10, 7, 5],
+                        borderColor: ['rgb(109, 190, 102)'],
+                        fill: false,
+                        borderWidth: 1
+                    }, {
+                        label: '+Встречи',
+                        data: [1, 20, 15, 2, 3],
+                        borderColor: ['rgb(240, 181, 29)'],
+                        fill: false,
+                        borderWidth: 1
+                    }, {
+                        label: '+Звонки',
+                        data: [1, 2, 10, 17, 30, 25, 35],
+                        borderColor: ['rgb(119, 47, 210)'],
+                        fill: false,
+                        borderWidth: 1
+                    }, {
+                        label: '',
+                        data: [20],
+                        borderColor: ['rgba(255, 255, 255,0.0)'],
+                        fill: false,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 3,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+
+                            }, gridLines: {
+                                display: true,
+                                drawBorder: true,
+                                drawOnChartArea: false,
+                            }
+                        }],
+                        xAxes: [{
+                            gridLines: {
+                                display: true,
+                                drawBorder: true,
+                                drawOnChartArea: false,
+                            }
+                        }]
+                    }
                 }
             });
         });
