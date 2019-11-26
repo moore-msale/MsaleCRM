@@ -12,8 +12,11 @@
             <div class="w-100 p-2 sf-light" style="background: rgba(196,196,196,0.22)">
                 {{$history->description}}
             </div>
-            <div>
+            <div class="d-flex justify-content-between">
+                <div>
                 <img src="{{ asset('images/arrow.svg') }}" alt=""><span class="ml-3 sf-light">{{$history->status}}</span>
+                </div>
+                <span class="sf-light">{{$history->action}}</span>
             </div>
         </div>
     @endforeach

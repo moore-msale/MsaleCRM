@@ -28,18 +28,18 @@
                 <a href="/home" class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ЗВОНКИ
                 </a>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#TaskCreate">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CallCreate">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
                 {{--<a href="clearCall" class="text-white sf-bold mb-0 bg-danger px-3 py-3 mx-0">--}}
                     {{--Х--}}
                 {{--</a>--}}
-                <a href="/waitCall" class="text-white sf-bold mb-0 mx-auto d-md-none d-block bg-success px-3 py-3 mx-0">
-                    На перезвон
-                </a>
-                <a href="/notCall" class="text-white sf-bold mb-0 ml-auto d-md-none d-block bg-danger px-3 py-3 mx-0">
-                    Не ответившие
-                </a>
+                {{--<a href="/waitCall" class="text-white sf-bold mb-0 mx-auto d-md-none d-block bg-success px-3 py-3 mx-0">--}}
+                    {{--На перезвон--}}
+                {{--</a>--}}
+                {{--<a href="/notCall" class="text-white sf-bold mb-0 ml-auto d-md-none d-block bg-danger px-3 py-3 mx-0">--}}
+                    {{--Не ответившие--}}
+                {{--</a>--}}
             </div>
             {{--<div class="mt-3 mx-lg-3 mx-0 d-flex align-items-center py-2 px-3"--}}
                  {{--style="border-left:2px solid #3d5afe; box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.15);">--}}
@@ -68,7 +68,7 @@
                 <p class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ВСТРЕЧИ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#MeetCreate">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CreateMeet">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
             </div>
@@ -93,7 +93,7 @@
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ПОТЕНЦИАЛЬНЫЕ КЛИЕНТЫ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#addPotencial">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#AddPotencial">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
             </div>

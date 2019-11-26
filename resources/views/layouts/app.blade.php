@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
+    <link rel="icon" href="//to-moore.com/images/favicon.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Moore CRM') }}</title>
+    <title>MOORE CRM</title>
 
     <!-- Scripts -->
     <style>
@@ -23,6 +24,17 @@
             background-repeat: no-repeat;
             background-color: white;
             background-position: center;
+        }
+        .backdrop
+        {
+            position: fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index: 99;
+            display: none;
+            background-color: rgba(167, 167, 167, 0.4);
         }
         @media screen and (min-width: 300px) and (max-width: 700px) {
             .preloader
@@ -44,6 +56,7 @@
     <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/bootstrap-material-datetimepicker.css') }}" />
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <link href="{{ asset('css/Chart.css') }}" rel="stylesheet">
     <link href="{{ asset('css/Chart.min.css') }}" rel="stylesheet">
@@ -51,6 +64,7 @@
 </head>
 <body>
 <div class="preloader"></div>
+
 <?php
 $agent = New \Jenssegers\Agent\Agent();
 ?>
@@ -63,6 +77,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         @include('_partials.sidebar')
                     </div>
                     <div class="col-lg-14 col-15 pt-0">
+                        <div class="backdrop"></div>
                         @yield('content')
                     </div>
                 </div>
@@ -70,18 +85,58 @@ $agent = New \Jenssegers\Agent\Agent();
 
         </main>
     </div>
-
+@include('modals.customers.create_client_admin')
+@include('modals.tasks.create_task_admin')
+@include('modals.meets.create_meet_admin')
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
     {{--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>--}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+{{--<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>--}}
 <script>
     function preloader() {
         $('.preloader').fadeOut('slow').delay(10000);
     };
 </script>
+@push('scripts')
+    <script>
+        $('.menu-burger').click( function () {
+            if($('.menu-burger').hasClass('active'))
+            {
+                document.getElementById("mySidenav").style.left = "-500px";
+                $('#mySidenav').hide(100);
+                $('.menu-burger').removeClass('active');
+                $('.backdrop').hide(10);
+            }
+            else
+            {
+                document.getElementById("mySidenav").style.left = "65px";
+                $('#mySidenav').show(100);
+                $('.menu-burger').addClass('active');
+                $('.backdrop').show(10);
+            }
+
+        });
+        $('.backdrop').click( function () {
+            document.getElementById("mySidenav").style.left = "-500px";
+            $('#mySidenav').hide(100);
+            $('.menu-burger').removeClass('active');
+            $('.backdrop').hide(10);
+        });
+        $('.close-menu').click( function () {
+            document.getElementById("mySidenav").style.left = "-500px";
+            $('#mySidenav').hide(100);
+            $('.menu-burger').removeClass('active');
+            $('.backdrop').hide(10);
+        });
+
+        // $('.menu-burger').click( function () {
+        //
+        // });
+    </script>
+@endpush
 <script>
     setTimeout(preloader, 500);
 </script>
@@ -150,6 +205,196 @@ $agent = New \Jenssegers\Agent\Agent();
         });
     });
 
+</script>
+<script>
+    $('.createCustomerAdmin').click(e => {
+        e.preventDefault();
+        let btn = $(e.currentTarget);
+        btn.hide();
+        let title = $('#client_name');
+        let company = $('#client_company');
+        let contacts = $('#client_contacts');
+        let socials = $('#client_socials');
+        let desc = $('#client_desc');
+        let date = $('#client_date');
+        let user = $('#client_manager');
+        let status = $('#client_status');
+        if(desc.val().length < 20)
+        {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+        }
+        else {
+            $.ajax({
+                url: '{{ route('CreateCustomerAdmin') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title": title.val(),
+                    "company": company.val(),
+                    "contacts": contacts.val(),
+                    "socials": socials.val(),
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "user_id": user.val(),
+                    "status": status.val(),
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Задача добавлена!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    btn.show();
+                    $('#client_name').val('');
+                    $('#client_desc').val('');
+                    $('#client_date').val('');
+                    $('#client_contacts').val('');
+                    $('#client_socials').val('');
+                    $('#client_company').val('');
+                },
+                error: () => {
+                    btn.show();
+                    console.log(0);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Произошла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                }
+            })
+        }
+    })
+</script>
+<script>
+    $('.createTaskAdmin').click(e => {
+        e.preventDefault();
+        let btn = $(e.currentTarget);
+        btn.removeClass('createTask');
+        let title = $('#task_name');
+        let desc = $('#task_desc');
+        let date = $('#task_date');
+        let user = $('#task_manager');
+        let status = $('#task_status');
+        let chief = 1;
+
+        if(desc.val().length < 20)
+        {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+        }
+        else {
+            $.ajax({
+                url: '{{ route('task.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title": title.val(),
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "user_id": user.val(),
+                    "status": status.val(),
+                    "chief": chief,
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Задача добавлена!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    btn.addClass('createTask');
+                    $('#task_name').val('');
+                    $('#task_desc').val('');
+                    $('#task_date').val('');
+
+                },
+                error: () => {
+                    console.log(0);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Произошла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                }
+            })
+        }
+    })
+</script>
+<script>
+    $('.createMeetAdmin').click(e => {
+        e.preventDefault();
+        let btn = $(e.currentTarget);
+        btn.hide();
+        let desc = $('#meet_desc');
+        let date = $('#meet_date');
+        let customer = $('#meet_customer');
+
+        if(desc.val().length < 20)
+        {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+
+            });
+            btn.show();
+        }
+        else {
+            $.ajax({
+                url: 'CreateMeetAdmin',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "customer_id": customer.val(),
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Встреча создана!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    $('#meet_date').val('');
+                    $('#meet_desc').val('');
+                    btn.show();
+                },
+                error: () => {
+                    console.log(0);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Произошла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    btn.show();
+                }
+            })
+        }
+    })
 </script>
 
 <script src="{{ asset('js/Chart.js') }}"></script>

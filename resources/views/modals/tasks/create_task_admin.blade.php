@@ -1,55 +1,56 @@
-<div class="modal fade" id="TaskCreate_admin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-danger" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-                <p class="heading lead">Добавить задачу</p>
 
+
+@push('styles')
+    <style>
+        /*@media screen and (min-width: 992px)*/
+        /*{*/
+            /*.modal .modal-full-height*/
+            /*{*/
+                /*width:400px;!important;*/
+                /*max-width: 400px;!important;*/
+            /*}*/
+        /*}*/
+
+    </style>
+@endpush
+<div class="modal fade right" id="CreateTaskAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-full-height modal-right" role="document" style="max-width:400px; width:400px;">
+        <div class="modal-content px-2">
+            <div class="modal-header border-0">
+                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+Добавить задачу</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text">&times;</span>
+                    <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
             </div>
-
-            <!--Body-->
             <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-tasks fa-4x mb-3 animated rotateIn"></i>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" value="tasks" name="type">
-                        <div class="md-form">
-                            <input type="text" name="title" id="taskname2" class="form-control">
-                            <label for="form1">Заголовок</label>
-                        </div>
-                        <div class="md-form">
-                            <textarea id="taskdescription2" name="description" class="form-control md-textarea" rows="3"></textarea>
-                            <label for="description">Описание</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" name="deadline_date" id="taskdate2" class="form-control date-format">
-                            <label for="date">Выберите срок</label>
-                        </div>
-                        <div class="md-form">
-                            <select name="user_id" id="taskuser2" class="browser-default custom-select">
-                                <option value="{{ null }}">Выберите менеджера...</option>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" value="potentials" name="type">
+                    <input type="text" name="name" id="task_name" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название">
+                    <input type="text" name="deadline_date" id="task_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
+                    <select class="browser-default custom-select border-0 mt-2" id="task_manager" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        <option value="null" disabled>Выберите менеджера</option>
+                        @foreach(\App\User::all() as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                    <select class="browser-default custom-select border-0 mt-2" id="task_status" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                            <option value="0">В работе</option>
+                        @foreach(\App\Status::where('type','task')->get() as $stat)
+                            <option value="{{ $stat->id }}">{{ $stat->name }}</option>
+                        @endforeach
+                    </select>
+                    <textarea id="task_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
+                </form>
+                <button type="button" class="w-100 sf-light createTaskAdmin mt-5 space-button">Создать</button>
 
-                                @foreach(\App\User::all()->except(1) as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </form>
-                    <a type="button" class="btn btn-danger addTask2">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
-                </div>
             </div>
-
-
-            {{--<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">No, thanks</a>--}}
+            {{--<div class="modal-footer justify-content-center">--}}
+            {{--</div>--}}
         </div>
-        <!--/.Content-->
     </div>
 </div>
-
 

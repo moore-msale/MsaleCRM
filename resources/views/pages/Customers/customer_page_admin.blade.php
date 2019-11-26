@@ -16,8 +16,8 @@
         <div class="menu-bar">
                 <form class="row" action="{{ route('customer_filter')}}" method="POST"  enctype="multipart/form-data">
                     @csrf
-                    <div class="col-3">
-                        <select name="manager" id="meetingname" class="browser-default custom-select border-0">
+                    <div class="col-2">
+                        <select name="manager" id="meetingname" class="browser-default custom-select border-0 sf-light">
                              <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
                             @if(isset($manager))
                                 <option value="{{ null }}">Все менеджеры</option>
@@ -30,8 +30,8 @@
                              @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
-                        <select name="status" id="meetingname" class="browser-default custom-select border-0">
+                    <div class="col-2">
+                        <select name="status" id="meetingname" class="browser-default custom-select border-0 sf-light   ">
                             @if(isset($status) && $status == 0)
                                 <option value="0">Без статуса</option>
                             @else
@@ -51,14 +51,27 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <button class="new-button">
                             Применить
                         </button>
                     </div>
+                    <div class="col-9 text-right d-flex align-items-center justify-content-end">
+                        <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClientAdmin" style="color:#000000;">
+                            + добавить клиента
+                        </span>
+                            <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTaskAdmin" style="color:#000000;">
+                                + добавить задачу
+                            </span>
+                            <span class="button-create" style="color:#000000;" data-toggle="modal" data-target="#CreateMeetAdmin">
+                                + добавить встречу
+                            </span>
+
+                    </div>
                 </form>
+
             <div class="row pt-4">
-                <div class="col-9">
+                <div class="col-6">
                     <div class="search">
                         <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск по клиентам">
                         <div class="position-relative">
@@ -98,15 +111,18 @@
                 </div>
             </div>
             @foreach($customers as $customer)
-            <div class="row py-2 sf-light" id="customer-{{$customer->id}}">
-                <div class="col-2 cust-name" style="border-right:1px solid #dedede;">
-                    {{ $customer->title }}
+            <div class="row py-2 sf-light position-relative" id="customer-{{$customer->id}}">
+                @if(count($customer->taskable->histories))
+                <div class="position-absolute" style="width:10px; height:10px; background-color: #772FD2; top:3%; right:0%; border-radius: 50%;"></div>
+                @endif
+                    <div class="col-2 cust-name" style="border-right:1px solid #dedede;">
+                    {{ $customer->taskable->name }}
                 </div>
                 <div class="col-2 cust-company" style="border-right:1px solid #dedede;">
                     {{ $customer->taskable->company }}
                 </div>
                 <div class="col-3 cust-desc" style="border-right:1px solid #dedede;">
-                    {{ str_limit($customer->description, $limit = 30, $end = '...') }}
+                    {{ str_limit($customer->description, $limit = 25, $end = '...') }}
                 </div>
                 <div class="col-1 cust-manager" style="border-right:1px solid #dedede;">
                     {{ \App\User::find($customer->user_id)->name }}
@@ -147,6 +163,9 @@
         @include('modals.customers.edit_customer_admin')
         @include('modals.customers.delete_customer_admin')
     @endforeach
+    @include('modals.customers.create_client_admin')
+    @include('modals.tasks.create_task_admin')
+    @include('modals.meets.create_meet_admin')
 @endsection
 
 @push('scripts')
@@ -197,6 +216,78 @@
             }
         });
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script>
             $('.editCustomer').click(e => {
                 e.preventDefault();
@@ -292,7 +383,7 @@
                 },
                 success: data => {
                     Swal.fire({
-                        position: 'center',
+                        position: 'top-end',
                         icon: 'success',
                         title: 'Клиент удален!',
                         showConfirmButton: false,
@@ -304,7 +395,7 @@
                 error: () => {
                     console.log(0);
                     Swal.fire({
-                        position: 'center',
+                        position: 'top-end',
                         icon: 'error',
                         title: 'Произошла ошибка!',
                         showConfirmButton: false,
@@ -315,4 +406,5 @@
 
         })
     </script>
+
 @endpush

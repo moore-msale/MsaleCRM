@@ -472,13 +472,13 @@
             {{--}, 5000);--}}
         {{--</script>--}}
         <script>
-            $('.addTask').click(e => {
+            $('.createTask').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
-                let title = $('#taskname');
-                let desc = $('#taskdescription');
-                let date = $('#taskdate');
-                let user = $('#taskuser');
+                let title = $('#task_name');
+                let desc = $('#task_desc');
+                let date = $('#task_date');
+                let status = $('#task_status');
                 if(desc.val() == '')
                 {
                     swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -492,11 +492,17 @@
                             "title": title.val(),
                             "description": desc.val(),
                             "deadline_date": date.val(),
-                            "user_id": user.val(),
+                            "status": status.val(),
                         },
                         success: data => {
                             $('#TaskCreate').modal('hide');
-                            swal("Задача добавлена!", "Отчет был отправлен", "success");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Задача добавлена!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                             let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                             result.find('.taskDone').each((e,i) => {
                                 doneTask($(i));
@@ -508,9 +514,9 @@
                             result.find('.taskEdit').each((e,i) => {
                                 editTask($(i));
                             });
-                            $('#taskname').val('');
-                            $('#taskdescription').val('');
-                            $('#taskdate').val('');
+                            $('#task_name').val('');
+                            $('#task_desc').val('');
+                            $('#task_date').val('');
 
                         },
                         error: () => {
@@ -522,16 +528,22 @@
             })
         </script>
         <script>
-            $('.addMeeting').click(e => {
+            $('.createMeet').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
-                let id = $('#meetingname');
-                let desc = $('#meetingdescription');
-                let date = $('#meetingdate');
-                let user = $('#meetinguser');
+                let id = $('#meet_name');
+                let desc = $('#meet_desc');
+                let date = $('#meet_date');
+                let user = $('#meet_user');
                 if(desc.val() == '')
                 {
-                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        title: 'Заполните описание, описание должно быть больше 20 символов!',
+                        showConfirmButton: true,
+                        // timer: 700
+                    });
                 }
                 else {
                     $.ajax({
@@ -545,9 +557,15 @@
                             "user_id": user.val(),
                         },
                         success: data => {
-                            $('#MeetCreate').modal('hide');
-                            console.log(data);
-                            swal("Встреча добавлена!", "Отчет был отправлен", "success");
+                            $('#CreateMeetAdmin').modal('hide');
+                            // console.log(data);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Встреча создана!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                             result.find('.meetDone').each((e,i) => {
                                 doneMeet($(i));
@@ -555,17 +573,22 @@
                             result.find('.meetDelete').each((e,i) => {
                                 deleteMeet($(i));
                             });
-
                             result.find('.meetEdit').each((e,i) => {
                                 editMeet($(i));
                             });
-                            $('#meetingname').val('');
-                            $('#meetingdescription').val('');
-                            $('#meetingdate').val('');
+                            $('#meet_name').val('');
+                            $('#meet_desc').val('');
+                            $('#meet_date').val('');
                         },
                         error: () => {
                             console.log(0);
-                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Произошла ошибка!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                         }
                     })
                 }
@@ -1125,12 +1148,18 @@
             $('.addPotencial').click(e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
-                let id = $('#potencialname');
-                let desc = $('#potencialdescription');
-                let date = $('#potencialdate');
+                let id = $('#customer_name');
+                let desc = $('#customer_desc');
+                let date = $('#customer_date');
                 if(desc.val() == '')
                 {
-                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'info',
+                        title: 'Заполните описание, описание должно быть больше 20 символов!',
+                        showConfirmButton: true,
+                        // timer: 700
+                    });
                 }
                 else {
                     $.ajax({
@@ -1143,11 +1172,17 @@
                             "date": date.val(),
                         },
                         success: data => {
-                            $('#addPotencial').modal('hide');
+                            $('#AddPotencial').modal('hide');
                             console.log(data);
-                            swal("Потенциальный клиент добавлен!", "Отчет был отправлен", "success");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Потенциальный клиент добавлен!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                             if (data.view) {
-                                let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                                let result = $('#customers-scroll').prepend(data.view).show('slide', {direction: 'left'}, 400);
                                 result.find('.customerDone').each((e,i) => {
                                     doneCustomer($(i));
                                 });
@@ -1155,10 +1190,19 @@
                                     deleteCustomer($(i));
                                 });
                             }
+                            $('#customer_name').val('');
+                            $('#customer_desc').val('');
+                            $('#customer_date').val('');
                         },
                         error: () => {
                             console.log(0);
-                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Произошла ошибка!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                         }
                     })
                 }

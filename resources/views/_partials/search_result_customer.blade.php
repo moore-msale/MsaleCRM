@@ -22,21 +22,25 @@
                 </span>
                     </div>
                     @foreach($items as $value)
-                        @if(\App\User::find($value->user_id)->role != 'admin')
-                        <div class="nav-link products px-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$value->id}}">
+                        {{--@dd($value->task)--}}
+                        @if(isset($value->task))
+                        @if(\App\User::find($value->task->user_id)->role != 'admin')
+                        <div class="nav-link products px-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$value->task->id}}">
                 <span class="d-flex align-items-center justify-content-between border-bottom pb-2" style="cursor: pointer;">
                     <span class="ml-3">
-                        {{ $value->title }}
+                        {{ $value->task->title }}
                     </span>
                     <span>
-                        {{ $value->description }}
+                        @if(isset($value->task->description))
+                        {{ str_limit($value->task->description, $limit = 15, $end = '...') }}
+                        @endif
                     </span>
                     <span class="mr-3">
-                        {{ \App\User::find($value->user_id)->name }}
+                        {{ \App\User::find($value->task->user_id)->name }}
                     </span>
-                    @if(isset($value->status))
-                        <button style="height:100%; color:white; background: {{ $value->status->color }}; border-radius: 20px; border:0px;">
-                        {{ $value->status->name }}
+                    @if(isset($value->task->status))
+                        <button style="height:100%; color:white; background: {{ $value->task->status->color }}; border-radius: 20px; border:0px;">
+                        {{ $value->task->status->name }}
                     </button>
                     @else
                         <button style="height:100%; color:white; background: #3B79D6; border-radius: 20px; border:0px; padding:0px 15px;">
@@ -45,6 +49,7 @@
                     @endif
                 </span>
                         </div>
+                        @endif
                         @endif
                     @endforeach
                 </div>

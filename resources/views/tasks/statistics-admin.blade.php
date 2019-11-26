@@ -30,25 +30,21 @@
             </div>
         </div>
         <div class="justify-content-end d-flex pr-3" style="width: 55%">
-            <button class="button-new mr-3" data-toggle="modal" data-target="#ClientCreate">
+            <button class="button-new mr-3" data-toggle="modal" data-target="#CreateClientAdmin">
                 + клиент
             </button>
-            <a href="">
-            <button class="button-new mr-3">
+            <button class="button-new mr-3" data-toggle="modal" data-target="#CreateTaskAdmin">
                 + задачу
             </button>
-            </a>
-            <a href="">
-            <button class="button-new">
+            <button class="button-new" data-toggle="modal" data-target="#CreateMeetAdmin">
                 + встречу
             </button>
-            </a>
         </div>
     </div>
     <div class="row justify-content-center pt-3 px-3">
 
         <div class="p-3 " style="width:25%;">
-            <div class="plan-collumn bg-white shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1 ? 'light-green accent-3' : ''}}">
+            <div class="plan-collumn bg-white p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1 ? 'light-green accent-3' : ''}}" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);">
                 <div class="stats-title sf-bold  text-uppercase mb-0" style="opacity: 0.2;">
                     План на день
                 </div>
@@ -75,7 +71,7 @@
             </div>
         </div>
         <div class="p-3" style="width:25%;">
-            <div class="plan-collumn bg-white shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1  ? 'light-green accent-3' : ''}}">
+            <div class="plan-collumn bg-white p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1  ? 'light-green accent-3' : ''}}" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);">
                 <div class="stats-title sf-bold  text-uppercase mb-0" style="opacity: 0.4;">
                     Выполненных встреч
                 </div>
@@ -85,7 +81,7 @@
             </div>
         </div>
         <div class="p-3" style="width:25%;">
-            <div class="plan-collumn bg-white shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1  ? 'light-green accent-3' : ''}}">
+            <div class="plan-collumn bg-white p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1  ? 'light-green accent-3' : ''}}" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);">
                 <div class="stats-title sf-bold  text-uppercase mb-0" style="opacity: 0.4;">
                     Выполненных звонков
                 </div>
@@ -95,7 +91,7 @@
             </div>
         </div>
         <div class="p-3" style="width:25%;">
-            <div class="plan-collumn bg-white shadow p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1  ? 'light-green accent-3' : ''}}">
+            <div class="plan-collumn bg-white p-3 h-100 {{ $plan->status == 1 && auth()->id() != 1  ? 'light-green accent-3' : ''}}" style="box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);">
                 <div class="stats-title sf-bold  text-uppercase mb-0" style="opacity: 0.4;">
                     Добавленно клиентов
                 </div>

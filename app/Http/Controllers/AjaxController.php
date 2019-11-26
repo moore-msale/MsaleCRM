@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\Task;
 use App\User;
 use Illuminate\Http\Request;
@@ -67,7 +68,7 @@ class AjaxController extends Controller
     public function searchCustomer(Request $request)
     {
         $search = $request->search;
-        $result = collect(['Клиенты' => Task::where('taskable_type', 'App\Customer')->where('title', 'like', "%$search%")->get()]);
+        $result = collect(['Клиенты' => Customer::where('name', 'like', "%$search%")->get()]);
 
         $count = count($result);
 

@@ -75,7 +75,11 @@ class TaskController extends Controller
         $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
         $request->request->remove('deadline_date');
         $request->merge(['deadline_date' => $deadline_date]);
+
         $task = Task::create($request->all());
+        $task->status_id = $request->status;
+        $task->user_id = Auth::id();
+        $task->save();
 
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();

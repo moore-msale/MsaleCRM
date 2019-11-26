@@ -85,14 +85,17 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     //admin routes
+    Route::post('/CreateTaskAdmin', 'AdminController@create_task')->name('CreateTaskAdmin');
     Route::post('/DoneTaskAdmin', 'AdminController@done_task')->name('DoneTaskAdmin');
     Route::post('/DeleteTaskAdmin', 'AdminController@delete_task')->name('DeleteTaskAdmin');
     Route::post('/EditTaskAdmin', 'AdminController@edit_task')->name('EditTaskAdmin');
 
+    Route::post('/CreateMeetAdmin', 'AdminController@create_meet')->name('CreateMeetAdmin');
     Route::post('/DoneMeetAdmin', 'AdminController@done_meet')->name('DoneMeetAdmin');
     Route::post('/DeleteMeetAdmin', 'AdminController@delete_meet')->name('DeleteMeetAdmin');
     Route::post('/EditMeetAdmin', 'AdminController@edit_meet')->name('EditMeetAdmin');
 
+    Route::post('/CreateCustomerAdmin', 'AdminController@create_customer')->name('CreateCustomerAdmin');
     Route::post('/DoneCustomerAdmin', 'AdminController@done_customer')->name('DoneCustomerAdmin');
     Route::post('/DeleteCustomerAdmin', 'AdminController@delete_customer')->name('DeleteCustomerAdmin');
     Route::post('/EditCustomerAdmin', 'AdminController@edit_customer')->name('EditCustomerAdmin');
