@@ -11,13 +11,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use function DeepCopy\deep_copy;
 
 class TaskController extends Controller
 {
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -71,7 +72,7 @@ class TaskController extends Controller
     {
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
-        
+
         $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
         $request->request->remove('deadline_date');
         $request->merge(['deadline_date' => $deadline_date]);
@@ -115,7 +116,7 @@ class TaskController extends Controller
             $task->chief = 1;
             $task->save();
         }
-        
+
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -167,14 +168,22 @@ class TaskController extends Controller
 
 
         $task = Task::find($request->id);
+        $task2 = deep_copy($task);
         $task->title = $request->title;
         $task->description = $request->desc;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
+        $task->status_id = $request->status;
+        if($task==$task2){
+            return response()->json([
+                'status' => "error",
+                'task2'=>$task2,
+                'task'=>$task,
+            ]);
+        }
         $task->save();
-
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['task_update'])) {
@@ -213,7 +222,9 @@ class TaskController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $task
+                'task' => $task,
+                'status_id'=>$task->status,
+                'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
             ]);
         }
 

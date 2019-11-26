@@ -592,62 +592,62 @@
                 {{--// }--}}
             {{--}, 5000);--}}
         {{--</script>--}}
-        <script>
-            $('.createTask').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let title = $('#task_name');
-                let desc = $('#task_desc');
-                let date = $('#task_date');
-                let status = $('#task_status');
-                if(desc.val() == '')
-                {
-                    swal("Заполните описание!","Поле описание стало обязательным","error");
-                }
-                else {
-                    $.ajax({
-                        url: '{{ route('task.store') }}',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "title": title.val(),
-                            "description": desc.val(),
-                            "deadline_date": date.val(),
-                            "status": status.val(),
-                        },
-                        success: data => {
-                            $('#TaskCreate').modal('hide');
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Задача добавлена!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                            let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                            result.find('.taskDone').each((e,i) => {
-                                doneTask($(i));
-                            });
-                            result.find('.taskDelete').each((e,i) => {
-                                deleteTask($(i));
-                            });
+            <script>
+                $('.createTask').click(e => {
+                    e.preventDefault();
+                    let btn = $(e.currentTarget);
+                    let title = $('#task_name');
+                    let desc = $('#task_desc');
+                    let date = $('#task_date');
+                    let status = $('#task_status');
+                    if(desc.val() == '')
+                    {
+                        swal("Заполните описание!","Поле описание стало обязательным","error");
+                    }
+                    else {
+                        $.ajax({
+                            url: '{{ route('task.store') }}',
+                            method: 'POST',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "title": title.val(),
+                                "description": desc.val(),
+                                "deadline_date": date.val(),
+                                "status": status.val(),
+                            },
+                            success: data => {
+                                $('#TaskCreate').modal('hide');
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Задача добавлена!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                                result.find('.taskDone').each((e,i) => {
+                                    doneTask($(i));
+                                });
+                                result.find('.taskDelete').each((e,i) => {
+                                    deleteTask($(i));
+                                });
 
-                            result.find('.taskEdit').each((e,i) => {
-                                editTask($(i));
-                            });
-                            $('#task_name').val('');
-                            $('#task_desc').val('');
-                            $('#task_date').val('');
+                                result.find('.taskEdit').each((e,i) => {
+                                    editTask($(i));
+                                });
+                                $('#task_name').val('');
+                                $('#task_desc').val('');
+                                $('#task_date').val('');
 
-                        },
-                        error: () => {
-                            console.log(0);
-                            swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
-                        }
-                    })
-                }
-            })
-        </script>
+                            },
+                            error: () => {
+                                console.log(0);
+                                swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                            }
+                        })
+                    }
+                })
+            </script>
         <script>
             $('.createMeet').click(e => {
                 e.preventDefault();

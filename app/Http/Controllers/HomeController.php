@@ -111,7 +111,7 @@ class HomeController extends Controller
         }
         else
         {
-            $customers = Task::where('user_id',auth()->id())->hasMorph(
+            $customers = Task::where('user_id',auth()->id())->where('status_id','!=', 0)->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();

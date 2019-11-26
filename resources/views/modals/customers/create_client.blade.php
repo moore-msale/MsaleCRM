@@ -1,56 +1,53 @@
-<div class="modal fade" id="ClientCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-notify modal-success" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-                <p class="heading lead">Добавить клиента</p>
 
+
+@push('styles')
+    <style>
+        /*@media screen and (min-width: 992px)*/
+        /*{*/
+        /*.modal .modal-full-height*/
+        /*{*/
+        /*width:400px;!important;*/
+        /*max-width: 400px;!important;*/
+        /*}*/
+        /*}*/
+
+    </style>
+@endpush
+<div class="modal fade right" id="CreateClient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-full-height modal-right" role="document" style="max-width:400px; width:400px;">
+        <div class="modal-content px-2">
+            <div class="modal-header border-0">
+                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+Добавить клиента</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text">&times;</span>
+                    <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
             </div>
-
-            <!--Body-->
             <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-user-friends fa-4x animated rotateIn"></i>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" value="potentials" name="type">
-                        <div class="md-form">
-                            <input type="text" name="name" id="client_name1" class="form-control">
-                            <label for="client_name1">ФИО</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" id="client_phone1" name="phone" class="form-control">
-                            <label for="client_phone1">Номер телефона</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" id="client_company1" name="company" class="form-control">
-                            <label for="client_company1">Компания</label>
-                        </div>
-                        <div class="md-form">
-                            <input type="text" id="client_social1" name="social" class="form-control">
-                            <label for="client_social1">Сайт или соц.сети</label>
-                        </div>
-                        <div class="md-form">
-                            <textarea id="client_desc1" name="description" class="form-control md-textarea" rows="3"></textarea>
-                            <label for="client_desc1">Описание</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="client_status1">
-                            <label class="custom-control-label" for="client_status1">Потенциальный клиент?</label>
-                        </div>
-                    </form>
-                    <a type="button" class="btn btn-success addClient1">Добавить<i class="fas fa-check ml-1 text-white"></i></a>
-                </div>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" value="potentials" name="type">
+                    <input type="text" name="name" id="client_name" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите Имя">
+                    <input type="text" name="company" id="client_company" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название Компании">
+                    <input type="text" name="contacts" id="client_contacts" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите контакты Компании">
+                    <input type="text" name="socials" id="client_socials" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите соц.сети Компании">
+                    <input type="text" name="deadline_date" id="task_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
+                    <select class="browser-default custom-select border-0 mt-2" id="client_status" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        <option value="0">В работе</option>
+                        @foreach(\App\Status::where('type','customer')->get() as $stat)
+                            <option value="{{ $stat->id }}">{{ $stat->name }}</option>
+                        @endforeach
+                    </select>
+                    <textarea id="client_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
+                </form>
+                <button type="button" class="w-100 sf-light createCustomerAdmin mt-5 space-button">Создать</button>
+
             </div>
-
-
-            {{--<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">No, thanks</a>--}}
+            {{--<div class="modal-footer justify-content-center">--}}
+            {{--</div>--}}
         </div>
-        <!--/.Content-->
     </div>
 </div>
+

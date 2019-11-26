@@ -252,14 +252,23 @@ class AdminController extends Controller
     {
         $task = Task::find($request->id);
         $customer = $task->taskable;
-
+        $id = $customer->id;
+        if(auth()->user()->role != 'admin'){
+            $task->status_id = 0;
+            $task->save();
+            if ($request->ajax()){
+                return response()->json([
+                    'status' => "success",
+                    'id'=>$id,
+                ]);
+            }
+        }
         $histories = History::where('customer_id', $customer->id)->get();
-
         foreach ($histories as $history)
         {
             $history->delete();
         }
-        $id = $customer->id;
+
         $task->delete();
         $customer->delete();
 

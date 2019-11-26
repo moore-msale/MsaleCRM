@@ -18,7 +18,7 @@
         <div class="menu-bar">
                 <form class="row" action="{{ route('meet_filter')}}" method="POST"  enctype="multipart/form-data">
                     @csrf
-                    <div class="col-3">
+                    <div class="col-2">
                         <select name="manager" id="meetingname" class="browser-default custom-select border-0">
                              <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
                             @if(isset($manager))
@@ -32,7 +32,7 @@
                              @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <select name="status" id="meetingname" class="browser-default custom-select border-0">
                             @if(isset($status) && $status == 0)
                                 <option value="0">Без встреч</option>
@@ -52,14 +52,25 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <button class="new-button">
                             Применить
                         </button>
                     </div>
+                    <div class="col-9 text-right d-flex align-items-center justify-content-end">
+                        <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClientAdmin" style="color:#000000;">
+                            + добавить клиента
+                        </span>
+                        <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTaskAdmin" style="color:#000000;">
+                            + добавить задачу
+                        </span>
+                        <span class="button-create" style="color:#000000;" data-toggle="modal" data-target="#CreateMeetAdmin">
+                            + добавить встречу
+                        </span>
+                    </div>
                 </form>
             <div class="row pt-4">
-                <div class="col-9">
+                <div class="col-6">
                     <div class="search">
                         <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск среди задач">
                         <div class="position-relative">

@@ -34,7 +34,7 @@ class   CustomerController extends Controller
         }
         else
         {
-        $customers = Task::all()->hasMorph(
+        $customers = Task::where('user_id',auth()->id())->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();
