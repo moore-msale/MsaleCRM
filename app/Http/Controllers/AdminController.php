@@ -8,6 +8,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use function DeepCopy\deep_copy;
 
 class AdminController extends Controller
 {
@@ -117,12 +118,20 @@ class AdminController extends Controller
     public function edit_meet(Request $request)
     {
         $task = Task::find($request->id);
+        $task2 = deep_copy($task);
         $task->title = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
         $task->status_id = $request->status;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
+        if($task==$task2){
+            return response()->json([
+                'status' => "error",
+                'task2'=>$task2,
+                'task'=>$task,
+            ]);
+        }
         $task->save();
         if ($request->ajax()){
             return response()->json([
@@ -166,6 +175,8 @@ class AdminController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
         $task = Task::find($request->id);
         $customer = $task->taskable;
+        $task2 = deep_copy($task);
+        $customer2 = deep_copy($customer);
         $task->title = $request->name;
         $customer->name = $request->name;
         $customer->company = $request->company;
@@ -173,19 +184,22 @@ class AdminController extends Controller
         $customer->socials = $request->socials;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
-        $task->deadline_date = $request->date;
         $task->description = $request->desc;
         $task->user_id = $request->manager;
         $task->status_id = $request->status;
-
-       /* if($task==$task2 and $customer==$customer2){
-            return response()->json([
-                'status' => "error",
-            ]);
-        }*/
-
+        $contacts = $request->contacts;
+        $socials = $request->soocials;
         $customer->save();
         $task->save();
+        if($customer==$customer2 and  $task==$task2){
+            return response()->json([
+                'status' => "error",
+                'task'=>$task,
+                'task2'=>$task2,
+                'customer'=> $contacts,
+                'customer2'=>$socials,
+            ]);
+        }
         $history = new History();
         $history->description = $task->description;
         $history->user_id = Auth::id();
@@ -207,12 +221,10 @@ class AdminController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'customer' => $customer,
                 'html' => view('history.includes.history', ['customer' => $task])->render(),
                 'user' => User::find($task->user_id)->name,
                 'task' => $task,
-                'task2'=>$task2,
-                'customer2'=>$customer,
+                'customer' => $customer,
             ]);
         }
 

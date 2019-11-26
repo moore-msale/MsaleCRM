@@ -256,7 +256,7 @@
                             }else{
                                 Swal.fire({
                                     position: 'top-end',
-                                    icon: 'error',
+                                    icon: 'info',
                                     title: 'Изменение не найдены!',
                                     showConfirmButton: false,
                                     timer: 700

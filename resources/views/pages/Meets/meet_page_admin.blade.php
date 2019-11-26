@@ -187,7 +187,6 @@
             }
         });
     </script>
-    </script>
     <script>
         $('.deleteMeet').click(e => {
             e.preventDefault();
@@ -249,30 +248,39 @@
                             "status": status.val(),
                             "id": id,
                         },
-                        success: data => {                          
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Данные изменены!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                            console.log(data);
-                            $('#meet-' + id).find('.meet-name').html(data.meet.title);
-                            $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
-                            $('#meet-' + id).find('.meet-manager').html(data.user);
-                            if (data.meet.description.length > 25)
-                              $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...'); 
-                           else
-                              $('#meet-' + id).find('.meet-desc').html(data.meet.description);
+                        success: data => {
+                            if(data.status == "success"){
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Данные изменены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
+                                $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                                $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
+                                $('#meet-' + id).find('.meet-manager').html(data.user);
+                                if (data.meet.description.length > 25)
+                                    $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
+                                else
+                                    $('#meet-' + id).find('.meet-desc').html(data.meet.description);
 
-                            if(data.status){
-                                $('#meet-' + id).find('.meet-status button').html(data.status.name).css("background-color",data.status.color);    
-                            }else{
-                                $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                                if(data.status){
+                                    $('#meet-' + id).find('.meet-status button').html(data.status.name).css("background-color",data.status.color);
+                                }else{
+                                    $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                                }
+                            } else{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'info',
+                                    title: 'Изменение не найдены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
                             }
-                            
-
                         },
                         error: () => {
                             console.log(0);
