@@ -259,13 +259,14 @@ class AdminController extends Controller
         {
             $history->delete();
         }
-
+        $id = $customer->id;
         $task->delete();
         $customer->delete();
 
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
+                'id'=>$id,
             ]);
         }
     }
@@ -283,24 +284,18 @@ class AdminController extends Controller
         $task->title = $request->name;
         $customer->name = $request->name;
         $customer->company = $request->company;
-        $customer->contacts = $request->contacts;
-        $customer->socials = $request->socials;
+        $customer->contacts = $request->phone;
+        $customer->socials = $request->social;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
         $task->description = $request->desc;
         $task->user_id = $request->manager;
         $task->status_id = $request->status;
-        $contacts = $request->contacts;
-        $socials = $request->soocials;
         $customer->save();
         $task->save();
         if($customer==$customer2 and  $task==$task2){
             return response()->json([
                 'status' => "error",
-                'task'=>$task,
-                'task2'=>$task2,
-                'customer'=> $contacts,
-                'customer2'=>$socials,
             ]);
         }
         $history = new History();
@@ -319,8 +314,10 @@ class AdminController extends Controller
         $history->date = Carbon::now();
         $history->save();
         $date = Carbon::parse($task->deadline_date)->format('M d - H:i');
+        $date1 = Carbon::parse($task->deadline_date)->format('d M');
 //        $html = view('history.includes.history')->render();
 //        dd($html);
+        $date2 = Carbon::parse($task->deadline_date)->format('H:i');
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -329,6 +326,8 @@ class AdminController extends Controller
                 'user' => User::find($task->user_id)->name,
                 'task' => $task,
                 'date' => $date,
+                'date1' => $date1,
+                'date2'=>$date2,
             ]);
         }
 

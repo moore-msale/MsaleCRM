@@ -50,6 +50,10 @@
         @include('modals.customers.add_customer')
         @include('modals.customers.add_potencial')
     @endif
+    @foreach(\App\Task::where('taskable_type','App\Customer')->get() as $customer)
+        @include('modals.customers.edit_customer_admin')
+        @include('modals.customers.delete_customer_admin')
+    @endforeach
     @include('modals.customers.create_client')
     @include('modals.tasks.create_task_admin')
 @endsection
@@ -68,6 +72,123 @@
 
 
     {{--</script>--}}
+    <script>
+        $('.deleteCustomer').click(e => {
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            $.ajax({
+                url: 'DeleteCustomerAdmin',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Клиент удален!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    $('#DeleteCustomer-' + id).modal('hide');
+                    $('#customer-' + id).remove();
+                },
+                error: () => {
+                    console.log(0);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Произошла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                }
+            })
+
+        })
+    </script>
+    <script>
+        $('.editCustomer').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let date = $('#client_date-' + id);
+            let name = $('#client_name-' + id);
+            let company = $('#client_company-' + id);
+            let phone = $('#client_phone-' + id);
+            let social = $('#client_social-' + id);
+            let manager = $('#client_manager-' + id);
+            let status = $('#client_status-' + id);
+            let desc = $('#client_desc-' + id);
+
+            if(desc.val().length < 20)
+            {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Заполните описание, описание должно быть больше 20 символов!',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else {
+                $.ajax({
+                    url: 'EditCustomerAdmin',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "date": date.val(),
+                        "name": name.val(),
+                        "company": company.val(),
+                        "phone": phone.val(),
+                        "social": social.val(),
+                        "manager": manager.val(),
+                        "status": status.val(),
+                        "desc": desc.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        if(data.status == 'success'){
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Данные изменены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            $('#customer-' + id).find('.cust-name').html(data.customer.name);
+                            $('#customer-' + id).find('.cust-company').html(data.customer.company);
+                            $('#customer-' + id).find('.cust-date1').html(data.date1);
+                            $('#customer-' + id).find('.cust-date2').html(data.date2);
+                            $('#history_block-' + id).html(data.html);
+                            console.log(data);
+                        }else{
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'info',
+                                title: 'Изменение не найдены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            console.log(data);
+                        }
+                    },
+                    error: () => {
+                        console.log(0);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Произошла ошибка!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }
+                })
+            }
+
+        })
+    </script>
     <script>
         $('.addClient1').click(e => {
             e.preventDefault();
@@ -756,7 +877,7 @@
                 }
 
 
-                })    
+                })
             }
         </script>
         <script>
@@ -841,7 +962,7 @@
                     })
                 }
                 })
-            }      
+            }
         </script>
         <script>
             function deleteMeet(){

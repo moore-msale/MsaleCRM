@@ -1,7 +1,7 @@
-<div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative potencial-show" id="customer-{{$customer->taskable->id}}" >
+<div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative " id="customer-{{$customer->id}}" >
     {{--<div class="position-absolute bg-danger"--}}
     {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
-    <div class="cust-company pb-1 position-relative" style="border-bottom:1px solid rgba(0,0,0,0.2);">
+    <div class="pb-1 position-relative" style="border-bottom:1px solid rgba(0,0,0,0.2);">
         <img src="{{ asset('images/company.svg') }}" alt=""><span class="ml-2 font-weight-bold cust-company"> {{ $customer->taskable->company }} </span>
         {{--<i class="fas fa-ellipsis-v position-absolute" style="color:#C4C4C4; top:0%;right:0%;"></i>--}}
         <div class="btn-group dropleft col-1 position-absolute" style="top:0%; right:0%;">

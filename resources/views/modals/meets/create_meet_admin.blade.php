@@ -31,9 +31,12 @@
                     <input type="hidden" value="potentials" name="type">
                     <input type="text" name="deadline_date" id="meet_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
                     <select class="browser-default custom-select border-0 mt-2 sf-light" id="meet_customer" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        <option value="null" disabled>Выберите клиента</option>
-                        @foreach(\App\Task::where('taskable_type','App\Customer')->get() as $cust)
-                            <option value="{{ $cust->id }}">{{ $cust->taskable->name }} - {{ $cust->taskable->company }} - менеджер: {{ \App\User::find($cust->user_id)->name }}</option>
+                        <option value="null">Выберите клиента</option>
+                        @foreach(\App\Customer::all() as $customer)
+                            @if(!empty(\App\Task::where('taskable_id',$customer->id)->where('taskable_type','App\Customer')->first()))
+                                @continue
+                            @endif
+                            <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->company }}</option>
                         @endforeach
                     </select>
                     <textarea id="meet_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>

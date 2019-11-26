@@ -56,7 +56,7 @@
 <div class="modal fade right" id="CreateMeet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
 
-    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
+    <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $customer -->
     <div class="modal-dialog modal-full-height modal-right" role="document">
         <div class="modal-content px-2">
             <div class="modal-header border-0">
@@ -73,10 +73,11 @@
                     <input type="text" name="deadline_date" id="meet_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
                     <select class="browser-default custom-select border-0 mt-2 sf-light" id="meet_name" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{null}}">Выберите клиента...</option>
-                        @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $customer)
-                            @if($customer->user_id == auth()->id())
-                                <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }} - {{ $customer->taskable->company }}</option>
+                        @foreach(\App\Customer::all() as $customer)
+                            @if(!empty(\App\Task::where('taskable_id',$customer->id)->where('taskable_type','App\Customer')->first()))
+                                @continue
                             @endif
+                            <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->company }}</option>
                         @endforeach
                     </select>
                     <textarea id="meet_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
