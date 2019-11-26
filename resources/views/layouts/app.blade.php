@@ -210,7 +210,6 @@ $agent = New \Jenssegers\Agent\Agent();
     $('.createCustomerAdmin').click(e => {
         e.preventDefault();
         let btn = $(e.currentTarget);
-        btn.hide();
         let title = $('#client_name');
         let company = $('#client_company');
         let contacts = $('#client_contacts');
@@ -248,11 +247,11 @@ $agent = New \Jenssegers\Agent\Agent();
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Задача добавлена!',
+                        title: 'Клиент добавлен!',
                         showConfirmButton: false,
                         timer: 700
                     });
-                    btn.show();
+                    $('#createClientAdmin').modal('hide');
                     $('#client_name').val('');
                     $('#client_desc').val('');
                     $('#client_date').val('');
@@ -261,7 +260,6 @@ $agent = New \Jenssegers\Agent\Agent();
                     $('#client_company').val('');
                 },
                 error: () => {
-                    btn.show();
                     console.log(0);
                     Swal.fire({
                         position: 'top-end',
@@ -286,7 +284,6 @@ $agent = New \Jenssegers\Agent\Agent();
         let user = $('#task_manager');
         let status = $('#task_status');
         let chief = 1;
-
         if(desc.val().length < 20)
         {
             Swal.fire({

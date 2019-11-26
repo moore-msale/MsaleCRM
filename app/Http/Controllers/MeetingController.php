@@ -183,6 +183,7 @@ class MeetingController extends Controller
 
         $meeting = Meeting::find($request->id);
         $task = $meeting->task;
+    
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);

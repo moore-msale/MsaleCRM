@@ -3,7 +3,7 @@
     {{--<div class="position-absolute bg-danger"--}}
     {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
     <div class="pb-1 position-relative" style="border-bottom:1px solid rgba(0,0,0,0.2);">
-       <span class="sf-medium task-desc"> {{ $task->description }} </span>
+       <span class="sf-medium task-desc" style="word-break: break-all;"> {{ $task->description }} </span>
         <i class="fas fa-ellipsis-v position-absolute" style="color:#C4C4C4; top:0%;right:0%;"></i>
     </div>
     <div class="d-flex mt-2">

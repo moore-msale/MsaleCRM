@@ -278,7 +278,7 @@
                                     $('#meet-' + id).find('.meet-desc').html(data.meet.description);
 
                                 if(data.status){
-                                    $('#meet-' + id).find('.meet-status button').html(data.status.name).css("background-color",data.status.color);
+                                    $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
                                 }else{
                                     $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
                                 }

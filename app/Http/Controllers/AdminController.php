@@ -78,12 +78,18 @@ class AdminController extends Controller
     public function edit_task(Request $request)
     {
         $task = Task::find($request->id);
+        $task2 = deep_copy($task);
         $task->title = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
-        $task->status_id = $request->status;
+        $task->status_id = $request->status;    
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
+        if($task == $task2){
+            return response()->json([
+                'status' => "error",
+            ]);
+        }
         $task->save();
         if ($request->ajax()){
             return response()->json([
@@ -91,7 +97,7 @@ class AdminController extends Controller
                 'task' => $task,
                 'user' => User::find($task->user_id)->name,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
-                'status'=>$task->status,
+                'status_id'=>$task->status,
             ]);
         }
 
@@ -181,11 +187,9 @@ class AdminController extends Controller
         $task->status_id = $request->status;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
-        if($task==$task2){
+        if($task == $task2){
             return response()->json([
                 'status' => "error",
-                'task2'=>$task2,
-                'task'=>$task,
             ]);
         }
         $task->save();
@@ -195,7 +199,7 @@ class AdminController extends Controller
                 'meet' => $task,
                 'user' => User::find($task->user_id)->name,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
-                'status'=>$task->status,
+                'status_id'=>$task->status,
             ]);
         }
 
@@ -300,13 +304,13 @@ class AdminController extends Controller
         $task->description = $request->desc;
         $task->user_id = $request->manager;
         $task->status_id = $request->status;
-        $customer->save();
-        $task->save();
         if($customer==$customer2 and  $task==$task2){
             return response()->json([
                 'status' => "error",
             ]);
         }
+        $customer->save();
+        $task->save();
         $history = new History();
         $history->description = $task->description;
         $history->user_id = Auth::id();

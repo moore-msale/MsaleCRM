@@ -18,7 +18,7 @@
         <div class="menu-bar">
                 <form class="row" action="{{ route('task_filter')}}" method="POST"  enctype="multipart/form-data">
                     @csrf
-                    <div class="col-3">
+                    <div class="col-2">
                         <select name="manager" id="meetingname" class="browser-default custom-select border-0">
                              <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
                             @if(isset($manager))
@@ -32,7 +32,7 @@
                              @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <select name="status" id="meetingname" class="browser-default custom-select border-0">
                             @if(isset($status) && $status == 0)
                                 <option value="0">Без статуса</option>
@@ -52,14 +52,25 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <button class="new-button">
                             Применить
                         </button>
                     </div>
+                    <div class="col-9 text-right d-flex align-items-center justify-content-end">
+                    <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClientAdmin" style="color:#000000;">
+                        + добавить клиента
+                    </span>
+                    <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTaskAdmin" style="color:#000000;">
+                        + добавить задачу
+                    </span>
+                    <span class="button-create" data-toggle="modal" data-target="#CreateMeetAdmin" style="color:#000000;">
+                        + добавить встречу
+                    </span>
+                </div>
                 </form>
             <div class="row pt-4">
-                <div class="col-9">
+                <div class="col-6">
                     <div class="search">
                         <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск среди задач">
                         <div class="position-relative">
@@ -99,45 +110,45 @@
 
              @foreach($tasks as $task)
                  @if(\App\User::find($task->user_id)->role = 'admin')
-                     <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}" style="border: 0.5px solid rgba(255, 0, 0, 0.5)!important;">
-                         @else
-                             <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
-                                 @endif
-                                 <div class="col-2 task-name" style="border-right:1px solid #dedede;">
-                                     {{ $task->title }}
-                                 </div>
-                                 <div class="col-4 task-desc" style="border-right:1px solid #dedede;">
-                                     {{ str_limit($task->description, $limit = 25, $end = '...') }}
-                                 </div>
-                                 <div class="col-2 task-manager" style="border-right:1px solid #dedede;">
-                                     {{ \App\User::find($task->user_id)->name }}
-                                 </div>
-                                 <div class="col-2 task-deadline">
-                                     {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
-                                 </div>
-                                 <div class="col-2 task-status">
-                                     @if(isset($task->status))
-                                         <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
-                                             {{ $task->status->name }}
-                                         </button>
-                                     @else
-                                         <button style="width:100%; height:100%; color:white; background: #3B79D6; border-radius: 20px; border:0px;" disabled>
-                                             В работе
-                                         </button>
-                                     @endif
-                                 </div>
-                                 <div class="col-2 task-date">
-                                     {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
-                                 </div>
-                                 <div class="btn-group dropleft col-1">
-                                     <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
-                                     <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
-                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTaskAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
-                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
-                                     </div>
-                                 </div>
-                             </div>
-                             @endforeach
+                    <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}" style="border: 0.5px solid rgba(255, 0, 0, 0.5)!important;">
+                 @else
+                    <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
+                @endif
+                <div class="col-2 task-name" style="border-right:1px solid #dedede;">
+                    {{ $task->title }}
+                </div>
+                <div class="col-4 task-desc" style="border-right:1px solid #dedede;">
+                    {{ str_limit($task->description, $limit = 25, $end = '...') }}
+                </div>
+                <div class="col-2 task-manager" style="border-right:1px solid #dedede;">
+                    {{ \App\User::find($task->user_id)->name }}
+                </div>
+                <div class="col-2 task-deadline">
+                    {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
+                </div>
+                <div class="col-2 task-status">
+                    @if(isset($task->status))
+                        <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
+                            {{ $task->status->name }}
+                        </button>
+                    @else
+                        <button style="width:100%; height:100%; color:white; background: #3B79D6; border-radius: 20px; border:0px;" disabled>
+                            В работе
+                        </button>
+                    @endif
+                </div>
+                <div class="col-2 task-date">
+                    {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
+                </div>
+                <div class="btn-group dropleft col-1">
+                    <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
+                    <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
+                        <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTaskAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                        <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
+                    </div>
+                </div>
+            </div>
+             @endforeach
         </div>
         </div>
     </div>
@@ -147,7 +158,9 @@
     @include('modals.tasks.edit_task_admin')
     @include('modals.tasks.search_task_modal')
 @endforeach
-
+    @include('modals.customers.create_client_admin')
+    @include('modals.tasks.create_task_admin')
+    @include('modals.meets.create_meet_admin')
 @endsection
 
 
@@ -285,30 +298,39 @@
                             "status": status.val(),
                             "id": id,
                         },
-                        success: data => {                          
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Данные изменены!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                            console.log(data);
-                            $('#task-' + id).find('.task-name').html(data.task.title);
-                            $('#task-' + id).find('.task-deadline').html(data.deadline_date);
-                            $('#task-' + id).find('.task-manager').html(data.user);
-                            if (data.task.description.length > 25)
-                                $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...'); 
-                            else
-                                $('#task-' + id).find('.task-desc').html(data.task.description);
+                        success: data => {  
+                            if(data.status == 'success'){
+                                    Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Данные изменены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
+                                $('#task-' + id).find('.task-name').html(data.task.title);
+                                $('#task-' + id).find('.task-deadline').html(data.deadline_date);
+                                $('#task-' + id).find('.task-manager').html(data.user);
+                                if (data.task.description.length > 25)
+                                    $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...'); 
+                                else
+                                    $('#task-' + id).find('.task-desc').html(data.task.description);
 
-                            if(data.status){
-                                $('#task-' + id).find('.task-status button').html(data.status.name).css("background-color",data.status.color);    
+                                if(data.status){
+                                    $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);    
+                                }else{
+                                    $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
+                                }
                             }else{
-                                $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
-                            }
-                            
-
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'info',
+                                    title: 'Изменение не найдены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
+                            }                        
                         },
                         error: () => {
                             console.log(0);
