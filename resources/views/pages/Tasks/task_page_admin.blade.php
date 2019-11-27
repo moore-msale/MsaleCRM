@@ -83,7 +83,7 @@
         </div>
          <div class="content-block pt-4" style="height:40vh;">
             <h2 class="pb-3">Задачи</h2>
-            <div class="row mb-3 py-2 sf-light" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
+            <div class="row mb-3 py-2 sf-light" id="tasks-content" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
                 <div class="col-2 pr-0">
                     Название
                 </div>
@@ -109,11 +109,7 @@
             </div>
 
              @foreach($tasks as $task)
-                 @if(\App\User::find($task->user_id)->role = 'admin')
-                    <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}" style="border: 0.5px solid rgba(255, 0, 0, 0.5)!important;">
-                 @else
-                    <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
-                @endif
+                <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
                 <div class="col-2 task-name-admin" style="border-right:1px solid #dedede;">
                     {{ $task->title }}
                 </div>

@@ -41,9 +41,7 @@
     {{--</a>--}}
 
     {{--</div>--}}
-    <div class="status-met position-absolute h-100" style="width:3px; background-color: {{ isset($task->status) != null ? $task->status->color : '#C4C4C4'}}; top:0%; left:0%; "></div>
+    <div class="status-task position-absolute h-100" style="width:3px; background-color: {{ isset($task->status) != null ? $task->status->color : '#C4C4C4'}}; top:0%; left:0%; "></div>
 </div>
-
-@include('modals.tasks.edit_task')
-@include('modals.tasks.done_task')
-@include('modals.tasks.delete_task')
+@include('modals.tasks.delete_task_admin')
+@include('modals.tasks.edit_task_admin')

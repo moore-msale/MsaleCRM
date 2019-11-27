@@ -83,7 +83,7 @@
         </div>
          <div class="content-block pt-4" style="height:40vh;">
             <h2 class="pb-3">Встречи</h2>
-            <div class="row mb-3 py-2 sf-light" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
+            <div class="row mb-3 py-2 sf-light" id="meets-content" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
                 <div class="col-2 pr-0">
                     Компания
                 </div>

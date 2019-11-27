@@ -37,7 +37,7 @@ class MeetingController extends Controller
         }
         elseif($request->status != null)
         {
-            $tasks = Task::where('taskable_type', 'App\Meeting')->where('status_id',$request->status)->get()->reverse();
+            $tasks = Task::where('taskable_type', 'App\Meeting')->where('status_id',$request->status)->where('user_id',auth()->id())->get()->reverse();
         }
         elseif($request->manager != null)
         {
@@ -45,10 +45,12 @@ class MeetingController extends Controller
         }
         else
         {
-            $tasks = Task::where('taskable_type','App\Meeting')->get()->reverse();
+            $tasks = Task::where('taskable_type','App\Meeting')->where('user_id',auth()->id())->get()->reverse();
         }
-
-        return view('pages.Meets.meet_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
+        if(auth()->user()->role=='admin'){
+            return view('pages.Meets.meet_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
+        }
+        return view('pages.Meets.meet_page', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
     }
     /**
      * Show the form for creating a new resource.

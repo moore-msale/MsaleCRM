@@ -35,22 +35,24 @@ class TaskController extends Controller
 
         if($request->status != null && $request->manager != null)
         {
-            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->where('status_id',$request->status)->get()->reverse();
+            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->where('status_id',$request->status)->where('user_id',auth()->id())->get()->reverse();
         }
         elseif($request->status != null)
         {
-            $tasks = Task::where('taskable_type', null)->where('status_id',$request->status)->get()->reverse();
+            $tasks = Task::where('taskable_type', null)->where('status_id',$request->status)->where('user_id',auth()->id())->get()->reverse();
         }
         elseif($request->manager != null)
         {
-            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->get()->reverse();
+            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->where('user_id',auth()->id())->get()->reverse();
         }
         else
         {
-            $tasks = Task::where('taskable_type',null)->get()->reverse();
+            $tasks = Task::where('taskable_type',null)->where('user_id',auth()->id())->get()->reverse();
         }
-
-        return view('pages.Tasks.task_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
+        if(auth()->user()->role=='admin'){
+            return view('pages.Tasks.task_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);        
+        }
+        return view('pages.Tasks.task_page', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
     }
     /**
      * Show the form for creating a new resource.
@@ -125,7 +127,9 @@ class TaskController extends Controller
                 'view' => view('tasks.tasks-card', [
                     'task' => $task,
                 ])->render(),
-
+                'view2' => view('tasks.tasks-content', [
+                    'task' => $task,
+                ])->render(),
             ], 200);
         }
 

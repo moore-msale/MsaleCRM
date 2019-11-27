@@ -46,7 +46,10 @@
             box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
         }
         .display-5{
-            font-size: 2.5rem;
+            font-size: 36px;
+        }
+        .display-3{
+            font-size:55px!important;
         }
         .display-6{
             font-size:13px;
@@ -73,10 +76,10 @@
         <div class="menu-bar">
             <div class="row">
                 <div class="col-4 row sf-medium">
-                    <div class="col p-0 mr-5 pt-1">
+                    <div class="col-6 p-0 pt-1">
                         <h3 class="pb-3">ОТЧЕТЫ</h3>
                     </div>
-                    <div class="col p-0">
+                    <div class="col-6 p-0">
                         <button class="btn-purple sf-medium border-0">
                             отчет по менеджерам
                         </button>
@@ -106,28 +109,28 @@
                 <div class="col-9 mt-2">
                     <h6 class="statistic-links text-uppercase display-6">Общий план</h6>
                     <p class="purple-text mb-0">Звонки</p>
-                    <p class="display-5"><span class="purple-text count">120</span><span class="slash mx-3">/</span><span class="statistic-links count">117</span> </p>
+                    <p class="display-5"><span class="purple-text count">120</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="statistic-links count">117</span> </p>
                 </div>
                 <div class="col-6 pl-0 text-center h-100 d-flex align-items-center justify-content-center" style="background: rgba(196, 195, 195, 0.15);">
-                    <div>
+                    <div class="mt-4">
                         <p class="purple-text black-and-bold mb-0">Встречи</p>
-                        <p class="display-5"><span class="statistic-links count">6</span><span class="slash mx-3">/</span><span class="count purple-text">1</span></p>
+                        <p class="display-5"><span class="statistic-links count">6</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="count purple-text">1</span></p>
                     </div>
                 </div>
             </div>
             <div class="col-4 shadow mr-3 pb-2">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">Встречи выполнены \ назначены</h6>
-                <p class="display-3 mb-0"><span class="count purple-text">4</span><span class="slash mx-3">/</span><span class="count statistic-links">8</span></p>
+                <p class="display-3 mb-0"><span class="count purple-text">4</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="count statistic-links">8</span></p>
                 <a class="statistic-links underline" href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/meets_admin' : '/meets' }}">перейти во встречи</a>
             </div>
             <div class="col-4 shadow mr-3">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">Звонков успешных \ неуспешныx</h6>
-                <p class="display-3 mb-0"><span class="count purple-text">112</span><span class="slash mx-3">/</span><span class="statistic-links count">592</span></p>
+                <p class="display-3 mb-0"><span class="count purple-text">112</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="statistic-links count">592</span></p>
                 <a class="statistic-links underline" href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/calls_admin' : '/calls' }}">перейти в звонки</a>
             </div>
             <div class="col-4 shadow">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">+ клиентов / потенциальных</h6>
-                <p class="display-3 mb-0"><span class="count purple-text">15</span><span class="slash mx-3">/</span><span class="success-text count">2</span></p>
+                <p class="display-3 mb-0"><span class="count purple-text">15</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="success-text count">2</span></p>
                 <a class="statistic-links underline" href="/customer">перейти в клиенты</a>
             </div>
         </div>
@@ -156,21 +159,21 @@
                 <p class="statistic-links display-7">общий коэффициент клиентов которые отказались на встрече по всем менеджерам</p>
             </div>
         </div>
-        <div class="row content-block-2 mt-3 d-flex justify-content-center  sf-medium">
+        <div class="row content-block-2 mt-3 d-flex justify-content-center sf-medium">
             <div class="col-4 shadow row mr-3">
-                <div class="col pl-0 mt-2 pr-0">
+                <div class="col pl-0  pr-0">
                     <h6 class="mt-1">+ потенциальный прогноз продаж за ноябрь</h6>
                     <p class="statistic-links display-7 mb-1">план расчитывыется исходя из общего числа потенциальных клиентов и суммы</p>
                     <hr class="w-100 pr-1 mb-4 mt-3">
-                    <h6 class="statistic-links text-uppercase mt-2 display-6 w-100 h-auto">горячих клиентов</h6>
+                    <h6 class="statistic-links text-uppercase mt-0 display-6 w-100 h-auto">горячих клиентов</h6>
                     <p class="success-text display-5 mb-0 mt-0 underline"><span class="count">175</span></p>
-                    <h6 class="statistic-links text-uppercase mt-2 display-6 w-100">На сумму</h6>
+                    <h6 class="statistic-links text-uppercase mt-0 display-6 w-100">На сумму</h6>
                     <div style="word-wrap: break-word;">
                     <p class="purple-text display-5 mb-0 underline mt-0"><span class="count">2000000000</span>руб</p>
                     </div>
                 </div>
             </div>
-            <div class="col-12 shadow" style="flex: 0 0 73.599999%;max-width: none; height: 8%;">
+            <div class="col-12 shadow" style="flex: 0 0 73.599999%;max-width: none; height: 6%;">
                 <canvas id="myChart"></canvas>
             </div>
         </div>
@@ -231,7 +234,7 @@
                 },
                 options: {
                     responsive: true,
-                    aspectRatio: 3,
+                    aspectRatio: 4,
                     scales: {
                         yAxes: [{
                             ticks: {

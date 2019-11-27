@@ -232,7 +232,7 @@
                         "user_id": user.val(),
                     },
                     success: data => {
-                        $('#CreateMeetAdmin').modal('hide');
+                        $('#CreateMeet').modal('hide');
                         // console.log(data);
                         Swal.fire({
                             position: 'top-end',
@@ -242,15 +242,6 @@
                             timer: 700
                         });
                         let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        result.find('.meetDone').each((e,i) => {
-                            doneMeet($(i));
-                        });
-                        result.find('.meetDelete').each((e,i) => {
-                            deleteMeet($(i));
-                        });
-                        result.find('.meetEdit').each((e,i) => {
-                            editMeet($(i));
-                        });
                         $('#meet_name').val('');
                         $('#meet_desc').val('');
                         $('#meet_date').val('');
@@ -268,7 +259,6 @@
                 })
             }
         })
-        registerMeetDoneBtn($('.doneMeet'));
     </script>
     <script>
         $('.createTask').click(e => {
@@ -434,8 +424,7 @@
                             $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...');
                         else
                             $('#task-' + id).find('.task-desc').html(data.task.description);
-
-                        if(data.status){
+                        if(data.status_id){
                             $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
                         }else{
                             $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
@@ -450,7 +439,6 @@
                         });
                         console.log(data);
                     }
-
                     },
                     error: () => {
                         console.log(0);

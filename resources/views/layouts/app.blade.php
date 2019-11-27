@@ -341,9 +341,11 @@ $agent = New \Jenssegers\Agent\Agent();
                     $('#CreateTaskAdmin').modal('hide');
                     $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     btn.addClass('createTaskAdmin');
+                    $('#tasks-content').after(data.view2).show('slide', {direction: 'left'}, 400);
                     $('#task_name_admin').val('');
                     $('#task_desc_admin').val('');
                     $('#task_date_admin').val('');
+                    console.log(data);
 
                 },
                 error: () => {
@@ -367,7 +369,7 @@ $agent = New \Jenssegers\Agent\Agent();
         btn.hide();
         let desc = $('#meet_desc_admin');
         let date = $('#meet_date_admin');
-        let customer = $('#meet_customer_admin');
+        var customer = $('#meet_customer_admin');
         let manager = $('#meet_manager_admin');
         let status = $('#meet_status_admin');
         let datas = [desc.val(),date.val(),customer.val()];
@@ -411,12 +413,14 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
+                    btn.show();
                     $('#CreateMeetAdmin').modal('hide');
                     $('#meet_date_admin').val('');
                     $('#meet_desc_admin').val('');
                     $('#meet_customer_admin').val('');
-                    $('.customerid-'+data.data.taskable.customer_id).remove();
+                    $('.customerid-'+data.id).remove();
                     $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    $('#meets-content').after(data.view2).show('slide', {direction: 'left'}, 400);  
                     btn.show();
                 },
                 error: () => {

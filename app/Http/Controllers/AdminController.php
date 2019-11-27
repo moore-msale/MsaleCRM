@@ -31,12 +31,14 @@ class AdminController extends Controller
         $task->user_id = $request->user_id;
         $task->status_id = $request->status;
         $task->save();
-
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
                 'data' => $task,
                 'view'=>view('tasks.tasks-card', [
+                    'task' => $task,
+                ])->render(),
+                'view2' => view('pages.Tasks.includes.task_admin', [
                     'task' => $task,
                 ])->render(),
             ]);
@@ -101,9 +103,10 @@ class AdminController extends Controller
             return response()->json([
                 'status' => "success",
                 'task' => $task,
-                'user' => User::find($task->user_id)->name,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
+                'date1'=>Carbon::parse($deadline_date)->format('d M'),
+                'date2'=>Carbon::parse($deadline_date)->format('H:i'),
             ]);
         }
 
@@ -143,9 +146,10 @@ class AdminController extends Controller
             return response()->json([
                 'status' => "success",
                 'data'=>$task,
-                'view'=>view('tasks.meetings-card', [
-                    'meeting' => $task,
-                ])->render(),
+                'id'=>  $customer->id,
+                'view2' => view('pages.Meets.includes.meet_admin', [
+                    'task' => $task,
+                ])->renderSections(),
             ]);
         }
     }
@@ -204,6 +208,8 @@ class AdminController extends Controller
             ]);
         }
         $task->save();
+        $date1 = Carbon::parse($task->deadline_date)->format('d M');
+        $date2 = Carbon::parse($task->deadline_date)->format('H:i');
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -211,6 +217,8 @@ class AdminController extends Controller
                 'user' => User::find($task->user_id)->name,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
+                'date1'=>$date1,
+                'date2'=>$date2,
             ]);
         }
 
@@ -258,6 +266,12 @@ class AdminController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
+                'view'=>view('tasks.potentials-card', [
+                    'customer' => $customer,
+                ])->render(),
+                'view2' => view('pages.Customers.includes.customer', [
+                    'customer' => $customer,
+                ])->render(),
             ]);
         }
     }

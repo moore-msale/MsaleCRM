@@ -118,12 +118,12 @@
             e.preventDefault();
             let btn = $(e.currentTarget);
             let id = btn.data('id');
-            let user = btn.data('parent');
-            let title = $('#meet_name-' + id);
-            let desc = $('#meet_desc-' + id);
-            let date = $('#meet_date-' + id);
-            let manage = $('#meet_manager-' + id);
-            let status = $('#meet_status-' + id);
+            let user = btn.data('parent'); 
+            let title = $('#meet_name_admin-' + id);
+            let desc = $('#meet_desc_admin-' + id);
+            let date = $('#meet_date_admin-' + id);
+            let manage = $('#meet_manager_admin-' + id);
+            let status = $('#meet_status_admin-' + id);
             if(desc.val() == '')
             {
                 swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -152,17 +152,21 @@
                             });
                             console.log(data);
                             $('#meet-' + id).find('.meet-name').html(data.meet.title);
-                            $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
                             $('#meet-' + id).find('.meet-manager').html(data.user);
+                            $('#meet-' + id).find('.meet-desc').html(data.meet.description);
+                            $('#meet-' + id).find('.meet-date1').html(data.date1);
+                            $('#meet-' + id).find('.meet-date2').html(data.date2);
                             $('#EditMeetAdmin-' + id).find('.modal-title').html(data.meet.title);
-                            if (data.meet.description.length > 25)
-                                $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
-                            else
-                                $('#meet-' + id).find('.meet-desc').html(data.meet.description);
+                            
+                           
                             if(data.status_id){
                                 $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color); 
+                                $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);                         
                             }else{
                                 $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                                $('#meet-' + id).find('.status-meet').css("background-color",'#C4C4C4');
+                                $('#meet-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');       
                             }
                         } else{
                             Swal.fire({
@@ -261,11 +265,11 @@
             let btn = $(e.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
-            let title = $('#task_name-' + id);
-            let desc = $('#task_desc-' + id);
-            let date = $('#task_date-' + id);
-            let manage = $('#task_manager-' + id);
-            let status = $('#task_status-' + id);
+            let title = $('#task_name_admin-' + id);
+            let desc = $('#task_desc_admin-' + id);
+            let date = $('#task_date_admin-' + id);
+            let manage = $('#task_manager_admin-' + id);
+            let status = $('#task_status_admin-' + id);
             if(desc.val() == '')
             {
                 swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -295,17 +299,19 @@
                             console.log(data);
                             $('#EditTaskAdmin-' + id).find('.modal-title').html(data.task.title);
                             $('#task-' + id).find('.task-name').html(data.task.title);
-                            $('#task-' + id).find('.task-deadline').html(data.deadline_date);
+                            $('#task-' + id).find('.task-date1').html(data.date1);
+                            $('#task-' + id).find('.task-date2').html(data.date2);
                             $('#task-' + id).find('.task-manager').html(data.user);
-                            if (data.task.description.length > 25)
-                                $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...');
-                            else
-                                $('#task-' + id).find('.task-desc').html(data.task.description);
+                            $('#task-' + id).find('.task-desc').html(data.task.description);
 
                             if(data.status_id){
                                 $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                $('#task-' + id).find('.status-task').css("background-color",data.status_id.color); 
+                                $('#task-' + id).find('.deal-text path,span').attr('fill',data.status_id.color).css("color",data.status_id.color);                         
                             }else{
                                 $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
+                                $('#task-' + id).find('.status-task').css("background-color",'#C4C4C4');
+                                $('#task-' + id).find('.deal-text path,span').attr('fill','#C4C4C4').css("color",'#C4C4C4');                                  
                             }
                         }else{
                             Swal.fire({
@@ -422,6 +428,15 @@
                             $('#customer-' + id).find('.cust-date1').html(data.date1);
                             $('#customer-' + id).find('.cust-date2').html(data.date2);
                             $('#history_block-' + id).html(data.html);
+
+                            if(data.status_id){
+                                $('#customer-' + id).find('.status-customer').css("background-color",data.status_id.color); 
+                                $('#customer-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);                         
+                            }else{
+                                $('#customer-' + id).find('.status-customer').css("background-color",'#C4C4C4');
+                                $('#customer-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');                                  
+
+                            }
                             console.log(data);
                         }else{
                             Swal.fire({
@@ -1576,8 +1591,8 @@
                             $('#customer_desc').val('');
                             $('#customer_date').val('');
                         },
-                        error: () => {
-                            console.log(0);
+                        error: data => {
+                            console.log(data);
                             Swal.fire({
                                 position: 'top-end',
                                 icon: 'error',

@@ -1,38 +1,35 @@
-<div class="row py-2 task-point meet-{{$task->id}}" id="donemeet-{{$task->id}}" style="{{$task->chief != null ? 'border-left: 1px solid red;' : ''}}">
-    <div class="col-2 d-flex align-items-center">
-                    <span class="meet-title task-name">
-                        {{ $task->title }}
-                    </span>
+<div class="row py-2 my-1 sf-light position-relative" id="meet-{{$task->id}}">
+    <div class="col-2 meet-name-admin" style="border-right:1px solid #dedede;">
+        {{ $task->title }}
     </div>
-    <div class="col-2 d-flex align-items-center">
-                    <span class="meet-company task-name">
-                        {{ $task->taskable->customer->company }}
-                    </span>
+    <div class="col-4 meet-desc-admin" style="border-right:1px solid #dedede;">
+        {{ str_limit($task->description, $limit = 25, $end = '...') }}
     </div>
-    <div class="col-3 d-flex align-items-center">
-                    <span class="meet-desc task-name">
-                        {{$task->description}}
-                    </span>
+    <div class="col-2 meet-manager-admin" style="border-right:1px solid #dedede;">
+        {{ \App\User::find($task->user_id)->name }}
     </div>
-    <div class="col-2 d-flex align-items-center">
-                    <span class="meet-manager task-name">
-                        {{ \App\User::find($task->user_id)->name }}
-                    </span>
+    <div class="col-2 meet-deadline-admin">
+        {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
     </div>
-    <div class="col-2 d-flex align-items-center">
-                    <span class="meet-date task-name">
-                        {{ $task->deadline_date }}
-                    </span>
+    <div class="col-2 meet-status-admin">
+        @if(isset($task->status))
+            <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
+                {{ $task->status->name }}
+            </button>
+        @else
+            <button style="width:100%; height:100%; color:white; background: #EBDC60; border-radius: 20px; border:0px;" disabled>
+                В ожидании
+            </button>
+        @endif
     </div>
-    <div class="col-2 text-center">
-        <button class="btn py-2 px-3 task-name task-button text-white" style="background:#A8A8A8; opacity: 1;" disabled>
-            Не выполнено
-        </button>
+    <div class="col-2 meet-date-admin">
+        {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
     </div>
-    <div class="col-2 d-flex align-items-center justify-content-center">
-        <i class="far fa-check-circle fa-sm mr-3 ico-done task-ico" data-toggle="modal" data-target="#DoneMeetAdmin-{{$task->id}}" style="cursor:pointer;" title="Завершить встречу"></i>
-        <i class="far fa-times-circle fa-sm mr-3 ico-delete task-ico" data-toggle="modal" data-target="#DeleteMeetAdmin-{{$task->id}}" style="cursor:pointer;" title="Удалить встречу"></i>
-        <i class="fas fa-pencil-alt fa-sm mr-3 ico-edit task-ico" data-toggle="modal" data-target="#EditMeetAdmin-{{ $task->id }}" style="cursor:pointer;" title="Изменить описание"></i>
+    <div class="btn-group dropleft col-1">
+        <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
+        <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
+            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
+            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeetAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
+        </div>
     </div>
 </div>
-

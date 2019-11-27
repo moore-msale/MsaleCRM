@@ -60,10 +60,12 @@ class   CustomerController extends Controller
         }
         else
         {
-            $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
+            $customers = Task::where('taskable_type','App\Customer')->where('user_id',$request->manager)->get()->reverse();
         }
-
-        return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
+        if(auth()->user()->role=='admin'){
+            return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);            
+        }
+        return view('pages.Customers.customer_page', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
     }
 
     /**
@@ -454,7 +456,7 @@ class   CustomerController extends Controller
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $customer = Customer::find($request->id);
-        $task = $customer->task;
+        $task = new Task;
         $task->description = $request->desc;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');

@@ -2,7 +2,7 @@
     <style>
         @media screen and (min-width: 992px)
         {
-        .modal .modal-full-height
+        .modal .modal-full-height .modal-dialog
         {
             width:700px;!important;
             max-width: 700px;!important;
@@ -15,7 +15,7 @@
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-    <div class="modal-dialog modal-full-height modal-right" role="document">
+    <div class="modal-dialog modal-full-height modal-right" role="document" style="width:700px;!important;max-width: 700px;!important;">
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light" style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>

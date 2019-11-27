@@ -5,14 +5,14 @@
 
 <div class="h-100 position-fixed pt-2" style="background-color: #772FD2; z-index: 9999;">
     <div class="text-center text-white sidebar position-relative">
-
+        
         <img class="mb-1" src="{{ asset('images/logo.svg') }}" alt="">
 
-
+        <a href="/profile">
         <div class="avatar mx-auto mt-5 d-flex align-items-center justify-content-center">
             <span class="mx-auto text-white text-uppercase w-100" style="font-size:18px;">{{ mb_strcut(auth::user()->name, 0, 1) }}</span>
         </div>
-
+        </a>
         {{--<div class="notific mx-auto mt-3 d-flex align-items-center justify-content-center position-relative">--}}
             {{--<img src="{{ asset('images/notif.svg') }}" alt="">--}}
             {{--<div class="notif-point"></div>--}}
@@ -65,6 +65,13 @@
         </div>
             </a>
         @endif
+        <a href="{{route('settings')}}">
+        <div class="point">
+            {{--<i class="fas fa-home fa-2x"></i>--}}
+            <img class="w-50 pt-1 point-ico" src="{{ 'images/settings.svg' }}" alt="">
+            <p class="sf-medium pt-2 pb-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Настройки</p>
+        </div>
+        </a>
 
     </div>
 

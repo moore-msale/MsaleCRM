@@ -22,12 +22,14 @@
                         @if(isset($manager))
                             <option value="{{ null }}">Все менеджеры</option>
                         @endif
-                        @foreach(\App\User::all() as $user)
-                            @if(isset($manager) && $user->id == $manager)
-                                @continue
-                            @endif
-                            <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->lastname }}</option>
-                        @endforeach
+                        @if(auth()->user()->role=='admin')
+                            @foreach(\App\User::all() as $user)
+                                @if(isset($manager) && $user->id == $manager)
+                                    @continue
+                                @endif
+                                <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->lastname }}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
                 <div class="col-2">
@@ -57,13 +59,13 @@
                     </button>
                 </div>
                 <div class="col-9 text-right d-flex align-items-center justify-content-end">
-                        <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClientAdmin" style="color:#000000;">
+                        <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClient" style="color:#000000;">
                             + добавить клиента
                         </span>
-                    <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTaskAdmin" style="color:#000000;">
+                    <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTask" style="color:#000000;">
                                 + добавить задачу
                             </span>
-                    <span class="button-create" style="color:#000000;" data-toggle="modal" data-target="#CreateMeetAdmin">
+                    <span class="button-create" style="color:#000000;" data-toggle="modal" data-target="#CreateMeet">
                                 + добавить встречу
                             </span>
 
@@ -160,12 +162,11 @@
 
 
     @foreach(\App\Task::where('taskable_type','App\Customer')->get() as $customer)
-        @include('modals.customers.edit_customer_admin')
-        @include('modals.customers.delete_customer_admin')
+        @include('modals.customers.edit_customer')
     @endforeach
-    @include('modals.customers.create_client_admin')
-    @include('modals.tasks.create_task_admin')
-    @include('modals.meets.create_meet_admin')
+    @include('modals.customers.create_client')
+    @include('modals.tasks.create_task')
+    @include('modals.meets.create_meet')
 @endsection
 
 @push('scripts')
@@ -216,8 +217,65 @@
             }
         });
     </script>
+     <script>
+        $('.createMeet').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = $('#meet_name');
+            let desc = $('#meet_desc');
+            let date = $('#meet_date');
+            let user = $('#meet_user');
+            if(desc.val() == '')
+            {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Заполните описание, описание должно быть больше 20 символов!',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else {
+                $.ajax({
+                    url: '{{ route('meeting.store') }}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id.val(),
+                        "description": desc.val(),
+                        "deadline_date": date.val(),
+                        "user_id": user.val(),
+                    },
+                    success: data => {
+                        $('#CreateMeet').modal('hide');
+                        // console.log(data);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Встреча создана!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                        let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                        $('#meet_name').val('');
+                        $('#meet_desc').val('');
+                        $('#meet_date').val('');
+                    },
+                    error: () => {
+                        console.log(0);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Произошла ошибка!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }
+                })
+            }
+        })
 
-
+    </script>
     <script>
         $('.editCustomer').click(e => {
             e.preventDefault();
