@@ -19,7 +19,7 @@
             box-shadow: 0px 10px 10px rgba(119, 47, 210, 0.2);
         }
         .purple-text{
-            color: #772FD2;
+            color: #772FD2!important;
         }
         .success-text{
             color: #6DBE66

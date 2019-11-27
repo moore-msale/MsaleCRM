@@ -27,6 +27,7 @@ class AdminController extends Controller
         $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
         $request->request->remove('deadline_date');
         $request->merge(['deadline_date' => $deadline_date]);
+        $task->deadline_date = $request->deadline_date;
         $task->user_id = $request->user_id;
         $task->status_id = $request->status;
         $task->save();
@@ -35,6 +36,9 @@ class AdminController extends Controller
             return response()->json([
                 'status' => "success",
                 'data' => $task,
+                'view'=>view('tasks.tasks-card', [
+                    'task' => $task,
+                ])->render(),
             ]);
         }
     }
@@ -82,12 +86,14 @@ class AdminController extends Controller
         $task->title = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
-        $task->status_id = $request->status;    
+        $task->status_id = $request->status;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
         if($task == $task2){
             return response()->json([
                 'status' => "error",
+                'task'=>$task,
+                'task2'=>$task2,
             ]);
         }
         $task->save();
@@ -106,8 +112,7 @@ class AdminController extends Controller
 
     public function create_meet(Request $request)
     {
-        $task = Task::find($request->customer_id);
-        $customer = Customer::find($task->taskable->id);
+        $customer = Customer::find($request->customer_id);
         $meeting = New Meeting();
         $meeting->customer_id = $customer->id;
         $meeting->save();
@@ -119,7 +124,9 @@ class AdminController extends Controller
         $request->merge(['deadline_date' => $deadline_date]);
         $task->deadline_date = $request->deadline_date;
         $task->description = $request->description;
-        $task->user_id = $request->user_id;
+        $task->user_id = auth()->id();
+        $task->status_id = $request->status_id;
+        $task->taskable_id = $request->manager_id;
         $task->save();
         $meeting->task()->save($task);
 
@@ -129,12 +136,16 @@ class AdminController extends Controller
         $history->customer_id = $customer->id;
         $history->action = "Встреча";
         $history->date = Carbon::now();
-        $history->status = $customer->task->status->name;
+        $history->status = $request->status_id;
         $history->save();
 
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
+                'data'=>$task,
+                'view'=>view('tasks.meetings-card', [
+                    'meeting' => $task,
+                ])->render(),
             ]);
         }
     }
@@ -341,6 +352,7 @@ class AdminController extends Controller
                 'date' => $date,
                 'date1' => $date1,
                 'date2'=>$date2,
+                'status_id'=>$task->status,
             ]);
         }
 

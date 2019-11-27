@@ -210,15 +210,26 @@ $agent = New \Jenssegers\Agent\Agent();
     $('.createCustomerAdmin').click(e => {
         e.preventDefault();
         let btn = $(e.currentTarget);
-        let title = $('#client_name');
-        let company = $('#client_company');
-        let contacts = $('#client_contacts');
-        let socials = $('#client_socials');
-        let desc = $('#client_desc');
-        let date = $('#client_date');
-        let user = $('#client_manager');
-        let status = $('#client_status');
-        if(desc.val().length < 20)
+        let title = $('#client_name_admin');
+        let company = $('#client_company_admin');
+        let contacts = $('#client_contacts_admin');
+        let socials = $('#client_socials_admin');
+        let desc = $('#client_desc_admin');
+        let date = $('#client_date_admin');
+        let user = $('#client_manager_admin');
+        let status = $('#client_status_admin');
+        let datas = [title.val(),company.val(),contacts.val(),desc.val(),date.val(),user.val(),status.val()];
+
+        if(datas.indexOf("") != -1){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните вcе поля!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+        }
+        else if(desc.val().length < 20)
         {
             Swal.fire({
                 position: 'top-end',
@@ -227,6 +238,7 @@ $agent = New \Jenssegers\Agent\Agent();
                 showConfirmButton: true,
                 // timer: 700
             });
+            console.log(datas);
         }
         else {
             $.ajax({
@@ -252,12 +264,12 @@ $agent = New \Jenssegers\Agent\Agent();
                         timer: 700
                     });
                     $('#createClientAdmin').modal('hide');
-                    $('#client_name').val('');
-                    $('#client_desc').val('');
-                    $('#client_date').val('');
-                    $('#client_contacts').val('');
-                    $('#client_socials').val('');
-                    $('#client_company').val('');
+                    $('#client_name_admin').val('');
+                    $('#client_desc_admin').val('');
+                    $('#client_date_admin').val('');
+                    $('#client_contacts_admin').val('');
+                    $('#client_socials_admin').val('');
+                    $('#client_company_admin').val('');
                 },
                 error: () => {
                     console.log(0);
@@ -277,15 +289,25 @@ $agent = New \Jenssegers\Agent\Agent();
     $('.createTaskAdmin').click(e => {
         e.preventDefault();
         let btn = $(e.currentTarget);
-        btn.removeClass('createTask');
-        let title = $('#task_name');
-        let desc = $('#task_desc');
-        let date = $('#task_date');
-        let user = $('#task_manager');
-        let status = $('#task_status');
+        btn.removeClass('createTaskAdmin');
+        let title = $('#task_name_admin');
+        let desc = $('#task_desc_admin');
+        let date = $('#task_date_admin');
+        let user = $('#task_manager_admin');
+        let status = $('#task_status_admin');
         let chief = 1;
-        if(desc.val().length < 20)
-        {
+        let datas = [desc.val(),date.val(),title.val()];
+        if(datas.indexOf("") != -1){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните вcе поля!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+            console.log(datas);
+            btn.addClass('createTaskAdmin');
+        }else if(desc.val().length < 20) {
             Swal.fire({
                 position: 'top-end',
                 icon: 'info',
@@ -293,10 +315,11 @@ $agent = New \Jenssegers\Agent\Agent();
                 showConfirmButton: true,
                 // timer: 700
             });
+            btn.addClass('createTaskAdmin');
         }
         else {
             $.ajax({
-                url: '{{ route('task.store') }}',
+                url: 'CreateTaskAdmin',
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -315,10 +338,12 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
-                    btn.addClass('createTask');
-                    $('#task_name').val('');
-                    $('#task_desc').val('');
-                    $('#task_date').val('');
+                    $('#CreateTaskAdmin').modal('hide');
+                    $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    btn.addClass('createTaskAdmin');
+                    $('#task_name_admin').val('');
+                    $('#task_desc_admin').val('');
+                    $('#task_date_admin').val('');
 
                 },
                 error: () => {
@@ -340,19 +365,29 @@ $agent = New \Jenssegers\Agent\Agent();
         e.preventDefault();
         let btn = $(e.currentTarget);
         btn.hide();
-        let desc = $('#meet_desc');
-        let date = $('#meet_date');
-        let customer = $('#meet_customer');
-
-        if(desc.val().length < 20)
-        {
+        let desc = $('#meet_desc_admin');
+        let date = $('#meet_date_admin');
+        let customer = $('#meet_customer_admin');
+        let manager = $('#meet_manager_admin');
+        let status = $('#meet_status_admin');
+        let datas = [desc.val(),date.val(),customer.val()];
+        if(datas.indexOf("") != -1){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните вcе поля!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+            console.log(datas);
+            btn.show();
+        }else if(desc.val().length < 20){
             Swal.fire({
                 position: 'top-end',
                 icon: 'info',
                 title: 'Заполните описание, описание должно быть больше 20 символов!',
                 showConfirmButton: true,
                 // timer: 700
-
             });
             btn.show();
         }
@@ -365,6 +400,8 @@ $agent = New \Jenssegers\Agent\Agent();
                     "description": desc.val(),
                     "deadline_date": date.val(),
                     "customer_id": customer.val(),
+                    "manager_id": manager.val(),
+                    "status_id": status.val(),
                 },
                 success: data => {
                     Swal.fire({
@@ -374,8 +411,12 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
-                    $('#meet_date').val('');
-                    $('#meet_desc').val('');
+                    $('#CreateMeetAdmin').modal('hide');
+                    $('#meet_date_admin').val('');
+                    $('#meet_desc_admin').val('');
+                    $('#meet_customer_admin').val('');
+                    $('.customerid-'+data.data.taskable.customer_id).remove();
+                    $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     btn.show();
                 },
                 error: () => {

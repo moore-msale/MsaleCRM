@@ -46,7 +46,6 @@
                     <textarea id="task_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>
                 <button type="button" class="w-100 sf-light editTask mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
-
             </div>
             {{--<div class="modal-footer justify-content-center">--}}
             {{--</div>--}}

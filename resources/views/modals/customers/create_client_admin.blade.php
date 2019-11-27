@@ -29,24 +29,24 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="potentials" name="type">
-                    <input type="text" name="name" id="client_name" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите Имя">
-                    <input type="text" name="company" id="client_company" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название Компании">
-                    <input type="text" name="contacts" id="client_contacts" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите контакты Компании">
-                    <input type="text" name="socials" id="client_socials" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите соц.сети Компании">
-                    <input type="text" name="deadline_date" id="task_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
-                    <select class="browser-default custom-select border-0 mt-2" id="client_manager" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                    <input type="text" name="name" id="client_name_admin" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите Имя">
+                    <input type="text" name="company" id="client_company_admin" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название Компании">
+                    <input type="text" name="contacts" id="client_contacts_admin" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите контакты Компании">
+                    <input type="text" name="socials" id="client_socials_admin" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите соц.сети Компании">
+                    <input type="text" name="deadline_date" id="client_date_admin" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
+                    <select class="browser-default custom-select border-0 mt-2" id="client_manager_admin" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="null" disabled>Выберите менеджера</option>
                         @foreach(\App\User::all() as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>
-                    <select class="browser-default custom-select border-0 mt-2" id="client_status" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                    <select class="browser-default custom-select border-0 mt-2" id="client_status_admin" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="0">В работе</option>
                         @foreach(\App\Status::where('type','customer')->get() as $stat)
                             <option value="{{ $stat->id }}">{{ $stat->name }}</option>
                         @endforeach
                     </select>
-                    <textarea id="client_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
+                    <textarea id="client_desc_admin" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
                 </form>
                 <button type="button" class="w-100 sf-light createCustomerAdmin mt-5 space-button">Создать</button>
 

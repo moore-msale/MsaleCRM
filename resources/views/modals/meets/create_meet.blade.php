@@ -60,7 +60,7 @@
     <div class="modal-dialog modal-full-height modal-right" role="document">
         <div class="modal-content px-2">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+Создать встречу</h4>
+                <h4 class="modal-title w-50 sf-light" id="myModalLabel">+Создать встречу</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
@@ -74,10 +74,9 @@
                     <select class="browser-default custom-select border-0 mt-2 sf-light" id="meet_name" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{null}}">Выберите клиента...</option>
                         @foreach(\App\Customer::all() as $customer)
-                            @if(!empty(\App\Task::where('taskable_id',$customer->id)->where('taskable_type','App\Customer')->first()))
-                                @continue
+                            @if(empty(\App\Meeting::where('customer_id',$customer->id)->first()))
+                                <option class="customerid-{{$customer->id }}" value="{{ $customer->id }}">{{ $customer->name }} - {{$customer->company}}</option>
                             @endif
-                            <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->company }}</option>
                         @endforeach
                     </select>
                     <textarea id="meet_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>

@@ -9,7 +9,6 @@
             <div class="dropdown-menu pl-2 shadow" style="border-radius: 0px; border:none;">
                 <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
                 <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$customer->id}}" style="cursor:pointer;">удалить</p>
-
             </div>
         </div>
     </div>

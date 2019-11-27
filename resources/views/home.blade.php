@@ -54,6 +54,14 @@
         @include('modals.customers.edit_customer_admin')
         @include('modals.customers.delete_customer_admin')
     @endforeach
+    @foreach(\App\Task::where('taskable_type',null)->get() as $task)
+        @include('modals.tasks.edit_task_admin')
+        @include('modals.tasks.delete_task_admin')
+    @endforeach
+    @foreach(\App\Task::where('taskable_type','App\Meeting')->get() as $task)
+        @include('modals.meets.edit_meet_admin')
+        @include('modals.meets.delete_meet_admin')
+    @endforeach
     @include('modals.customers.create_client')
     @include('modals.tasks.create_task_admin')
 @endsection
@@ -72,6 +80,258 @@
 
 
     {{--</script>--}}
+    <script>
+        $('.deleteMeet').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let user = btn.data('parent');
+            console.log(id);
+            $.ajax({
+                url: 'DeleteTaskAdmin',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Встреча удалена!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    $('#meet-' + id).hide();
+                    $('#DeleteMeetAdmin-' + id).modal('hide');
+                    console.log(data);
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+        })
+    </script>
+    <script>
+        $('.editMeet').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let user = btn.data('parent');
+            let title = $('#meet_name-' + id);
+            let desc = $('#meet_desc-' + id);
+            let date = $('#meet_date-' + id);
+            let manage = $('#meet_manager-' + id);
+            let status = $('#meet_status-' + id);
+            if(desc.val() == '')
+            {
+                swal("Заполните описание!","Поле описание стало обязательным","error");
+            }
+            else {
+                $.ajax({
+                    url: 'EditMeetAdmin',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "title": title.val(),
+                        "desc": desc.val(),
+                        "date": date.val(),
+                        "manage": manage.val(),
+                        "status": status.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        if(data.status == "success"){
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Данные изменены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            console.log(data);
+                            $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                            $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
+                            $('#meet-' + id).find('.meet-manager').html(data.user);
+                            $('#EditMeetAdmin-' + id).find('.modal-title').html(data.meet.title);
+                            if (data.meet.description.length > 25)
+                                $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
+                            else
+                                $('#meet-' + id).find('.meet-desc').html(data.meet.description);
+                            if(data.status_id){
+                                $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                            }else{
+                                $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                            }
+                        } else{
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'info',
+                                title: 'Изменение не найдены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            console.log(data);
+                        }
+                    },
+                    error: () => {
+                        console.log(0);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Что-то пошло не так!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }
+                })
+            }
+        })
+    </script>
+    <script>
+        $('.doneTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let user = btn.data('parent');
+            let id = btn.data('id');
+
+            // console.log(id);
+            $.ajax({
+                url: 'DoneTaskAdmin',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                },
+                success: data => {
+                    $('#DoneTaskAdmin-' + id).modal('hide');
+                    $('#task-now').find('.task-' + data.data.id).hide(200);
+                    console.log(data.view);
+                    console.log($('#done_task_content').html());
+                    let result = $('#done_task_content').append(data.view).show('slide',{direction: 'left'}, 400);
+                    $('#task-now-' + user).find('.task-' + data.data.id).hide(200);
+                    $('#done_task-' + data.data.user_id).append(data.view).show('slide', {direction: 'left'}, 400);
+
+                    swal("Задача выполнена!","Отчет был отправлен","success");
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+        })
+    </script>
+    <script>
+        $('.deleteTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let user = btn.data('parent');
+            console.log(id);
+            $.ajax({
+                url: 'DeleteTaskAdmin',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Задача удалена!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    $('#task-' + id).hide();
+                    $('#DeleteTaskAdmin-' + id).modal('hide');
+                    console.log(data);
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+        })
+    </script>
+    <script>
+        $('.editTask').click(e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            let user = btn.data('parent');
+            let title = $('#task_name-' + id);
+            let desc = $('#task_desc-' + id);
+            let date = $('#task_date-' + id);
+            let manage = $('#task_manager-' + id);
+            let status = $('#task_status-' + id);
+            if(desc.val() == '')
+            {
+                swal("Заполните описание!","Поле описание стало обязательным","error");
+            }
+            else {
+                $.ajax({
+                    url: 'EditTaskAdmin',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "title": title.val(),
+                        "desc": desc.val(),
+                        "date": date.val(),
+                        "manage": manage.val(),
+                        "status": status.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        if(data.status == 'success'){
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Данные изменены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            console.log(data);
+                            $('#EditTaskAdmin-' + id).find('.modal-title').html(data.task.title);
+                            $('#task-' + id).find('.task-name').html(data.task.title);
+                            $('#task-' + id).find('.task-deadline').html(data.deadline_date);
+                            $('#task-' + id).find('.task-manager').html(data.user);
+                            if (data.task.description.length > 25)
+                                $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...');
+                            else
+                                $('#task-' + id).find('.task-desc').html(data.task.description);
+
+                            if(data.status_id){
+                                $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                            }else{
+                                $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
+                            }
+                        }else{
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'info',
+                                title: 'Изменение не найдены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            console.log(data);
+                        }
+                    },
+                    error: () => {
+                        console.log(0);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Что-то пошло не так!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }
+                })
+            }
+        })
+    </script>
     <script>
         $('.deleteCustomer').click(e => {
             let btn = $(e.currentTarget);
@@ -678,7 +938,7 @@
                             "user_id": user.val(),
                         },
                         success: data => {
-                            $('#CreateMeetAdmin').modal('hide');
+                            $('#CreateMeet').modal('hide');
                             // console.log(data);
                             Swal.fire({
                                 position: 'top-end',
@@ -687,6 +947,7 @@
                                 showConfirmButton: false,
                                 timer: 700
                             });
+                            $('.customerid-'+data.data.taskable.customer_id).remove();
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                             result.find('.meetDone').each((e,i) => {
                                 doneMeet($(i));

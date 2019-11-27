@@ -110,19 +110,19 @@
 
              @foreach($tasks as $task)
                 <div class="row py-2 my-1 sf-light position-relative" id="meet-{{$task->id}}">
-                     <div class="col-2 meet-name" style="border-right:1px solid #dedede;">
+                     <div class="col-2 meet-name-admin" style="border-right:1px solid #dedede;">
                          {{ $task->title }}
                      </div>
-                     <div class="col-4 meet-desc" style="border-right:1px solid #dedede;">
+                     <div class="col-4 meet-desc-admin" style="border-right:1px solid #dedede;">
                          {{ str_limit($task->description, $limit = 25, $end = '...') }}
                      </div>
-                     <div class="col-2 meet-manager" style="border-right:1px solid #dedede;">
+                     <div class="col-2 meet-manager-admin" style="border-right:1px solid #dedede;">
                          {{ \App\User::find($task->user_id)->name }}
                      </div>
-                     <div class="col-2 meet-deadline">
+                     <div class="col-2 meet-deadline-admin">
                          {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                      </div>
-                     <div class="col-2 meet-status">
+                     <div class="col-2 meet-status-admin">
                          @if(isset($task->status))
                              <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
                                  {{ $task->status->name }}
@@ -133,7 +133,7 @@
                              </button>
                          @endif
                      </div>
-                     <div class="col-2 task-date">
+                     <div class="col-2 meet-date-admin">
                          {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
                      </div>
                      <div class="btn-group dropleft col-1">
@@ -220,7 +220,7 @@
                             showConfirmButton: false,
                             timer: 700
                         });
-                        $('#task-' + id).hide();
+                        $('#meet-' + id).hide();
                         $('#DeleteMeetAdmin-' + id).modal('hide');
                         console.log(data);
                     },
@@ -237,11 +237,11 @@
             let btn = $(e.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
-            let title = $('#meet_name-' + id);
-            let desc = $('#meet_desc-' + id);
-            let date = $('#meet_date-' + id);
-            let manage = $('#meet_manager-' + id);
-            let status = $('#meet_status-' + id);
+            let title = $('#meet_name_admin-' + id);
+            let desc = $('#meet_desc_admin-' + id);
+            let date = $('#meet_date_admin-' + id);
+            let manage = $('#meet_manager_admin-' + id);
+            let status = $('#meet_status_admin-' + id);
             if(desc.val() == '')
             {
                 swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -269,18 +269,18 @@
                                     timer: 700
                                 });
                                 console.log(data);
-                                $('#meet-' + id).find('.meet-name').html(data.meet.title);
-                                $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
-                                $('#meet-' + id).find('.meet-manager').html(data.user);
+                                $('#meet-' + id).find('.meet-name-admin').html(data.meet.title);
+                                $('#meet-' + id).find('.meet-deadline-admin').html(data.deadline_date);
+                                $('#meet-' + id).find('.meet-manager-admin').html(data.user);
+                                $('#EditMeetAdmin-' + id).find('.modal-title').html(data.meet.title);
                                 if (data.meet.description.length > 25)
-                                    $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
+                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description.substring(0,25) + '...');
                                 else
-                                    $('#meet-' + id).find('.meet-desc').html(data.meet.description);
-
-                                if(data.status){
-                                    $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description);
+                                if(data.status_id){
+                                    $('#meet-' + id).find('.meet-status-admin button').html(data.status_id.name).css("background-color",data.status_id.color);
                                 }else{
-                                    $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                                    $('#meet-' + id).find('.meet-status-admin button').html('В ожидании').css("background-color",'#EBDC60');
                                 }
                             } else{
                                 Swal.fire({
