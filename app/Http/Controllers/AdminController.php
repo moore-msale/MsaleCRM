@@ -29,7 +29,7 @@ class AdminController extends Controller
         $request->merge(['deadline_date' => $deadline_date]);
         $task->deadline_date = $request->deadline_date;
         $task->user_id = $request->user_id;
-        $task->status_id = $request->status;
+        $task->status_id = 0;
         $task->save();
         if ($request->ajax()){
             return response()->json([
@@ -128,7 +128,7 @@ class AdminController extends Controller
         $task->deadline_date = $request->deadline_date;
         $task->description = $request->description;
         $task->user_id = auth()->id();
-        $task->status_id = $request->status_id;
+        $task->status_id = 0;
         $task->taskable_id = $request->manager_id;
         $task->save();
         $meeting->task()->save($task);
@@ -139,7 +139,7 @@ class AdminController extends Controller
         $history->customer_id = $customer->id;
         $history->action = "Встреча";
         $history->date = Carbon::now();
-        $history->status = $request->status_id;
+        $history->status = 0;
         $history->save();
 
         if ($request->ajax()){
@@ -149,7 +149,10 @@ class AdminController extends Controller
                 'id'=>  $customer->id,
                 'view2' => view('pages.Meets.includes.meet_admin', [
                     'task' => $task,
-                ])->renderSections(),
+                ])->render(),
+                'view' => view('tasks.meetings-card', [
+                    'task' => $task,
+                ])->render(),
             ]);
         }
     }
@@ -238,7 +241,7 @@ class AdminController extends Controller
         $task->title = $customer->name ? $customer->company : 'Empty';
         $task->user_id = $request->user_id;
         $task->description = $request->description;
-        $task->status_id = $request->status;
+        $task->status_id =0;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
@@ -267,10 +270,10 @@ class AdminController extends Controller
             return response()->json([
                 'status' => "success",
                 'view'=>view('tasks.potentials-card', [
-                    'customer' => $customer,
+                    'customer' => $task,
                 ])->render(),
-                'view2' => view('pages.Customers.includes.customer', [
-                    'customer' => $customer,
+                'view2' => view('pages.Customers.includes.customer_admin', [
+                    'customer' => $task,
                 ])->render(),
             ]);
         }

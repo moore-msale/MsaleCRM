@@ -25,16 +25,16 @@
                         <div class="nav-link products px-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$value->id}}">
                             <span class="d-flex align-items-center justify-content-between border-bottom pb-2" style="cursor: pointer;">
                                 <span class="ml-3">
-                                    {{ $value->title }}
+                                    {{str_limit($value->title,15) }}
                                 </span>
                                 <span>
-                                    {{ $value->description }}
+                                    {{str_limit($value->description,15) }}
                                 </span>
                                 <span class="mr-3">
                                     {{ \App\User::find($value->user_id)->name }}
                                 </span>
                                 @if(isset($value->status))
-                                    <button style="height:100%; color:white; background: {{ $value->status->color }}; border-radius: 20px; border:0px;">
+                                    <button style="height:100%; color:white; background: {{ $value->status->color }}; border-radius: 20px; border:0px;padding:0px 15px;">
                                     {{ $value->status->name }}
                                 </button>
                                 @else

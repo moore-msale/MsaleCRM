@@ -40,12 +40,6 @@
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>
-                    <select class="browser-default custom-select border-0 mt-2" id="client_status_admin" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        <option value="0">В работе</option>
-                        @foreach(\App\Status::where('type','customer')->get() as $stat)
-                            <option value="{{ $stat->id }}">{{ $stat->name }}</option>
-                        @endforeach
-                    </select>
                     <textarea id="client_desc_admin" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
                 </form>
                 <button type="button" class="w-100 sf-light createCustomerAdmin mt-5 space-button">Создать</button>

@@ -4,9 +4,15 @@
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ЗАДАЧИ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#TaskCreate">
-                    <img src="{{ asset('images/+.svg') }}" alt="">
-                </a>
+                @if(auth()->user()->role=='admin')
+                    <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CreateTaskAdmin">
+                        <img src="{{ asset('images/+.svg') }}" alt="">
+                    </a>
+                @else
+                    <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#TaskCreate">
+                        <img src="{{ asset('images/+.svg') }}" alt="">
+                    </a>
+                @endif
             </div>
             {{--<div class="mt-3 mx-lg-3 mx-0 d-flex align-items-center py-2 px-3"--}}
                  {{--style="border-left:2px solid #ff5252; box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.15);">--}}
@@ -68,9 +74,15 @@
                 <p class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ВСТРЕЧИ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CreateMeet">
-                    <img src="{{ asset('images/+.svg') }}" alt="">
-                </a>
+                @if(auth()->user()->role=='admin')
+                    <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CreateMeetAdmin">
+                        <img src="{{ asset('images/+.svg') }}" alt="">
+                    </a>
+                @else
+                    <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CreateMeet">
+                        <img src="{{ asset('images/+.svg') }}" alt="">
+                    </a>
+                @endif
             </div>
 
             {{--<div class="mt-3 mx-lg-3 mx-0 d-flex align-items-center"--}}

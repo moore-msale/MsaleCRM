@@ -258,14 +258,14 @@
         })
     </script>
     <script>
-        $('.deleteMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.deleteMeet',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             console.log(id);
             $.ajax({
-                url: 'DeleteTaskAdmin',
+                url: 'DeleteTask',
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -279,7 +279,7 @@
                         showConfirmButton: false,
                         timer: 700
                     });
-                    $('#task-' + id).hide();
+                    $('#meet-' + id).hide();
                     $('#DeleteMeetAdmin-' + id).modal('hide');
                     console.log(data);
                 },
@@ -291,28 +291,30 @@
         })
     </script>
     <script>
-        $('.editMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.editMeet',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
-            let title = $('#meet_name-' + id);
-            let desc = $('#meet_desc-' + id);
-            let date = $('#meet_date-' + id);
-            let status = $('#meet_status-' + id);
+            let title = $('#meet_name_admin-' + id);
+            let desc = $('#meet_desc_admin-' + id);
+            let date = $('#meet_date_admin-' + id);
+            let manage = $('#meet_manager_admin-' + id);
+            let status = $('#meet_status_admin-' + id);
             if(desc.val() == '')
             {
                 swal("Заполните описание!","Поле описание стало обязательным","error");
             }
             else {
                 $.ajax({
-                    url: 'meeting/'+id,
-                    method: 'PUT',
+                    url: 'EditMeet',
+                    method: 'POST',
                     data: {
                         "_token": "{{ csrf_token() }}",
                         "title": title.val(),
                         "desc": desc.val(),
                         "date": date.val(),
+                        "manage": manage.val(),
                         "status": status.val(),
                         "id": id,
                     },
@@ -326,18 +328,18 @@
                                 timer: 700
                             });
                             console.log(data);
-                            $('#meet-' + id).find('.meet-name').html(data.meet.title);
-                            $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
-                            $('#meet-' + id).find('.meet-manager').html(data.user);
+                            $('#meet-' + id).find('.meet-name-admin').html(data.meet.title);
+                            $('#meet-' + id).find('.meet-deadline-admin').html(data.deadline_date);
+                            $('#meet-' + id).find('.meet-manager-admin').html(data.user);
+                            $('#EditMeetAdmin-' + id).find('.modal-title').html(data.meet.title);
                             if (data.meet.description.length > 25)
-                                $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
+                                $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description.substring(0,25) + '...');
                             else
-                                $('#meet-' + id).find('.meet-desc').html(data.meet.description);
-
-                            if(data.status){
-                                $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description);
+                            if(data.status_id){
+                                $('#meet-' + id).find('.meet-status-admin button').html(data.status_id.name).css("background-color",data.status_id.color);
                             }else{
-                                $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                                $('#meet-' + id).find('.meet-status-admin button').html('В ожидании').css("background-color",'#EBDC60');
                             }
                         } else{
                             Swal.fire({

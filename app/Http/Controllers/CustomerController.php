@@ -45,7 +45,6 @@ class   CustomerController extends Controller
     public function filter(Request $request)
     {
 //        dd($request->all());
-
         if($request->status != null && $request->manager != null)
         {
             $customers = Task::where('taskable_type', 'App\Customer')->where('user_id',$request->manager)->where('status_id',$request->status)->get()->reverse();
@@ -57,13 +56,15 @@ class   CustomerController extends Controller
         elseif($request->manager != null)
         {
             $customers = Task::where('taskable_type', 'App\Customer')->where('user_id',$request->manager)->get()->reverse();
+        }elseif(auth()->user()->role=='admin'){
+            $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
         }
         else
         {
-            $customers = Task::where('taskable_type','App\Customer')->where('user_id',$request->manager)->get()->reverse();
+            $customers = Task::where('taskable_type','App\Customer')->where('user_id',auth()->id())->get()->reverse();
         }
         if(auth()->user()->role=='admin'){
-            return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);            
+            return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
         }
         return view('pages.Customers.customer_page', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
     }
@@ -456,7 +457,7 @@ class   CustomerController extends Controller
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $customer = Customer::find($request->id);
-        $task = new Task;
+        $task = $customer->task;
         $task->description = $request->desc;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');

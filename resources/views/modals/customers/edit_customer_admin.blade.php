@@ -48,9 +48,10 @@
                     <select class="browser-default custom-select border-0 mt-2" id="client_manager-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{ \App\User::find($customer->user_id)->id }}">{{ \App\User::find($customer->user_id)->name }}</option>
                         @foreach(\App\User::all() as $user)
-                            @if($user->id != \App\User::find($customer->user_id)->id and empty(\App\Task::where('user_id',$user->id)))
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @if($user->id == \App\User::find($customer->user_id)->id)
+                                @continue
                             @endif
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>
                     <select class="browser-default custom-select border-0 mt-2" id="client_status-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">

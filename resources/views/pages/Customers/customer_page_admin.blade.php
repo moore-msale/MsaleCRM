@@ -35,13 +35,12 @@
                             @if(isset($status) && $status == 0)
                                 <option value="0">Без статуса</option>
                             @else
-                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все статусы'}}</option>
+                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все клиенты'}}</option>
                                 <option value="0">Без статуса</option>
                             @endif
-                            @if(isset($status) )
-                                <option value="{{ null }}">Все статусы</option>
+                            @if(isset($status))
+                                <option value="{{ null }}">Все клиенты</option>
                             @endif
-
                             @foreach(\App\Status::where('type','customer')->get() as $status1)
                                 @if(isset($status) && $status1->id == $status)
 
@@ -84,7 +83,7 @@
         </div>
 
         <div class="content-block pt-5" style="height:40vh;">
-            <div class="row mb-3 py-2 sf-light" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
+            <div class="row mb-3 py-2 sf-light" id="customers-content" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
                 <div class="col-2">
                     Имя
                 </div>
@@ -149,8 +148,7 @@
                         <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
                         <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
                             <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
-                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$customer->id}}" style="cursor:pointer;">удалить</p>
-
+                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">удалить</p>
                         </div>
                     </div>
             </div>
@@ -219,9 +217,9 @@
 
 
     <script>
-    $('.editCustomer').click(e => {
-        e.preventDefault();
-        let btn = $(e.currentTarget);
+    $(document).on("click", '.editCustomer',function( event ) {
+        event.preventDefault();
+        let btn = $(event.currentTarget);
         let id = btn.data('id');
         let date = $('#client_date-' + id);
         let name = $('#client_name-' + id);
@@ -310,8 +308,9 @@
     })
 </script>
     <script>
-        $('.deleteCustomer').click(e => {
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.deleteCustomer',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             $.ajax({
                 url: 'DeleteCustomerAdmin',
@@ -328,7 +327,7 @@
                         showConfirmButton: false,
                         timer: 700
                     });
-                    $('#DeleteCustomer-' + id).modal('hide');
+                    $('#DeleteCustomerAdmin-' + id).modal('hide');
                     $('#customer-' + id).hide();
                 },
                 error: () => {

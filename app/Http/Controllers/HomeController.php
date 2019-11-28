@@ -116,11 +116,17 @@ class HomeController extends Controller
                 'App\Customer'
             )->get();
         }
-
-        $meetings = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)->hasMorph(
-            'taskable',
-            'App\Meeting'
-        )->get();
+        if(Auth::user()->role == 'admin'){
+            $meetings = Task::where('deadline_date', '>=', $today)->hasMorph(
+                'taskable',
+                'App\Meeting'
+            )->get();
+        }else{
+            $meetings = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)->hasMorph(
+                'taskable',
+                'App\Meeting'
+            )->get();
+        }
 
 
         $calls = Call::where('user_id', auth()->id())->where('active',0)->get()->reverse();

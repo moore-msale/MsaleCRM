@@ -73,16 +73,25 @@
                     <input type="text" name="deadline_date" id="customer_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
                     <select class="browser-default custom-select border-0 mt-2 sf-light" id="customer_name" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{null}}">Выберите клиента...</option>
-                        @foreach(\App\Customer::all() as $customer)
-                            @if(!empty(\App\Task::where('user_id',$customer->id)->where('taskable_type','App\Customer')->first()))
-                                @continue
+{{--                        @foreach(\App\Customer::all() as $customer)--}}
+{{--                            @if(!empty(\App\Task::where('user_id',$customer->id)->where('taskable_type','App\Customer')->first()))--}}
+{{--                                @continue--}}
+{{--                            @endif--}}
+{{--                            <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->company }}</option>--}}
+{{--                        @endforeach--}}
+                        @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $customer)
+                            @if(!isset($customer->status) ||  $customer->status->name != 'Потенциальный')
+                                <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }} - {{ $customer->taskable->company }} | Статус : {{ isset($customer->status) ? $customer->status->name : 'В работе' }}</option>
                             @endif
-                            <option value="{{ $customer->id }}">{{ $customer->name }} - {{ $customer->company }}</option>
                         @endforeach
                     </select>
                     <textarea id="customer_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
                 </form>
-                <button type="button" class="w-100 sf-light addPotencial mt-5 space-button" data-id="{{$customer->id}}">Создать</button>
+                @if(isset($customer))
+                    <button type="button" class="w-100 sf-light addPotencial mt-5 space-button" data-id="{{$customer->id}}">Создать</button>
+                @else
+                    <button type="button" class="w-100 sf-light addPotencial mt-5 space-button" data-id="">Создать</button>
+                @endif
 
             </div>
             {{--<div class="modal-footer justify-content-center">--}}

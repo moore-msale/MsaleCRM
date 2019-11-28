@@ -1,4 +1,4 @@
-<div class="modal fade " id="DeleteCustomer-{{$customer->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade " id="DeleteCustomerAdmin-{{$customer->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <!--Content-->

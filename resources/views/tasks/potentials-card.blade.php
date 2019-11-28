@@ -51,10 +51,10 @@
         {{--</div>--}}
     <div class="status-customer position-absolute h-100" style="width:3px; background-color: {{ isset($customer->status) != null ? $customer->status->color : '#C4C4C4'}}; top:0%; left:0%; "></div>
 </div>
-
-
-
-
-@include('modals.customers.edit_customer')
-@include('modals.customers.done_customer')
-@include('modals.customers.delete_customer')
+@if(auth()->user()->role=='admin')
+    @include('modals.customers.delete_customer_admin')
+    @include('modals.customers.edit_customer_admin')
+@else
+    @include('modals.customers.delete_customer')
+    @include('modals.customerss.edit_customer')
+@endif

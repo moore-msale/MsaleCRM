@@ -16,15 +16,19 @@
     font-size: 23px;
  }
 .display-5-5{
-    font-size: 18px;  
+    font-size: 18px;
 }
  .display-6{
-    font-size: 12px;  
+    font-size: 12px;
  }
 
  .upload-avatar{
     cursor: pointer!important;
  }
+ .confirmation{
+     font-size: 18px;
+     line-height: 21px;
+     color: #6FC268;
 }
 </style>
 <div class="row pl-1 h-100">
@@ -34,7 +38,7 @@
                     <div class="mt-1 pl-5 pt-4">
                         <div class="row">
                             <div class="col text-left">
-                                <h2 class="display-5 sf-medium">+ профиль</h2>  
+                                <h2 class="display-5 sf-medium">+ профиль</h2>
                             </div>
                         </div>
                     </div>
@@ -67,21 +71,7 @@
                                 <input type="text" name="email" id="email-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->email }}" placeholder="Email">
                             </div>
                             <div class="form-group mb-2">
-                                <input type="text" name="role" id="role-{{$user->role}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->role }}" placeholder="Должность">
-                            </div>
-                            <div class="form-group mb-2">
                                 <input type="text" name="password" id="password-{{$user->password}}" class="form-control rounded-0 border-0 bg-grey sf-medium display-6" placeholder="Пароль">
-                            </div>
-                            <div class="mt-5">
-                                <h2 class="text-muted sf-medium display-5-5">+ ежедневный план</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <input type="text" class="form-control rounded-0 border-0 bg-grey sf-medium" placeholder="Количество звонков">
-                                </div>
-                                <div class="col">
-                                    <input type="text" class="form-control rounded-0 border-0 bg-grey sf-medium" placeholder="Количество встреч">
-                                </div>
                             </div>
                             <div class="mt-5">
                                 <h2 class="text-muted sf-medium display-5-5">+ личные данные</h2>
@@ -101,12 +91,15 @@
                                     <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="scan_pas-{{ $user->id }} sf-medium">Загрузить фото паспорта(задниию часть)</label>
                                 </div>
                             </div>
-                            <div class="input-group pt-2 mb-5">
+                            <div class="input-group pt-2 mb-4">
                                 <div class="custom-file rounded-0 border-0">
                                     <input type="file" class="custom-file" id="scan2_pas-{{$user->id}}" name="scan2_pas"
                                            aria-describedby="inputGroupFileAddon01" accept="image/*">
                                     <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="scan2_pas-{{ $user->id }} sf-medium">Загрузить фото паспорта(переднию часть)</label>
                                 </div>
+                            </div>
+                            <div class="mb-5">
+                                <span class="confirmation sf-medium mr-2">С условиями ознакомлен и согласен</span><img src="{{asset('images/check-circle.png')}}" alt="">
                             </div>
                             <button class="btn btn-outline-secondary btn-block sf-medium" type="submit">
                                 Изменить

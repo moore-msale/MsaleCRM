@@ -81,8 +81,11 @@
                     </select>
                     <textarea id="meet_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
                 </form>
-                <button type="button" class="w-100 sf-light createMeet mt-5 space-button" data-id="{{$customer->id}}">Создать</button>
-
+                @if(isset($customer))
+                    <button type="button" class="w-100 sf-light createMeet mt-5 space-button" data-id="{{$customer->id}}">Создать</button>
+                @else
+                    <button type="button" class="w-100 sf-light createMeet mt-5 space-button" data-id="">Создать</button>
+                @endif
             </div>
             {{--<div class="modal-footer justify-content-center">--}}
             {{--</div>--}}

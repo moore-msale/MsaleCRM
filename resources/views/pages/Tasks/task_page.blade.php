@@ -39,7 +39,7 @@
                         @if(isset($status) && $status == 0)
                             <option value="0">Без статуса</option>
                         @else
-                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все статусы'}}</option>
+                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все задачи'}}</option>
                             <option value="0">Без статуса</option>
                         @endif
                         @if(isset($status) )
@@ -325,22 +325,32 @@
 
             // console.log(id);
             $.ajax({
-                url: 'DoneTaskAdmin',
+                url: '{{route('taskdone')}}',
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "id": id,
                 },
                 success: data => {
-                    $('#DoneTaskAdmin-' + id).modal('hide');
-                    $('#task-now').find('.task-' + data.data.id).hide(200);
-                    console.log(data.view);
-                    console.log($('#done_task_content').html());
-                    let result = $('#done_task_content').append(data.view).show('slide',{direction: 'left'}, 400);
-                    $('#task-now-' + user).find('.task-' + data.data.id).hide(200);
-                    $('#done_task-' + data.data.user_id).append(data.view).show('slide', {direction: 'left'}, 400);
-
-                    swal("Задача выполнена!","Отчет был отправлен","success");
+                    if(data.status=='success'){
+                        $('#EditTask-' + id).modal('hide');
+                        $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Задача выполнена!\nОтчет был отправлен',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }else{
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: 'Задача уже завершена!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }
                 },
                 error: () => {
                     console.log(0);
@@ -391,7 +401,6 @@
             let title = $('#task_name-' + id);
             let desc = $('#task_desc-' + id);
             let date = $('#task_date-' + id);
-            let status = $('#task_status-' + id);
             if(desc.val() == '')
             {
                 swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -405,7 +414,6 @@
                         "title": title.val(),
                         "desc": desc.val(),
                         "date": date.val(),
-                        "status": status.val(),
                         "id": id,
                     },
                     success: data => {
@@ -418,17 +426,18 @@
                             timer: 700
                         });
                         console.log(data);
+                         $('#EditTask-' + id).find('.modal-title').html(data.task.title);
                         $('#task-' + id).find('.task-name').html(data.task.title);
                         $('#task-' + id).find('.task-deadline').html(data.deadline_date);
                         if (data.task.description.length > 25)
                             $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...');
                         else
                             $('#task-' + id).find('.task-desc').html(data.task.description);
-                        if(data.status_id){
-                            $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
-                        }else{
-                            $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
-                        }
+                        // if(data.status_id){
+                        //     $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                        // }else{
+                        //     $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
+                        // }
                     }else{
                         Swal.fire({
                             position: 'top-end',

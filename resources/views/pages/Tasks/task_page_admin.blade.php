@@ -37,13 +37,12 @@
                             @if(isset($status) && $status == 0)
                                 <option value="0">Без статуса</option>
                             @else
-                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все статусы'}}</option>
+                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все задачи'}}</option>
                                 <option value="0">Без статуса</option>
                             @endif
                             @if(isset($status) )
                                 <option value="{{ null }}">Все задачи</option>
                             @endif
-
                             @foreach(\App\Status::where('type','task')->get() as $status1)
                                 @if(isset($status) && $status1->id == $status)
                                     @continue
@@ -110,19 +109,19 @@
 
              @foreach($tasks as $task)
                 <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
-                <div class="col-2 task-name-admin" style="border-right:1px solid #dedede;">
+                <div class="col-2 task-name" style="border-right:1px solid #dedede;">
                     {{ $task->title }}
                 </div>
-                <div class="col-4 task-desc-admin" style="border-right:1px solid #dedede;">
+                <div class="col-4 task-desc" style="border-right:1px solid #dedede;">
                     {{ str_limit($task->description, $limit = 25, $end = '...') }}
                 </div>
-                <div class="col-2 task-manager-admin" style="border-right:1px solid #dedede;">
+                <div class="col-2 task-manager" style="border-right:1px solid #dedede;">
                     {{ \App\User::find($task->user_id)->name }}
                 </div>
-                <div class="col-2 task-deadline-admin">
+                <div class="col-2 task-deadline">
                     {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                 </div>
-                <div class="col-2 task-status-admin">
+                <div class="col-2 task-status">
                     @if(isset($task->status))
                         <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
                             {{ $task->status->name }}
@@ -133,7 +132,7 @@
                         </button>
                     @endif
                 </div>
-                <div class="col-2 task-date-admin">
+                <div class="col-2 task-date">
                     {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
                 </div>
                 <div class="btn-group dropleft col-1">
@@ -201,9 +200,9 @@
         });
     </script>
     <script>
-        $('.doneTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.doneTask',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let user = btn.data('parent');
             let id = btn.data('id');
 
@@ -234,9 +233,9 @@
         })
     </script>
     <script>
-        $('.deleteTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.deleteTask',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             console.log(id);
@@ -267,9 +266,9 @@
         })
     </script>
     <script>
-        $('.editTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.editTask',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             let title = $('#task_name_admin-' + id);
@@ -277,7 +276,6 @@
             let date = $('#task_date_admin-' + id);
             let manage = $('#task_manager_admin-' + id);
             let status = $('#task_status_admin-' + id);
-            console/log('Something');
             if(desc.val() == '')
             {
                 swal("Заполните описание!","Поле описание стало обязательным","error");
@@ -306,18 +304,18 @@
                             });
                             console.log(data);
                             $('#EditTaskAdmin-' + id).find('.modal-title').html(data.task.title);
-                            $('#task-' + id).find('.task-name-admin').html(data.task.title);
-                            $('#task-' + id).find('.task-deadline-admin').html(data.deadline_date);
-                            $('#task-' + id).find('.task-manager-admin').html(data.user);
+                            $('#task-' + id).find('.task-name').html(data.task.title);
+                            $('#task-' + id).find('.task-deadline').html(data.deadline_date);
+                            $('#task-' + id).find('.task-manager').html(data.user);
                             if (data.task.description.length > 25)
-                                $('#task-' + id).find('.task-desc-admin').html(data.task.description.substring(0,25) + '...');
+                                $('#task-' + id).find('.task-desc').html(data.task.description.substring(0,25) + '...');
                             else
-                                $('#task-' + id).find('.task-desc-admin').html(data.task.description);
+                                $('#task-' + id).find('.task-desc').html(data.task.description);
 
                             if(data.status_id){
-                                $('#task-' + id).find('.task-status-admin button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
                             }else{
-                                $('#task-' + id).find('.task-status-admin button').html('В работе').css("background-color",'#3B79D6');
+                                $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
                             }
                         }else{
                             Swal.fire({

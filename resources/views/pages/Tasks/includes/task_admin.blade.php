@@ -33,3 +33,5 @@
         </div>
     </div>
 </div>
+@include('modals.tasks.delete_task_admin')
+@include('modals.tasks.edit_task_admin')

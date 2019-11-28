@@ -22,7 +22,7 @@ class MeetingController extends Controller
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
     public function index()
     {
         //
@@ -42,14 +42,16 @@ class MeetingController extends Controller
         elseif($request->manager != null)
         {
             $tasks = Task::where('taskable_type', 'App\Meeting')->where('user_id',$request->manager)->get()->reverse();
+        }elseif(auth()->user()->role=='admin'){
+            $tasks = Task::where('taskable_type','App\Meeting')->get()->reverse();
         }
         else
         {
             $tasks = Task::where('taskable_type','App\Meeting')->where('user_id',auth()->id())->get()->reverse();
         }
-        if(auth()->user()->role=='admin'){
-            return view('pages.Meets.meet_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
-        }
+         if(auth()->user()->role=='admin'){
+             return view('pages.Meets.meet_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
+         }
         return view('pages.Meets.meet_page', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
     }
     /**
@@ -72,8 +74,8 @@ class MeetingController extends Controller
     {
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
-        
-        
+
+
         $customer = Customer::find($request->id);
         $meeting = New Meeting();
         $meeting->customer_id = $customer->id;
@@ -135,13 +137,13 @@ class MeetingController extends Controller
         $history->user_id = $task->user_id;
         $history->customer_id = $customer->id;
         $history->save();
-        
+
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
                 'data' => $task,
                 'view' => view('tasks.meetings-card', [
-                    'meeting' => $task,
+                    'task' => $task,
                 ])->render(),
             ], 200);
         }
@@ -185,7 +187,7 @@ class MeetingController extends Controller
 
         $meeting = Meeting::find($request->id);
         $task = $meeting->task;
-    
+
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);

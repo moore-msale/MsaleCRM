@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
-   
-    
+
+
     public function profile()
     {
         $user = Auth::user();
@@ -67,11 +67,14 @@ class UserController extends Controller
             }
         }
         $user->save();
-        $this->chandeDB($request['company']);
-        $newuser = $user->replicate();
-        $newuser->id = $user->id;
-        $newuser->save();
-        return back();
+        if( $user->company = $request['company']!='msalecrm'){
+            $this->chandeDB($request['company']);
+            $newuser = $user->replicate();
+            $newuser->id = $user->id;
+            $newuser->save();
+        }
+        return redirect()->back();
+
     }
     public function editUser(Request $request)
     {
@@ -113,19 +116,13 @@ class UserController extends Controller
         }
 
         $user->save();
-        $this->chandeDB($request['company']);
-        $newuser = User::find($request->id);
-        $newuser = $user->replicate();
-        $newuser->save();
-//        if ($request->ajax()){
-//            return response()->json([
-//                'status' => "success",
-//                'data' => $request->all(),
-//            ], 200);
-//        }
-
-        return back();
-
+        if( $user->company !='msalecrm') {
+            $this->chandeDB($request['company']);
+            $newuser = User::find($request->id);
+            $newuser = $user->replicate();
+            $newuser->save();
+        }
+        return redirect()->back();
     }
     public function blockUser($id){
         $user = User::find($id);
@@ -152,12 +149,14 @@ class UserController extends Controller
 
     public function deleteUser($id){
         $user = User::find($id);
-        $company = $user['company']; 
+        $company = $user['company'];
         $user->delete();
-        $this->chandeDB($company);
-        $newuser = User::find($id);
-        $newuser->delete();
-        return back();
+        if($company!='msalecrm'){
+            $this->chandeDB($company);
+            $newuser = User::find($id);
+            $newuser->delete();
+        }
+        return redirect()->back();
     }
     public function chandeDB($name){
         config(['database.connections.mysql.database' => $name]);

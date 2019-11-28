@@ -42,3 +42,5 @@
         <i class="fas fa-pencil-alt fa-sm mr-3 ico-edit task-ico" title="Изменить описание"></i>
     </div>
 </div>
+@include('modals.meets.delete_meet')
+@include('modals.meets.edit_meet')

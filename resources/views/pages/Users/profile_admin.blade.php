@@ -16,10 +16,10 @@
     font-size: 23px;
  }
 .display-5-5{
-    font-size: 18px;  
+    font-size: 18px;
 }
  .display-6{
-    font-size: 12px;  
+    font-size: 12px;
  }
 
  .upload-avatar{
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-7 pt-4 p-3 tab-pane fade active show" id="newuser"> 
+        <div class="col-7 pt-4 p-3 tab-pane fade active show" id="newuser">
                     <div class="shadow bg-white">
                         <div class="mt-1 pl-5 pt-4">
                             <p class="sf-medium display-5">+ Новый пользователь</p>
@@ -135,7 +135,7 @@
                                         <label class="custom-file-label rounded-0 border-0 bg-grey sf-medium display-6" for="avatar-{{ $user->id }}">Загрузить фото профиля</label>
                                     </div>
                                 </div>
-    
+
                                  <div class="input-group pt-2">
                                     <div class="custom-file rounded-0 border-0">
                                         <input type="file" class="custom-file" id="scan_pas-{{$user->id}}" name="scan_pas"
@@ -150,7 +150,7 @@
                                         <label class="custom-file-label rounded-0 border-0 bg-grey sf-medium display-6" for="scan2_pas-{{ $user->id }}">Загрузить фото паспорта(переднию часть)</label>
                                     </div>
                                 </div>
-                                <button class="btn btn-outline-secondary btn-block" type="submit">
+                                <button class="btn btn-outline-secondary btn-block addUser" type="submit">
                                     добавить
                                 </button>
                             </form>
@@ -163,10 +163,10 @@
                     <div class="mt-1 pl-5 pt-4">
                         <div class="row">
                             <div class="col text-left">
-                                <h2 class="display-5 sf-medium">+ профиль</h2>  
+                                <h2 class="display-5 sf-medium">+ профиль</h2>
                             </div>
                             <div class="col text-right  mr-5">
-                                <a href="blockuser/{{$manager->id}}" class="text-danger display-5 border-bottom border-danger sf-medium">-деактивировать</a>  
+                                <a href="blockuser/{{$manager->id}}" class="text-danger display-5 border-bottom border-danger sf-medium">-деактивировать</a>
                             </div>
                         </div>
                     </div>
@@ -264,31 +264,31 @@
                       <th scope="col sf-medium"></th>
                     </tr>
                   </thead>
-                  <tbody> 
+                  <tbody>
                     @foreach(\App\User::where('role', '!=', 'admin')->where('company','=',$user->company)->where('status', '!=', 'active')->get() as $manager)
                     <tr>
                         <th scope="row">{{$manager->id}}</th>
-                        <td>
+                        <td class="overflow-hidden">
                             @if(isset($manager->name))
                                 <p class="sf-medium">{{$manager->name}}</p>
-                            @endif 
+                            @endif
                         </td>
-                        <td>
+                        <td class="overflow-hidden">
                             @if(isset($manager->lastname))
                                 <p class="sf-medium">{{$manager->lastname}}</p>
-                            @endif 
+                            @endif
                         </td>
-                        <td>
+                        <td class="overflow-hidden">
                             @if(isset($manager->address))
                                 <p class="sf-medium">{{$manager->address}}</p>
                             @endif
                         </td>
-                        <td>
+                        <td class="overflow-hidden">
                             @if(isset($manager->phone))
                                 <p class="sf-medium">{{$manager->phone}}</p>
                             @endif
                         </td>
-                        <td>
+                        <td class="overflow-hidden">
                             @if(isset($manager->email))
                                 <p class="sf-medium">{{$manager->email}}</p>
                             @endif
@@ -302,7 +302,7 @@
                     </tbody>
                 </table>
             </div>
-            </div>       
+            </div>
         </div>
     </div>
 
@@ -316,47 +316,89 @@
         $('.nav-link').on('click', function() {
           $('.nav-link').removeClass('active');
         });
-        $('.editUser').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
-            let id = btn.data('id');
-            let name = $('#name-' + id);
-            let email = $('#email-' + id);
-            let avatar = $('#avatar-' + id);
-            let password = $('#password-' + id);
+        {{--$('.editUser').click(e => {--}}
+        {{--    e.preventDefault();--}}
+        {{--    let btn = $(e.currentTarget);--}}
+        {{--    let id = btn.data('id');--}}
+        {{--    let name = $('#name-' + id);--}}
+        {{--    let email = $('#email-' + id);--}}
+        {{--    let avatar = $('#avatar-' + id);--}}
+        {{--    let password = $('#password-' + id);--}}
 
-            // console.log(avatar.prop('files')[0]);
+        {{--    // console.log(avatar.prop('files')[0]);--}}
 
-            // console.log(image);
+        {{--    // console.log(image);--}}
 
-            $.ajax({
-                url: 'editUser',
-                method: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id": id,
-                    "name": name.val(),
-                    "email": email.val(),
-                    // "avatar": avatar.prop('files')[0],
-                    "password": password.val(),
-                },
-                success: data => {
-                    // $('#DoneTaskAdmin-' + id).modal('hide');
-                    // $('#task-now').find('.task-' + data.data.id).hide(200);
-                    // console.log(data.view);
-                    // console.log($('#done_task_content').html());
-                    // let result = $('#done_task_content').append(data.view).show('slide',{direction: 'left'}, 400);
-                    // $('#task-now-' + user).find('.task-' + data.data.id).hide(200);
-                    // $('#done_task-' + data.data.user_id).append(data.view).show('slide', {direction: 'left'}, 400);
-                    console.log(data.data);
-                    swal("Данные изменены!","","success");
-                },
-                error: () => {
-                    console.log(0);
-                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                }
-            })
-        })
+        {{--    $.ajax({--}}
+        {{--        url: 'editUser',--}}
+        {{--        method: 'POST',--}}
+        {{--        data: {--}}
+        {{--            "_token": "{{ csrf_token() }}",--}}
+        {{--            "id": id,--}}
+        {{--            "name": name.val(),--}}
+        {{--            "email": email.val(),--}}
+        {{--            // "avatar": avatar.prop('files')[0],--}}
+        {{--            "password": password.val(),--}}
+        {{--        },--}}
+        {{--        success: data => {--}}
+        {{--            // $('#DoneTaskAdmin-' + id).modal('hide');--}}
+        {{--            // $('#task-now').find('.task-' + data.data.id).hide(200);--}}
+        {{--            // console.log(data.view);--}}
+        {{--            // console.log($('#done_task_content').html());--}}
+        {{--            // let result = $('#done_task_content').append(data.view).show('slide',{direction: 'left'}, 400);--}}
+        {{--            // $('#task-now-' + user).find('.task-' + data.data.id).hide(200);--}}
+        {{--            // $('#done_task-' + data.data.user_id).append(data.view).show('slide', {direction: 'left'}, 400);--}}
+        {{--            console.log(data.data);--}}
+        {{--            swal("Данные изменены!","","success");--}}
+        {{--        },--}}
+        {{--        error: () => {--}}
+        {{--            console.log(0);--}}
+        {{--            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--})--}}
+    </script>
+    <script>
+        {{--$('.addUser').click(e => {--}}
+        {{--    e.preventDefault();--}}
+        {{--    let btn = $(e.currentTarget);--}}
+        {{--    let name = $('.name');--}}
+        {{--    let lastname = $('.lastname');--}}
+        {{--    let company = $('.company');--}}
+        {{--    let address = $('.address');--}}
+        {{--    let phone = $('.phone');--}}
+        {{--    let email = $('.email');--}}
+        {{--    let role = $('.role');--}}
+        {{--    let password = $('.password');--}}
+        {{--    let calls = $('.calls');--}}
+        {{--   --}}
+        {{--    let meetings = $('.meetings');--}}
+
+
+        {{--    $.ajax({--}}
+        {{--        url: 'addUser',--}}
+        {{--        method: 'POST',--}}
+        {{--        data: {--}}
+        {{--            "_token": "{{ csrf_token() }}",--}}
+        {{--            "id": id,--}}
+        {{--        },--}}
+        {{--        success: data => {--}}
+        {{--            $('#DoneTaskAdmin-' + id).modal('hide');--}}
+        {{--            $('#task-now').find('.task-' + data.data.id).hide(200);--}}
+        {{--            console.log(data.view);--}}
+        {{--            console.log($('#done_task_content').html());--}}
+        {{--            let result = $('#done_task_content').append(data.view).show('slide',{direction: 'left'}, 400);--}}
+        {{--            $('#task-now-' + user).find('.task-' + data.data.id).hide(200);--}}
+        {{--            $('#done_task-' + data.data.user_id).append(data.view).show('slide', {direction: 'left'}, 400);--}}
+
+        {{--            swal("Задача выполнена!","Отчет был отправлен","success");--}}
+        {{--        },--}}
+        {{--        error: () => {--}}
+        {{--            console.log(0);--}}
+        {{--            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--})--}}
     </script>
 @endpush
 

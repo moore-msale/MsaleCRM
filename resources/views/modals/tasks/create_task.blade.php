@@ -29,12 +29,6 @@
                     <input type="hidden" value="potentials" name="type">
                     <input type="text" name="name" id="task_name" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название">
                     <input type="text" name="deadline_date" id="task_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
-                    <select class="browser-default custom-select border-0 mt-2" id="task_status" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        <option value="0">в работе</option>
-                        @foreach(\App\Status::where('type','task')->get() as $stat)
-                            <option value="{{ $stat->id }}">{{ $stat->name }}</option>
-                        @endforeach
-                    </select>
                     <textarea id="task_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
                 </form>
                 <button type="button" class="w-100 sf-light createTask mt-5 space-button">Создать</button>

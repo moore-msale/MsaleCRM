@@ -43,25 +43,13 @@
         @include('modals.customers.add_customer')
         @include('modals.calls.add_1_call')
     @else
-        @include('modals.tasks.create_task')
+        @include('modals.tasks.create_task_admin')
         @include('modals.calls.create_call')
-        @include('modals.meets.create_meet')
+        @include('modals.meets.create_meet_admin')
         @include('modals.calls.called-modal')
         @include('modals.customers.add_customer')
         @include('modals.customers.add_potencial')
     @endif
-    @foreach(\App\Task::where('taskable_type','App\Customer')->get() as $customer)
-        @include('modals.customers.edit_customer_admin')
-        @include('modals.customers.delete_customer_admin')
-    @endforeach
-    @foreach(\App\Task::where('taskable_type',null)->get() as $task)
-        @include('modals.tasks.edit_task_admin')
-        @include('modals.tasks.delete_task_admin')
-    @endforeach
-    @foreach(\App\Task::where('taskable_type','App\Meeting')->get() as $task)
-        @include('modals.meets.edit_meet_admin')
-        @include('modals.meets.delete_meet_admin')
-    @endforeach
     @include('modals.customers.create_client')
     @include('modals.tasks.create_task_admin')
 @endsection
@@ -81,9 +69,9 @@
 
     {{--</script>--}}
     <script>
-        $('.deleteMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.deleteMeet',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             console.log(id);
@@ -114,11 +102,11 @@
         })
     </script>
     <script>
-        $('.editMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.editMeet',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
-            let user = btn.data('parent'); 
+            let user = btn.data('parent');
             let title = $('#meet_name_admin-' + id);
             let desc = $('#meet_desc_admin-' + id);
             let date = $('#meet_date_admin-' + id);
@@ -157,16 +145,16 @@
                             $('#meet-' + id).find('.meet-date1').html(data.date1);
                             $('#meet-' + id).find('.meet-date2').html(data.date2);
                             $('#EditMeetAdmin-' + id).find('.modal-title').html(data.meet.title);
-                            
-                           
+
+
                             if(data.status_id){
                                 $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
-                                $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color); 
-                                $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);                         
+                                $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);
+                                $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                             }else{
                                 $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
                                 $('#meet-' + id).find('.status-meet').css("background-color",'#C4C4C4');
-                                $('#meet-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');       
+                                $('#meet-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');
                             }
                         } else{
                             Swal.fire({
@@ -194,9 +182,9 @@
         })
     </script>
     <script>
-        $('.doneTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.doneTask',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let user = btn.data('parent');
             let id = btn.data('id');
 
@@ -227,9 +215,9 @@
         })
     </script>
     <script>
-        $('.deleteTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.deleteTask',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             console.log(id);
@@ -260,9 +248,9 @@
         })
     </script>
     <script>
-        $('.editTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.editTask',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             let title = $('#task_name_admin-' + id);
@@ -306,12 +294,12 @@
 
                             if(data.status_id){
                                 $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
-                                $('#task-' + id).find('.status-task').css("background-color",data.status_id.color); 
-                                $('#task-' + id).find('.deal-text path,span').attr('fill',data.status_id.color).css("color",data.status_id.color);                         
+                                $('#task-' + id).find('.status-task').css("background-color",data.status_id.color);
+                                $('#task-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                             }else{
                                 $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
                                 $('#task-' + id).find('.status-task').css("background-color",'#C4C4C4');
-                                $('#task-' + id).find('.deal-text path,span').attr('fill','#C4C4C4').css("color",'#C4C4C4');                                  
+                                $('#task-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');
                             }
                         }else{
                             Swal.fire({
@@ -339,8 +327,9 @@
         })
     </script>
     <script>
-        $('.deleteCustomer').click(e => {
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.deleteCustomer',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             $.ajax({
                 url: 'DeleteCustomerAdmin',
@@ -375,9 +364,9 @@
         })
     </script>
     <script>
-        $('.editCustomer').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.editCustomer',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let date = $('#client_date-' + id);
             let name = $('#client_name-' + id);
@@ -430,11 +419,11 @@
                             $('#history_block-' + id).html(data.html);
 
                             if(data.status_id){
-                                $('#customer-' + id).find('.status-customer').css("background-color",data.status_id.color); 
-                                $('#customer-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);                         
+                                $('#customer-' + id).find('.status-customer').css("background-color",data.status_id.color);
+                                $('#customer-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                             }else{
                                 $('#customer-' + id).find('.status-customer').css("background-color",'#C4C4C4');
-                                $('#customer-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');                                  
+                                $('#customer-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');
 
                             }
                             console.log(data);
@@ -465,9 +454,9 @@
         })
     </script>
     <script>
-        $('.addClient1').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.addClient1',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let name = $('#client_name1');
             let phone = $('#client_phone1');
             let company = $('#client_company1');
@@ -514,9 +503,9 @@
         })
     </script>
     <script>
-        $('.addTask2').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.addTask2',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let title = $('#taskname2');
             let desc = $('#taskdescription2');
             let date = $('#taskdate2');
@@ -645,9 +634,9 @@
             })
         </script>
         <script>
-            $('.addClient').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
+            $(document).on("click", '.addClient',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
                 let id = $('#caller_id').val();
                 let name = $('#client-name');
                 let phone = $('#client-phone');
@@ -693,9 +682,9 @@
             })
         </script>
         <script>
-            $('.Call_1_add').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
+            $(document).on("click", '.Call_1_add',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
                 let company = $('#call_company');
                 let phone = $('#call_number');
 
@@ -868,9 +857,9 @@
             {{--}, 5000);--}}
         {{--</script>--}}
             <script>
-                $('.createTask').click(e => {
-                    e.preventDefault();
-                    let btn = $(e.currentTarget);
+                $(document).on("click", '.createTask',function( event ) {
+                    event.preventDefault();
+                    let btn = $(event.currentTarget);
                     let title = $('#task_name');
                     let desc = $('#task_desc');
                     let date = $('#task_date');
@@ -924,9 +913,9 @@
                 })
             </script>
         <script>
-            $('.createMeet').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
+            $(document).on("click", '.createMeet',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
                 let id = $('#meet_name');
                 let desc = $('#meet_desc');
                 let date = $('#meet_date');
@@ -1006,9 +995,9 @@
             }
         </script>
         <script>
-            $('.call_add').click(function (e) {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
+            $(document).on("click", '.call_add',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
                 let id = $('#caller_id').val();
                 let company = $('#caller_company').val();
                 let phone = $('#caller_phone').val();
@@ -1020,9 +1009,9 @@
             })
         </script>
         <script>
-            $('.addCall').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
+            $(document).on("click", '.addCall',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
                 let excel = $('#excel')[0].files[0];
 
                 var formData = new FormData();

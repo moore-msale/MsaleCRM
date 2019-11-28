@@ -9,7 +9,7 @@
     @endforeach
 @endif
 @if(isset($meetings3))
-    @foreach($meetings3 as $meeting)
+    @foreach($meetings3 as $task)
         @include('tasks.meetings-card')
     @endforeach
 @endif

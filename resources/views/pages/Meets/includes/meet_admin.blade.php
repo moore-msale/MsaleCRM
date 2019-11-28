@@ -33,3 +33,6 @@
         </div>
     </div>
 </div>
+
+@include('modals.meets.delete_meet_admin')
+@include('modals.meets.edit_meet_admin')

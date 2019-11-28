@@ -35,22 +35,24 @@ class TaskController extends Controller
 
         if($request->status != null && $request->manager != null)
         {
-            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->where('status_id',$request->status)->where('user_id',auth()->id())->get()->reverse();
+            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->where('user_id',auth()->id())->get()->reverse();
         }
         elseif($request->status != null)
         {
-            $tasks = Task::where('taskable_type', null)->where('status_id',$request->status)->where('user_id',auth()->id())->get()->reverse();
+            $tasks = Task::where('taskable_type', null)->where('status_id',$request->status)->get()->reverse();
         }
         elseif($request->manager != null)
         {
-            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->where('user_id',auth()->id())->get()->reverse();
+            $tasks = Task::where('taskable_type', null)->where('user_id',$request->manager)->get()->reverse();
+        }elseif(auth()->user()->role=='admin'){
+            $tasks = Task::where('taskable_type',null)->get()->reverse();
         }
         else
         {
             $tasks = Task::where('taskable_type',null)->where('user_id',auth()->id())->get()->reverse();
         }
         if(auth()->user()->role=='admin'){
-            return view('pages.Tasks.task_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);        
+            return view('pages.Tasks.task_page_admin', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
         }
         return view('pages.Tasks.task_page', ['tasks' => $tasks, 'manager' => $request->manager, 'status' => $request->status]);
     }
@@ -80,7 +82,7 @@ class TaskController extends Controller
         $request->merge(['deadline_date' => $deadline_date]);
 
         $task = Task::create($request->all());
-        $task->status_id = $request->status;
+        $task->status_id = 0;
         $task->user_id = Auth::id();
         $task->save();
 
@@ -127,7 +129,7 @@ class TaskController extends Controller
                 'view' => view('tasks.tasks-card', [
                     'task' => $task,
                 ])->render(),
-                'view2' => view('tasks.tasks-content', [
+                'view2' => view('pages.Tasks.includes.task', [
                     'task' => $task,
                 ])->render(),
             ], 200);
@@ -179,7 +181,6 @@ class TaskController extends Controller
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
-        $task->status_id = $request->status;
         if($task==$task2){
             return response()->json([
                 'status' => "error",
@@ -227,7 +228,6 @@ class TaskController extends Controller
             return response()->json([
                 'status' => "success",
                 'task' => $task,
-                'status_id'=>$task->status,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
             ]);
         }
@@ -294,8 +294,14 @@ class TaskController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
 
         $task = Task::find($request->id);
+        $task2=deep_copy($task);
         $task->status_id = 1;
         $task->save();
+        if($task==$task2){
+            return response()->json([
+                'status' => "error",
+            ]);
+        }
 
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
@@ -331,9 +337,7 @@ class TaskController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'view' => view('pages.Tasks.includes.done_task', [
-                    'task' => $task,
-                ])->render(),
+                'status_id'=>$task->status,
             ]);
         }
 

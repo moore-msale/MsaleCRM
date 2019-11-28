@@ -12,13 +12,17 @@ class AjaxController extends Controller
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
 
 
     public function searchTask(Request $request)
     {
         $search = $request->search;
-        $result = collect(['Задачи' => Task::where('taskable_type', '')->where('title', 'like', "%$search%")->get()]);
+        if(auth()->user()->role=='admin'){
+            $result = collect(['Задачи' => Task::where('taskable_type', null)->where('title', 'like', "%$search%")->get()]);
+        }else{
+            $result = collect(['Задачи' => Task::where('taskable_type', null)->where('title', 'like', "%$search%")->where('user_id',auth()->id())->get()]);
+        }
 
 //        $result = $result['Задачи']->merge(collect(Task::where('taskable_type', null)->where('description','like',"%$search%")->get()));
 //        $result = $result->merge(collect(Task::where('taskable_type', null)->where('deadline_date','like',"%$search%")->get()));
@@ -28,7 +32,6 @@ class AjaxController extends Controller
 //        })->get()]);
 
         $count = count($result);
-
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('_partials.search_result_task', [
@@ -37,7 +40,6 @@ class AjaxController extends Controller
                 ])->render(),
             ]);
         }
-
         return view('_partials.search-result', [
             'result' => $result,
         ]);

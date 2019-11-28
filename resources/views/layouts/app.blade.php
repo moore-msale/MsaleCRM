@@ -263,7 +263,8 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
-                    $('#createClientAdmin').modal('hide');
+                    $('#CreateClientAdmin').modal('hide');
+                    $('#customers-content').after(data.view2).show('slide', {direction: 'left'}, 400);
                     $('#client_name_admin').val('');
                     $('#client_desc_admin').val('');
                     $('#client_date_admin').val('');
@@ -420,7 +421,7 @@ $agent = New \Jenssegers\Agent\Agent();
                     $('#meet_customer_admin').val('');
                     $('.customerid-'+data.id).remove();
                     $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                    $('#meets-content').after(data.view2).show('slide', {direction: 'left'}, 400);  
+                    $('#meets-content').after(data.view2).show('slide', {direction: 'left'}, 400);
                     btn.show();
                 },
                 error: () => {

@@ -199,9 +199,9 @@
         });
     </script>
     <script>
-        $('.deleteMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.deleteMeet',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             console.log(id);
@@ -232,9 +232,9 @@
         })
     </script>
     <script>
-        $('.editMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
+        $(document).on("click", '.editMeet',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
             let title = $('#meet_name_admin-' + id);

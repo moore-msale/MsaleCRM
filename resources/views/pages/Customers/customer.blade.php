@@ -37,11 +37,11 @@
                         @if(isset($status) && $status == 0)
                             <option value="0">Без статуса</option>
                         @else
-                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все статусы'}}</option>
+                            <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все клиенты'}}</option>
                             <option value="0">Без статуса</option>
                         @endif
                         @if(isset($status) )
-                            <option value="{{ null }}">Все статусы</option>
+                            <option value="{{ null }}">Все клиенты</option>
                         @endif
 
                         @foreach(\App\Status::where('type','customer')->get() as $status1)
@@ -150,7 +150,7 @@
                     <div class="btn-group dropleft col-1">
                         <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
                         <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
-                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
+                            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomer-{{$customer->id}}" style="cursor:pointer;">изменить</p>
                             <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$customer->id}}" style="cursor:pointer;">удалить</p>
 
                         </div>
@@ -302,7 +302,7 @@
             }
             else {
                 $.ajax({
-                    url: 'EditCustomerAdmin',
+                    url: 'EditCustomer',
                     method: 'POST',
                     data: {
                         "_token": "{{ csrf_token() }}",
@@ -363,7 +363,7 @@
             let btn = $(e.currentTarget);
             let id = btn.data('id');
             $.ajax({
-                url: 'DeleteCustomerAdmin',
+                url: 'DeleteCustomer',
                 method: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -394,5 +394,4 @@
 
         })
     </script>
-
 @endpush
