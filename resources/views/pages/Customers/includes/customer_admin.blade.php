@@ -28,10 +28,18 @@
     <div class="btn-group dropleft col-1">
         <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
         <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
-            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
-            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">неудачно</p>
+            @if(auth()->user()->role=='admin')
+                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
+                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">неудачно</p>
+            @else
+                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomer-{{$customer->id}}" style="cursor:pointer;">изменить</p>
+            @endif
         </div>
     </div>
 </div>
-@include('modals.customers.delete_customer_admin')
-@include('modals.customers.edit_customer_admin')
+@if(auth()->user()->role=='admin')
+    @include('modals.customers.delete_customer_admin')
+    @include('modals.customers.edit_customer_admin')
+@else
+    @include('modals.customers.edit_customer')
+@endif

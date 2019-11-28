@@ -63,7 +63,7 @@
                     <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClient" style="color:#000000;">
                         + добавить клиента
                     </span>
-                    <span class="button-create mr-3" data-toggle="modal" data-target="#TaskCreate" style="color:#000000;">
+                    <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTask" style="color:#000000;">
                         + добавить задачу
                     </span>
                     <span class="button-create" data-toggle="modal" data-target="#CreateMeet" style="color:#000000;">
@@ -85,7 +85,7 @@
         </div>
         <div class="content-block pt-4" style="height:40vh;">
             <h2 class="pb-3">Задачи</h2>
-            <div class="row mb-3 py-2 sf-light" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
+            <div class="row mb-3 py-2 sf-light" id="tasks-content" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
                 <div class="col-2 pr-0">
                     Название
                 </div>
@@ -154,6 +154,7 @@
     </div>
     @foreach($tasks as $task)
         @include('modals.tasks.edit_task')
+        @include('modals.tasks.done_task')
         @include('modals.tasks.search_task_modal')
     @endforeach
     @include('modals.customers.create_client')
@@ -201,6 +202,51 @@
                 $("#search-result").parent().slideUp(400);
             }
         });
+    </script>
+    <script>
+        $(document).on("click", '.doneTask',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
+            let user = btn.data('parent');
+            let id = btn.data('id');
+
+            // console.log(id);
+            $.ajax({
+                url: '{{route('taskdone')}}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                },
+                success: data => {
+                    if(data.status=='success'){
+                        $('#EditTask-' + id).modal('hide');
+                        $('#task-' + id).find('.status-task').css("background-color", "#26DB38");
+                        $('#task-' + id).find('.change-color').attr('fill',"rgb(38, 219, 56)").css("color","#26DB38");
+                        $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color","#26DB38");
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Задача выполнена!\nОтчет был отправлен',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }else{
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'info',
+                            title: 'Задача уже завершена!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+        })
     </script>
     <script>
         $('.createMeet').click(e => {
@@ -261,104 +307,62 @@
         })
     </script>
     <script>
-        $('.createTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
-            let title = $('#task_name');
-            let desc = $('#task_desc');
-            let date = $('#task_date');
-            let status = $('#task_status');
-            if(desc.val() == '')
-            {
-                swal("Заполните описание!","Поле описание стало обязательным","error");
-            }
-            else {
-                $.ajax({
-                    url: '{{ route('task.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "title": title.val(),
-                        "description": desc.val(),
-                        "deadline_date": date.val(),
-                        "status": status.val(),
-                    },
-                    success: data => {
-                        $('#TaskCreate').modal('hide');
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Задача добавлена!',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                        let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        result.find('.taskDone').each((e,i) => {
-                            doneTask($(i));
-                        });
-                        result.find('.taskDelete').each((e,i) => {
-                            deleteTask($(i));
-                        });
+        {{--$('.createTask').click(e => {--}}
+        {{--    e.preventDefault();--}}
+        {{--    let btn = $(e.currentTarget);--}}
+        {{--    let title = $('#task_name');--}}
+        {{--    let desc = $('#task_desc');--}}
+        {{--    let date = $('#task_date');--}}
+        {{--    let status = $('#task_status');--}}
+        {{--    if(desc.val() == '')--}}
+        {{--    {--}}
+        {{--        swal("Заполните описание!","Поле описание стало обязательным","error");--}}
+        {{--    }--}}
+        {{--    else {--}}
+        {{--        $.ajax({--}}
+        {{--            url: '{{ route('task.store') }}',--}}
+        {{--            method: 'POST',--}}
+        {{--            data: {--}}
+        {{--                "_token": "{{ csrf_token() }}",--}}
+        {{--                "title": title.val(),--}}
+        {{--                "description": desc.val(),--}}
+        {{--                "deadline_date": date.val(),--}}
+        {{--                "status": status.val(),--}}
+        {{--            },--}}
+        {{--            success: data => {--}}
+        {{--                $('#TaskCreate').modal('hide');--}}
+        {{--                Swal.fire({--}}
+        {{--                    position: 'top-end',--}}
+        {{--                    icon: 'success',--}}
+        {{--                    title: 'Задача добавлена!',--}}
+        {{--                    showConfirmButton: false,--}}
+        {{--                    timer: 700--}}
+        {{--                });--}}
+        {{--                let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);--}}
+        {{--                result.find('.taskDone').each((e,i) => {--}}
+        {{--                    doneTask($(i));--}}
+        {{--                });--}}
+        {{--                result.find('.taskDelete').each((e,i) => {--}}
+        {{--                    deleteTask($(i));--}}
+        {{--                });--}}
 
-                        result.find('.taskEdit').each((e,i) => {
-                            editTask($(i));
-                        });
-                        $('#task_name').val('');
-                        $('#task_desc').val('');
-                        $('#task_date').val('');
+        {{--                result.find('.taskEdit').each((e,i) => {--}}
+        {{--                    editTask($(i));--}}
+        {{--                });--}}
+        {{--                $('#task_name').val('');--}}
+        {{--                $('#task_desc').val('');--}}
+        {{--                $('#task_date').val('');--}}
 
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
-                    }
-                })
-            }
-        })
+        {{--            },--}}
+        {{--            error: () => {--}}
+        {{--                console.log(0);--}}
+        {{--                swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");--}}
+        {{--            }--}}
+        {{--        })--}}
+        {{--    }--}}
+        {{--})--}}
     </script>
-    <script>
-        $('.doneTask').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
-            let user = btn.data('parent');
-            let id = btn.data('id');
 
-            // console.log(id);
-            $.ajax({
-                url: '{{route('taskdone')}}',
-                method: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id": id,
-                },
-                success: data => {
-                    if(data.status=='success'){
-                        $('#EditTask-' + id).modal('hide');
-                        $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Задача выполнена!\nОтчет был отправлен',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                    }else{
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'info',
-                            title: 'Задача уже завершена!',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                    }
-                },
-                error: () => {
-                    console.log(0);
-                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                }
-            })
-        })
-    </script>
     <script>
         $('.deleteTask').click(e => {
             e.preventDefault();

@@ -22,14 +22,14 @@
                 @else
             <div class="row pt-lg-4 pt-0 justify-content-center">
                 @if(\Illuminate\Support\Facades\Auth::user()->role == "admin")
-                @include('tasks.statistics-admin')
+                    @include('tasks.statistics-admin')
                 @else
                     @include('tasks.statistics')
                 @endif
                 @include('tasks.index', ['tasks2' => $tasks])
                 @include('tasks.index', ['meetings2' => $meetings])
                 @include('tasks.index', ['customers2' => $customers])
-                    @include('tasks.index', ['calls2' => $calls])
+                @include('tasks.index', ['calls2' => $calls])
             @endif
         </div>
     </div>
@@ -42,16 +42,23 @@
         @include('modals.calls.called-modal')
         @include('modals.customers.add_customer')
         @include('modals.calls.add_1_call')
-    @else
+    @elseif(auth()->user()->role=='admin')
         @include('modals.tasks.create_task_admin')
         @include('modals.calls.create_call')
         @include('modals.meets.create_meet_admin')
         @include('modals.calls.called-modal')
         @include('modals.customers.add_customer')
         @include('modals.customers.add_potencial')
+        @include('modals.customers.create_client_admin')
+    @else
+        @include('modals.tasks.create_task')
+        @include('modals.calls.create_call')
+        @include('modals.meets.create_meet')
+        @include('modals.calls.called-modal')
+        @include('modals.customers.add_customer')
+        @include('modals.customers.add_potencial')
+        @include('modals.customers.create_client')
     @endif
-    @include('modals.customers.create_client')
-    @include('modals.tasks.create_task_admin')
 @endsection
 
 @push('scripts')
@@ -102,7 +109,7 @@
         })
     </script>
     <script>
-        $(document).on("click", '.editMeet',function( event ) {
+        $(document).on("click", '.editMeetAdmin',function( event ) {
             event.preventDefault();
             let btn = $(event.currentTarget);
             let id = btn.data('id');
@@ -182,7 +189,7 @@
         })
     </script>
     <script>
-        $(document).on("click", '.doneTask',function( event ) {
+        $(document).on("click", '.doneTaskAdmin',function( event ) {
             event.preventDefault();
             let btn = $(event.currentTarget);
             let user = btn.data('parent');
@@ -248,7 +255,7 @@
         })
     </script>
     <script>
-        $(document).on("click", '.editTask',function( event ) {
+        $(document).on("click", '.editTaskAdmin',function( event ) {
             event.preventDefault();
             let btn = $(event.currentTarget);
             let id = btn.data('id');
@@ -285,7 +292,7 @@
                                 timer: 700
                             });
                             console.log(data);
-                            $('#EditTaskAdmin-' + id).find('.modal-title').html(data.task.title);
+                            $('#EditTask-' + id).find('.modal-title').html(data.task.title);
                             $('#task-' + id).find('.task-name').html(data.task.title);
                             $('#task-' + id).find('.task-date1').html(data.date1);
                             $('#task-' + id).find('.task-date2').html(data.date2);
@@ -346,7 +353,7 @@
                         showConfirmButton: false,
                         timer: 700
                     });
-                    $('#DeleteCustomer-' + id).modal('hide');
+                    $('#DeleteCustomerAdmin-' + id).modal('hide');
                     $('#customer-' + id).remove();
                 },
                 error: () => {
@@ -451,55 +458,6 @@
                 })
             }
 
-        })
-    </script>
-    <script>
-        $(document).on("click", '.addClient1',function( event ) {
-            event.preventDefault();
-            let btn = $(event.currentTarget);
-            let name = $('#client_name1');
-            let phone = $('#client_phone1');
-            let company = $('#client_company1');
-            let desc = $('#client_desc1');
-            let social = $('#client_social1');
-            let status = $('#client_status1').is(':checked') ? true : false;
-            if(desc.val() == '')
-            {
-                swal("Заполните описание!","Поле описание стало обязательным","error");
-            }
-            else {
-                $.ajax({
-                    url: '{{ route('customer.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "name": name.val(),
-                        "phone": phone.val(),
-                        "company": company.val(),
-                        "social": social.val(),
-                        "desc": desc.val(),
-                        "status": status
-                    },
-                    success: data => {
-                        $('#ClientCreate').modal('hide');
-                        console.log(data);
-                        swal("Клиент добавлен!","Отчет был отправлен","success");
-                        $('#client_name1').val('');
-                        $('#client_phone1').val('');
-                        $('#client_company1').val('');
-                        $('#client_desc1').val('');
-                        $('#client_social1').val('');
-
-                        if(data.view){
-                            let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        }
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
-            }
         })
     </script>
     <script>
@@ -889,16 +847,6 @@
                                     timer: 700
                                 });
                                 let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                                result.find('.taskDone').each((e,i) => {
-                                    doneTask($(i));
-                                });
-                                result.find('.taskDelete').each((e,i) => {
-                                    deleteTask($(i));
-                                });
-
-                                result.find('.taskEdit').each((e,i) => {
-                                    editTask($(i));
-                                });
                                 $('#task_name').val('');
                                 $('#task_desc').val('');
                                 $('#task_date').val('');
@@ -953,15 +901,6 @@
                             });
                             $('.customerid-'+data.data.taskable.customer_id).remove();
                             let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                            result.find('.meetDone').each((e,i) => {
-                                doneMeet($(i));
-                            });
-                            result.find('.meetDelete').each((e,i) => {
-                                deleteMeet($(i));
-                            });
-                            result.find('.meetEdit').each((e,i) => {
-                                editMeet($(i));
-                            });
                             $('#meet_name').val('');
                             $('#meet_desc').val('');
                             $('#meet_date').val('');
@@ -1108,90 +1047,128 @@
             })
         </script>
         <script>
-            function doneTask(){
-                $('.doneTask').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
+            $(document).on("click", '.doneTask',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
+                let user = btn.data('parent');
                 let id = btn.data('id');
-                let details = $('#details_done_Task-' + id);
-                console.log('something');
-                console.log(id);
-                if(details.val().length < 20)
+
+                // console.log(id);
+                $.ajax({
+                    url: '{{route('taskdone')}}',
+                    method: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id,
+                    },
+                    success: data => {
+                        if(data.status=='success'){
+                            $('#EditTask-' + id).modal('hide');
+                            $('#task-' + id).find('.status-task').css("background-color", "#26DB38");
+                            $('#task-' + id).find('.change-color').attr('fill',"rgb(38, 219, 56)").css("color","#26DB38");
+                            $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color","#26DB38");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Задача выполнена!\nОтчет был отправлен',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                        }else{
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'info',
+                                title: 'Задача уже завершена!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                        }
+                    },
+                    error: () => {
+                        console.log(0);
+                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                    }
+                })
+            })
+        </script>
+        <script>
+            $(document).on("click", '.editTask',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
+                let id = btn.data('id');
+                let user = btn.data('parent');
+                let title = $('#task_name-' + id);
+                let desc = $('#task_desc-' + id);
+                let date = $('#task_date-' + id);
+                let manage = $('#task_manager-' + id);
+                let status = $('#task_status-' + id);
+                if(desc.val() == '')
                 {
-                    swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для завершения!","error");
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
                 }
                 else {
                     $.ajax({
-                        url: 'taskdone',
-                        method: 'POST',
+                        url: 'task/'+id,
+                        method: 'PUT',
                         data: {
                             "_token": "{{ csrf_token() }}",
-                            "details": details.val(),
+                            "title": title.val(),
+                            "desc": desc.val(),
+                            "date": date.val(),
+                            "manage": manage.val(),
+                            "status": status.val(),
                             "id": id,
                         },
                         success: data => {
-                            $('#task-' + id).hide(400);
-                            swal("Задача выполнена!","Отчет был отправлен","success");
-                            console.log(data);
+                            if(data.status == 'success'){
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Данные изменены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
+                                $('#EditTask-' + id).find('.modal-title').html(data.task.title);
+                                $('#task-' + id).find('.task-name').html(data.task.title);
+                                $('#task-' + id).find('.task-date1').html(data.date1);
+                                $('#task-' + id).find('.task-date2').html(data.date2);
+                                $('#task-' + id).find('.task-manager').html(data.user);
+                                $('#task-' + id).find('.task-desc').html(data.task.description);
+
+                                if(data.status_id){
+                                    $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                    $('#task-' + id).find('.status-task').css("background-color",data.status_id.color);
+                                    $('#task-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
+                                }else{
+                                    $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
+                                    $('#task-' + id).find('.status-task').css("background-color",'#C4C4C4');
+                                    $('#task-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');
+                                }
+                            }else{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'info',
+                                    title: 'Изменение не найдены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
+                            }
                         },
                         error: () => {
                             console.log(0);
-                            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Что-то пошло не так!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
                         }
                     })
                 }
-
-
-                })
-            }
-        </script>
-        <script>
-            function editTask(){
-                $('.editTask').click(e => {
-                    e.preventDefault();
-                    let btn = $(e.currentTarget);
-                    let id = btn.data('id');
-                    let details = $('#details_update_Task-' + id);
-                    let title = $('#taskchangename-' + id);
-                    let desc = $('#taskchangedesc-' + id);
-                    let date = $('#taskchangedate-' + id);
-                    if(desc.val() == '')
-                    {
-                        swal("Заполните описание!","Поле описание стало обязательным","error");
-                    }
-                    else {
-                        console.log(id);
-                        if (details.val().length < 20) {
-                            swal("Неправильный ввод!", "Нужно ввести в поле 'причина' не менее 20 символов для изменения!", "error");
-                        }
-                        else {
-                            $.ajax({
-                                url: 'taskupdate',
-                                method: 'POST',
-                                data: {
-                                    "_token": "{{ csrf_token() }}",
-                                    "details": details.val(),
-                                    "title": title.val(),
-                                    "desc": desc.val(),
-                                    "date": date.val(),
-                                    "id": id,
-                                },
-                                success: data => {
-                                    swal("Встреча изменена!", "Отчет был отправлен", "success");
-                                    $('#task-' + id).find('.task-title').html(data.data.title);
-                                    $('#task-' + id).find('.task-date').html(data.data.deadline_date);
-                                    $('#task-' + id).find('.task-desc').html(data.data.description);
-                                    console.log(data);
-                                },
-                                error: () => {
-                                    console.log(0);
-                                    swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
-                                }
-                            })
-                        }
-                    }
-                })
-            }
+            })
         </script>
         <script>
             function doneMeet(){
@@ -1266,42 +1243,83 @@
             }
         </script>
         <script>
-            function editMeet(){
-                $('.editMeet').click(e => {
-                    e.preventDefault();
-                    let btn = $(e.currentTarget);
-                    let id = btn.data('id');
-                    let details = $('#details_update_Meet-' + id);
-                    let date = $('#meetchangedate-' + id);
-
-
-                    if(details.val().length < 20)
-                    {
-                        swal("Неправильный ввод!","Нужно ввести в поле 'причина' не менее 20 символов для изменения!","error");
-                    }
-                    else {
-                        $.ajax({
-                            url: 'meetupdate',
-                            method: 'POST',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "details": details.val(),
-                                "date": date.val(),
-                                "id": id,
-                            },
-                            success: data => {
-                                swal("Встреча изменена!","Отчет был отправлен","success");
-                                $('#meet-' + id).find('.meet-date').html(data.data.deadline_date);
+            $(document).on("click", '.editMeet',function( event ) {
+                event.preventDefault();
+                let btn = $(event.currentTarget);
+                let id = btn.data('id');
+                let user = btn.data('parent');
+                let title = $('#meet_name-' + id);
+                let desc = $('#meet_desc-' + id);
+                let date = $('#meet_date-' + id);
+                let manage = $('#meet_manager-' + id);
+                let status = $('#meet_status-' + id);
+                if(desc.val() == '')
+                {
+                    swal("Заполните описание!","Поле описание стало обязательным","error");
+                }
+                else {
+                    $.ajax({
+                        url: 'meetupdate',
+                        method: 'POST',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "title": title.val(),
+                            "desc": desc.val(),
+                            "date": date.val(),
+                            "manage": manage.val(),
+                            "status": status.val(),
+                            "id": id,
+                        },
+                        success: data => {
+                            if(data.status == "success"){
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Данные изменены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
                                 console.log(data);
-                            },
-                            error: () => {
-                                console.log(0);
-                                swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                                $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                                $('#meet-' + id).find('.meet-manager').html(data.user);
+                                $('#meet-' + id).find('.meet-desc').html(data.meet.description);
+                                $('#meet-' + id).find('.meet-date1').html(data.date1);
+                                $('#meet-' + id).find('.meet-date2').html(data.date2);
+                                $('#EditMeet-' + id).find('.modal-title').html(data.meet.title);
+
+                                if(data.status_id){
+                                    $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                    $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);
+                                    $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
+                                }else{
+                                    $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                                    $('#meet-' + id).find('.status-meet').css("background-color",'#C4C4C4');
+                                    $('#meet-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');
+                                }
+                            } else{
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'info',
+                                    title: 'Изменение не найдены!',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                                console.log(data);
                             }
-                        })
-                    }
-                })
-            }
+                        },
+                        error: () => {
+                            console.log(0);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Что-то пошло не так!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                        }
+                    })
+                }
+            })
         </script>
         <script>
             $('.addClient').click(e => {

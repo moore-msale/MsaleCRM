@@ -18,7 +18,7 @@
     <div class="modal-dialog modal-full-height modal-right" role="document">
         <div class="modal-content px-2 w-100">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+{{ $task->title }}</h4>
+                <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+{{ $task->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
@@ -54,7 +54,7 @@
                     </select>
                     <textarea id="task_desc_admin-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>
-                <button type="button" class="w-100 sf-light editTask mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
+                <button type="button" class="w-100 sf-light editTaskAdmin mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
             </div>
             {{--<div class="modal-footer justify-content-center">--}}
             {{--</div>--}}

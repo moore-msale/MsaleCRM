@@ -76,7 +76,7 @@ class MeetingController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
 
 
-        $customer = Customer::find($request->id);
+        $customer = Customer::find($request->customer_id);
         $meeting = New Meeting();
         $meeting->customer_id = $customer->id;
         $meeting->save();
@@ -88,7 +88,7 @@ class MeetingController extends Controller
         $request->merge(['deadline_date' => $deadline_date]);
         $task->deadline_date = $request->deadline_date;
         $task->description = $request->description;
-        $task->user_id = $request->user_id;
+        $task->user_id = auth()->id();
         $task->save();
         $meeting->task()->save($task);
 
@@ -142,6 +142,9 @@ class MeetingController extends Controller
             return response()->json([
                 'status' => "success",
                 'data' => $task,
+                'view2' => view('pages.Meets.includes.meet_admin', [
+                    'task' => $task,
+                ])->render(),
                 'view' => view('tasks.meetings-card', [
                     'task' => $task,
                 ])->render(),
@@ -185,13 +188,14 @@ class MeetingController extends Controller
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
 
-        $meeting = Meeting::find($request->id);
-        $task = $meeting->task;
+        $task = Task::find($request->id);
 
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
+
         $task->deadline_date = $request->date;
+        $task->status_id =$request->status;
         $task->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
@@ -227,7 +231,10 @@ class MeetingController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $task
+                'meet' => $task,
+                'date1'=>Carbon::parse($deadline_date)->format('d M'),
+                'date2'=>Carbon::parse($deadline_date)->format('H:i'),
+                'status_id'=>$task->status,
             ]);
         }
 

@@ -104,14 +104,14 @@ class HomeController extends Controller
         $tasks = Task::where('taskable_type', null)->where('user_id',auth()->id())->where('deadline_date', '>=', $today)->get();
         if(Auth::user()->role == 'admin')
         {
-            $customers = Task::where('deadline_date','>=', $today)->hasMorph(
+            $customers = Task::where('status_id','=', 1)->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();
         }
         else
         {
-            $customers = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)->hasMorph(
+            $customers = Task::where('user_id',auth()->id())->where('deadline_date', '>=', $today)->where('status_id','=', 1)->hasMorph(
                 'taskable',
                 'App\Customer'
             )->get();

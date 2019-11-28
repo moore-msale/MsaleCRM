@@ -85,7 +85,7 @@
         </div>
         <div class="content-block pt-4" style="height:40vh;">
             <h2 class="pb-3">Встречи</h2>
-            <div class="row mb-3 py-2 sf-light" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
+            <div class="row mb-3 py-2 sf-light" id="meets-content" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
                 <div class="col-2 pr-0">
                     Компания
                 </div>
@@ -148,7 +148,6 @@
             @endforeach
         </div>
     </div>
-    </div>
     @foreach($tasks as $task)
         @include('modals.meets.edit_meet')
         @include('modals.meets.search_meet_modal')
@@ -200,62 +199,62 @@
         });
     </script>
      <script>
-        $('.createMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
-            let id = $('#meet_name');
-            let desc = $('#meet_desc');
-            let date = $('#meet_date');
-            let user = $('#meet_user');
-            if(desc.val() == '')
-            {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'info',
-                    title: 'Заполните описание, описание должно быть больше 20 символов!',
-                    showConfirmButton: true,
-                    // timer: 700
-                });
-            }
-            else {
-                $.ajax({
-                    url: '{{ route('meeting.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id.val(),
-                        "description": desc.val(),
-                        "deadline_date": date.val(),
-                        "user_id": user.val(),
-                    },
-                    success: data => {
-                        $('#CreateMeet').modal('hide');
-                        // console.log(data);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Встреча создана!',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                        let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        $('#meet_name').val('');
-                        $('#meet_desc').val('');
-                        $('#meet_date').val('');
-                    },
-                    error: () => {
-                        console.log(0);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: 'Произошла ошибка!',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                    }
-                })
-            }
-        })
+        {{--$('.createMeet').click(e => {--}}
+        {{--    e.preventDefault();--}}
+        {{--    let btn = $(e.currentTarget);--}}
+        {{--    let id = $('#meet_name');--}}
+        {{--    let desc = $('#meet_desc');--}}
+        {{--    let date = $('#meet_date');--}}
+        {{--    let user = $('#meet_user');--}}
+        {{--    if(desc.val() == '')--}}
+        {{--    {--}}
+        {{--        Swal.fire({--}}
+        {{--            position: 'top-end',--}}
+        {{--            icon: 'info',--}}
+        {{--            title: 'Заполните описание, описание должно быть больше 20 символов!',--}}
+        {{--            showConfirmButton: true,--}}
+        {{--            // timer: 700--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--    else {--}}
+        {{--        $.ajax({--}}
+        {{--            url: '{{ route('meeting.store') }}',--}}
+        {{--            method: 'POST',--}}
+        {{--            data: {--}}
+        {{--                "_token": "{{ csrf_token() }}",--}}
+        {{--                "id": id.val(),--}}
+        {{--                "description": desc.val(),--}}
+        {{--                "deadline_date": date.val(),--}}
+        {{--                "user_id": user.val(),--}}
+        {{--            },--}}
+        {{--            success: data => {--}}
+        {{--                $('#CreateMeet').modal('hide');--}}
+        {{--                // console.log(data);--}}
+        {{--                Swal.fire({--}}
+        {{--                    position: 'top-end',--}}
+        {{--                    icon: 'success',--}}
+        {{--                    title: 'Встреча создана!',--}}
+        {{--                    showConfirmButton: false,--}}
+        {{--                    timer: 700--}}
+        {{--                });--}}
+        {{--                let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);--}}
+        {{--                $('#meet_name').val('');--}}
+        {{--                $('#meet_desc').val('');--}}
+        {{--                $('#meet_date').val('');--}}
+        {{--            },--}}
+        {{--            error: () => {--}}
+        {{--                console.log(0);--}}
+        {{--                Swal.fire({--}}
+        {{--                    position: 'top-end',--}}
+        {{--                    icon: 'error',--}}
+        {{--                    title: 'Произошла ошибка!',--}}
+        {{--                    showConfirmButton: false,--}}
+        {{--                    timer: 700--}}
+        {{--                });--}}
+        {{--            }--}}
+        {{--        })--}}
+        {{--    }--}}
+        {{--})--}}
     </script>
     <script>
         $(document).on("click", '.deleteMeet',function( event ) {

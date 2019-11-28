@@ -8,8 +8,13 @@
         <div class="btn-group dropleft col-1 position-absolute" style="top:0%; right:-4%;">
             <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; top:0%;right:0%; cursor:pointer;"></i>
             <div class="dropdown-menu pl-2 shadow" style="border-radius: 0px; border:none;">
-                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTaskAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
-                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
+                @if(auth()->user()->role=="admin")
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTaskAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
+                @else
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTask-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTask-{{$task->id}}" style="cursor:pointer;">неудачно</p>
+                @endif
             </div>
         </div>
     </div>

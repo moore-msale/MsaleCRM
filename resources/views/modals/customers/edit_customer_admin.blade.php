@@ -18,7 +18,7 @@
     <div class="modal-dialog modal-full-height modal-right" role="document" style="width:700px;!important;max-width: 700px;!important;">
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light" style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
+                <h4 class="modal-title w-100 sf-light " style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
             </div>
             <div class="modal-body" style="height: 80vh; overflow-y: auto">
                 <div id="history_block-{{ $customer->id }}">
@@ -31,7 +31,7 @@
         </div>
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+{{ $customer->title }}</h4>
+                <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+{{ $customer->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
@@ -40,7 +40,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="potentials" name="type">
-                    <input type="text" name="name" id="client_name-{{ $customer->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$customer->taskable->name}}" placeholder="Введите ФИО">
+                    <input type="text" name="name" id="client_name-{{ $customer->id }}" class="form-control sf-light border-0 " style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$customer->taskable->name}}" placeholder="Введите ФИО">
                     <input type="text" id="client_phone-{{ $customer->id }}" name="phone" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->contacts }}" placeholder="Введите контакты">
                     <input type="text" name="deadline_date" id="client_date-{{ $customer->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->deadline_date }}" placeholder="Выберите дату">
                     <input type="text" id="client_company-{{ $customer->id }}" name="company" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->company }}" placeholder="Введите компанию">

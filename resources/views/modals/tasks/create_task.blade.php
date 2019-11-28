@@ -11,7 +11,7 @@
 
     </style>
 @endpush
-<div class="modal fade right" id="TaskCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade right" id="CreateTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->

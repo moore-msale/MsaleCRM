@@ -85,9 +85,15 @@ $agent = New \Jenssegers\Agent\Agent();
 
         </main>
     </div>
-@include('modals.customers.create_client_admin')
-@include('modals.tasks.create_task_admin')
-@include('modals.meets.create_meet_admin')
+@if(auth()->user()->role=="admin")
+    @include('modals.customers.create_client_admin')
+    @include('modals.tasks.create_task_admin')
+    @include('modals.meets.create_meet_admin')
+@else
+    @include('modals.customers.create_client')
+    @include('modals.tasks.create_task')
+    @include('modals.meets.create_meet')
+@endif
 
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
@@ -205,6 +211,80 @@ $agent = New \Jenssegers\Agent\Agent();
         });
     });
 
+</script>
+<script>
+    $(document).on("click", '.addClient1',function( event ) {
+        event.preventDefault();
+        let btn = $(event.currentTarget);
+        let name = $('#client_name1');
+        let phone = $('#client_phone1');
+        let company = $('#client_company1');
+        let desc = $('#client_desc1');
+        let social = $('#client_social1');
+        let date = $('#client_date1');
+        let status = $('#client_status1').is(':checked') ? true : false;
+        let datas = [name.val(),company.val(),phone.val(),desc.val(),date.val()];
+        if(datas.indexOf("") != -1){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните вcе поля!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+        }
+        else if(desc.val() == '')
+        {
+            swal("Заполните описание!","Поле описание стало обязательным","error");
+        }
+        else {
+            $.ajax({
+                url: '{{ route('customer.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "name": name.val(),
+                    "phone": phone.val(),
+                    "company": company.val(),
+                    "social": social.val(),
+                    "desc": desc.val(),
+                    "date": date.val(),
+                    "status": status
+                },
+                success: data => {
+                    $('#ClientCreate').modal('hide');
+                    console.log(data);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Клиент добавлена!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    $('#client_name1').val('');
+                    $('#client_phone1').val('');
+                    $('#client_company1').val('');
+                    $('#client_desc1').val('');
+                    $('#client_social1').val('');
+                    $('#customers-content').after(data.view2).show('slide', {direction: 'left'}, 400);
+                    console.log(data);
+                    if(data.view){
+                        let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    }
+                },
+                error: () => {
+                    console.log(0);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Возникла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                }
+            })
+        }
+    })
 </script>
 <script>
     $('.createCustomerAdmin').click(e => {
@@ -358,6 +438,129 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
+                }
+            })
+        }
+    })
+</script>
+<script >
+    $('.createTask').click(e => {
+        e.preventDefault();
+        let btn = $(e.currentTarget);
+        let title = $('#task_name');
+        let desc = $('#task_desc');
+        let date = $('#task_date');
+        let status = $('#task_status');
+        if(desc.val() == '')
+        {
+            swal("Заполните описание!","Поле описание стало обязательным","error");
+        }
+        else {
+            $.ajax({
+                url: '{{ route('task.store') }}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title": title.val(),
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "status": status.val(),
+                },
+                success: data => {
+                    $('#TaskCreate').modal('hide');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Задача добавлена!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    $('#tasks-content').after(data.view2).show('slide', {direction: 'left'}, 400);
+                    $('#task_name').val('');
+                    $('#task_desc').val('');
+                    $('#task_date').val('');
+                    $('#CreateTask').modal('hide');
+
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
+                }
+            })
+        }
+    })
+</script>
+<script>
+    $('.createMeet').click(e => {
+        e.preventDefault();
+        let btn = $(e.currentTarget);
+        btn.hide();
+        let desc = $('#meet_desc');
+        let date = $('#meet_date');
+        let customer = $('#meet_name');
+        let status = $('#meet_status');
+        let datas = [desc.val(),date.val(),customer.val()];
+        if(datas.indexOf("") != -1){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните вcе поля!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+            console.log(datas);
+            btn.show();
+        }else if(desc.val().length < 20){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+            });
+            btn.show();
+        }
+        else {
+            $.ajax({
+                url: '{{route('meeting.store')}}',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "description": desc.val(),
+                    "deadline_date": date.val(),
+                    "customer_id": customer.val(),
+                    "status_id": status.val(),
+                },
+                success: data => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Встреча создана!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    btn.show();
+                    console.log(data);
+                    $('#meets-content').after(data.view2).show('slide', {direction: 'left'}, 400);
+                    $('.customerid-'+data.id).remove();
+                    $('#CreateMeet').modal('hide');
+                    $('#meet_date').val('');
+                    $('#meet_desc').val('');
+                    $('#meet_customer').val('');
+                    $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    btn.show();
+                },
+                error: () => {
+                    console.log(0);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Произошла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                    btn.show();
                 }
             })
         }

@@ -29,14 +29,14 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="potentials" name="type">
-                    <input type="text" name="name" id="client_name" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите Имя">
-                    <input type="text" name="company" id="client_company" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название Компании">
-                    <input type="text" name="contacts" id="client_contacts" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите контакты Компании">
-                    <input type="text" name="socials" id="client_socials" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите соц.сети Компании">
-                    <input type="text" name="deadline_date" id="task_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
-                    <textarea id="client_desc" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
+                    <input type="text" name="name" id="client_name1" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите Имя">
+                    <input type="text" name="company" id="client_company1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название Компании">
+                    <input type="text" name="contacts" id="client_contacts1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите контакты Компании">
+                    <input type="text" name="socials" id="client_socials1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите соц.сети Компании">
+                    <input type="text" name="deadline_date" id="client_date1" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
+                    <textarea id="client_desc1" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
                 </form>
-                <button type="button" class="w-100 sf-light createCustomerAdmin mt-5 space-button">Создать</button>
+                <button type="button" class="w-100 sf-light addClient1 mt-5 space-button">Создать</button>
 
             </div>
             {{--<div class="modal-footer justify-content-center">--}}

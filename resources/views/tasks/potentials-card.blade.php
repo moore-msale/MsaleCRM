@@ -7,8 +7,13 @@
         <div class="btn-group dropleft col-1 position-absolute" style="top:0%; right:0%;">
             <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
             <div class="dropdown-menu pl-2 shadow" style="border-radius: 0px; border:none;">
-                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
-                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$customer->id}}" style="cursor:pointer;">удалить</p>
+                @if(auth()->user()->role=="admin")
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">изменить</p>
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">удалить</p>
+                @else
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomer-{{$customer->id}}" style="cursor:pointer;">изменить</p>
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$customer->id}}" style="cursor:pointer;">удалить</p>
+                @endif
             </div>
         </div>
     </div>
@@ -56,5 +61,5 @@
     @include('modals.customers.edit_customer_admin')
 @else
     @include('modals.customers.delete_customer')
-    @include('modals.customerss.edit_customer')
+    @include('modals.customers.edit_customer')
 @endif

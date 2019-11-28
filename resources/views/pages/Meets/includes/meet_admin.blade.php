@@ -28,11 +28,18 @@
     <div class="btn-group dropleft col-1">
         <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
         <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
-            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
-            <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeetAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
+            @if(auth()->user()->role=="admin")
+                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeetAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
+             @else
+                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeet-{{$task->id}}" style="cursor:pointer;">изменить</p>
+            @endif
         </div>
     </div>
 </div>
-
+@if(auth()->user()->role=="admin")
 @include('modals.meets.delete_meet_admin')
 @include('modals.meets.edit_meet_admin')
+@else
+    @include('modals.meets.edit_meet')
+@endif

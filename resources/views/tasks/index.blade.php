@@ -9,7 +9,7 @@
                         <img src="{{ asset('images/+.svg') }}" alt="">
                     </a>
                 @else
-                    <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#TaskCreate">
+                    <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#CreateTask">
                         <img src="{{ asset('images/+.svg') }}" alt="">
                     </a>
                 @endif

@@ -2,13 +2,18 @@
     {{--<div class="position-absolute bg-danger"--}}
     {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
     <div class="meet-company pb-1 position-relative" style="border-bottom:1px solid rgba(0,0,0,0.2);">
-        <div class="font-weight-bold meet-company sf-medium"> {{ $task->taskable->customer->company }} </div>
+        <div class="font-weight-bold meet-company sf-medium"> {{ $task->taskable->customer['company'] }} </div>
 
         <div class="btn-group dropleft col-1 position-absolute" style="top:0%; right:-4%;">
             <i class="fas fa-ellipsis-v" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
             <div class="dropdown-menu pl-2 shadow" style="border-radius: 0px; border:none;">
-                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
-                <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeetAdmin-{{$task->id}}" style="cursor:pointer;">удалить</p>
+                @if(auth()->user()->role=="admin")
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeetAdmin-{{$task->id}}" style="cursor:pointer;">удалить</p>
+                @else
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeet-{{$task->id}}" style="cursor:pointer;">изменить</p>
+                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeet-{{$task->id}}" style="cursor:pointer;">удалить</p>
+                @endif
             </div>
         </div>
     </div>
@@ -34,7 +39,7 @@
                 <path d="M5 4.6875C6.20812 4.6875 7.1875 3.70812 7.1875 2.5C7.1875 1.29188 6.20812 0.3125 5 0.3125C3.79188 0.3125 2.8125 1.29188 2.8125 2.5C2.8125 3.70812 3.79188 4.6875 5 4.6875Z" stroke="#111111" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="pl-1 meet-name">
-                {{ $task->taskable->customer->name }}
+                {{ $task->taskable->customer['name'] }}
             </span>
         </div>
     </div>

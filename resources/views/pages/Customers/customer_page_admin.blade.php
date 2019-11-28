@@ -114,16 +114,16 @@
                 @if(count($customer->taskable->histories))
                 <div class="position-absolute" style="width:10px; height:10px; background-color: #772FD2; top:3%; right:0%; border-radius: 50%;"></div>
                 @endif
-                    <div class="col-2 cust-name" style="border-right:1px solid #dedede;">
+                    <div class="col-2 cust-name  overflow-hidden" style="border-right:1px solid #dedede;">
                     {{ $customer->taskable->name }}
                 </div>
-                <div class="col-2 cust-company" style="border-right:1px solid #dedede;">
+                <div class="col-2 cust-company  overflow-hidden" style="border-right:1px solid #dedede;">
                     {{ $customer->taskable->company }}
                 </div>
-                <div class="col-3 cust-desc" style="border-right:1px solid #dedede;">
+                <div class="col-3 cust-desc  overflow-hidden" style="border-right:1px solid #dedede;">
                     {{ str_limit($customer->description, $limit = 25, $end = '...') }}
                 </div>
-                <div class="col-1 cust-manager" style="border-right:1px solid #dedede;">
+                <div class="col-1 cust-manager  overflow-hidden" style="border-right:1px solid #dedede;">
                     {{ \App\User::find($customer->user_id)->name }}
                 </div>
                 <div class="col-2 cust-date">

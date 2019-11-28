@@ -81,7 +81,7 @@
 {{--                        @endforeach--}}
                         @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $customer)
                             @if(!isset($customer->status) ||  $customer->status->name != 'Потенциальный')
-                                <option value="{{ $customer->taskable->id }}">{{ $customer->taskable->name }} - {{ $customer->taskable->company }} | Статус : {{ isset($customer->status) ? $customer->status->name : 'В работе' }}</option>
+                                <option value="{{ $customer->taskable['id'] }}">{{ $customer->taskable['name'] }} - {{ $customer->taskable['company'] }} | Статус : {{ isset($customer->status) ? $customer->status->name : 'В работе' }}</option>
                             @endif
                         @endforeach
                     </select>

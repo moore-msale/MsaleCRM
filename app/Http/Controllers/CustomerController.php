@@ -210,6 +210,12 @@ class   CustomerController extends Controller
                     'status' => "success",
                     'data' => $task,
                     'plan' => $plan,
+                    'view'=>view('tasks.potentials-card', [
+                        'customer' => $task,
+                    ])->render(),
+                    'view2' => view('pages.Customers.includes.customer_admin', [
+                        'customer' => $task,
+                    ])->render(),
                 ], 200);
             }
         }
@@ -224,6 +230,9 @@ class   CustomerController extends Controller
                         'view' => view('tasks.potentials-card', [
                             'customer' => $task,
                         ])->render(),
+                        'view2' => view('pages.Customers.includes.customer_admin', [
+                            'customer' => $task,
+                        ])->render(),
                     ], 200);
                 }
             }
@@ -233,6 +242,12 @@ class   CustomerController extends Controller
                     return response()->json([
                         'status' => "success",
                         'data' => $task,
+                        'view' => view('tasks.potentials-card', [
+                            'customer' => $task,
+                        ])->render(),
+                        'view2' => view('pages.Customers.includes.customer_admin', [
+                            'customer' => $task,
+                        ])->render(),
                     ], 200);
                 }
             }
@@ -277,10 +292,8 @@ class   CustomerController extends Controller
 //        dd($request->all());
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
-
-        $customer = Customer::find($request->id);
-
-        $task = $customer->task;
+        $task = Task::find($request->id);
+        $customer =  $task->taskable;
         $task->title = $request->name;
         $customer->name = $request->name;
         $customer->company = $request->company;
