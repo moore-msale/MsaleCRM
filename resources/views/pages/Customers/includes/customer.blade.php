@@ -37,5 +37,4 @@
     </div>
 </div>
 @include('modals.customers.done_customer')
-@include('modals.customers.delete_customer')
 @include('modals.customers.edit_customer')

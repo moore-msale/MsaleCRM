@@ -13,7 +13,6 @@
                     <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTaskAdmin-{{$task->id}}" style="cursor:pointer;">неудачно</p>
                 @else
                     <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTask-{{$task->id}}" style="cursor:pointer;">изменить</p>
-                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteTask-{{$task->id}}" style="cursor:pointer;">неудачно</p>
                 @endif
             </div>
         </div>

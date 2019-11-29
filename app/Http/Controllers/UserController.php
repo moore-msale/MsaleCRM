@@ -30,13 +30,22 @@ class UserController extends Controller
 
     }
     public function addUser(Request $request){
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'phone'=>['required','string','unique:users'],
             'avatar'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
         ]);
+        if (!$validator->passes()) {
+            $arrays=array();
+            foreach ($validator->errors()->toArray() as $key=>$value){
+                $arrays[$key] = "<span class='invalid-feedback' role='alert' style='display: block;'><strong>".str_replace('validation.','',$value[0])."</strong></span>";
+            }
+            return response()->json(['status'=>'error','errors'=>$arrays]);
+        }
+
+
         $user = new User;
         $user->name = $request['name'];
         $user->email = $request['email'];
@@ -73,7 +82,15 @@ class UserController extends Controller
             $newuser->id = $user->id;
             $newuser->save();
         }
-        return redirect()->back();
+        if ($request->ajax()){
+            return response()->json([
+                'status' => "success",
+                'user' => $user,
+                'view'=>view('tasks.profile', [
+                    'manager' => $user,
+                ])->render()
+            ], 200);
+        }
 
     }
     public function editUser(Request $request)
@@ -162,5 +179,8 @@ class UserController extends Controller
         config(['database.connections.mysql.database' => $name]);
         DB::reconnect();
     }
+
+
+
 
 }

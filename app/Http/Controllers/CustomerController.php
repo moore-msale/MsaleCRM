@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use function DeepCopy\deep_copy;
 
 class   CustomerController extends Controller
 {
@@ -294,6 +295,8 @@ class   CustomerController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
         $task = Task::find($request->id);
         $customer =  $task->taskable;
+        $task2 = deep_copy($task);
+        $customer2 = deep_copy($customer);
         $task->title = $request->name;
         $customer->name = $request->name;
         $customer->company = $request->company;
@@ -303,9 +306,17 @@ class   CustomerController extends Controller
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
+        $task->status_id =  $request->status;
         if (isset($request->desc))
         {
             $task->description = $request->desc;
+        }
+        if($task==$task2 and $customer==$customer2){
+            return response()->json([
+                'status' => "error",
+                'task2'=>$task2,
+                'task'=>$task,
+            ]);
         }
         $customer->save();
         $task->save();
@@ -352,6 +363,10 @@ class   CustomerController extends Controller
                 'status' => "success",
                 'data' => $customer,
                 'id' => $id,
+                'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
+                'status_id'=>$task->status,
+                'date1'=>Carbon::parse($deadline_date)->format('d M'),
+                'date2'=>Carbon::parse($deadline_date)->format('H:i'),
             ]);
         }
 
@@ -513,6 +528,7 @@ class   CustomerController extends Controller
                 'view' => view('tasks.potentials-card', [
                     'customer' => $task,
                 ])->render(),
+                'something' =>"something",
             ], 200);
         }
 

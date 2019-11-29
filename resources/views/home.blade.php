@@ -51,13 +51,9 @@
         @include('modals.customers.add_potencial')
         @include('modals.customers.create_client_admin')
     @else
-        @include('modals.tasks.create_task')
-        @include('modals.calls.create_call')
-        @include('modals.meets.create_meet')
         @include('modals.calls.called-modal')
         @include('modals.customers.add_customer')
         @include('modals.customers.add_potencial')
-        @include('modals.customers.create_client')
     @endif
 @endsection
 
@@ -396,7 +392,7 @@
             }
             else {
                 $.ajax({
-                    url: 'EditCustomerAdmin',
+                    url: '{{route('customerupdate')}}',
                     method: 'POST',
                     data: {
                         "_token": "{{ csrf_token() }}",
@@ -424,7 +420,7 @@
                             $('#customer-' + id).find('.cust-date1').html(data.date1);
                             $('#customer-' + id).find('.cust-date2').html(data.date2);
                             $('#history_block-' + id).html(data.html);
-
+                            console.log(data);
                             if(data.status_id){
                                 $('#customer-' + id).find('.status-customer').css("background-color",data.status_id.color);
                                 $('#customer-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
@@ -813,113 +809,7 @@
                 {{--//     console.log('нет');--}}
                 {{--// }--}}
             {{--}, 5000);--}}
-        {{--</script>--}}
-            <script>
-                $(document).on("click", '.createTask',function( event ) {
-                    event.preventDefault();
-                    let btn = $(event.currentTarget);
-                    let title = $('#task_name');
-                    let desc = $('#task_desc');
-                    let date = $('#task_date');
-                    let status = $('#task_status');
-                    if(desc.val() == '')
-                    {
-                        swal("Заполните описание!","Поле описание стало обязательным","error");
-                    }
-                    else {
-                        $.ajax({
-                            url: '{{ route('task.store') }}',
-                            method: 'POST',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "title": title.val(),
-                                "description": desc.val(),
-                                "deadline_date": date.val(),
-                                "status": status.val(),
-                            },
-                            success: data => {
-                                $('#TaskCreate').modal('hide');
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: 'Задача добавлена!',
-                                    showConfirmButton: false,
-                                    timer: 700
-                                });
-                                let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                                $('#task_name').val('');
-                                $('#task_desc').val('');
-                                $('#task_date').val('');
 
-                            },
-                            error: () => {
-                                console.log(0);
-                                swal("Что то пошло не так!", "Обратитесь к Эркину за помощью))", "error");
-                            }
-                        })
-                    }
-                })
-            </script>
-        <script>
-            $(document).on("click", '.createMeet',function( event ) {
-                event.preventDefault();
-                let btn = $(event.currentTarget);
-                let id = $('#meet_name');
-                let desc = $('#meet_desc');
-                let date = $('#meet_date');
-                let user = $('#meet_user');
-                if(desc.val() == '')
-                {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'info',
-                        title: 'Заполните описание, описание должно быть больше 20 символов!',
-                        showConfirmButton: true,
-                        // timer: 700
-                    });
-                }
-                else {
-                    $.ajax({
-                        url: '{{ route('meeting.store') }}',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "id": id.val(),
-                            "description": desc.val(),
-                            "deadline_date": date.val(),
-                            "user_id": user.val(),
-                        },
-                        success: data => {
-                            $('#CreateMeet').modal('hide');
-                            // console.log(data);
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Встреча создана!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                            $('.customerid-'+data.data.taskable.customer_id).remove();
-                            let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                            $('#meet_name').val('');
-                            $('#meet_desc').val('');
-                            $('#meet_date').val('');
-                        },
-                        error: () => {
-                            console.log(0);
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'error',
-                                title: 'Произошла ошибка!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                        }
-                    })
-                }
-            })
-            registerMeetDoneBtn($('.doneMeet'));
-        </script>
         <script>
             function registerCallBtn(item) {
                 item.click(function (e) {

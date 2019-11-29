@@ -12,7 +12,6 @@
                     <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeetAdmin-{{$task->id}}" style="cursor:pointer;">удалить</p>
                 @else
                     <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditMeet-{{$task->id}}" style="cursor:pointer;">изменить</p>
-                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteMeet-{{$task->id}}" style="cursor:pointer;">удалить</p>
                 @endif
             </div>
         </div>

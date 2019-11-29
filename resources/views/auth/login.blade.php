@@ -29,7 +29,9 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
     top: 0;
     left: 0;
 }
-
+.sidenav a{
+    display:inline-block;
+}
 .sidenav img{
     width: 90%;
 }

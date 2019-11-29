@@ -12,7 +12,6 @@
                     <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomerAdmin-{{$customer->id}}" style="cursor:pointer;">удалить</p>
                 @else
                     <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditCustomer-{{$customer->id}}" style="cursor:pointer;">изменить</p>
-                    <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#DeleteCustomer-{{$customer->id}}" style="cursor:pointer;">удалить</p>
                 @endif
             </div>
         </div>

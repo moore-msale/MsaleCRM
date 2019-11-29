@@ -117,7 +117,7 @@
                          {{ str_limit($task->description, $limit = 25, $end = '...') }}
                      </div>
                      <div class="col-2 meet-manager-admin" style="border-right:1px solid #dedede;">
-                         {{ \App\User::find($task->user_id)->name }}
+                         {{ \App\User::find($task->user_id)['name'] }}
                      </div>
                      <div class="col-2 meet-deadline-admin">
                          {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
@@ -125,7 +125,7 @@
                      <div class="col-2 meet-status-admin">
                          @if(isset($task->status))
                              <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
-                                 {{ $task->status->name }}
+                                 {{ $task->status['name'] }}
                              </button>
                          @else
                              <button style="width:100%; height:100%; color:white; background: #EBDC60; border-radius: 20px; border:0px;" disabled>

@@ -261,6 +261,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
+                    console.log(data);
                     $('#client_name1').val('');
                     $('#client_phone1').val('');
                     $('#client_company1').val('');
@@ -467,7 +468,6 @@ $agent = New \Jenssegers\Agent\Agent();
                     "status": status.val(),
                 },
                 success: data => {
-                    $('#TaskCreate').modal('hide');
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -475,7 +475,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
-                    let result = $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    $('#tasks-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     $('#tasks-content').after(data.view2).show('slide', {direction: 'left'}, 400);
                     $('#task_name').val('');
                     $('#task_desc').val('');
