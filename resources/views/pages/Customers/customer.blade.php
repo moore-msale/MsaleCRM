@@ -239,7 +239,7 @@
                     method: 'POST',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        "id": id.val(),
+                        "customer_id": id.val(),
                         "description": desc.val(),
                         "deadline_date": date.val(),
                         "user_id": user.val(),
@@ -327,9 +327,9 @@
                             $('#customer-' + id).find('.cust-company').html(data.customer.company);
                             $('#customer-' + id).find('.cust-desc').html(data.customer.description);
                             $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
-                            $('#customer-' + id).find('.cust-manager').html(data.user);
+                            console.log(data.html);
                             $('#history_block-' + id).html(data.html);
-                            console.log(data);
+                            // console.log(data);
                         }else{
                             Swal.fire({
                                 position: 'top-end',

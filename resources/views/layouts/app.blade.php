@@ -269,9 +269,9 @@ $agent = New \Jenssegers\Agent\Agent();
                     $('#client_social1').val('');
                     $('#customers-content').after(data.view2).show('slide', {direction: 'left'}, 400);
                     console.log(data);
-                    if(data.view){
-                        let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                    }
+                    // if(data.view){
+                    //     let result = $('#customers-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
+                    // }
                 },
                 error: () => {
                     console.log(0);

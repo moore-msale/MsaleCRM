@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Call;
 use App\Customer;
+use App\History;
 use App\Plan;
 use App\Report;
 use App\Task;
@@ -105,6 +106,9 @@ class   CustomerController extends Controller
         $task->title = $customer->name ? $customer->company : 'Empty';
         $task->user_id = auth()->check() ? auth()->id() : 0;
         $task->description = $request->desc;
+
+
+
         if (!(isset($request->id)))
         {
             if($request->status == "true")
@@ -114,6 +118,25 @@ class   CustomerController extends Controller
         }
         $task->save();
         $customer->task()->save($task);
+
+
+        $history = new History();
+        $history->description = $task->description;
+        $history->action = "Создание";
+        $history->date = Carbon::now();
+        if($task->status_id == 0)
+        {
+            $history->status = "В работе";
+        }
+        else
+        {
+            $history->status = $task->status->name;
+        }
+        $history->user_id = $task->user_id;
+        $history->customer_id = $customer->id;
+        $history->save();
+
+
         if(Carbon::now() < $endday) {
             if(isset($request->id)){
                 $call = Call::find($request->id);
@@ -318,6 +341,23 @@ class   CustomerController extends Controller
                 'task'=>$task,
             ]);
         }
+
+        $history = new History();
+        $history->description = $task->description;
+        $history->user_id = Auth::id();
+        $history->action = 'Изменение';
+        if(isset($task->status->name))
+        {
+            $history->status = $task->status->name;
+        }
+        else
+        {
+            $history->status = 'В работе';
+        }
+        $history->customer_id = $customer->id;
+        $history->date = Carbon::now();
+        $history->save();
+
         $customer->save();
         $task->save();
         if(isset($request->details)){
@@ -361,8 +401,10 @@ class   CustomerController extends Controller
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $customer,
+                'customer' => $customer,
+                'task' => $task,
                 'id' => $id,
+                'html' => view('history.includes.history', ['customer' => $task])->render(),
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),
@@ -493,6 +535,24 @@ class   CustomerController extends Controller
         $task->deadline_date = $request->date;
         $task->status_id = 1;
         $task->save();
+
+        $history = new History();
+        $history->description = $task->description;
+        $history->action = "Изменение";
+        $history->date = Carbon::now();
+        if($task->status_id == 0)
+        {
+            $history->status = "В работе";
+        }
+        else
+        {
+            $history->status = $task->status->name;
+        }
+        $history->user_id = $task->user_id;
+        $history->customer_id = $customer->id;
+        $history->save();
+
+
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['custom_potencial'])) {

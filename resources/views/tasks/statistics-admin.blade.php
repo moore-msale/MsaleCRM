@@ -22,9 +22,9 @@
     <div class="row justify-content-center px-3">
         <div class="pl-3" style="width:45%;">
             <div class="search">
-                <input id="search" class="form-control" style="height:45px;" type="text" placeholder="Поиск по клиентам">
-                <div class="position-relative pt-1">
-                    <div class="position-absolute search-result shadow" id="search-result" style="right: 0; top: 160%;">
+                <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск по клиентам">
+                <div class="position-relative">
+                    <div class="position-absolute search-result shadow bg-white" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                     </div>
                 </div>
             </div>
