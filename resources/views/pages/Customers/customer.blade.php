@@ -288,6 +288,7 @@
             let status = $('#client_status-' + id);
             let desc = $('#client_desc-' + id);
 
+
             if(desc.val().length < 20)
             {
                 Swal.fire({
@@ -323,11 +324,11 @@
                                 showConfirmButton: false,
                                 timer: 700
                             });
+                            console.log(data);
                             $('#customer-' + id).find('.cust-name').html(data.customer.name);
                             $('#customer-' + id).find('.cust-company').html(data.customer.company);
                             $('#customer-' + id).find('.cust-desc').html(data.customer.description);
-                            $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
-                            $('#customer-' + id).find('.cust-manager').html(data.user);
+                            $('#customer-' + id).find('.cust-date').html(data.deadline_date);
                             $('#history_block-' + id).html(data.html);
                             console.log(data);
                         }else{

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Call;
 use App\Customer;
+use App\History;
 use App\Plan;
 use App\Report;
 use App\Task;
@@ -358,15 +359,32 @@ class   CustomerController extends Controller
         {
             $id = 0;
         }
+        $history = new History();
+        $history->description = $task->description;
+        $history->user_id = Auth::id();
+        $history->action = 'Изменение';
+        if(isset($task->status->name))
+        {
+            $history->status = $task->status->name;
+        }
+        else
+        {
+            $history->status = 'В работе';
+        }
+        $history->customer_id = $customer->id;
+        $history->date = Carbon::now();
+        $history->save();
+
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
-                'data' => $customer,
+                'customer' => $customer,
                 'id' => $id,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),
                 'date2'=>Carbon::parse($deadline_date)->format('H:i'),
+                'html' => view('history.includes.history', ['customer' => $task])->render(),
             ]);
         }
 

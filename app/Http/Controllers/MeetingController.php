@@ -11,6 +11,7 @@ use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use function DeepCopy\deep_copy;
 
 class MeetingController extends Controller
 {
@@ -142,7 +143,7 @@ class MeetingController extends Controller
             return response()->json([
                 'status' => "success",
                 'data' => $task,
-                'view2' => view('pages.Meets.includes.meet_admin', [
+                'view2' => view('pages.Meets.includes.meet', [
                     'task' => $task,
                 ])->render(),
                 'view' => view('tasks.meetings-card', [
@@ -189,13 +190,19 @@ class MeetingController extends Controller
         $endday = Carbon::now()->setTime('18','00','00');
 
         $task = Task::find($request->id);
-
+        $task2 = deep_copy($task);
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
-
+        $task->title = $request->title;
         $task->deadline_date = $request->date;
-        $task->status_id =$request->status;
+        $task->status_id = $request->status;
+        $task->description = $request->desc;
+        if($task == $task2){
+            return response()->json([
+                'status'=>'error'
+            ]);
+        }
         $task->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
