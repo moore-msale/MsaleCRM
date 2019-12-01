@@ -397,7 +397,7 @@
         })
     </script>
     <script>
-        $('.editTask').click(e => {
+        $(document).on('click','.editTask', e => {
             e.preventDefault();
             let btn = $(e.currentTarget);
             let id = btn.data('id');

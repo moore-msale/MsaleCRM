@@ -266,7 +266,7 @@
         })
     </script>
     <script>
-        $(document).on("click", '.editTask',function( event ) {
+        $(document).on("click", '.editTaskAdmin',function( event ) {
             event.preventDefault();
             let btn = $(event.currentTarget);
             let id = btn.data('id');

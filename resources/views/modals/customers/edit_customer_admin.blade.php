@@ -46,9 +46,9 @@
                     <input type="text" id="client_company-{{ $customer->id }}" name="company" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->company }}" placeholder="Введите компанию">
                     <input type="text" id="client_social-{{ $customer->id }}" name="social" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->socials }}" placeholder="Введите соц.сеть или сайт">
                     <select class="browser-default custom-select border-0 mt-2" id="client_manager-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        <option value="{{ \App\User::find($customer->user_id)->id }}">{{ \App\User::find($customer->user_id)->name }}</option>
+                        <option value="{{ \App\User::find($customer->user_id)['id'] }}">{{ \App\User::find($customer->user_id)['name'] }}</option>
                         @foreach(\App\User::all() as $user)
-                            @if($user->id == \App\User::find($customer->user_id)->id)
+                            @if($user->id == \App\User::find($customer->user_id)['id'])
                                 @continue
                             @endif
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -59,11 +59,11 @@
                             <option value="0">В работе</option>
                         @endif
                         @if(isset($customer->status))
-                                <option value="{{ \App\Status::find($customer->status_id)->id }}">{{ \App\Status::find($customer->status_id)->name }}</option>
+                                <option value="{{ \App\Status::find($customer->status_id)['id']}}">{{ \App\Status::find($customer->status_id)['name'] }}</option>
                                 <option value="0">В работе</option>
                             @endif
                         @foreach(\App\Status::where('type','customer')->get() as $stat)
-                            @if(isset($customer->status) && $stat->id == \App\Status::find($customer->status_id)->id)
+                            @if(isset($customer->status) && $stat->id == \App\Status::find($customer->status_id)['id'])
                                 @continue
                             @endif
                             <option value="{{ $stat->id }}">{{ $stat->name }}</option>

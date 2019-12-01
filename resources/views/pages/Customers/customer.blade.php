@@ -329,7 +329,7 @@
                             $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
                             console.log(data.html);
                             $('#history_block-' + id).html(data.html);
-                            // console.log(data);
+                            console.log(data);
                         }else{
                             Swal.fire({
                                 position: 'top-end',

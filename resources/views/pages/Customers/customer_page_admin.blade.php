@@ -124,7 +124,7 @@
                     {{ str_limit($customer->description, $limit = 25, $end = '...') }}
                 </div>
                 <div class="col-1 cust-manager  overflow-hidden" style="border-right:1px solid #dedede;">
-                    {{ \App\User::find($customer->user_id)->name }}
+                    {{ \App\User::find($customer->user_id)['name'] }}
                 </div>
                 <div class="col-2 cust-date">
                     {{ \Carbon\Carbon::parse($customer->deadline_date)->format('M d - H:i') }}

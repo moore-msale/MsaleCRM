@@ -37,9 +37,7 @@
         </div>
     </div>
 </div>
-@if(auth()->user()->role=="admin")
 @include('modals.meets.delete_meet_admin')
 @include('modals.meets.edit_meet_admin')
-@else
-    @include('modals.meets.edit_meet')
-@endif
+
+
