@@ -27,6 +27,10 @@ class   CustomerController extends Controller
      */
     public function index()
     {
+        $agent = New \Jenssegers\Agent\Agent();
+        if($agent->isPhone()){
+            return view('pages.Customers.customer_phone_page',['agent',$agent]);
+        }
         if(Auth::user()->role == 'admin')
         {
             $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
@@ -65,6 +69,7 @@ class   CustomerController extends Controller
         {
             $customers = Task::where('taskable_type','App\Customer')->where('user_id',auth()->id())->get()->reverse();
         }
+
         if(auth()->user()->role=='admin'){
             return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
         }
@@ -106,6 +111,7 @@ class   CustomerController extends Controller
         $task->title = $customer->name ? $customer->company : 'Empty';
         $task->user_id = auth()->check() ? auth()->id() : 0;
         $task->description = $request->desc;
+        $task->deadline_date =  Carbon::parseFromLocale($request->deadline_date, 'ru');
         if (!(isset($request->id)))
         {
             if($request->status == "true")
