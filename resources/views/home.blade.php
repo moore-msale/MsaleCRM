@@ -7,6 +7,7 @@
         .active{
             background: #FFFFFF!important;
             color: #000!important;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
         }
     </style>
 @endpush

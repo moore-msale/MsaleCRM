@@ -49,7 +49,7 @@
                 {{--</a>--}}
             </div>
             @else
-             <div class="mt-5 pt-2">
+             <div class="mt-5 pt-4">
                 <div class="mx-lg-3 mx-0 py-2 d-flex justify-content-center">
                     <p class="text-dark sf-bold mb-0 mr-2 w-25" style="font-size: 18px;font-weight: 600;">
                         Звонки
@@ -74,6 +74,14 @@
                     </div>
                 </div>
              </div>
+                <div class="tab-pane fade active" id="allCalls" role="tabpanel" aria-labelledby="allCalls">
+                    <div class="blog-scroll" id="calls-scroll">
+                        @include('tasks.list', ['calls3' => $calls2])
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="waitCalls" role="tabpanel" aria-labelledby="waitCall">
+
+                </div>
             @endif
             {{--<div class="mt-3 mx-lg-3 mx-0 d-flex align-items-center py-2 px-3"--}}
                  {{--style="border-left:2px solid #3d5afe; box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.15);">--}}
@@ -138,7 +146,7 @@
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ПОТЕНЦИАЛЬНЫЕ КЛИЕНТЫ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#AddPotencial">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#Add Potencial">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
             </div>

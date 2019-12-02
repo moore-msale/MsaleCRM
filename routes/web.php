@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tasks', function () {
         $agent = New \Jenssegers\Agent\Agent();
         if($agent->isPhone()){
-            return view('pages.Tasks.task_phone_page');
+            return view('pages.Tasks.task_phone_page', ['tasks' => \App\Task::where('taskable_type', null)->where('user_id',auth()->id())->get()->reverse()]);
         }
         return view('pages.Tasks.task_page', ['tasks' => \App\Task::where('taskable_type', null)->where('user_id',auth()->id())->get()->reverse()]);
     });
@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/meets', function () {
         $agent = New \Jenssegers\Agent\Agent();
         if($agent->isPhone()){
-            return view('pages.Customers.customer_phone_page');
+            return view('pages.Meets.meet_phone_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->where('user_id', auth()->id())->get()->reverse()]);
         }
         return view('pages.Meets.meet_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->where('user_id', auth()->id())->get()->reverse()]);
     });
