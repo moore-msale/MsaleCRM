@@ -4,7 +4,10 @@
         .men-use {
             background: #1F0343 !important;
         }
-
+        .active{
+            background: #FFFFFF!important;
+            color: #000!important;
+        }
     </style>
 @endpush
 @section('content')
@@ -15,21 +18,24 @@
     <div class="container-fluid">
 
             @if($agent->isPhone())
-            <div class="row">
-
-                @include('tasks.index', ['calls2' => $calls])
-            </div>
-                @else
-            <div class="row pt-lg-4 pt-0 justify-content-center">
+                <div class="row">
+                    @include('_partials.header')
+                    @include('tasks.index', ['calls2' => $calls])
+                    @include('tasks.index', ['tasks2' => $tasks])
+                    @include('tasks.index', ['meetings2' => $meetings])
+                    @include('tasks.index', ['customers2' => $customers])
+                </div>
+            @else
+                <div class="row pt-lg-4 pt-0 justify-content-center">
                 @if(\Illuminate\Support\Facades\Auth::user()->role == "admin")
                     @include('tasks.statistics-admin')
                 @else
                     @include('tasks.statistics')
                 @endif
-                @include('tasks.index', ['tasks2' => $tasks])
-                @include('tasks.index', ['meetings2' => $meetings])
-                @include('tasks.index', ['customers2' => $customers])
-                @include('tasks.index', ['calls2' => $calls])
+                    @include('tasks.index', ['tasks2' => $tasks])
+                    @include('tasks.index', ['meetings2' => $meetings])
+                    @include('tasks.index', ['customers2' => $customers])
+                    @include('tasks.index', ['calls2' => $calls])
             @endif
         </div>
     </div>
@@ -1149,7 +1155,7 @@
                 }
                 else {
                     $.ajax({
-                        url: 'meetupdate',
+                        url: 'EditMeetAdmin',
                         method: 'POST',
                         data: {
                             "_token": "{{ csrf_token() }}",
@@ -1171,6 +1177,7 @@
                                 });
                                 console.log(data);
                                 $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                                $('#meet-' + id).find('.meet-company').html(data.customer.company);
                                 $('#meet-' + id).find('.meet-manager').html(data.user);
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description);
                                 $('#meet-' + id).find('.meet-date1').html(data.date1);

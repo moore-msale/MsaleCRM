@@ -62,12 +62,20 @@ Route::group(['middleware' => ['auth']], function () {
         return view('pages.Tasks.task_page_admin', ['tasks' => \App\Task::where('taskable_type', null)->get()->reverse()]);
     });
     Route::get('/tasks', function () {
+        $agent = New \Jenssegers\Agent\Agent();
+        if($agent->isPhone()){
+            return view('pages.Tasks.task_phone_page');
+        }
         return view('pages.Tasks.task_page', ['tasks' => \App\Task::where('taskable_type', null)->where('user_id',auth()->id())->get()->reverse()]);
     });
     Route::get('/meets_admin', function () {
         return view('pages.Meets.meet_page_admin', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->get()->reverse() ]);
     });
     Route::get('/meets', function () {
+        $agent = New \Jenssegers\Agent\Agent();
+        if($agent->isPhone()){
+            return view('pages.Customers.customer_phone_page');
+        }
         return view('pages.Meets.meet_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->where('user_id', auth()->id())->get()->reverse()]);
     });
     Route::post('/task_filter', 'TaskController@filter')->name('task_filter');

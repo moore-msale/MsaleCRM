@@ -57,7 +57,7 @@ class ReportController extends Controller
         $today = Carbon::now()->setTime('00', '00');
         $endday = Carbon::now()->setTime('18','00','00');
         $users = User::all();
-
+        $admin = User::find(1);
         foreach ($users as $user) {
             if($user->role != 'admin') {
                 $report = Report::where('created_at', '>=', $today)->where('user_id', $user->id)->first();
@@ -88,15 +88,16 @@ class ReportController extends Controller
                             if ($plan->status == 2) {
                                 $plan->status = 3;
                                 $plan->save();
-                                $user->balance = $user->balance - 400;
+                                $penalty = $user->balance - isset($user->penalty) ? $user->penalty : $admin->penalty;
+                                $user->balance = $penalty;
                                 $user->save();
                             }
                         }
-                    } else {
+                    }else{
                         $plan = new Plan();
-                        $plan->calls_goal = 60;
+                        $plan->calls_goal = isset($user->calls) ? $user->calls : $admin->calls;
                         $plan->calls_score = 0;
-                        $plan->meets_goal = 60;
+                        $plan->meets_goal = isset($user->meetings) ? $user->meetings : $admin->meetings;
                         $plan->meets_score = 0;
                         $plan->status = 3;
                         $plan->user_id = $user->id;

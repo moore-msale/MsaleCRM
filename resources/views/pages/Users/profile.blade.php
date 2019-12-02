@@ -65,7 +65,7 @@
                                 <input type="text" name="address" id="address-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->address }}" placeholder="Адрес">
                             </div>
                             <div class="form-group mb-2">
-                                <input type="text" name="phone" id="phone-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->phone }}" placeholder="Номер">
+                                <input type="number" name="phone" id="phone-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->phone }}" placeholder="Номер">
                             </div>
                             <div class="form-group mb-2">
                                 <input type="text" name="email" id="email-{{$user->id}}" class="form-control rounded-0 border-0  bg-grey sf-medium display-6" value="{{ $user->email }}" placeholder="Email">

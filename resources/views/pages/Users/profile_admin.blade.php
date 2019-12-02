@@ -52,11 +52,11 @@
                             </div>
                         </div>
                         <div class="w-100"></div>
-                        <div class="col mt-2">
-                           <a class="nav-link btn rounded-0 border-n btn-block text-left bg-white active sf-medium p-2 pl-3" href="#newuser" data-toggle="tab" role="tab">+ Пользователь</a>
+                        <div class="col" style="margin-top: 0.10rem;">
+                           <a class="nav-link btn rounded-0 border-n btn-block text-left active sf-medium p-2 pl-3" href="#newuser" data-toggle="tab" role="tab">+ Пользователь</a>
                         </div>
                         <div class="w-100"></div>
-                        <div class="col mt-2">
+                        <div class="col" style="margin-top: 0.10rem;">
                             <a class="nav-link btn rounded-0 border-n btn-block text-left bg-white sf-medium p-2 pl-3"  href="#archive" data-toggle="tab" role="tab">- Архив пользователей</a>
                         </div>
                     </div>
@@ -104,11 +104,14 @@
                             <h2 class="text-muted sf-medium display-5-5">+ ежедневный план</h2>
                         </div>
                         <div class="row">
-                            <div class="col" id="calls">
-                                <input type="text" class="form-control rounded-0 border-n bg-grey display-6" name="calls" placeholder="Количество звонков" value="{{ old('calls') }}">
+                            <div class="col pr-1" id="calls">
+                                <input type="number" class="form-control rounded-0 border-n bg-grey display-6" name="calls" placeholder="Количество звонков" value="{{ old('calls') }}">
                             </div>
-                            <div class="col"  id="meetings">
-                                <input type="text" class="form-control rounded-0 border-n bg-grey display-6" placeholder="Количество встреч" name="meetings" value="{{ old('meetings') }}">
+                            <div class="col px-1"  id="meetings">
+                                <input type="number" class="form-control rounded-0 border-n bg-grey display-6" placeholder="Количество встреч" name="meetings" value="{{ old('meetings') }}">
+                            </div>
+                            <div class="col pl-1"  id="penalty">
+                                <input type="number" class="form-control rounded-0 border-n bg-grey display-6" placeholder="Штраф" name="penalty" value="{{ old('penalty') }}">
                             </div>
                         </div>
                         <div class="mt-5">
@@ -180,7 +183,7 @@
                                 <input type="text" name="address" id="address-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->address }}" placeholder="Адрес">
                             </div>
                             <div class="form-group mb-2">
-                                <input type="text" name="phone" id="phone-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->phone }}" placeholder="Номер">
+                                <input type="number" name="phone" id="phone-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->phone }}" placeholder="Номер">
                             </div>
                             <div class="form-group mb-2">
                                 <input type="text" name="email" id="email-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->email }}" placeholder="Email">
@@ -195,11 +198,14 @@
                                 <h2 class="text-muted sf-medium display-5-5">+ ежедневный план</h2>
                             </div>
                             <div class="row">
-                                <div class="col">
-                                    <input type="text" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество звонков">
+                                <div class="col pr-1">
+                                    <input type="number" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество звонков" value="{{isset($manager->calls) ? $manager->calls : auth()->user()->calls}}">
                                 </div>
-                                <div class="col">
-                                    <input type="text" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество встреч">
+                                <div class="col px-1">
+                                    <input type="number" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество встреч" value="{{ isset($manager->meetings) ? $manager->meetings :auth()->user()->meetings}}">
+                                </div>
+                                <div class="col pl-1">
+                                    <input type="number" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Штрафы" value="{{ isset($manager->penalty) ? $manager->penalty :auth()->user()->penalty}}">
                                 </div>
                             </div>
                             <div class="mt-5">
@@ -235,7 +241,7 @@
                 </div>
         </div>
         @endforeach
-         <div class="tab-pane fade col-9 pt-5" id="archive" role="tabpanel" aria-labelledby="archive">
+         <div class="tab-pane fade col-10 pt-5" id="archive" role="tabpanel" aria-labelledby="archive">
             <div class="mt-1">
                  <div class="mt-1">
                 <table class="table">
@@ -279,9 +285,10 @@
                                 <p class="sf-medium">{{$manager->email}}</p>
                             @endif
                         </td>
-                        <td class="text-right pr-0">
-                            <a href="activateuser/{{$manager->id}}" class="text-success border-right btn-lg">+</a>
-                            <a href="deleteuser/{{$manager->id}}" class="text-danger btn-lg pr-0">x</a>
+                        <td class="overflow-hidden text-right px-0">
+                            <a href="activateuser/{{$manager->id}}" class="text-success border-right btn-lg pl-0"><img
+                                    src="{{asset('images/plus.png')}}" alt=""></a>
+                            <a href="deleteuser/{{$manager->id}}" class="text-danger btn-lg pl-2"><img src="{{asset('images/delete.png')}}" alt=""></a>
                         </td>
                     </tr>
                     @endforeach

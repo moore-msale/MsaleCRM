@@ -34,7 +34,7 @@
                     <input type="text" name="address" id="address-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->address }}" placeholder="Адрес">
                 </div>
                 <div class="form-group mb-2">
-                    <input type="text" name="phone" id="phone-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->phone }}" placeholder="Номер">
+                    <input type="number" name="phone" id="phone-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->phone }}" placeholder="Номер">
                 </div>
                 <div class="form-group mb-2">
                     <input type="text" name="email" id="email-{{$manager->id}}" class="form-control rounded-0 border-n  bg-grey sf-medium display-6" value="{{ $manager->email }}" placeholder="Email">
@@ -49,11 +49,14 @@
                     <h2 class="text-muted sf-medium display-5-5">+ ежедневный план</h2>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <input type="text" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество звонков">
+                    <div class="col pr-1">
+                        <input type="number" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество звонков" value="{{isset($manager->calls) ? $manager->calls : auth()->user()->calls}}">
                     </div>
-                    <div class="col">
-                        <input type="text" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество встреч">
+                    <div class="col px-1">
+                        <input type="number" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Количество встреч" value="{{ isset($manager->meetings) ? $manager->meetings :auth()->user()->meetings}}">
+                    </div>
+                    <div class="col pl-1">
+                        <input type="number" class="form-control rounded-0 border-n bg-grey sf-medium" placeholder="Штрафы" value="{{ isset($manager->penalty) ? $manager->penalty :auth()->user()->penalty}}">
                     </div>
                 </div>
                 <div class="mt-5">

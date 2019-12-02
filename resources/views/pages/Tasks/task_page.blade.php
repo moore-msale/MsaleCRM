@@ -157,9 +157,9 @@
         @include('modals.tasks.done_task')
         @include('modals.tasks.search_task_modal')
     @endforeach
-    @include('modals.customers.create_client')
-    @include('modals.tasks.create_task')
-    @include('modals.meets.create_meet')
+        @include('modals.customers.create_client')
+        @include('modals.tasks.create_task')
+        @include('modals.meets.create_meet')
 @endsection
 
 

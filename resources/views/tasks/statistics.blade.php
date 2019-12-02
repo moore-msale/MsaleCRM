@@ -41,21 +41,21 @@
                     План на день
                 </div>
                 <div class="d-flex">
-                    <div class="w-75">
+                    <div style="width: 60%;">
                         <p class="stats-head text-uppercase sf-black">
                             Звонки
                         </p>
                         <p class="stats-score font-weight-bold">
-                            {{$plan->calls_goal}}<span class="sf-light font-weight-light">/</span> <span class="stats-score2 font-weight-light">0</span>
+                            {{ $plan->calls_goal }} <span class="sf-light font-weight-light">/</span> <span class="stats-score2 font-weight-light">{{$plan->calls_score}}</span>
                         </p>
                     </div>
-                    <div class="w-25">
+                    <div style="width: 40%;">
                         {{--<img class="img-fluid" src="{{ asset('images/meets.png') }}" alt="">--}}
-                        <p class="stats-head text-uppercase sf-black">
+                        <p class="stats-head text-uppercase sf-black text-center">
                             Встречи
                         </p>
-                        <p class="stats-score font-weight-bold">
-                            {{$plan->meets_goal}}<span class="sf-light font-weight-light">/</span> <span class="stats-score2 font-weight-light">0</span>
+                        <p class="stats-score font-weight-bold text-center">
+                            {{ $plan->meets_goal }} <span class="sf-light font-weight-light">/</span> <span class="stats-score2 font-weight-light">{{$plan->meets_score}}</span>
                         </p>
                     </div>
                 </div>
