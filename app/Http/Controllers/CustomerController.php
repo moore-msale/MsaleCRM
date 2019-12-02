@@ -27,6 +27,10 @@ class   CustomerController extends Controller
      */
     public function index()
     {
+        $agent = New \Jenssegers\Agent\Agent();
+        if($agent->isPhone()){
+            return view('pages.Customers.customer_phone_page',['agent',$agent]);
+        }
         if(Auth::user()->role == 'admin')
         {
             $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
@@ -65,6 +69,7 @@ class   CustomerController extends Controller
         {
             $customers = Task::where('taskable_type','App\Customer')->where('user_id',auth()->id())->get()->reverse();
         }
+
         if(auth()->user()->role=='admin'){
             return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
         }
@@ -106,9 +111,7 @@ class   CustomerController extends Controller
         $task->title = $customer->name ? $customer->company : 'Empty';
         $task->user_id = auth()->check() ? auth()->id() : 0;
         $task->description = $request->desc;
-
-
-
+        $task->deadline_date =  Carbon::parseFromLocale($request->deadline_date, 'ru');
         if (!(isset($request->id)))
         {
             if($request->status == "true")
@@ -398,6 +401,22 @@ class   CustomerController extends Controller
         {
             $id = 0;
         }
+        $history = new History();
+        $history->description = $task->description;
+        $history->user_id = Auth::id();
+        $history->action = 'Изменение';
+        if(isset($task->status->name))
+        {
+            $history->status = $task->status->name;
+        }
+        else
+        {
+            $history->status = 'В работе';
+        }
+        $history->customer_id = $customer->id;
+        $history->date = Carbon::now();
+        $history->save();
+
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",
@@ -409,6 +428,7 @@ class   CustomerController extends Controller
                 'status_id'=>$task->status,
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),
                 'date2'=>Carbon::parse($deadline_date)->format('H:i'),
+                'html' => view('history.includes.history', ['customer' => $task])->render(),
             ]);
         }
 
