@@ -16,7 +16,6 @@ $agent = New \Jenssegers\Agent\Agent();
 @endpush
 <div class="modal fade right" id="EditCustomerAdmin-{{ $customer->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
     <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="width:700px;!important;max-width: 700px;!important;">
         @if(!$agent->isPhone())
@@ -34,7 +33,7 @@ $agent = New \Jenssegers\Agent\Agent();
             {{--</div>--}}
         </div>
         @endif
-        <div class="modal-content px-2 w-50">
+        <div class="modal-content px-2 w-md-50 mr-0" style="min-height: 550px; height: 100vh;">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+{{ $customer->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

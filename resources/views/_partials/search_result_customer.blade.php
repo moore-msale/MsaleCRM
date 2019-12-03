@@ -1,6 +1,6 @@
 <nav class="nav flex-column text-left scrollbar" id="search-result-ajax" style="max-height: 500px;overflow-y: auto; width: 100%; overflow-x: hidden;">
-
     @if($count)
+
         @foreach($result as $key => $items)
             <div class="position-relative">
 
@@ -52,8 +52,6 @@
                     @endforeach
                 </div>
             </div>
-
-
         @endforeach
 
         {{--@if(count($result->collapse()) > 10)--}}
