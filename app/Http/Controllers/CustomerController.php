@@ -34,7 +34,7 @@ class   CustomerController extends Controller
             $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
 //            dd($customers->groupBy('user_id'));
             if($agent->isPhone()){
-                return view('pages.Customers.customer_phone_page',['agent'=>$agent,'customers' => $customers]);
+                return view('pages.Customers.customer_phone_page',['customers' => $customers]);
             }
             return view('pages.Customers.customer_page_admin',['customers' => $customers]);
         }
@@ -45,8 +45,9 @@ class   CustomerController extends Controller
                 'App\Customer'
             )->get();
             if($agent->isPhone()){
-                return view('pages.Customers.customer_phone_page',['agent'=>$agent,'customers' => $customers]);
+                return view('pages.Customers.customer_phone_page',['customers' => $customers]);
             }
+//            dd($customers);
             return view('pages.Customers.customer',['customers' => $customers]);
         }
     }

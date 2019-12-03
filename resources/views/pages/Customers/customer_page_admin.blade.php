@@ -114,10 +114,10 @@
                 @if(count($customer->taskable->histories))
                 <div class="position-absolute" style="width:10px; height:10px; background-color: #772FD2; top:3%; right:0%; border-radius: 50%;"></div>
                 @endif
-                    <div class="col-2 cust-name  overflow-hidden" style="border-right:1px solid #dedede;">
+                    <div class="col-2 cust-name  overflow-hidden" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ $customer->taskable->name }}
                 </div>
-                <div class="col-2 cust-company  overflow-hidden" style="border-right:1px solid #dedede;">
+                <div class="col-2 cust-company  overflow-hidden" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ $customer->taskable->company }}
                 </div>
                 <div class="col-3 cust-desc  overflow-hidden" style="border-right:1px solid #dedede;">

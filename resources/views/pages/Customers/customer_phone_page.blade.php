@@ -19,7 +19,9 @@
         </div>
     </div>
     <div >
-        @include('tasks.list', ['customer3' => $customers])
+        <div class="blog-scroll" id="customers-scroll">
+            @include('tasks.list', ['customers3' => $customers])
+        </div>
     </div>
     @if(auth()->user()->role=='admin')
         @include('modals.customers.create_client_admin')

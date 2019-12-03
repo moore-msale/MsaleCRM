@@ -1,3 +1,6 @@
+<?php
+$agent = New \Jenssegers\Agent\Agent();
+?>
 @push('styles')
     <style>
         @media screen and (min-width: 992px)
@@ -15,7 +18,8 @@
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-    <div class="modal-dialog modal-full-height modal-right" role="document" style="width:700px;!important;max-width: 700px;!important;">
+    <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="width:700px;!important;max-width: 700px;!important;">
+        @if(!$agent->isPhone())
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light " style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
@@ -29,6 +33,7 @@
             {{--<div class="modal-footer justify-content-center">--}}
             {{--</div>--}}
         </div>
+        @endif
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+{{ $customer->title }}</h4>

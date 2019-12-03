@@ -139,12 +139,14 @@ class HomeController extends Controller
 
 
         $calls = Call::where('user_id', auth()->id())->where('active',0)->get()->reverse();
+        $wcalls = Call::where('user_id', auth()->id())->where('active',1)->get()->reverse();
         return view('home',[
             'plan' => $plan,
             'tasks' => $tasks,
             'customers' => $customers,
             'meetings' => $meetings,
             'calls' => $calls,
+            'wcalls' => $wcalls,
             'penalty' => $penalty
         ]);
     }

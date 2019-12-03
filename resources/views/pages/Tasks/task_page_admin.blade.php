@@ -109,13 +109,13 @@
 
              @foreach($tasks as $task)
                 <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
-                <div class="col-2 task-name" style="border-right:1px solid #dedede;">
+                <div class="col-2 task-name" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ $task->title }}
                 </div>
-                <div class="col-4 task-desc" style="border-right:1px solid #dedede;">
+                <div class="col-4 task-desc" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ str_limit($task->description, $limit = 25, $end = '...') }}
                 </div>
-                <div class="col-2 task-manager" style="border-right:1px solid #dedede;">
+                <div class="col-2 task-manager" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ \App\User::find($task->user_id)->name }}
                 </div>
                 <div class="col-2 task-deadline">

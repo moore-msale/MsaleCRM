@@ -138,33 +138,33 @@
 
 
 
-<nav class="navbar navbar-expand-lg fixed-top py-2" style="box-shadow: none; padding-left:5%; padding-right:5%;">
-    <div style="border-bottom:0.5px solid #000000;" class="w-100 ">
-        <a class="text-white logo sf-black pt-0" style="font-size: 25px; line-height: 105%;     font-weight: 900; text-transform: uppercase;" href="/home">
-            <img src="{{ asset('images/purple-logo.svg') }}" alt="">
-        </a>
-        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <img src="{{asset('images/arrows-hamburger-2 1.png')}}" alt="">
-        </button>
+<nav class="navbar navbar-expand-lg fixed-top py-2 px-0" style="box-shadow: none;background-color: #F5F6FA;">
+    <a class="text-white logo sf-black pt-0 navbar-brand pl-3" style="font-size: 25px; line-height: 105%;     font-weight: 900; text-transform: uppercase;" href="/home">
+        <img src="{{ asset('images/purple-logo.svg') }}" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <img src="{{asset('images/arrows-hamburger-2 1.png')}}" alt="">
+    </button>
+    <div style="border-bottom:0.5px solid #000000;opacity: 0.3;" class="w-100 mx-3">
     </div>
     <div class="collapse navbar-collapse pl-0 w-100" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav mx-auto bg-white">
             {{--<li class="nav-item active bt-li">--}}
                 {{--<a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>--}}
             {{--</li>--}}
-                <li class="nav-item active bt-li pr-2" style="border-bottom:2px solid #EBEBEB;">
-                    <a class="nav-link sf-medium text-dark" href="/home">Звонки</a>
-                </li>
-                <li class="nav-item active bt-li pr-2" style="border-bottom:2px solid #EBEBEB;">
-                    <a class="nav-link sf-medium text-dark" href="/meets">Встречи</a>
-                </li>
-                <li class="nav-item active bt-li pr-2" style="border-bottom:2px solid #EBEBEB;">
-                    <a class="nav-link sf-medium text-dark" href="/tasks">Задачи</a>
-                </li>
-                <li class="nav-item active bt-li pr-2">
-                    <a class="nav-link sf-medium text-dark"  href="/customer">Клиенты</a>
-                </li>
+            <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                <a class="nav-link sf-medium text-dark" href="/home">Звонки</a>
+            </li>
+            <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                <a class="nav-link sf-medium text-dark" href="/meets">Встречи</a>
+            </li>
+            <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                <a class="nav-link sf-medium text-dark" href="/tasks">Задачи</a>
+            </li>
+            <li class="nav-item bt-li mx-3" style="font-weight: 600;font-size: 18px;">
+                <a class="nav-link sf-medium text-dark"  href="/customer">Клиенты</a>
+            </li>
         </ul>
         <ul class="navbar-nav  d-none">
             <li class="nav-item dropdown ml-auto">
