@@ -36,9 +36,15 @@
              let date = $('#meet_date-' + id);
              let manage = $('#meet_manager-' + id);
              let status = $('#meet_status-' + id);
-             if(desc.val() == '')
+             if(desc.val().length < 20)
              {
-                 swal("Заполните описание!","Поле описание стало обязательным","error");
+                 Swal.fire({
+                     position: 'top-end',
+                     icon: 'info',
+                     title: 'Заполните описание, описание должно быть больше 20 символов!',
+                     showConfirmButton: true,
+                     // timer: 700
+                 });
              }
              else {
                  $.ajax({
@@ -146,9 +152,15 @@
          let desc = $('#meet_desc-' + id);
          let date = $('#meet_date-' + id);
          let status = $('#meet_status-' + id);
-         if(desc.val() == '')
+         if(desc.val().length < 20)
          {
-             swal("Заполните описание!","Поле описание стало обязательным","error");
+             Swal.fire({
+                 position: 'top-end',
+                 icon: 'info',
+                 title: 'Заполните описание, описание должно быть больше 20 символов!',
+                 showConfirmButton: true,
+                 // timer: 700
+             });
          }
          else {
              $.ajax({

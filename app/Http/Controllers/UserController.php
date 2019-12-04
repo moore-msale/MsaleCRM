@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
-
-
+    public function exit() {
+        Auth::logout();
+        return redirect('/');
+    }
     public function profile()
     {
         $user = Auth::user();

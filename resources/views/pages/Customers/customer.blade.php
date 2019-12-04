@@ -17,7 +17,7 @@
             <form class="row" action="{{ route('customer_filter')}}" method="POST"  enctype="multipart/form-data">
                 @csrf
                 <div class="col-2">
-                    <select name="manager" id="meetingname" class="browser-default custom-select border-0 sf-light">
+                    <select name="manager" id="meetingname" class="browser-default custom-select border-0 sf-light  p-0 pl-4" style="height: 31px;">
                         <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
                         @if(isset($manager))
                             <option value="{{ null }}">Все менеджеры</option>
@@ -33,7 +33,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <select name="status" id="meetingname" class="browser-default custom-select border-0 sf-light   ">
+                    <select name="status" id="meetingname" class="browser-default custom-select border-0 sf-light  p-0 pl-4" style="height: 31px;">
                         @if(isset($status) && $status == 0)
                             <option value="0">Без статуса</option>
                         @else
@@ -54,7 +54,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <button class="new-button">
+                    <button class="new-button" style="height: 31px;">
                         Применить
                     </button>
                 </div>
@@ -77,7 +77,7 @@
                     <div class="search">
                         <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск по клиентам">
                         <div class="position-relative">
-                            <div class="position-absolute search-result shadow bg-white" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
+                            <div class="position-absolute search-result bg-white mt-2" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                 <div class="col-2">
                     Сроки
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-center">
                     Статус
                 </div>
                 <div class="col-2">
@@ -113,7 +113,7 @@
                 </div>
             </div>
             @foreach($customers as $customer)
-                <div class="row py-2 sf-light position-relative" id="customer-{{$customer->id}}">
+                <div class="row py-2 sf-light position-relative  rows-hover" id="customer-{{$customer->id}}">
                     @if(count($customer->taskable->histories))
                         <div class="position-absolute" style="width:10px; height:10px; background-color: #772FD2; top:3%; right:0%; border-radius: 50%;"></div>
                     @endif

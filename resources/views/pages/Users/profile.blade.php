@@ -2,8 +2,7 @@
 @section('content')
 <style type="text/css">
 .bg-grey{
-    background-color: #e9ecef;
-    opacity: 1;
+    background-color: #F5F5F5;
 }
 .custom-file-label:after {
     content: "Выбрать"!important;
@@ -34,7 +33,7 @@
 <div class="row pl-1 h-100">
     <div class="col-3"></div>
     <div class="col-7 pt-5" id="user-{{ $user->id }}" role="tabpanel" aria-labelledby="users-{{$user->id}}">
-             <div class="shadow bg-white">
+             <div class="bg-white" style="box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);">
                     <div class="mt-1 pl-5 pt-4">
                         <div class="row">
                             <div class="col text-left">

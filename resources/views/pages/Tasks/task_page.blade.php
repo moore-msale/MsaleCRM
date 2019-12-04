@@ -19,7 +19,7 @@
             <form class="row" action="{{ route('task_filter')}}" method="POST"  enctype="multipart/form-data">
                 @csrf
                 <div class="col-2">
-                    <select name="manager" id="meetingname" class="browser-default custom-select border-0">
+                    <select name="manager" id="meetingname" class="browser-default custom-select border-0 rounded-0 p-0 pl-4" style="height: 31px;">
                         <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
                         @if(isset($manager))
                             <option value="{{ null }}">Все менеджеры</option>
@@ -35,7 +35,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <select name="status" id="meetingname" class="browser-default custom-select border-0">
+                    <select name="status" id="meetingname" class="browser-default custom-select border-0 rounded-0  p-0 pl-4" style="height: 31px;">
                         @if(isset($status) && $status == 0)
                             <option value="0">Без статуса</option>
                         @else
@@ -55,7 +55,7 @@
                     </select>
                 </div>
                 <div class="col-2">
-                    <button class="new-button">
+                    <button class="new-button" style="height: 31px;">
                         Применить
                     </button>
                 </div>
@@ -76,7 +76,7 @@
                     <div class="search">
                         <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск среди задач">
                         <div class="position-relative">
-                            <div class="position-absolute search-result shadow bg-white" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
+                            <div class="position-absolute search-result bg-white mt-2" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                             </div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                 <div class="col-2">
                     Сроки
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-center">
                     Статус
                 </div>
 
@@ -111,9 +111,9 @@
             </div>
             @foreach($tasks as $task)
                 @if(\App\User::find($task->user_id)->role == 'admin')
-                    <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}" style="border: 0.5px solid rgba(255, 0, 0, 0.5)!important;">
+                    <div class="row py-2 my-1 sf-light position-relative  rows-hover" id="task-{{$task->id}}" style="border: 0.5px solid rgba(255, 0, 0, 0.5)!important;">
                         @else
-                            <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
+                            <div class="row py-2 my-1 sf-light position-relative  rows-hover" id="task-{{$task->id}}">
                                 @endif
                                 <div class="col-2 task-name" style="border-right:1px solid #dedede;">
                                     {{ $task->title }}

@@ -73,9 +73,8 @@ class AjaxController extends Controller
     public function searchCustomer(Request $request)
     {
         $search = $request->search;
-        $result = collect(['Клиенты' => Customer::where('company', 'like', "%$search%")->orWhere('contacts', 'like', "%$search%")->get()]);
+        $result = collect(['Клиенты' => Customer::where('company', 'like', "%$search%")->orWhere('contacts', 'like', "%$search%")->orWhere('name', 'like', "%$search%")->get()]);
         $count = count($result);
-        dd($result);
         if ($request->ajax()) {
             return response()->json([
                 'html' => view('_partials.search_result_customer', [

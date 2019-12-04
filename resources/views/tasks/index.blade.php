@@ -1,6 +1,6 @@
 @if(isset($tasks2))
         <div class="px-0 h-auto d-lg-block d-none collumn-4">
-            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-between p-3 category-btn" style="background-color:#4A4A4A;  ">
+            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-between py-2 px-3 category-btn" style="border-left:8px solid#D63A3A;  background-color:#4A4A4A;  ">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ЗАДАЧИ
                 </p>
@@ -31,7 +31,7 @@
 @if(isset($calls2))
         <div class="px-0 h-auto collumn-4">
             @if(!$agent->isPhone())
-            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-center p-3 category-btn" style="background-color:#4A4A4A;">
+            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-center py-2 px-3 category-btn" style="border-left:8px solid #3D3AD6;background-color:#4A4A4A;">
                 <a href="/home" class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ЗВОНКИ
                 </a>
@@ -120,7 +120,7 @@
 @endif
 @if(isset($meetings2))
         <div class="px-0 h-auto d-lg-block d-none collumn-4">
-            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-between p-3 category-btn" style="background-color:#4A4A4A;">
+            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-between py-2 px-3 category-btn" style="border-left:8px solid #D6BD3A;background-color:#4A4A4A;">
                 <p class="text-white sf-bold mb-0 mr-auto">
                     ВСЕ ВСТРЕЧИ
                 </p>
@@ -151,11 +151,11 @@
 @endif
 @if(isset($customers2))
         <div class="px-0 h-auto d-lg-block d-none collumn-4">
-            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-between p-3 category-btn" style="background-color:#4A4A4A;">
+            <div class="mt-4 mx-lg-3 mx-0 d-flex align-items-center justify-content-between py-2 px-3 category-btn" style="border-left:8px solid #6FC268;background-color:#4A4A4A;">
                 <p class="text-white sf-bold mb-0">
                     ВСЕ ПОТЕНЦИАЛЬНЫЕ КЛИЕНТЫ
                 </p>
-                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#Add Potencial">
+                <a class="ml-auto text-white" href="" data-toggle="modal" data-target="#AddPotencial">
                     <img src="{{ asset('images/+.svg') }}" alt="">
                 </a>
             </div>

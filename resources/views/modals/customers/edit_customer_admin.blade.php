@@ -17,7 +17,7 @@ $agent = New \Jenssegers\Agent\Agent();
 <div class="modal fade right" id="EditCustomerAdmin-{{ $customer->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-    <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="width:700px;!important;max-width: 700px;!important;">
+    <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="width:100%;!important;max-width: 700px;!important;">
         @if(!$agent->isPhone())
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">

@@ -234,9 +234,15 @@ $agent = New \Jenssegers\Agent\Agent();
                 // timer: 700
             });
         }
-        else if(desc.val() == '')
+        else if(desc.val().length < 20)
         {
-            swal("Заполните описание!","Поле описание стало обязательным","error");
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+            });
         }
         else {
             $.ajax({
@@ -453,9 +459,15 @@ $agent = New \Jenssegers\Agent\Agent();
         let desc = $('#task_desc');
         let date = $('#task_date');
         let status = $('#task_status');
-        if(desc.val() == '')
+        if(desc.val().length < 20)
         {
-            swal("Заполните описание!","Поле описание стало обязательным","error");
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+            });
         }
         else {
             $.ajax({

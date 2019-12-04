@@ -369,22 +369,20 @@ class   CustomerController extends Controller
         {
             $id = 0;
         }
-        $history = new History();
-        $history->description = $task->description;
-        $history->user_id = Auth::id();
-        $history->action = 'Изменение';
-        if(isset($task->status->name))
-        {
-            $history->status = $task->status->name;
+        if ($task->description != $task2->description or $task->status != $task2->status) {
+            $history = new History();
+            $history->description = $task->description;
+            $history->user_id = Auth::id();
+            $history->action = 'Изменение';
+            if (isset($task->status->name)) {
+                $history->status = $task->status->name;
+            } else {
+                $history->status = 'В работе';
+            }
+            $history->customer_id = $customer->id;
+            $history->date = Carbon::now();
+            $history->save();
         }
-        else
-        {
-            $history->status = 'В работе';
-        }
-        $history->customer_id = $customer->id;
-        $history->date = Carbon::now();
-        $history->save();
-
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",

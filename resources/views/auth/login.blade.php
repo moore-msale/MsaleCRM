@@ -20,7 +20,9 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
      -ms-font-family: SF Pro Display!important;
  }
 .sidenav {
-    background: linear-gradient(212.75deg, #772FD2 -1.49%, #3C1E61 100%);
+    /*background: linear-gradient(212.75deg, #772FD2 -1.49%, #3C1E61 100%);*/
+    background-image: url("{{asset('images/login-bg.svg')}}");
+    background-size: 100%;
     padding-top: 32vh;
     padding-left: 10%;
     width: 50%;
@@ -31,6 +33,7 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
 }
 .sidenav a{
     display:inline-block;
+    color: #fff;
 }
 .sidenav img{
     width: 90%;
@@ -90,16 +93,18 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
 }
 .hover-purple:hover,.hover-purple:active,.hover-purple:focus{
     border-color: #8F39FC;
+    color: #0f0f0f;
     outline:0px !important;
     -webkit-appearance:none;
     box-shadow: none !important;
     cursor: pointer;
 }
 .btn-purple{
-    background: #8F39FC;
+    background: #8F39FC!important;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
     font-weight: 300;
     font-size: 16px;
+    color:#fff;
     line-height: 19px;
 }
 .btn-purple:not([disabled]):not(.disabled).active{
@@ -127,17 +132,18 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
 }
 </style>
 <div class="sidenav h-100 d-none d-lg-block">
-    <div class="login-main-text row">
-        <div class="col text-right">
-                <img src="{{asset('images/loginLogo.svg')}}">
-            <div class="text-center pl-5">
-                <h2 class="main-head">Правильное <br>управление <br>продажами </h2>
-            </div>
+    <div class="login-main-text row pl-1">
+        <div class="col-2"></div>
+        <div class="col-8 text-left px-5">
+            <img src="{{asset('images/loginLogo.svg')}}">
+            <h2 class="main-head sf-light" style="padding-left: 18%;">Правильное <br>управление <br>продажами </h2>
         </div>
-        <div class="col tab nab nav-tabs text-right pt-5" role="tablist">
-                <a class="btn btn-purple nav-link border-0 rounded-0 p-3 m-0 active text-left" href="#login" data-toggle="tab" role="tab">Вход</a>
-                <br>
-                <a class="btn btn-purple nav-link border-0 rounded-0 pr-2 pl-3 pb-3 pt-3 m-0 text-left"  href="#register" data-toggle="tab" role="tab">Регистрация</a>
+        <div class="col-2"></div>
+        <div class="col-3 tab nab nav-tabs pt-5" role="tablist" >
+            <div class="float-right">
+                <a class="btn btn-purple nav-link border-0 rounded-0 p-3 m-0 active text-left d-flex align-items-center log" href="#login" data-toggle="tab" role="tab">Вход</a>
+                <a class="btn btn-purple nav-link border-0 rounded-0 pr-2 pl-3 pb-3 pt-3 m-0 text-left d-flex align-items-center reg"  href="#register" data-toggle="tab" role="tab">Регистрация</a>
+            </div>
         </div>
     </div>
 </div>
@@ -167,7 +173,7 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
                 @enderror
             </div>
                 <div class="form-group row mt-4 justify-content-center" >
-                    <div class="pl-0 pr-0" style="width: 310px!important;">
+                    <div class="pl-0 pr-0" style="width: 310px!important;" role="tablist">
                         <div class="float-left">
                             <input type="submit" class="btn btn-purple pr-3 pl-3 pt-2 pb-2 float-left" value="{{ __('вход') }}">
                          </div>
@@ -278,9 +284,16 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
     </div>
 </div>
 <script>
-    $('.nav-link').on('click', function() {
-      $('.nav-link').removeClass('active');
+    $('.nav-link').on('click', e => {
+        $('.nav-link').removeClass('active');
     });
+    $('.haveAccount').on('click',e=>{
+        if($(e.currentTarget).attr('href')=='#register'){
+            $('.log').addClass('active');
+        }else{
+            $('.reg').addClass('active');
+        }
+    })
 </script>
 
 @endsection
