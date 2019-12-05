@@ -142,10 +142,15 @@
     <a class="text-white logo sf-black pt-0 navbar-brand pl-3" style="font-size: 25px; line-height: 105%;     font-weight: 900; text-transform: uppercase;" href="/home">
         <img src="{{ asset('images/purple-logo.svg') }}" alt="">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <img src="{{asset('images/arrows-hamburger-2 1.png')}}" alt="">
-    </button>
+    <div>
+        <a data-toggle="modal" data-target="#phoneSearch" id="phone-search-icon">
+            <img src="{{asset('images/zoom-2 1.svg')}}" alt="">
+        </a>
+        <button class="navbar-toggler pl-0" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="{{asset('images/arrows-hamburger-2 1.png')}}" alt="">
+        </button>
+    </div>
     <div style="border-bottom:0.5px solid #000000;opacity: 0.3;" class="w-100 mx-3">
     </div>
     <div class="collapse navbar-collapse pl-0 w-100" id="navbarNav">
@@ -202,6 +207,12 @@
 @include('modals.customers.create_client')
 @include('modals.tasks.create_task_admin')
 @push('scripts')
+    <script>
+        $(document).ready(function () {
+            if(window.location.pathname=='/home')
+                $('#phone-search-icon').remove();
+        });
+    </script>
     <script>
         $('.addClient1').click(e => {
             e.preventDefault();

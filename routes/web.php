@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/search_meet','AjaxController@searchMeet')->name('search_meet');
     Route::get('/search_customer','AjaxController@searchCustomer')->name('search_customer');
     Route::get('/something','AjaxController@something')->name('something');
-
+    Route::get('/deletehistory/{id}','HistoryController@delete')->name('historydelete');
 
     Route::get('/waitCall', function () {
         return view('pages.waitCall',['calls' => \App\Call::where('user_id', auth()->id())->where('active',1)->get()->reverse()]);

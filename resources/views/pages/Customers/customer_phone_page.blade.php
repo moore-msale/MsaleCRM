@@ -23,6 +23,9 @@
             @include('tasks.list', ['customers3' => $customers])
         </div>
     </div>
+    <div class="serch">
+        @include('_partials.phone_search')
+    </div>
     @if(auth()->user()->role=='admin')
         @include('modals.customers.create_client_admin')
     @else
@@ -30,6 +33,45 @@
     @endif
 @endsection
 @push('scripts')
+<script>
+    $(document).on('click','.close-search',function () {
+        $('#phoneSearch').modal('hide');
+    })
+</script>
+<script>
+    let result = $('#search-result');
+    result.parent().hide(0);
+    $('#phone-search-input').on('keyup click', function () {
+        let value = $(this).val();
+        console.log(value);
+        if (value != '' && value.length >= 1) {
+            // let searchBtn = $('#search-btn');
+            // searchBtn.prop('href', '');
+            // searchBtn.prop('href', '/search?search=' + value);
+            $.ajax({
+                url: '{!! route('search_customer') !!}',
+                data: {'search': value},
+                success: (data) => {
+                    console.log(data);
+                    result = result.html(data.html);
+                    result.siblings('span').css('opacity', 1);
+                },
+                error: () => {
+                    console.log('error');
+                }
+            });
+        } else {
+            result.parent().show();
+            result.empty();
+        }
+    });
+
+    $(document).click(function(event) {
+        if (!$(event.target).is("#search, #search-result, #search-result-ajax, .collapse, .products")) {
+            $("#search-result").parent().show();
+        }
+    });
+</script>
 @if(auth()->user()->role =='admin')
 <script>
     $(document).on("click", '.editCustomer',function( event ) {

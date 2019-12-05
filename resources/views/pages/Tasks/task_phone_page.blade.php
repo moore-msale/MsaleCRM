@@ -2,6 +2,12 @@
 
 @section('content')
     @include('_partials.header')
+    <style>
+        #phone-search-input{
+            outline: none;
+            box-shadow:none !important;
+        }
+    </style>
     <div class="mt-5 pt-4">
         <div class="mt-2 mx-lg-3 mx-0 py-2 d-flex justify-content-center">
             <p class="text-dark sf-bold mb-0 mr-2 w-25" style="font-size: 18px;font-weight: 600;">
@@ -23,13 +29,57 @@
             @include('tasks.list', ['tasks3' => $tasks])
         </div>
     </div>
+    <div class="serch">
+        @include('_partials.phone_search')
+    </div>
     @if(auth()->user()->role=='admin')
         @include('modals.tasks.create_task_admin')
     @else
         @include('modals.tasks.create_task')
     @endif
+
+
 @endsection
 @push('scripts')
+    <script>
+        $(document).on('click','.close-search',function () {
+            $('#phoneSearch').modal('hide');
+        })
+    </script>
+    <script>
+        let result = $('#search-result');
+        result.parent().hide(0);
+        $('#phone-search-input').on('keyup click', function () {
+            let value = $(this).val();
+            console.log(value);
+            if (value != '' && value.length >= 1) {
+                // let searchBtn = $('#search-btn');
+                // searchBtn.prop('href', '');
+                // searchBtn.prop('href', '/search?search=' + value);
+                $.ajax({
+                    url: '{!! route('search_task') !!}',
+                    data: {'search': value},
+                    success: (data) => {
+                        console.log(data);
+                        result = result.html(data.html);
+                        result.siblings('span').css('opacity', 1);
+                    },
+                    error: () => {
+                        console.log('error');
+                    }
+                });
+            } else {
+                result.parent().show();
+                result.empty();
+            }
+        });
+
+        $(document).click(function(event) {
+            if (!$(event.target).is("#search, #search-result, #search-result-ajax, .collapse, .products")) {
+                $("#search-result").parent().show();
+            }
+        });
+    </script>
     <script>
         $(document).on('click','.editTask', e => {
             e.preventDefault();

@@ -71,7 +71,7 @@
             <div class="row pt-4">
                 <div class="col-6">
                     <div class="search">
-                        <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск по клиентам">
+                        <input id="search" class="form-control" style="height:55px;padding-left:2.5rem;background-image:url('{{asset('images/zoom-2 1.svg')}}');background-repeat: no-repeat;background-position: 2% 50%;" type="text" placeholder="Поиск по клиентам">
                         <div class="position-relative">
                             <div class="position-absolute search-result bg-white mt-2" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                             </div>
@@ -173,6 +173,28 @@
             })
         </script>
     @endforeach
+    <script>
+        $(document).on('click','.delete-history',function (e) {
+            let btn = $(e.currentTarget);
+            let id = btn.data('parent');
+            $.ajax({
+                url: '/deletehistory/'+id,
+                method:'GET',
+                success: () => {
+                    btn.closest('.pt-2').remove();
+                },
+                error: () => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Произошла ошибка!',
+                        showConfirmButton: false,
+                        timer: 700
+                    });
+                }
+            });
+        })
+    </script>
     <script>
         let result = $('#search-result');
 

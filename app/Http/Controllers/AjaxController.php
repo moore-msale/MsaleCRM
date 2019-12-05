@@ -18,6 +18,7 @@ class AjaxController extends Controller
 
     public function searchTask(Request $request)
     {
+        $agent = New \Jenssegers\Agent\Agent();
         $search = $request->search;
         if(auth()->user()->role=='admin'){
             $result = collect(['Задачи' => Task::where([['taskable_type' ,null],['title', 'like', "%$search%"]])->orWhere([['taskable_type' ,null],['description', 'like', "%$search%"]])->get()]);
@@ -34,6 +35,14 @@ class AjaxController extends Controller
 
         $count = count($result);
         if ($request->ajax()) {
+            if($agent->isPhone()){
+                return response()->json([
+                    'html' => view('_partials.phone_search_result_task', [
+                        'result' => $result,
+                        'count' => $count,
+                    ])->render(),
+                ]);
+            }
             return response()->json([
                 'html' => view('_partials.search_result_task', [
                     'result' => $result,
@@ -49,6 +58,7 @@ class AjaxController extends Controller
 
      public function searchMeet(Request $request)
         {
+            $agent = New \Jenssegers\Agent\Agent();
             $search = $request->search;
             if(auth()->user()->role=='admin'){
                 $result = collect(['Встречи' => Task::where([['taskable_type', 'App\Meeting'],['title', 'like', "%$search%"]])->orWhere([['taskable_type', 'App\Meeting'],['description', 'like', "%$search%"]])->get()]);
@@ -58,6 +68,14 @@ class AjaxController extends Controller
             $count = count($result);
 
             if ($request->ajax()) {
+                if($agent->isPhone()){
+                    return response()->json([
+                        'html' => view('_partials.phone_search_result_meet', [
+                            'result' => $result,
+                            'count' => $count,
+                        ])->render(),
+                    ]);
+                }
                 return response()->json([
                     'html' => view('_partials.search_result_meet', [
                         'result' => $result,
@@ -73,11 +91,20 @@ class AjaxController extends Controller
 
     public function searchCustomer(Request $request)
     {
+        $agent = New \Jenssegers\Agent\Agent();
         $search = $request->search;
         $result = collect(['Клиенты' => Customer::where('company', 'like', "%$search%")->orWhere('contacts', 'like', "%$search%")->orWhere('name', 'like', "%$search%")->get()]);
         $count = count($result);
 
         if ($request->ajax()) {
+            if($agent->isPhone()){
+                return response()->json([
+                    'html' => view('_partials.phone_search_result_customer', [
+                        'result' => $result,
+                        'count' => $count,
+                    ])->render(),
+                ]);
+            }
             return response()->json([
                 'html' => view('_partials.search_result_customer', [
                     'result' => $result,

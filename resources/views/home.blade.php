@@ -75,8 +75,6 @@
                 {{--timer: 700--}}
             {{--})--}}
         {{--});--}}
-
-
     {{--</script>--}}
     <script>
         $(document).on('click','.createclient',function () {

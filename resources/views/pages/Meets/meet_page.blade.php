@@ -74,7 +74,7 @@
             <div class="row pt-4">
                 <div class="col-6">
                     <div class="search">
-                        <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск среди задач">
+                        <input id="search" class="form-control" style="height:55px;padding-left:2.5rem;background-image:url('{{asset('images/zoom-2 1.svg')}}');background-repeat: no-repeat;background-position: 2% 50%;" type="text" placeholder="Поиск среди задач">
                         <div class="position-relative">
                             <div class="position-absolute search-result bg-white mt-2" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                             </div>
@@ -146,6 +146,7 @@
                     </div>
                 </div>
             @endforeach
+
         </div>
     </div>
     @foreach($tasks as $task)

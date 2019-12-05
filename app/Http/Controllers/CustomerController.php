@@ -30,7 +30,6 @@ class   CustomerController extends Controller
         $agent = New \Jenssegers\Agent\Agent();
         if(Auth::user()->role == 'admin')
         {
-
             $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
 //            dd($customers->groupBy('user_id'));
             if($agent->isPhone()){

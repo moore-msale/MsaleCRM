@@ -1,7 +1,7 @@
 @if(count(\App\History::where('customer_id', $customer->taskable->id)->get()) != 0)
     @foreach(\App\History::where('customer_id', $customer->taskable->id)->get() as $history)
         <div class="pt-2 pb-3">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between history-block">
                 <div class="sf-light" style="color:#772FD2;">
                     {{\Carbon\Carbon::parse($history->date)->format('d.m.Y - H:i')}}
                 </div>
@@ -14,7 +14,10 @@
             </div>
             <div class="d-flex justify-content-between">
                 <div>
-                <img src="{{ asset('images/arrow.svg') }}" alt=""><span class="ml-3 sf-light">{{$history->status}}</span>
+                    @if(auth()->user()->role=='admin')
+                    <a class="delete-history" data-parent="{{$history->id}}"><img src="{{asset('images/delete.png')}}" alt=""></a>
+                    @endif
+                    <img src="{{ asset('images/arrow.svg') }}" alt=""><span class="ml-3 sf-light">{{$history->status}}</span>
                 </div>
                 <span class="sf-light">{{$history->action}}</span>
             </div>

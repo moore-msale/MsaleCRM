@@ -22,6 +22,7 @@
                         </div>
                     </div>
                     @foreach($items as $value)
+                        @if($value->task->user_id==auth()->id() or auth()->user()->role=='admin')
                         {{--@dd($value->task)--}}
                         @if(isset($value->task))
                         <div class="nav-link products px-2 rows-hover" data-toggle="modal" data-target="#EditCustomerAdmin-{{$value->task->id}}">
@@ -52,6 +53,7 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
                         @endif
                     @endforeach
                 </div>
