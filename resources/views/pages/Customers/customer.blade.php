@@ -59,16 +59,15 @@
                     </button>
                 </div>
                 <div class="col-9 text-right d-flex align-items-center justify-content-end">
-                        <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClient" style="color:#000000;">
-                            + добавить клиента
-                        </span>
+                    <span class="button-create mr-3" data-toggle="modal" data-target="#CreateClient" style="color:#000000;">
+                        + добавить клиента
+                    </span>
                     <span class="button-create mr-3" data-toggle="modal" data-target="#CreateTask" style="color:#000000;">
-                                + добавить задачу
-                            </span>
+                        + добавить задачу
+                    </span>
                     <span class="button-create" style="color:#000000;" data-toggle="modal" data-target="#CreateMeet">
-                                + добавить встречу
-                            </span>
-
+                        + добавить встречу
+                    </span>
                 </div>
             </form>
 
@@ -287,8 +286,6 @@
             let manager = $('#client_manager-' + id);
             let status = $('#client_status-' + id);
             let desc = $('#client_desc-' + id);
-
-
             if(desc.val().length < 20)
             {
                 Swal.fire({
@@ -330,7 +327,15 @@
                             $('#customer-' + id).find('.cust-desc').html(data.customer.description);
                             $('#customer-' + id).find('.cust-date').html(data.deadline_date);
                             $('#history_block-' + id).html(data.html);
-                            console.log(data);
+                            if (data.task.description.length > 25)
+                                $('#customer-' + id).find('.cust-desc').html(data.task.description.substring(0,25) + '...');
+                            else
+                                $('#customer-' + id).find('.cust-desc').html(data.task.description);
+                            if(data.status_id){
+                                $('#customer-' + id).find('.cust-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                            }else{
+                                $('#customer-' + id).find('.cust-status button').html('В работе').css("background-color",'#3B79D6');
+                            }
                         }else{
                             Swal.fire({
                                 position: 'top-end',

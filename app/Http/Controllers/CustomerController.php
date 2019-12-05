@@ -388,6 +388,7 @@ class   CustomerController extends Controller
                 'status' => "success",
                 'customer' => $customer,
                 'id' => $id,
+                'task' => $task,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),
