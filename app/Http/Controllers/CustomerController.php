@@ -348,23 +348,6 @@ class   CustomerController extends Controller
                 'task'=>$task,
             ]);
         }
-
-        $history = new History();
-        $history->description = $task->description;
-        $history->user_id = Auth::id();
-        $history->action = 'Изменение';
-        if(isset($task->status->name))
-        {
-            $history->status = $task->status->name;
-        }
-        else
-        {
-            $history->status = 'В работе';
-        }
-        $history->customer_id = $customer->id;
-        $history->date = Carbon::now();
-        $history->save();
-
         $customer->save();
         $task->save();
         if(isset($request->details)){
@@ -423,9 +406,8 @@ class   CustomerController extends Controller
             return response()->json([
                 'status' => "success",
                 'customer' => $customer,
-                'task' => $task,
                 'id' => $id,
-                'html' => view('history.includes.history', ['customer' => $task])->render(),
+                'task' => $task,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),
@@ -557,24 +539,6 @@ class   CustomerController extends Controller
         $task->deadline_date = $request->date;
         $task->status_id = 1;
         $task->save();
-
-        $history = new History();
-        $history->description = $task->description;
-        $history->action = "Изменение";
-        $history->date = Carbon::now();
-        if($task->status_id == 0)
-        {
-            $history->status = "В работе";
-        }
-        else
-        {
-            $history->status = $task->status->name;
-        }
-        $history->user_id = $task->user_id;
-        $history->customer_id = $customer->id;
-        $history->save();
-
-
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['custom_potencial'])) {
