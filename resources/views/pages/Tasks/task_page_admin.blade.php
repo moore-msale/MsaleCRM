@@ -19,7 +19,7 @@
                 <form class="row" action="{{ route('task_filter')}}" method="POST"  enctype="multipart/form-data">
                     @csrf
                     <div class="col-2">
-                        <select name="manager" id="meetingname" class="browser-default custom-select border-0">
+                        <select name="manager" id="meetingname" class="browser-default custom-select border-0 rounded-0 p-0 pl-4" style="height: 31px;">
                              <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
                             @if(isset($manager))
                                 <option value="{{ null }}">Все менеджеры</option>
@@ -33,7 +33,7 @@
                         </select>
                     </div>
                     <div class="col-2">
-                        <select name="status" id="meetingname" class="browser-default custom-select border-0">
+                        <select name="status" id="meetingname" class="browser-default custom-select border-0 rounded-0 p-0 pl-4" style="height: 31px;">
                             @if(isset($status) && $status == 0)
                                 <option value="0">Без статуса</option>
                             @else
@@ -52,7 +52,7 @@
                         </select>
                     </div>
                     <div class="col-2">
-                        <button class="new-button">
+                        <button class="new-button" style="height:31px;">
                             Применить
                         </button>
                     </div>
@@ -73,7 +73,7 @@
                     <div class="search">
                         <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск среди задач">
                         <div class="position-relative">
-                            <div class="position-absolute search-result shadow bg-white" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
+                            <div class="position-absolute search-result bg-white mt-2" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                 <div class="col-2">
                     Сроки
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-center">
                     Статус
                 </div>
 
@@ -108,14 +108,14 @@
             </div>
 
              @foreach($tasks as $task)
-                <div class="row py-2 my-1 sf-light position-relative" id="task-{{$task->id}}">
-                <div class="col-2 task-name" style="border-right:1px solid #dedede;">
+                <div class="row py-2 my-1 sf-light position-relative rows-hover" id="task-{{$task->id}}">
+                <div class="col-2 task-name" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ $task->title }}
                 </div>
-                <div class="col-4 task-desc" style="border-right:1px solid #dedede;">
+                <div class="col-4 task-desc" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ str_limit($task->description, $limit = 25, $end = '...') }}
                 </div>
-                <div class="col-2 task-manager" style="border-right:1px solid #dedede;">
+                <div class="col-2 task-manager" style="border-right:1px solid #dedede; white-space: nowrap;">
                     {{ \App\User::find($task->user_id)->name }}
                 </div>
                 <div class="col-2 task-deadline">

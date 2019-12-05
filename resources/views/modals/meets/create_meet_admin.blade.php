@@ -17,8 +17,8 @@
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-    <div class="modal-dialog modal-full-height modal-right" role="document" style="max-width:400px!important; width:400px!important;">
-        <div class="modal-content px-2">
+    <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="max-width:400px!important; width:100%!important;">
+        <div class="modal-content px-2" style="min-height: 550px;height: 100vh;">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light" id="myModalLabel">+Добавить встречу</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

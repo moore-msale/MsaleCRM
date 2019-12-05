@@ -30,8 +30,6 @@
                     <a type="button" class="btn btn-primary Call_1_add">Добавить <i class="fas fa-check ml-1 text-white"></i></a>
                 </div>
             </div>
-
-
             {{--<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">No, thanks</a>--}}
         </div>
         <!--/.Content-->

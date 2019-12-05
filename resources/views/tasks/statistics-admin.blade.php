@@ -8,10 +8,10 @@
         {
             $planer = \App\Plan::where('user_id',$user->id)->where('created_at','>=',\Carbon\Carbon::now()->setTime('00','00','00'))->first();
             if($planer){
-            $calls_all = $calls_all + $planer->calls_goal;
-            $meets_all = $meets_all + $planer->meets_goal;
-            $calls_score = $calls_score + $planer->calls_score;
-            $meets_score = $meets_score + $planer->meets_score;
+                $calls_all = $calls_all + $planer->calls_goal;
+                $meets_all = $meets_all + $planer->meets_goal;
+                $calls_score = $calls_score + $planer->calls_score;
+                $meets_score = $meets_score + $planer->meets_score;
             }
         }
 ?>
@@ -49,7 +49,7 @@
                     План на день
                 </div>
                 <div class="d-flex">
-                    <div class="w-75">
+                    <div style="width: 60%;">
                         <p class="stats-head text-uppercase sf-black">
                             Звонки
                         </p>
@@ -57,12 +57,12 @@
                             {{ $calls_all }} <span class="sf-light font-weight-light">/</span> <span class="stats-score2 font-weight-light">{{$calls_score}}</span>
                         </p>
                     </div>
-                    <div class="w-25">
+                    <div style="width: 40%;">
                         {{--<img class="img-fluid" src="{{ asset('images/meets.png') }}" alt="">--}}
-                        <p class="stats-head text-uppercase sf-black">
+                        <p class="stats-head text-uppercase sf-black text-center">
                             Встречи
                         </p>
-                        <p class="stats-score font-weight-bold">
+                        <p class="stats-score font-weight-bold text-center">
                             {{ $meets_all }} <span class="sf-light font-weight-light">/</span> <span class="stats-score2 font-weight-light">{{$meets_score}}</span>
                         </p>
                     </div>

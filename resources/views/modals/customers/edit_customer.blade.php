@@ -1,3 +1,6 @@
+<?php
+$agent = New \Jenssegers\Agent\Agent();
+?>
 @push('styles')
     <style>
         @media screen and (min-width: 992px)
@@ -15,7 +18,8 @@
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-    <div class="modal-dialog modal-full-height modal-right" role="document" style="width:700px;!important;max-width: 700px;!important;">
+    <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="width:100%;!important;max-width: 700px;!important;">
+        @if(!$agent->isPhone())
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light" style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
@@ -29,7 +33,8 @@
             {{--<div class="modal-footer justify-content-center">--}}
             {{--</div>--}}
         </div>
-        <div class="modal-content px-2 w-50">
+        @endif
+        <div class="modal-content px-2 w-md-50" style="height: 100vh; min-height: 550px;">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light  overflow-hidden" id="myModalLabel">+{{ $customer->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -41,7 +46,7 @@
                     @csrf
                     <input type="hidden" value="potentials" name="type">
                     <input type="text" name="name" id="client_name-{{ $customer->id }}" class="form-control sf-light border-0 " style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$customer->taskable->name}}" placeholder="Введите ФИО">
-                    <input type="text" id="client_phone-{{ $customer->id }}" name="phone" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->contacts }}" placeholder="Введите контакты">
+                    <input type="text" id="client_phone-{{ $customer->id }}" name="phone" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->contacts}}" placeholder="Введите контакты">
                     <input type="text" name="deadline_date" id="client_date-{{ $customer->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->deadline_date }}" placeholder="Выберите дату">
                     <input type="text" id="client_company-{{ $customer->id }}" name="company" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->company }}" placeholder="Введите компанию">
                     <input type="text" id="client_social-{{ $customer->id }}" name="social" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->socials }}" placeholder="Введите соц.сеть или сайт">

@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-
-
-
+    public function exit() {
+        Auth::logout();
+        return redirect('/');
+    }
     public function profile()
     {
         $user = Auth::user();
@@ -45,7 +46,6 @@ class UserController extends Controller
             return response()->json(['status'=>'error','errors'=>$arrays]);
         }
 
-
         $user = new User;
         $user->name = $request['name'];
         $user->email = $request['email'];
@@ -54,6 +54,12 @@ class UserController extends Controller
         $user->phone = $request['phone'];
         $user->role= $request['role'];
         $user->address= $request['address'];
+        if($request->calls)
+            $user->calls = $request->calls;
+        if($request->meetings)
+            $user->meetings = $request->meetings;
+        if($request->penalty)
+            $user->penalty = $request->penalty;
         if($file = $request->file('scan_pas')){
             $name = 'user_pas'.$user->id.$user->email;
             if ($file->move('passport', $name))

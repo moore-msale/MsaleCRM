@@ -15,8 +15,8 @@
      aria-hidden="true">
 
     <!-- Add class .modal-full-height and then add class .modal-right (or other classes from list above) to set a position to the modal -->
-    <div class="modal-dialog modal-full-height modal-right" role="document">
-        <div class="modal-content px-2 w-100">
+    <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="max-width: 400px; width: 100%;">
+        <div class="modal-content px-2 w-100" style="min-height: 550px;height: 100vh;">
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+{{ $task->title }}</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -40,7 +40,6 @@
                     <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>
                 <button type="button" class="w-100 sf-light editMeet mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
-
             </div>
             {{--<div class="modal-footer justify-content-center">--}}
             {{--</div>--}}

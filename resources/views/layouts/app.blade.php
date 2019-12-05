@@ -215,6 +215,7 @@ $agent = New \Jenssegers\Agent\Agent();
 <script>
     $(document).on("click", '.addClient1',function( event ) {
         event.preventDefault();
+        let callId = $('#call_id1').val();
         let btn = $(event.currentTarget);
         let name = $('#client_name1');
         let phone = $('#client_contacts1');
@@ -233,9 +234,15 @@ $agent = New \Jenssegers\Agent\Agent();
                 // timer: 700
             });
         }
-        else if(desc.val() == '')
+        else if(desc.val().length < 20)
         {
-            swal("Заполните описание!","Поле описание стало обязательным","error");
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+            });
         }
         else {
             $.ajax({
@@ -253,7 +260,6 @@ $agent = New \Jenssegers\Agent\Agent();
                 },
                 success: data => {
                     $('#ClientCreate').modal('hide');
-                    console.log(data);
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -261,7 +267,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
-                    console.log(data);
+                    $('#CreateClient').modal('hide');
                     $('#client_name1').val('');
                     $('#client_contacts1').val('');
                     $('#client_company1').val('');
@@ -352,6 +358,7 @@ $agent = New \Jenssegers\Agent\Agent();
                     $('#client_contacts_admin').val('');
                     $('#client_socials_admin').val('');
                     $('#client_company_admin').val('');
+                    $('#customers-scroll').append(data.view3).show('slide', {direction: 'left'}, 400);
                 },
                 error: () => {
                     console.log(0);
@@ -452,9 +459,15 @@ $agent = New \Jenssegers\Agent\Agent();
         let desc = $('#task_desc');
         let date = $('#task_date');
         let status = $('#task_status');
-        if(desc.val() == '')
+        if(desc.val().length < 20)
         {
-            swal("Заполните описание!","Поле описание стало обязательным","error");
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Заполните описание, описание должно быть больше 20 символов!',
+                showConfirmButton: true,
+                // timer: 700
+            });
         }
         else {
             $.ajax({

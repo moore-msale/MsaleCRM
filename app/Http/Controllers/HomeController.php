@@ -69,29 +69,38 @@ class HomeController extends Controller
         $plan = Plan::where('created_at','>=',$today)->where('user_id',auth()->id())->first();
             if($plan == null)
             {
+                $admin = User::find(1);
                 $plan = New Plan();
-                $plan->calls_goal = 60;
+                if(auth()->user()->calls){
+                    $plan->calls_goal = auth()->user()->calls;
+                }else{
+                    $plan->calls_goal = $admin->calls;
+                }
+                if(auth()->user()->meets){
+                    $plan->meets_goal = auth()->user()->meetings;
+                }else {
+                    $plan->meets_goal = $admin->meetings;
+               }
                 $plan->calls_score = 0;
-                $plan->meets_goal = 2;
                 $plan->meets_score = 0;
                 $plan->user_id = auth()->id();
                 $plan->save();
             }
-            if($plan->calls_score >= 60 && $plan->meets_score >= 0 && $plan->status != 1)
-            {
-                $plan->status = 1;
-                $plan->save();
-            }
-            elseif($plan->calls_score >= 30 && $plan->meets_score >= 1 && $plan->status != 1)
-            {
-                $plan->status = 1;
-                $plan->save();
-            }
-            elseif($plan->calls_score >= 0 && $plan->meets_score >= 2 && $plan->status != 1)
-            {
-                $plan->status = 1;
-                $plan->save();
-            }
+//            if($plan->calls_score >= 60 && $plan->meets_score >= 0 && $plan->status != 1)
+//            {
+//                $plan->status = 1;
+//                $plan->save();
+//            }
+//            elseif($plan->calls_score >= 30 && $plan->meets_score >= 1 && $plan->status != 1)
+//            {
+//                $plan->status = 1;
+//                $plan->save();
+//            }
+//            elseif($plan->calls_score >= 0 && $plan->meets_score >= 2 && $plan->status != 1)
+//            {
+//                $plan->status = 1;
+//                $plan->save();
+//            }
             $user = Auth::user();
             if (Carbon::yesterday()->month != Carbon::now()->month)
             {
@@ -130,12 +139,14 @@ class HomeController extends Controller
 
 
         $calls = Call::where('user_id', auth()->id())->where('active',0)->get()->reverse();
+        $wcalls = Call::where('user_id', auth()->id())->where('active',1)->get()->reverse();
         return view('home',[
             'plan' => $plan,
             'tasks' => $tasks,
             'customers' => $customers,
             'meetings' => $meetings,
             'calls' => $calls,
+            'wcalls' => $wcalls,
             'penalty' => $penalty
         ]);
     }

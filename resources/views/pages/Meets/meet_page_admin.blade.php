@@ -19,7 +19,7 @@
                 <form class="row" action="{{ route('meet_filter')}}" method="POST"  enctype="multipart/form-data">
                     @csrf
                     <div class="col-2">
-                        <select name="manager" id="meetingname" class="browser-default custom-select border-0">
+                        <select name="manager" id="meetingname" class="browser-default custom-select border-0 rounded-0  p-0 pl-4" style="height: 31px;">
                              <option value="{{isset($manager) ? $manager : null }}">{{ isset($manager) ? \App\User::find($manager)->name. ' - ' .\App\User::find($manager)->lastname : 'Все менеджеры'}}</option>
                             @if(isset($manager))
                                 <option value="{{ null }}">Все менеджеры</option>
@@ -33,7 +33,7 @@
                         </select>
                     </div>
                     <div class="col-2">
-                        <select name="status" id="meetingname" class="browser-default custom-select border-0">
+                        <select name="status" id="meetingname" class="browser-default custom-select border-0 rounded-0  p-0 pl-4" style="height: 31px;">
                             @if(isset($status) && $status == 0)
                                 <option value="0">Без встреч</option>
                             @else
@@ -74,7 +74,7 @@
                     <div class="search">
                         <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск среди задач">
                         <div class="position-relative">
-                            <div class="position-absolute search-result shadow bg-white" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
+                            <div class="position-absolute search-result bg-white mt-2" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                 <div class="col-2">
                     Сроки
                 </div>
-                <div class="col-2">
+                <div class="col-2 text-center">
                     Статус
                 </div>
 
@@ -109,11 +109,11 @@
             </div>
 
              @foreach($tasks as $task)
-                <div class="row py-2 my-1 sf-light position-relative" id="meet-{{$task->id}}">
-                     <div class="col-2 meet-name-admin" style="border-right:1px solid #dedede;">
+                <div class="row py-2 my-1 sf-light position-relative  rows-hover" id="meet-{{$task->id}}">
+                     <div class="col-2 meet-name-admin" style="border-right:1px solid #dedede; white-space: nowrap;">
                          {{ $task->title }}
                      </div>
-                     <div class="col-4 meet-desc-admin" style="border-right:1px solid #dedede;">
+                     <div class="col-4 meet-desc-admin" style="border-right:1px solid #dedede; white-space: nowrap;">
                          {{ str_limit($task->description, $limit = 25, $end = '...') }}
                      </div>
                      <div class="col-2 meet-manager-admin" style="border-right:1px solid #dedede;">
@@ -231,82 +231,82 @@
                 })
         })
     </script>
-    <script>
-        $(document).on("click", '.editMeet',function( event ) {
-            event.preventDefault();
-            let btn = $(event.currentTarget);
-            let id = btn.data('id');
-            let user = btn.data('parent');
-            let title = $('#meet_name_admin-' + id);
-            let desc = $('#meet_desc_admin-' + id);
-            let date = $('#meet_date_admin-' + id);
-            let manage = $('#meet_manager_admin-' + id);
-            let status = $('#meet_status_admin-' + id);
-            if(desc.val() == '')
-            {
-                swal("Заполните описание!","Поле описание стало обязательным","error");
-            }
-            else {
-                    $.ajax({
-                        url: 'EditMeetAdmin',
-                        method: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "title": title.val(),
-                            "desc": desc.val(),
-                            "date": date.val(),
-                            "manage": manage.val(),
-                            "status": status.val(),
-                            "id": id,
-                        },
-                        success: data => {
-                            if(data.status == "success"){
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: 'Данные изменены!',
-                                    showConfirmButton: false,
-                                    timer: 700
-                                });
-                                console.log(data);
-                                $('#meet-' + id).find('.meet-name-admin').html(data.meet.title);
-                                $('#meet-' + id).find('.meet-deadline-admin').html(data.deadline_date);
-                                $('#meet-' + id).find('.meet-manager-admin').html(data.user);
-                                $('#EditMeetAdmin-' + id).find('.modal-title').html(data.meet.title);
-                                if (data.meet.description.length > 25)
-                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description.substring(0,25) + '...');
-                                else
-                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description);
-                                if(data.status_id){
-                                    $('#meet-' + id).find('.meet-status-admin button').html(data.status_id.name).css("background-color",data.status_id.color);
-                                }else{
-                                    $('#meet-' + id).find('.meet-status-admin button').html('В ожидании').css("background-color",'#EBDC60');
-                                }
-                            } else{
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'info',
-                                    title: 'Изменение не найдены!',
-                                    showConfirmButton: false,
-                                    timer: 700
-                                });
-                                console.log(data);
-                            }
-                        },
-                        error: () => {
-                            console.log(0);
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'error',
-                                title: 'Что-то пошло не так!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                        }
-                    })
-            }
-        })
-    </script>
+{{--    <script>--}}
+{{--        $(document).on("click", '.editMeet',function( event ) {--}}
+{{--            event.preventDefault();--}}
+{{--            let btn = $(event.currentTarget);--}}
+{{--            let id = btn.data('id');--}}
+{{--            let user = btn.data('parent');--}}
+{{--            let title = $('#meet_name_admin-' + id);--}}
+{{--            let desc = $('#meet_desc_admin-' + id);--}}
+{{--            let date = $('#meet_date_admin-' + id);--}}
+{{--            let manage = $('#meet_manager_admin-' + id);--}}
+{{--            let status = $('#meet_status_admin-' + id);--}}
+{{--            if(desc.val() == '')--}}
+{{--            {--}}
+{{--                swal("Заполните описание!","Поле описание стало обязательным","error");--}}
+{{--            }--}}
+{{--            else {--}}
+{{--                    $.ajax({--}}
+{{--                        url: 'EditMeetAdmin',--}}
+{{--                        method: 'POST',--}}
+{{--                        data: {--}}
+{{--                            "_token": "{{ csrf_token() }}",--}}
+{{--                            "title": title.val(),--}}
+{{--                            "desc": desc.val(),--}}
+{{--                            "date": date.val(),--}}
+{{--                            "manage": manage.val(),--}}
+{{--                            "status": status.val(),--}}
+{{--                            "id": id,--}}
+{{--                        },--}}
+{{--                        success: data => {--}}
+{{--                            if(data.status == "success"){--}}
+{{--                                Swal.fire({--}}
+{{--                                    position: 'top-end',--}}
+{{--                                    icon: 'success',--}}
+{{--                                    title: 'Данные изменены!',--}}
+{{--                                    showConfirmButton: false,--}}
+{{--                                    timer: 700--}}
+{{--                                });--}}
+{{--                                console.log(data);--}}
+{{--                                $('#meet-' + id).find('.meet-name-admin').html(data.meet.title);--}}
+{{--                                $('#meet-' + id).find('.meet-deadline-admin').html(data.deadline_date);--}}
+{{--                                $('#meet-' + id).find('.meet-manager-admin').html(data.user);--}}
+{{--                                $('#EditMeetAdmin-' + id).find('.modal-title').html(data.meet.title);--}}
+{{--                                if (data.meet.description.length > 25)--}}
+{{--                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description.substring(0,25) + '...');--}}
+{{--                                else--}}
+{{--                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description);--}}
+{{--                                if(data.status_id){--}}
+{{--                                    $('#meet-' + id).find('.meet-status-admin button').html(data.status_id.name).css("background-color",data.status_id.color);--}}
+{{--                                }else{--}}
+{{--                                    $('#meet-' + id).find('.meet-status-admin button').html('В ожидании').css("background-color",'#EBDC60');--}}
+{{--                                }--}}
+{{--                            } else{--}}
+{{--                                Swal.fire({--}}
+{{--                                    position: 'top-end',--}}
+{{--                                    icon: 'info',--}}
+{{--                                    title: 'Изменение не найдены!',--}}
+{{--                                    showConfirmButton: false,--}}
+{{--                                    timer: 700--}}
+{{--                                });--}}
+{{--                                console.log(data);--}}
+{{--                            }--}}
+{{--                        },--}}
+{{--                        error: () => {--}}
+{{--                            console.log(0);--}}
+{{--                            Swal.fire({--}}
+{{--                                position: 'top-end',--}}
+{{--                                icon: 'error',--}}
+{{--                                title: 'Что-то пошло не так!',--}}
+{{--                                showConfirmButton: false,--}}
+{{--                                timer: 700--}}
+{{--                            });--}}
+{{--                        }--}}
+{{--                    })--}}
+{{--            }--}}
+{{--        })--}}
+{{--    </script>--}}
     <script>
         let result = $('#search-result');
 

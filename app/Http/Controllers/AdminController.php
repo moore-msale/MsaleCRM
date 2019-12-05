@@ -218,6 +218,7 @@ class AdminController extends Controller
                 'status' => "success",
                 'meet' => $task,
                 'user' => User::find($task->user_id)->name,
+                'customer'=>$task->taskable->customer,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
                 'date1'=>$date1,
@@ -275,6 +276,9 @@ class AdminController extends Controller
                 'view2' => view('pages.Customers.includes.customer_admin', [
                     'customer' => $task,
                 ])->render(),
+                'view3'=>view('tasks.potentials-card', [
+                    'customer' => $task,
+                ])->render(),
             ]);
         }
     }
@@ -316,7 +320,7 @@ class AdminController extends Controller
     public function edit_customer(Request $request)
     {
         $today = Carbon::now()->setTime('00', '00');
-        $endday = Carbon::now()->setTime('18','00','00');
+        $endday = Carbon::now()->setTime('18', '00', '00');
 
         $task = Task::find($request->id);
         $customer = $task->taskable;
@@ -332,28 +336,27 @@ class AdminController extends Controller
         $task->description = $request->desc;
         $task->user_id = $request->manager;
         $task->status_id = $request->status;
-        if($customer==$customer2 and  $task==$task2){
+        if ($customer == $customer2 and $task == $task2) {
             return response()->json([
                 'status' => "error",
             ]);
         }
         $customer->save();
         $task->save();
+        if ($task->description != $task2->description or $task->status != $task2->status){
         $history = new History();
         $history->description = $task->description;
         $history->user_id = Auth::id();
         $history->action = 'Изменение';
-        if(isset($task->status->name))
-        {
+        if (isset($task->status->name)) {
             $history->status = $task->status->name;
-        }
-        else
-        {
+        } else {
             $history->status = 'В работе';
         }
         $history->customer_id = $customer->id;
         $history->date = Carbon::now();
         $history->save();
+        }
         $date = Carbon::parse($task->deadline_date)->format('M d - H:i');
         $date1 = Carbon::parse($task->deadline_date)->format('d M');
 //        $html = view('history.includes.history')->render();

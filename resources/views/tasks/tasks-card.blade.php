@@ -1,4 +1,4 @@
-<div class="mt-3 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative potencial-show" id="task-{{$task->id}}" >
+<div class="mt-2 mx-lg-3 mx-0 px-3 py-3 work-desk position-relative potencial-show" id="task-{{$task->id}}" >
     {{--    @dd($meeting)--}}
     {{--<div class="position-absolute bg-danger"--}}
     {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}

@@ -28,14 +28,14 @@ class   CustomerController extends Controller
     public function index()
     {
         $agent = New \Jenssegers\Agent\Agent();
-        if($agent->isPhone()){
-            return view('pages.Customers.customer_phone_page',['agent',$agent]);
-        }
         if(Auth::user()->role == 'admin')
         {
+
             $customers = Task::where('taskable_type','App\Customer')->get()->reverse();
 //            dd($customers->groupBy('user_id'));
-
+            if($agent->isPhone()){
+                return view('pages.Customers.customer_phone_page',['customers' => $customers]);
+            }
             return view('pages.Customers.customer_page_admin',['customers' => $customers]);
         }
         else
@@ -44,6 +44,10 @@ class   CustomerController extends Controller
                 'taskable',
                 'App\Customer'
             )->get();
+            if($agent->isPhone()){
+                return view('pages.Customers.customer_phone_page',['customers' => $customers]);
+            }
+//            dd($customers);
             return view('pages.Customers.customer',['customers' => $customers]);
         }
     }
@@ -401,22 +405,20 @@ class   CustomerController extends Controller
         {
             $id = 0;
         }
-        $history = new History();
-        $history->description = $task->description;
-        $history->user_id = Auth::id();
-        $history->action = 'Изменение';
-        if(isset($task->status->name))
-        {
-            $history->status = $task->status->name;
+        if ($task->description != $task2->description or $task->status != $task2->status) {
+            $history = new History();
+            $history->description = $task->description;
+            $history->user_id = Auth::id();
+            $history->action = 'Изменение';
+            if (isset($task->status->name)) {
+                $history->status = $task->status->name;
+            } else {
+                $history->status = 'В работе';
+            }
+            $history->customer_id = $customer->id;
+            $history->date = Carbon::now();
+            $history->save();
         }
-        else
-        {
-            $history->status = 'В работе';
-        }
-        $history->customer_id = $customer->id;
-        $history->date = Carbon::now();
-        $history->save();
-
         if ($request->ajax()){
             return response()->json([
                 'status' => "success",

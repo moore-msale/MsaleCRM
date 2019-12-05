@@ -20,7 +20,7 @@ class CallController extends Controller
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
     public function call_to_customer(Request $request)
     {
         $call = Call::find($request->id);
@@ -155,6 +155,9 @@ class CallController extends Controller
             return response()->json([
                 'status' => "success",
                 'data' => $call,
+                'view' => view('tasks.calls-card', [
+                    'call' => $call,
+                ])->render(),
             ], 200);
         }
 

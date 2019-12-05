@@ -4,7 +4,11 @@
         .men-use {
             background: #1F0343 !important;
         }
-
+        .nav-link.active{
+            background: #FFFFFF!important;
+            color: #000!important;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+        }
     </style>
 @endpush
 @section('content')
@@ -15,21 +19,24 @@
     <div class="container-fluid">
 
             @if($agent->isPhone())
-            <div class="row">
-
-                @include('tasks.index', ['calls2' => $calls])
-            </div>
-                @else
-            <div class="row pt-lg-4 pt-0 justify-content-center">
+                <div class="row">
+                    @include('_partials.header')
+                    @include('tasks.index', ['calls2' => $calls,'wcalls'=>$wcalls])
+                    @include('tasks.index', ['tasks2' => $tasks])
+                    @include('tasks.index', ['meetings2' => $meetings])
+                    @include('tasks.index', ['customers2' => $customers])
+                </div>
+            @else
+                <div class="row pt-lg-4 pt-0 justify-content-center">
                 @if(\Illuminate\Support\Facades\Auth::user()->role == "admin")
                     @include('tasks.statistics-admin')
                 @else
                     @include('tasks.statistics')
                 @endif
-                @include('tasks.index', ['tasks2' => $tasks])
-                @include('tasks.index', ['meetings2' => $meetings])
-                @include('tasks.index', ['customers2' => $customers])
-                @include('tasks.index', ['calls2' => $calls])
+                    @include('tasks.index', ['tasks2' => $tasks])
+                    @include('tasks.index', ['meetings2' => $meetings])
+                    @include('tasks.index', ['customers2' => $customers])
+                    @include('tasks.index', ['calls2' => $calls])
             @endif
         </div>
     </div>
@@ -71,6 +78,17 @@
 
 
     {{--</script>--}}
+    <script>
+        $(document).on('click','.createclient',function () {
+            $('#calledModal').modal('hide');
+            let id = $('.caller_id').val();
+            let company = $('.caller_company').val();
+            let phone = $('.caller_phone').val();
+            $('#client_company1').val(company);
+            $('#client_contacts1').val(phone);
+            $('#call_id1').val(id);
+        });
+    </script>
     <script>
         $(document).on("click", '.deleteMeet',function( event ) {
             event.preventDefault();
@@ -496,6 +514,17 @@
     @if($agent->isPhone())
 
         <script>
+            // $(document).on('click','.call-btn',function (event){
+            //         let btn = $(event.currentTarget);
+            //         let id = btn.data('id');
+            //         let company = btn.data('parent');
+            //         let phone = btn.data('parent2');
+            //         $('#calledModal').modal('show');
+            //         $('#caller_id').val(id);
+            //         $('#caller_company').val(company);
+            //         $('#caller_phone').val(phone);
+            //     })
+            // });
             function registerCallBtn(item) {
                 item.click(function (e) {
                     e.preventDefault();
@@ -655,10 +684,19 @@
                     success: data => {
                         $('#Call_1_add').modal('hide');
                         console.log(data);
-                        swal("Номер добавлен!","Отчет был отправлен","success");
                         let result = $('#calls-scroll').prepend(data.view).show('slide', {direction: 'left'}, 400);
+                        $('#call_company').val('');
+                        $('#call_number').val('');
+                        console.log('somethings');
                         result.find('.call-btn').each((e, i) => {
-                            registerCallBtn($(i));
+                        registerCallBtn($(i));
+                        });
+                        Swal.fire({
+                            position: 'top-start',
+                            icon: 'success',
+                            title: 'Номер добавлен!',
+                            showConfirmButton: false,
+                            timer: 700
                         });
                     },
                     error: () => {
@@ -670,7 +708,7 @@
             registerCallBtn($('.call-btn'));
         </script>
         <script>
-            $('.waitCall').click(e => {
+            $(document).on('click','.waitCall',e => {
                 e.preventDefault();
                 let btn = $(e.currentTarget);
                 let id = $('#caller_id').val();
@@ -683,8 +721,18 @@
                         "id": id,
                     },
                     success: data => {
-                        swal("Звонок добавлен в список на перезвон!","Отчет был отправлен","success");
+                        Swal.fire({
+                            position: 'top-start',
+                            icon: 'success',
+                            title: 'Звонок добавлен в список на перезвон!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
                         $('#calledModal').modal('hide');
+                        let result = $('#wcalls-scroll').prepend(data.view).show('slide', {direction: 'left'}, 400);
+                        result.find('.call-btn').each((e, i) => {
+                            registerCallBtn($(i));
+                        });
                         $('#call-' + id).hide(400);
                         console.log(data);
                     },
@@ -693,9 +741,8 @@
                         swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
                     }
                 })
-
-
             })
+            registerCallBtn($('.call-btn'));
         </script>
         <script>
             $('.notCall').click(e => {
@@ -1133,7 +1180,7 @@
             }
         </script>
         <script>
-            $(document).on("click", '.editMeet',function( event ) {
+            $(document).on("click", '.editMeetAdmin',function( event ) {
                 event.preventDefault();
                 let btn = $(event.currentTarget);
                 let id = btn.data('id');
@@ -1149,7 +1196,7 @@
                 }
                 else {
                     $.ajax({
-                        url: 'meetupdate',
+                        url: 'EditMeetAdmin',
                         method: 'POST',
                         data: {
                             "_token": "{{ csrf_token() }}",
@@ -1171,6 +1218,7 @@
                                 });
                                 console.log(data);
                                 $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                                $('#meet-' + id).find('.meet-company').html(data.customer.company);
                                 $('#meet-' + id).find('.meet-manager').html(data.user);
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description);
                                 $('#meet-' + id).find('.meet-date1').html(data.date1);
@@ -1503,32 +1551,30 @@
             })
         </script>
         <script>
-            $('.waitCall').click(e => {
-                e.preventDefault();
-                let btn = $(e.currentTarget);
-                let id = $('#caller_id').val();
-                console.log(id);
-                $.ajax({
-                    url: 'callw',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id,
-                    },
-                    success: data => {
-                        swal("Звонок добавлен в список на перезвон!","Отчет был отправлен","success");
-                        $('#calledModal').modal('hide');
-                        $('#call-' + id).hide(400);
-                        console.log(data);
-                    },
-                    error: () => {
-                        console.log(0);
-                        swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
-                    }
-                })
-
-
-            })
+            {{--$('.waitCall').click(e => {--}}
+            {{--    e.preventDefault();--}}
+            {{--    let btn = $(e.currentTarget);--}}
+            {{--    let id = $('#caller_id').val();--}}
+            {{--    console.log(id);--}}
+            {{--    $.ajax({--}}
+            {{--        url: 'callw',--}}
+            {{--        method: 'POST',--}}
+            {{--        data: {--}}
+            {{--            "_token": "{{ csrf_token() }}",--}}
+            {{--            "id": id,--}}
+            {{--        },--}}
+            {{--        success: data => {--}}
+            {{--            swal("Звонок добавлен в список на перезвон!","Отчет был отправлен","success");--}}
+            {{--            $('#calledModal').modal('hide');--}}
+            {{--            $('#call-' + id).hide(400);--}}
+            {{--            console.log(data);--}}
+            {{--        },--}}
+            {{--        error: () => {--}}
+            {{--            console.log(0);--}}
+            {{--            swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");--}}
+            {{--        }--}}
+            {{--    })--}}
+            {{--})--}}
         </script>
         <script>
             $('.notCall').click(e => {
