@@ -57,7 +57,7 @@
                     <p class="text-dark sf-bold mb-0 mr-2 w-25" style="font-size: 18px;font-weight: 600;">
                         Звонки
                     </p>
-                    <a class="ml-auto" href="clearCall" style="text-decoration: underline;color: #D63A3A;font-size:14px;">
+                    <a class="ml-auto cleared" href="clearCall" style="text-decoration: underline;color: #D63A3A;font-size:14px;">
                         очистить список
                     </a>
                     <a class="ml-auto purple-text pr-0" data-toggle="modal" data-target="#Call_1_add" style="text-decoration: underline;font-size:14px;">
@@ -66,12 +66,12 @@
                 </div>
                 <div class="mt-3 mx-lg-3 mx-0 py-2 d-flex justify-content-center row nav-tabs" role="tablist">
                     <div class="col px-0 w-100">
-                        <a href="#allCalls" class="text-white sf-bold btn px-4 mx-0 w-100 rounded-0 nav-link border-0 active" data-toggle="tab" role="tab" style="background: #772FD2;box-shadow: 0px 10px 25px rgba(119, 47, 210, 0.1);">
+                        <a href="#allCalls" class="text-white sf-bold btn px-4 mx-0 w-100 rounded-0 nav-link border-0 active" data-toggle="tab" data-parent="allCalls" role="tab" style="background: #772FD2;box-shadow: 0px 10px 25px rgba(119, 47, 210, 0.1);">
                             Все звонки
                         </a>
                     </div>
                     <div class="col px-0 w-100">
-                        <a href="#waitCalls" class="nav-link text-white sf-bold btn mx-0 w-100  rounded-0 border-0" data-toggle="tab" role="tab" style="background: #772FD2;box-shadow: 0px 10px 25px rgba(119, 47, 210, 0.1);">
+                        <a href="#waitCalls" class="nav-link text-white sf-bold btn mx-0 w-100  rounded-0 border-0" data-toggle="tab" data-parent="waitCalls" role="tab" style="background: #772FD2;box-shadow: 0px 10px 25px rgba(119, 47, 210, 0.1);">
                             перезвонить
                         </a>
                     </div>
@@ -111,9 +111,14 @@
             {{--</div>--}}
             @include('modals.calls.called-modal')
             <script>
-
-                $('.nav-link').on('click', function() {
+                $('.nav-link').on('click', function(e) {
                     $('.nav-link').removeClass('active');
+                    let page = $(e.currentTarget);
+                    if(page.data('parent')=='waitCalls'){
+                        $('.cleared').attr('href','clearWCall');
+                    }else{
+                        $('.cleared').attr('href','clearCall');
+                    }
                 });
             </script>
         </div>

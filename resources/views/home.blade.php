@@ -532,6 +532,14 @@
                     let id = btn.data('id');
                     let company = btn.data('parent');
                     let phone = btn.data('parent2');
+                    let active = btn.data('parent3');
+                    if(active){
+                        $('.waitCall').removeClass('d-flex');
+                        $('.waitCall').addClass('d-none');
+                    }else{
+                        $('.waitCall').removeClass('d-none');
+                        $('.waitCall').addClass('d-flex');
+                    }
                     $('#calledModal').modal('show');
                     $('#caller_id').val(id);
                     $('#caller_company').val(company);
