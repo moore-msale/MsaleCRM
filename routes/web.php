@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/callw', 'CallController@waitCall')->name('callw');
     Route::post('/calln', 'CallController@notCall')->name('calln');
     Route::get('/clearCall', 'CallController@call_clear')->name('clearCall');
+    Route::get('/clearWCall', 'CallController@wcall_clear')->name('clearWCall');
     Route::post('/balance_change', 'ReportController@balance')->name('balance_change');
     Route::get('/planer','PlanController@planer')->name('planer');
     Route::get('/search_task','AjaxController@searchTask')->name('search_task');

@@ -19,14 +19,14 @@ $agent = New \Jenssegers\Agent\Agent();
                     </div>
                 </div>
                 <div class="col pr-0">
-                    <a href="tel:{{ $call->phone ?? "No phone" }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" class="w-100 h-100 call-btn">
+                    <a href="tel:{{ $call->phone ?? "No phone" }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" data-parent3="{{ $call->active }}" class="w-100 h-100 call-btn">
     {{--                    <img src="{{asset('images/active-phone.png')}}" alt="">--}}
                         <i class="fas fa-phone fa-2x text-white w-100 h-100 d-flex justify-content-center flex-column text-center"  style="background: #6FC268;"></i>
                     </a>
                 </div>
             </div>
         @else
-        <div class="row pos ition-relative">
+        <div class="row position-relative">
             <div class="col-lg-11 col-11 py-lg-2 py-1 d-flex">
                  <div class="deal-text sf-bold d-flex align-items-center p-1 mb-0 row">
                      <span class="ml-2">{{ $call->company ?? "No company" }}</span>

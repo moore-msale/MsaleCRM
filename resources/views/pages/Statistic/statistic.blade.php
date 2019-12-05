@@ -15,7 +15,7 @@
         .btn-purple{
             width: 162px;
             height: 35px;
-            background: #772FD2;
+            background: #772FD2!important;
             box-shadow: 0px 10px 10px rgba(119, 47, 210, 0.2);
         }
         .purple-text{

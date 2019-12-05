@@ -197,7 +197,16 @@ class CallController extends Controller
     public function call_clear()
     {
         $calls = Call::where('user_id',auth()->id())->where('active',0)->get();
+        foreach ($calls as $call)
+        {
+            $call->delete();
+        }
 
+        return back();
+    }
+    public function wcall_clear()
+    {
+        $calls = Call::where('user_id',auth()->id())->where('active',1)->get();
         foreach ($calls as $call)
         {
             $call->delete();

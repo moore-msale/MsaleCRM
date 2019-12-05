@@ -23,7 +23,7 @@
                             <label for="call_company">Компания</label>
                         </div>
                         <div class="md-form">
-                            <input type="text" name="name" id="call_number" class="form-control">
+                            <input type="number" name="name" id="call_number" class="form-control">
                             <label for="call_number">Номер телефона</label>
                         </div>
                     </form>
