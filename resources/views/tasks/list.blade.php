@@ -18,3 +18,8 @@
         @include('tasks.potentials-card')
     @endforeach
 @endif
+@if(isset($customers4))
+    @foreach($customers4 as $customer)
+        @include('tasks.phone-clients-card')
+    @endforeach
+@endif

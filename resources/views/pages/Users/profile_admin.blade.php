@@ -50,7 +50,7 @@
                         </div>
                         <div class="w-100"></div>
                         <div class="col" style="margin-top: 0.10rem;">
-                           <a class="nav-link btn rounded-0 border-0 btn-block text-left active sf-light p-2 pl-3" href="#newuser" data-toggle="tab" role="tab"  style="box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);">+ Пользователь</a>
+                           <a class="nav-link btn rounded-0 border-0 btn-block text-left active sf-light p-2 pl-3  bg-white" href="#newuser" data-toggle="tab" role="tab"  style="box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.05);">+ Пользователь</a>
                         </div>
                         <div class="w-100"></div>
                         <div class="col" style="margin-top: 0.10rem;">
@@ -114,22 +114,22 @@
                         <div class="mt-5">
                             <h2 class="text-muted sf-medium display-5-5">+ личные данные</h2>
                         </div>
-                        <div class="input-group pt-2">
-                            <div class="custom-file rounded-0 border-0" id="avatar">
+                        <div class="input-group pt-2" id="avatar">
+                            <div class="custom-file rounded-0 border-0">
                                 <input type="file" class="custom-file" id="avatar-{{$user->id}}" name="avatar"
                                        aria-describedby="inputGroupFileAddon01" accept="image/*">
                                 <label class="custom-file-label rounded-0 border-0 bg-grey sf-medium display-6" for="avatar-{{ $user->id }}">Загрузить фото профиля</label>
                             </div>
                         </div>
 
-                         <div class="input-group pt-2">
+                         <div class="input-group pt-2" id="scan_pas">
                             <div class="custom-file rounded-0 border-0">
                                 <input type="file" class="custom-file" id="scan_pas-{{$user->id}}" name="scan_pas"
                                        aria-describedby="inputGroupFileAddon01" accept="image/*">
                                 <label class="custom-file-label rounded-0 border-0 bg-grey sf-medium display-6" for="scan_pas-{{ $user->id }}">Загрузить фото паспорта(задниию часть)</label>
                             </div>
                         </div>
-                        <div class="input-group pt-2 mb-5">
+                        <div class="input-group pt-2 mb-5" id="scan2_pas">
                             <div class="custom-file rounded-0 border-0">
                                 <input type="file" class="custom-file" id="scan2_pas-{{$user->id}}" name="scan2_pas"
                                        aria-describedby="inputGroupFileAddon01" accept="image/*">
@@ -212,22 +212,21 @@
                                 <div class="custom-file rounded-0 border-0">
                                     <input type="file" class="custom-file" id="avatar-{{$manager->id}}" name="avatar"
                                            aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="avatar-{{ $manager->id }} sf-medium">Загрузить фото профиля</label>
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6  sf-medium" for="avatar-{{ $manager->id }}">Загрузить фото профиля</label>
                                 </div>
                             </div>
-
                              <div class="input-group pt-2">
                                 <div class="custom-file rounded-0 border-0">
                                     <input type="file" class="custom-file" id="scan_pas-{{$manager->id}}" name="scan_pas"
                                            aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="scan_pas-{{ $manager->id }} sf-medium">Загрузить фото паспорта(задниию часть)</label>
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6  sf-medium" for="scan_pas-{{ $manager->id }}">Загрузить фото паспорта(задниию часть)</label>
                                 </div>
                             </div>
                             <div class="input-group pt-2 mb-5">
                                 <div class="custom-file rounded-0 border-0">
                                     <input type="file" class="custom-file" id="scan2_pas-{{$manager->id}}" name="scan2_pas"
                                            aria-describedby="inputGroupFileAddon01" accept="image/*">
-                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6" for="scan2_pas-{{ $manager->id }} sf-medium">Загрузить фото паспорта(переднию часть)</label>
+                                    <label class="custom-file-label rounded-0 border-0 bg-grey display-6  sf-medium" for="scan2_pas-{{ $manager->id }}">Загрузить фото паспорта(переднию часть)</label>
                                 </div>
                             </div>
                             <button class="btn btn-outline-secondary btn-block sf-medium" type="submit">

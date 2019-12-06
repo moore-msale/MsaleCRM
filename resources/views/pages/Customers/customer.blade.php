@@ -85,6 +85,7 @@
         </div>
 
         <div class="content-block pt-5" style="height:40vh;">
+            <h2 class="pb-3">Клиенты</h2>
             <div class="row mb-3 py-2 sf-light " id="customers-content" style="border-bottom:1px solid #DEDEDE; color:#a8a8a8;">
                 <div class="col-2">
                     Имя
@@ -324,7 +325,7 @@
                                 showConfirmButton: false,
                                 timer: 700
                             });
-                            console.log(data);
+                            $('#EditCustomer-' + id).find('.cust-title').html(data.customer.name);
                             $('#customer-' + id).find('.cust-name').html(data.customer.name);
                             $('#customer-' + id).find('.cust-company').html(data.customer.company);
                             $('#customer-' + id).find('.cust-desc').html(data.customer.description);

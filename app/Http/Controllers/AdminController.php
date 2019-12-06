@@ -276,7 +276,7 @@ class AdminController extends Controller
                 'view2' => view('pages.Customers.includes.customer_admin', [
                     'customer' => $task,
                 ])->render(),
-                'view3'=>view('tasks.potentials-card', [
+                'view3'=>view('tasks.phone-clients-card', [
                     'customer' => $task,
                 ])->render(),
             ]);

@@ -31,19 +31,38 @@ class UserController extends Controller
 
     }
     public function addUser(Request $request){
+        $messages = [
+            'required' => 'заполните поле',
+            'email'=>'требуется email',
+            'unique'=>'замечена сходство в базе',
+            'max:255'=>'значение должно бытьменьше чем 255',
+            'min'=>[
+                'string'=>'требуется минимум 8 символов'],
+
+            'max'=>[
+                'file'=>'файл превышеает 2048кб'
+            ]
+        ];
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'phone'=>['required','string','unique:users'],
             'avatar'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
-        ]);
+            'scan_pas'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+            'scan2_pas'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+        ],$messages);
+
         if (!$validator->passes()) {
             $arrays=array();
+
             foreach ($validator->errors()->toArray() as $key=>$value){
-                $arrays[$key] = "<span class='invalid-feedback' role='alert' style='display: block;'><strong>".str_replace('validation.','',$value[0])."</strong></span>";
+
+                $arrays[$key] = "<span class='invalid-feedback' role='alert' style='display: block;'><strong>".$value[0]."</strong></span>";
+
             }
-            return response()->json(['status'=>'error','errors'=>$arrays]);
+
+            return response()->json(['status'=>'error','errors'=>$arrays,'sd'=>$validator->errors()->messages()]);
         }
 
         $user = new User;

@@ -1,6 +1,18 @@
 <style>
-    .active-page.active-hash div{
+    .active-page div{
+        opacity: 0.5;
+    }
+    .active-page div:hover{
         background-color: #802FE6;
+        opacity: 1;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .active-page div:hover #black-icon{
+        left:32.5px;
+    }
+    #black-icon{
+        left:-100px;
     }
 </style>
 <div class="h-100 position-fixed pt-2" style="background-color: #772FD2; z-index: 9999;">
@@ -30,55 +42,55 @@
             <img src="{{ asset('images/humburger.svg') }}" alt="">
         </div>
 
-
         <a href="/home" class="active-page home">
-            <div class="point w-100 my-1 text-center">
-                <img class="pt-2 point-ico" src="{{ 'images/home.svg' }}" alt="">
+            <div class="point w-100 my-1 text-center" style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
+                <img class="w-100 point-ico" src="{{ 'images/home.svg' }}" alt="">
                 <p class="sf-medium pt-2 mb-0 pb-0 text-white" style="font-size:9px; line-height: 6px;">Главная</p>
-
+                <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
             </div>
         </a>
 
         <a href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/tasks_admin' : '/tasks' }}"  class="active-page tasks tasks_admin">
-        <div class="point w-100 my-1">
-            {{--<i class="fas fa-home fa-2x"></i>--}}
-            <img class="w-50 pt-2 point-ico" src="{{ 'images/edit-task.svg' }}" alt="">
-            <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Задачи</p>
-        </div>
+            <div class="point w-100 my-1" style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
+                {{--<i class="fas fa-home fa-2x"></i>--}}
+                <img class="w-100 point-ico" src="{{ 'images/edit-task.svg' }}" alt="">
+                <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Задачи</p>
+                <span class="position-relative"  id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
+            </div>
         </a>
-        {{--<div class="point mb-2">--}}
-            {{--<i class="fas fa-home fa-2x"></i>--}}
-            {{--<img class="w-50 pt-1 point-ico" src="{{ 'images/call.svg' }}" alt="">--}}
-            {{--<p class="sf-bold pt-2 pb-2 mb-0" style="font-size:9px; line-height: 6px;">Звонки</p>--}}
-        {{--</div>--}}
+
         <a href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/meets_admin' : '/meets' }}"  class="active-page meets meets_admin">
-        <div class="point w-100 my-1">
-            {{--<i class="fas fa-home fa-2x"></i>--}}
-            <img class="w-50 pt-2 point-ico" src="{{ 'images/partnership.svg' }}" alt="">
-            <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Встречи</p>
-        </div>
+            <div class="point w-100 my-1" style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
+                {{--<i class="fas fa-home fa-2x"></i>--}}
+                <img class="w-100 point-ico" src="{{ 'images/partnership.svg' }}" alt="">
+                <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Встречи</p>
+                <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
+            </div>
         </a>
         <a href="/customer"  class="active-page customer">
-        <div class="point w-100 my-1">
-            {{--<i class="fas fa-home fa-2x"></i>--}}
-            <img class="w-50 pt-3 point-ico" src="{{ 'images/customer.svg' }}" alt="">
-            <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Клиенты</p>
-        </div>
+            <div class="point w-100 my-1" style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
+                {{--<i class="fas fa-home fa-2x"></i>--}}
+                <img class="w-100 point-ico" src="{{ 'images/customer.svg' }}" alt="">
+                <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Клиенты</p>
+                <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
+            </div>
         </a>
         @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
             <a href="/statistic" class="active-page statistic">
-                <div class="point w-100 my-1">
+                <div class="point w-100 my-1"style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
                     {{--<i class="fas fa-home fa-2x"></i>--}}
-                    <img class="w-50 pt-2 point-ico" src="{{ 'images/graph.svg' }}" alt="">
+                    <img class="w-100 point-ico" src="{{ 'images/graph.svg' }}" alt="">
                     <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Отчеты</p>
+                    <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
                 </div>
             </a>
         @endif
         <a href="/settings"  class="active-page settings">
-            <div class="point w-100 my-1">
+            <div class="point w-100 my-1"style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
                 {{--<i class="fas fa-home fa-2x"></i>--}}
-                <img class="w-50 pt-2 point-ico" src="{{ 'images/settings.svg' }}" alt="">
+                <img class="w-100 point-ico" src="{{ 'images/settings.svg' }}" alt="">
                 <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Настройки</p>
+                <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
             </div>
         </a>
 
@@ -101,13 +113,6 @@
     </div>
 </div>
 @push('scripts')
-    <script>
-        $(document).ready(function () {
-            let locationName = window.location.pathname;
-            $(document).find("[href='" + locationName + "']").addClass('active-hash');
-            $('.active-hash .point').append('<span class="position-relative" style="top: -30px;left: 33px;border-right: 4px solid #3D1366; width: 20px;"></span>');
-        });
-    </script>
     <script>
         $(document).on('click','.portfolio',function () {
            if($('.portfolio').hasClass('active')){

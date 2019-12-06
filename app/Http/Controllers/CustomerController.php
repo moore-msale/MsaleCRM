@@ -206,16 +206,17 @@ class   CustomerController extends Controller
             else {
                 $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
                 if (!isset($report->data['custom_store'])) {
-                    $item = collect($customer);
+                    $item = collect($task);
                     $item = $item->push(Carbon::now()->format('H:i:s'));
-                    $item = $item->push($task);
                     $tts = collect(['custom_store' => new Collection()]);
                     $result = $tts['custom_store']->push($item);
                     $tts = collect($result);
                     if (isset($report->data)) {
                         $report->data = $report->data->merge(collect(['custom_store' => $tts]));
                     } else {
-                        $report->data = collect(['custom_store' => $tts]);
+                        if(isset($tts)){
+                            $report->data = collect(['custom_store' => $tts]);
+                        }
                     }
                 } else {
                     $item = collect($customer);
@@ -246,6 +247,9 @@ class   CustomerController extends Controller
                     'view2' => view('pages.Customers.includes.customer_admin', [
                         'customer' => $task,
                     ])->render(),
+                    'view3' => view('tasks.phone-clients-card', [
+                        'customer' => $task,
+                    ])->render(),
                 ], 200);
             }
         }
@@ -263,6 +267,9 @@ class   CustomerController extends Controller
                         'view2' => view('pages.Customers.includes.customer_admin', [
                             'customer' => $task,
                         ])->render(),
+                        'view3' => view('tasks.phone-clients-card', [
+                            'customer' => $task,
+                        ])->render(),
                     ], 200);
                 }
             }
@@ -276,6 +283,9 @@ class   CustomerController extends Controller
                             'customer' => $task,
                         ])->render(),
                         'view2' => view('pages.Customers.includes.customer_admin', [
+                            'customer' => $task,
+                        ])->render(),
+                        'view3' => view('tasks.phone-clients-card', [
                             'customer' => $task,
                         ])->render(),
                     ], 200);

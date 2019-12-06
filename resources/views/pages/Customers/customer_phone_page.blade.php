@@ -20,7 +20,7 @@
     </div>
     <div>
         <div class="blog-scroll" id="customers-scroll">
-            @include('tasks.list', ['customers3' => $customers])
+            @include('tasks.list', ['customers4' => $customers])
         </div>
     </div>
     <div class="serch">
@@ -127,7 +127,6 @@
                         $('#customer-' + id).find('.cust-company').html(data.customer.company);
                         $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
                         $('#customer-' + id).find('.cust-manager').html(data.user);
-                        $('#history_block-' + id).html(data.html);
                         if (data.task.description.length > 25)
                             $('#customer-' + id).find('.cust-desc').html(data.task.description.substring(0,25) + '...');
                         else
@@ -255,9 +254,17 @@
                         console.log(data);
                         $('#customer-' + id).find('.cust-name').html(data.customer.name);
                         $('#customer-' + id).find('.cust-company').html(data.customer.company);
-                        $('#customer-' + id).find('.cust-desc').html(data.customer.description);
-                        $('#customer-' + id).find('.cust-date').html(data.deadline_date);
-                        $('#history_block-' + id).html(data.html);
+                        $('#customer-' + id).find('.cust-date').html(data.task.deadline_date);
+                        $('#customer-' + id).find('.cust-manager').html(data.user);
+                        if (data.task.description.length > 25)
+                            $('#customer-' + id).find('.cust-desc').html(data.task.description.substring(0,25) + '...');
+                        else
+                            $('#customer-' + id).find('.cust-desc').html(data.task.description);
+                        if(data.status_id){
+                            $('#customer-' + id).find('.cust-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                        }else{
+                            $('#customer-' + id).find('.cust-status button').html('В работе').css("background-color",'#3B79D6');
+                        }
                         console.log(data);
                     }else{
                         Swal.fire({
