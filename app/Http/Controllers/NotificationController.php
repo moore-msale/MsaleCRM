@@ -18,7 +18,7 @@ class NotificationController extends Controller
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
 
     public function notification()
     {
@@ -68,7 +68,28 @@ class NotificationController extends Controller
                     Mail::to($user->email)->send(new TaskPenaltyByChief($task));
                     Mail::to('buvladi@gmail.com')->send(new PenaltyNotificationToChief($task));
                 }
+            }elseif($task->taskable_type == 'App\Customer'){
+            if($task->status_id != 1 && $task->status_id != 2 && User::find($task->user_id)->role != 'admin' && $task->deadline_date < $now && $task->chief == 1)
+            {
+                $user = User::find($task->user_id);
+                $user->balance = $user->balance - 200;
+                $task->status_id = 2;
+                $task->chief = 2;
+                $user->save();
+                $task->save();
+                Mail::to($user->email)->send(new TaskPenaltyByChief($task));
+                Mail::to('buvladi@gmail.com')->send(new PenaltyNotificationToChief($task));
             }
+            elseif($task->status_id != 1 && $task->status_id !=2 && User::find($task->user_id)->role != 'admin' && $task->deadline_date < $now)
+            {
+                $user = User::find($task->user_id);
+                $task->status_id = 2;
+                $task->save();
+                $user->save();
+                Mail::to($user->email)->send(new TaskPenaltyByChief($task));
+                Mail::to('buvladi@gmail.com')->send(new PenaltyNotificationToChief($task));
+            }
+        }
 
         }
     }

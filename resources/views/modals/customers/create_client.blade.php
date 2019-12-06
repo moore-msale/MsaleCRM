@@ -30,12 +30,13 @@
                     @csrf
                     <input type="hidden" value="potentials" name="type">
                     <input type="hidden" id="call_id1">
-                    <input type="text" name="name" id="client_name1" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите Имя">
-                    <input type="text" name="company" id="client_company1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите название Компании">
-                    <input type="text" name="contacts" id="client_contacts1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите контакты Компании">
-                    <input type="text" name="socials" id="client_socials1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Введите соц.сети Компании">
+                    <input type="text" name="name" id="client_name1" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="ФИО">
+                    <input type="text" name="company" id="client_company1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Компания">
+                    <input type="text" name="contacts" id="client_contacts1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Телефон">
+                    <input type="text" name="role" id="client_role1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Должность">
+                    <input type="text" name="socials" id="client_socials1" class="form-control sf-light border-0 mt-2" style="border-radius:0px; background: rgba(151,151,151,0.1);" placeholder="Соц.сети или сайт">
                     <input type="text" name="deadline_date" id="client_date1" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
-                    <textarea id="client_desc1" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание"></textarea>
+                    <textarea id="client_desc1" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="описание"></textarea>
                 </form>
                 <button type="button" class="w-100 sf-light addClient1 mt-5 space-button">Создать</button>
             </div>

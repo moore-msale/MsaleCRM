@@ -236,6 +236,7 @@ class AdminController extends Controller
         $customer->company = $request->company;
         $customer->contacts = $request->contacts;
         $customer->socials = $request->socials;
+        $customer->role = $request->role;
         $customer->save();
 
         $task = new Task();

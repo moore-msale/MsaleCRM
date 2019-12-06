@@ -107,6 +107,7 @@ class   CustomerController extends Controller
         $customer->company = $request->company;
         $customer->contacts = $request->phone;
         $customer->socials = $request->social;
+        $customer->role = $request->role;
 
         $customer->save();
 
