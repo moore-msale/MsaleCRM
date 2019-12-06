@@ -18,14 +18,14 @@ class NotificationController extends Controller
     public function __construct()
     {
         $this->middleware('changeDB');
-    } 
+    }
 
     public function notification()
     {
         $now = Carbon::now();
         $next = Carbon::now()->addHours(2);
         $tasks = Task::all();
-
+        $admin = User::find(1);
         foreach ($tasks as $task)
         {
             if($task->deadline_date > $now && $task->deadline_date < $next)
@@ -46,12 +46,14 @@ class NotificationController extends Controller
                 $task->save();
                 }
                 }
+            }elseif($task->deadline_date > $next){
+                 $task->status_id = null;
             }
             if($task->taskable_type == null){
                 if($task->status_id != 1 && $task->status_id != 2 && User::find($task->user_id)->role != 'admin' && $task->deadline_date < $now && $task->chief == 1)
                 {
                     $user = User::find($task->user_id);
-                    $user->balance = $user->balance - 200;
+                    $user->balance = $user->balance - isset($user->penalty) ? $user->penalty : $admin->penalty;
                     $task->status_id = 2;
                     $task->chief = 2;
                     $user->save();

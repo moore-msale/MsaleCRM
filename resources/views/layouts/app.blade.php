@@ -223,6 +223,7 @@ $agent = New \Jenssegers\Agent\Agent();
         let desc = $('#client_desc1');
         let social = $('#client_socials1');
         let date = $('#client_date1');
+        let role = $('#client_role1');
         let status = $('#client_status1').is(':checked') ? true : false;
         let datas = [name.val(),company.val(),phone.val(),desc.val(),date.val()];
         if(datas.indexOf("") != -1){
@@ -256,7 +257,8 @@ $agent = New \Jenssegers\Agent\Agent();
                     "social": social.val(),
                     "desc": desc.val(),
                     "date": date.val(),
-                    "status": status
+                    "status": status,
+                    "role":role.val(),
                 },
                 success: data => {
                     $('#ClientCreate').modal('hide');
@@ -268,11 +270,13 @@ $agent = New \Jenssegers\Agent\Agent();
                         timer: 700
                     });
                     $('#CreateClient').modal('hide');
+                    $('#calledModal').modal('hide');
                     $('#client_name1').val('');
                     $('#client_contacts1').val('');
                     $('#client_company1').val('');
                     $('#client_desc1').val('');
                     $('#client_socials1').val('');
+                    $('#client_role1').val('');
                     $('#customers-content').after(data.view2).show('slide', {direction: 'left'}, 400);
                     $('#customers-scroll').append(data.view3).show('slide', {direction: 'left'}, 400);
                     console.log(data);
@@ -306,6 +310,7 @@ $agent = New \Jenssegers\Agent\Agent();
         let date = $('#client_date_admin');
         let user = $('#client_manager_admin');
         let status = $('#client_status_admin');
+        let role = $('#client_role_admin');
         let datas = [title.val(),company.val(),contacts.val(),desc.val(),date.val(),user.val(),status.val()];
 
         if(datas.indexOf("") != -1){
@@ -342,6 +347,7 @@ $agent = New \Jenssegers\Agent\Agent();
                     "deadline_date": date.val(),
                     "user_id": user.val(),
                     "status": status.val(),
+                    "role":role.val(),
                 },
                 success: data => {
                     Swal.fire({
@@ -351,6 +357,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         showConfirmButton: false,
                         timer: 700
                     });
+                    $('#calledModal').modal('hide');
                     $('#CreateClientAdmin').modal('hide');
                     $('#customers-content').after(data.view2).show('slide', {direction: 'left'}, 400);
                     $('#client_name_admin').val('');
@@ -359,6 +366,7 @@ $agent = New \Jenssegers\Agent\Agent();
                     $('#client_contacts_admin').val('');
                     $('#client_socials_admin').val('');
                     $('#client_company_admin').val('');
+                    $('#client_role_admin').val('');
                     $('#customers-scroll').append(data.view3).show('slide', {direction: 'left'}, 400);
                 },
                 error: () => {

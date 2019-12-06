@@ -78,13 +78,16 @@
     {{--</script>--}}
     <script>
         $(document).on('click','.createclient',function () {
-            $('#calledModal').modal('hide');
+            
             let id = $('.caller_id').val();
             let company = $('.caller_company').val();
             let phone = $('.caller_phone').val();
             $('#client_company1').val(company);
             $('#client_contacts1').val(phone);
             $('#call_id1').val(id);
+            $('#client_company_admin').val(company);
+            $('#client_contacts_admin').val(phone);
+            $('#call_id_admin').val(id);
         });
     </script>
     <script>

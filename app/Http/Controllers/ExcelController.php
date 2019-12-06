@@ -22,17 +22,15 @@ class ExcelController extends Controller
             $calls = Excel::toCollection(CallsImport::class, $excel)->collapse();
             if (count($calls)) {
                     foreach ($calls as $call) {
-//                        if($call2->company == $call[1] || $call2->phone = $call[2] )
-//                        {
-//                            continue;
-//                        }
-//                        else {
+                        if($call[0] and $call[1])
+                        {
                             $newCall = new Call();
                             $newCall->phone = $call[1];
                             $newCall->company = $call[0];
                             $newCall->user_id = auth()->id();
                             $newCall->save();
-//                        }
+                        }
+//
                 }
                 Session::flash('excel_status', 'success');
             }
