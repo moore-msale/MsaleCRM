@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/search_task','AjaxController@searchTask')->name('search_task');
     Route::get('/search_meet','AjaxController@searchMeet')->name('search_meet');
     Route::get('/search_customer','AjaxController@searchCustomer')->name('search_customer');
+    Route::get('/home_search_customer','AjaxController@homeSearchCustomer')->name('home_search_customer');
     Route::get('/something','AjaxController@something')->name('something');
     Route::get('/deletehistory/{id}','HistoryController@delete')->name('historydelete');
 
@@ -87,6 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/balance_get', 'AjaxController@balance_get')->name('balance_get');
     Route::get('/profile', 'UserController@profile')->name('profile');
     Route::post('/editUser', 'UserController@editUser')->name('editUser');
+    Route::get('/findCustomer/{id}', 'CustomerController@findCustomer')->name('findCustomer');
     Route::post('/adduser','UserController@addUser')->name('addUser');
     Route::get('/blockuser/{id}','UserController@blockUser')->name('blockuser');
     Route::get('/activateuser/{id}','UserController@activateUser')->name('activateuser');

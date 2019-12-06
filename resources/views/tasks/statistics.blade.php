@@ -2,9 +2,9 @@
     <div class="row justify-content-center px-3">
         <div class="pl-3" style="width:45%;">
             <div class="search">
-                <input id="search" class="form-control" style="height:55px;" type="text" placeholder="Поиск по клиентам">
+                <input id="search" class="form-control" style="height:55px;padding-left:3rem;background-image:url('{{asset('images/zoom-2 1.svg')}}');background-repeat: no-repeat;background-position: 2% 50%;" type="text" placeholder="Поиск по клиентам">
                 <div class="position-relative">
-                    <div class="position-absolute search-result shadow bg-white" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
+                    <div class="position-absolute search-result shadow bg-white mt-2" id="search-result" style="right: 0; top: 160%;width:100%; z-index:999;">
                     </div>
                 </div>
             </div>
@@ -112,3 +112,46 @@
         </div>
     </div>
 </div>
+@push('scripts')
+
+<script>
+    let result = $('#search-result');
+
+    result.parent().hide(0);
+    $('#search').on('keyup click', function () {
+        let value = $(this).val();
+        console.log(value);
+        if (value != '' && value.length >= 1) {
+            // let searchBtn = $('#search-btn');
+            // searchBtn.prop('href', '');
+            // searchBtn.prop('href', '/search?search=' + value);
+            $.ajax({
+                url: '{!! route('home_search_customer') !!}',
+                data: {'search': value},
+                success: (data) => {
+                    console.log(data);
+                    result = result.html(data.html);
+                    result.parent().slideDown(400);
+                    result.siblings('span').css('opacity', 1);
+                    // result.find('.collapse').each((e, i) => {
+                    //     registerCollapse($(i));
+                    // });
+                    // registerCollapse(result);
+                },
+                error: () => {
+                    console.log('error');
+                }
+            });
+        } else {
+            result.parent().slideUp(400);
+            result.empty();
+        }
+    });
+
+    $(document).click(function(event) {
+        if (!$(event.target).is("#search, #search-result, #search-result-ajax, .collapse, .products")) {
+            $("#search-result").parent().slideUp(400);
+        }
+    });
+</script>
+@endpush

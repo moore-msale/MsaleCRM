@@ -58,6 +58,7 @@
         @include('modals.customers.add_potencial')
         @include('modals.customers.create_client_admin')
     @else
+        @include('modals.calls.create_call')
         @include('modals.calls.called-modal')
         @include('modals.customers.add_customer')
         @include('modals.customers.add_potencial')
@@ -78,7 +79,7 @@
     {{--</script>--}}
     <script>
         $(document).on('click','.createclient',function () {
-            
+
             let id = $('.caller_id').val();
             let company = $('.caller_company').val();
             let phone = $('.caller_phone').val();

@@ -47,7 +47,7 @@ class NotificationController extends Controller
                 }
                 }
             }elseif($task->deadline_date > $next){
-                 $task->status_id = null;
+                 $task->active = 0;
             }
             if($task->taskable_type == null){
                 if($task->status_id != 1 && $task->status_id != 2 && User::find($task->user_id)->role != 'admin' && $task->deadline_date < $now && $task->chief == 1)

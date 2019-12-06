@@ -38,7 +38,13 @@
                                 <div class="col-3">
                                     {{ \App\User::find($value->task->user_id)['name'] }}
                                 </div>
-                                @if(isset($value->task->status))
+                                @if(!$value->task->active)
+                                    <div class="col-4">
+                                        <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;border:0px;padding:0px 15px;" disabled>
+                                            Просроченно
+                                        </button>
+                                    </div>
+                                @elseif(isset($value->task->status))
                                     <div class="col-4">
                                         <button class="w-100" style="height:100%; color:white; background: {{ $value->task->status->color }}; border-radius: 20px; border:0px;padding:0px 15px;">
                                         {{ $value->task->status->name }}

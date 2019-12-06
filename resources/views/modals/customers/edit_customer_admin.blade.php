@@ -65,7 +65,7 @@ $agent = New \Jenssegers\Agent\Agent();
                         @if(isset($customer->status))
                                 <option value="{{ \App\Status::find($customer->status_id)['id']}}">{{ \App\Status::find($customer->status_id)['name'] }}</option>
                                 <option value="0">В работе</option>
-                            @endif
+                        @endif
                         @foreach(\App\Status::where('type','customer')->get() as $stat)
                             @if(isset($customer->status) && $stat->id == \App\Status::find($customer->status_id)['id'])
                                 @continue
