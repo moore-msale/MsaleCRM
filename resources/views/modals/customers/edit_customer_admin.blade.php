@@ -33,7 +33,11 @@ $agent = New \Jenssegers\Agent\Agent();
             {{--</div>--}}
         </div>
         @endif
-        <div class="modal-content px-2 w-md-50 mr-0" style="min-height: 550px; height: 100vh;">
+        @if($agent->isPhone())
+            <div class="modal-content px-2 w-100 mr-0" style="min-height: 550px; height: 100vh;">
+         @else
+            <div class="modal-content px-2 w-50 mr-0" style="min-height: 550px; height: 100vh;">
+        @endif
             <div class="modal-header border-0">
                 <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+<span class="cust-title">{{ $customer->title }}</span></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
