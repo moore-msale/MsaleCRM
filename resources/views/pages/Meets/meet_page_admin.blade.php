@@ -123,8 +123,12 @@
                          {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                      </div>
                      <div class="col-2 meet-status-admin">
-                         @if(isset($task->status))
-                             <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
+                         @if(!$task->active)
+                             <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
+                                 Просроченно
+                             </button>
+                         @elseif(isset($task->status))
+                            <button style="width:100%; height:100%; color:white; background: {{ $task->status->color }}; border-radius: 20px; border:0px;" disabled>
                                  {{ $task->status['name'] }}
                              </button>
                          @else

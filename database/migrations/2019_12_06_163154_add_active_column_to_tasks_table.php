@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRoleColumnToCustomersTable extends Migration
+class AddActiveColumnToTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddRoleColumnToCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->string('role')->default('user');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->integer('active')->default(1)->after('taskable_id');
         });
     }
 
@@ -25,9 +25,7 @@ class AddRoleColumnToCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            //
+        Schema::table('tasks', function (Blueprint $table) {
         });
     }
 }
-

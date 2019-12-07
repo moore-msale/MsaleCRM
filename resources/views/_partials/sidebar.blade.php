@@ -84,15 +84,16 @@
                     <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
                 </div>
             </a>
+            <a href="/settings"  class="active-page settings">
+                <div class="point w-100 my-1"style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
+                    {{--<i class="fas fa-home fa-2x"></i>--}}
+                    <img class="w-100 point-ico" src="{{ 'images/settings.svg' }}" alt="">
+                    <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Настройки</p>
+                    <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
+                </div>
+            </a>
         @endif
-        <a href="/settings"  class="active-page settings">
-            <div class="point w-100 my-1"style="height: 53px; padding-top: 5.5px; padding-bottom: 5.5px;">
-                {{--<i class="fas fa-home fa-2x"></i>--}}
-                <img class="w-100 point-ico" src="{{ 'images/settings.svg' }}" alt="">
-                <p class="sf-medium pt-2 mb-0 text-white" style="font-size:9px; line-height: 6px;">Настройки</p>
-                <span class="position-relative" id="black-icon" style="top: -30px;border-right: 4px solid #3D1366; width: 20px;"></span>
-            </div>
-        </a>
+
 
     </div>
 

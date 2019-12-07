@@ -590,4 +590,25 @@ class   CustomerController extends Controller
 
         return back();
     }
+    public function findCustomer($id){
+        $customer = Task::find($id);
+        if(\auth()->user()->role=='admin'){
+            return response()->json([
+                'view' => view('modals.customers.edit_customer_admin', [
+                    'customer' => $customer,
+                ])->render(),
+                'modal'=>'#EditCustomerAdmin-',
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'view' => view('modals.customers.edit_customer', [
+                    'customer' => $customer,
+                ])->render(),
+                'modal'=>'#EditCustomer-',
+            ], 200);
+        }
+
+
+    }
 }

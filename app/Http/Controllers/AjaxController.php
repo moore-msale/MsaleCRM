@@ -117,5 +117,24 @@ class AjaxController extends Controller
             'result' => $result,
         ]);
     }
+    public function homeSearchCustomer(Request $request)
+    {
+        $search = $request->search;
+        $result = collect(['Клиенты' => Customer::where('company', 'like', "%$search%")->orWhere('contacts', 'like', "%$search%")->orWhere('name', 'like', "%$search%")->get()]);
+        $count = count($result);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('_partials.search_home_customer', [
+                    'result' => $result,
+                    'count' => $count,
+                ])->render(),
+            ]);
+        }
+
+        return view('_partials.search-result', [
+            'result' => $result,
+        ]);
+    }
 
 }

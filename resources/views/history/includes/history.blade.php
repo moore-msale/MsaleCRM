@@ -1,3 +1,4 @@
+
 @if(count(\App\History::where('customer_id', $customer->taskable->id)->get()) != 0)
     @foreach(\App\History::where('customer_id', $customer->taskable->id)->get() as $history)
         <div class="pt-2 pb-3">

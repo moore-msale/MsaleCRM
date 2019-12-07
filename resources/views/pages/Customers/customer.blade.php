@@ -133,7 +133,11 @@
                         {{ \Carbon\Carbon::parse($customer->deadline_date)->format('M d - H:i') }}
                     </div>
                     <div class="col-2 cust-status">
-                        @if(isset($customer->status))
+                        @if(!$customer->active)
+                            <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
+                                Просроченно
+                            </button>
+                        @elseif(isset($customer->status))
                             <button style="width:100%; height:100%; color:white; background: {{ $customer->status->color }}; border-radius: 20px; border:0px;" disabled>
                                 {{ $customer->status->name }}
                             </button>
