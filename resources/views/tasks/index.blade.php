@@ -110,17 +110,7 @@
 
             {{--</div>--}}
             @include('modals.calls.called-modal')
-            <script>
-                $('.nav-link').on('click', function(e) {
-                    $('.nav-link').removeClass('active');
-                    let page = $(e.currentTarget);
-                    if(page.data('parent')=='waitCalls'){
-                        $('.cleared').attr('href','clearWCall');
-                    }else{
-                        $('.cleared').attr('href','clearCall');
-                    }
-                });
-            </script>
+
         </div>
 @endif
 @if(isset($meetings2))
