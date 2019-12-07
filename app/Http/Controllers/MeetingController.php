@@ -194,16 +194,19 @@ class MeetingController extends Controller
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
-        $task->title = $request->title;
+        $meeting = Meeting::find($task->taskable_id);
+        $meeting1 = deep_copy($meeting);
+        $meeting->customer_id= $request->customer;
         $task->deadline_date = $request->date;
         $task->status_id = $request->status;
         $task->description = $request->desc;
-        if($task == $task2){
+        if($task == $task2 and $meeting==$meeting1){
             return response()->json([
                 'status'=>'error'
             ]);
         }
         $task->save();
+        $meeting->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
             if (!isset($report->data['meet_update'])) {
@@ -239,6 +242,7 @@ class MeetingController extends Controller
             return response()->json([
                 'status' => "success",
                 'meet' => $task,
+                'customer'=>\App\Customer::where('id',$meeting->customer_id)->get(),
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),
                 'date2'=>Carbon::parse($deadline_date)->format('H:i'),
                 'status_id'=>$task->status,

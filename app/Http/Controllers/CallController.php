@@ -42,7 +42,7 @@ class CallController extends Controller
             'type' => 'call',
             'status' => true,
             'data' => $call,
-            'plan' => $plan
+            'plan' => $plan,
         ]);
         $report->save();
         $call->delete();

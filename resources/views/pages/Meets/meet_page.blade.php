@@ -336,7 +336,7 @@
                                 timer: 700
                             });
                             console.log(data);
-                            $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                            $('#meet-' + id).find('.meet-name').html(data.customer.name);
                             $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
                             $('#meet-' + id).find('.meet-manager').html(data.user);
                             $('#EditMeet-' + id).find('.modal-title').html(data.meet.title);

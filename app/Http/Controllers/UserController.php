@@ -48,9 +48,9 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'phone'=>['required','string','unique:users'],
-            'avatar'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
-            'scan_pas'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
-            'scan2_pas'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+            'avatar'=>['image','mimes:jpeg,png,jpg','max:2048'],
+            'scan_pas'=>['image','mimes:jpeg,png,jpg','max:2048'],
+            'scan2_pas'=>['image','mimes:jpeg,png,jpg','max:2048'],
         ],$messages);
 
         if (!$validator->passes()) {

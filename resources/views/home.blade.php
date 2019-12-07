@@ -78,6 +78,111 @@
         {{--});--}}
     {{--</script>--}}
     <script>
+        $(document).on('click','.deleteCallDesktop',e => {
+            e.preventDefault();
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            console.log(id);
+            $.ajax({
+                url: 'calldelete',
+                method: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id,
+                },
+                success: data => {
+                    $('#call-' + id).hide(5);
+                },
+                error: () => {
+                    console.log(0);
+                    swal("Что то пошло не так!","Обратитесь к Эркину за помощью))","error");
+                }
+            })
+
+
+        });
+    </script>
+    <script>
+        $(document).on("click", '.editMeet',function( event ) {
+            event.preventDefault();
+            let btn = $(event.currentTarget);
+            let id = btn.data('id');
+            let user = btn.data('parent');
+            let customer = $('#meet_name-' + id);
+            let desc = $('#meet_desc-' + id);
+            let date = $('#meet_date-' + id);
+            let status = $('#meet_status-' + id);
+            if(desc.val().length < 20)
+            {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Заполните описание, описание должно быть больше 20 символов!',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else {
+                $.ajax({
+                    url: 'meeting/'+id,
+                    method: 'PUT',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "customer": customer.val(),
+                        "desc": desc.val(),
+                        "date": date.val(),
+                        "status": status.val(),
+                        "id": id,
+                    },
+                    success: data => {
+                        if(data.status == "success"){
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Данные изменены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            console.log(data);
+                            $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
+                            $('#meet-' + id).find('.meet-manager').html(data.user);
+                            $('#meet-' + id).find('.meet-date1').html(data.date1);
+                            $('#meet-' + id).find('.meet-date2').html(data.date2);
+                            if (data.meet.description.length > 25)
+                                $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
+                            else
+                                $('#meet-' + id).find('.meet-desc').html(data.meet.description);
+                            if(data.status_id){
+                                $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                            }else{
+                                $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                            }
+                        } else{
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'info',
+                                title: 'Изменение не найдены!',
+                                showConfirmButton: false,
+                                timer: 700
+                            });
+                            console.log(data);
+                        }
+                    },
+                    error: () => {
+                        console.log(0);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Что-то пошло не так!',
+                            showConfirmButton: false,
+                            timer: 700
+                        });
+                    }
+                })
+            }
+        })
+    </script>
+    <script>
         $(document).on('click','.createclient',function () {
 
             let id = $('.caller_id').val();
@@ -585,7 +690,7 @@
                     success: data => {
                         $('#CallCreate').modal('hide');
                         console.log(data);
-
+                        $('#calls-scroll').html('');
                         let result = $('#calls-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                         result.find('.call-btn').each((e, i) => {
                             registerCallBtn($(i));
@@ -626,6 +731,7 @@
 
             })
         </script>
+
         <script>
             $(document).on("click", '.addClient',function( event ) {
                 event.preventDefault();
@@ -913,8 +1019,7 @@
                     data: formData,
                     success: data => {
                         $('#CallCreate').modal('hide');
-                        console.log(data);
-
+                        $('#calls-scroll').html('');
                         let result = $('#calls-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                         result.find('.call-btn').each((e, i) => {
                             registerCallBtn($(i));

@@ -283,17 +283,6 @@ url("//db.onlinewebfonts.com/t/0b51833ff62e4af8acb5fd3e2bf59e97.svg#SF Pro Displ
         </div>
     </div>
 </div>
-<script>
-    $('.nav-link').on('click', e => {
-        $('.nav-link').removeClass('active');
-    });
-    $('.haveAccount').on('click',e=>{
-        if($(e.currentTarget).attr('href')=='#register'){
-            $('.log').addClass('active');
-        }else{
-            $('.reg').addClass('active');
-        }
-    })
-</script>
+
 
 @endsection

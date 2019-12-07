@@ -4,6 +4,7 @@
     <div class="pb-1 position-relative" style="border-bottom:1px solid rgba(0,0,0,0.2);">
         <img src="{{ asset('images/company.svg') }}" alt=""><span class="ml-2 font-weight-bold cust-company"> {{ $customer->taskable->company }} </span>
         {{--<i class="fas fa-ellipsis-v position-absolute" style="color:#C4C4C4; top:0%;right:0%;"></i>--}}
+        <p class="sf-light mb-0 cust-desc">{{$customer->description}}</p>
         <div class="btn-group dropleft col-1 position-absolute" style="top:0%; right:0%;">
             <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
             <div class="dropdown-menu pl-2 shadow" style="border-radius: 0px; border:none;">

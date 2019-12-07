@@ -26,7 +26,11 @@
         </div>
         <div class="rounded-0 border-0 d-md-block d-none portfolio-logout position-fixed" id="portfolio-logout" style="left: -550px; top:88px;width: 125px; height: 64px;">
             <div class="links d-flex align-items-center">
-                <a class="sf-medium text-white pl-2 pt-2 text-left mb-0 rounded-0 border-0" href="/profile"   style="width: 125px; height: 32px;">+ пользователи</a>
+                @if(auth()->user()->role=='admin')
+                    <a class="sf-medium text-white pl-2 pt-2 text-left mb-0 rounded-0 border-0" href="/profile"   style="width: 125px; height: 32px;">+ пользователи</a>
+                @else
+                    <a class="sf-medium text-white pl-2 pt-2 text-left mb-0 rounded-0 border-0" href="/profile"   style="width: 125px; height: 32px;">+ аккаунт</a>
+                @endif
             </div>
             <div class="links d-flex align-items-center">
                 <a class="sf-medium text-white pl-2 pt-2 text-left mt-0 rounded-0 border-0" href="/exit"  style="width: 125px; height: 32px;">- выход</a>
