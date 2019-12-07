@@ -76,7 +76,7 @@ class   CustomerController extends Controller
         if(auth()->user()->role=='admin'){
             return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
         }
-        return view('pages.Customers.customer_page', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
+        return view('pages.Customers.customer', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
     }
 
     /**
@@ -358,6 +358,7 @@ class   CustomerController extends Controller
                 'task'=>$task,
             ]);
         }
+        $task->active = 1;
         $customer->save();
         $task->save();
         if(isset($request->details)){

@@ -40,10 +40,6 @@
                             <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все клиенты'}}</option>
                             <option value="0">Без статуса</option>
                         @endif
-                        @if(isset($status) )
-                            <option value="{{ null }}">Все клиенты</option>
-                        @endif
-
                         @foreach(\App\Status::where('type','customer')->get() as $status1)
                             @if(isset($status) && $status1->id == $status)
 
@@ -127,7 +123,7 @@
                         {{ str_limit($customer->description, $limit = 25, $end = '...') }}
                     </div>
                     <div class="col-1 cust-manager  overflow-hidden" style="border-right:1px solid #dedede;">
-                        {{ \App\User::find($customer->user_id)->name }}
+                        {{ \App\User::find($customer->user_id)['name'] }}
                     </div>
                     <div class="col-2 cust-date">
                         {{ \Carbon\Carbon::parse($customer->deadline_date)->format('M d - H:i') }}
@@ -293,8 +289,16 @@
             let status = $('#client_status-' + id);
             let desc = $('#client_desc-' + id);
 
-
-            if(desc.val().length < 20)
+            if(date.val()==''){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Дата просрочена выберите дату',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else if(desc.val().length < 20)
             {
                 Swal.fire({
                     position: 'top-end',

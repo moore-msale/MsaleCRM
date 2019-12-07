@@ -60,7 +60,7 @@
     <div class="modal-dialog modal-full-height modal-right" role="document">
         <div class="modal-content px-2">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+Добавить потенциального клиента</h4>
+                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+ добавить потенциального клиента</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>

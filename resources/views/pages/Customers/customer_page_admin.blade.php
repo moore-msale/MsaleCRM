@@ -38,9 +38,6 @@
                             <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все клиенты'}}</option>
                                 <option value="0">Без статуса</option>
                             @endif
-                            @if(isset($status))
-                                <option value="{{ null }}">Все клиенты</option>
-                            @endif
                             @foreach(\App\Status::where('type','customer')->get() as $status1)
                                 @if(isset($status) && $status1->id == $status)
                                     @continue
@@ -255,8 +252,16 @@
         let manager = $('#client_manager-' + id);
         let status = $('#client_status-' + id);
         let desc = $('#client_desc-' + id);
-
-        if(desc.val().length < 20)
+        if(date.val()==''){
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Дата просрочена выберите дату',
+                showConfirmButton: true,
+                // timer: 700
+            });
+        }
+        else if(desc.val().length < 20)
         {
             Swal.fire({
                 position: 'top-end',

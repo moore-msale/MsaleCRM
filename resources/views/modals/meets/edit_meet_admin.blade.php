@@ -1,3 +1,6 @@
+<?php
+$meeting = App\Meeting::where('id',$task->taskable_id)->first();
+?>
 @push('styles')
     <style>
         @media screen and (min-width: 992px)
@@ -26,8 +29,22 @@
             <div class="modal-body">
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="text" name="name" id="meet_name-{{ $task->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$task->title}}" placeholder="Компания">
-                    <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
+                    <select class="browser-default custom-select border-0 mt-2" name="name" id="meet_name-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        @foreach(\App\Customer::all() as $customer)
+                            @if($meeting['customer_id'] == $customer->id)
+                                <option class="customerid-{{$customer->id }}" value="{{ $customer->id }}" selected>{{ $customer->name }}</option>
+                                @continue
+                            @endif
+                            @if(empty(\App\Meeting::where('customer_id',$customer->id)->first()))
+                                <option class="customerid-{{$customer->id }}" value="{{ $customer->id }}">{{ $customer->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @if(!$task->active)
+                        <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);"  placeholder="Дата просрочена выберите новую">
+                    @else
+                        <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
+                    @endif
                     <select class="browser-default custom-select border-0 mt-2" id="meet_manager-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{ \App\User::find($task->user_id)['id'] }}">{{ \App\User::find($task->user_id)['name'] }}</option>
                         @foreach(\App\User::all() as $user)

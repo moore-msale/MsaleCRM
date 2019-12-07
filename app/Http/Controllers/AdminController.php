@@ -98,6 +98,7 @@ class AdminController extends Controller
                 'task2'=>$task2,
             ]);
         }
+        $task->active=1;
         $task->save();
         if ($request->ajax()){
             return response()->json([
@@ -198,18 +199,21 @@ class AdminController extends Controller
     public function edit_meet(Request $request)
     {
         $task = Task::find($request->id);
+        $meeting = Meeting::find($task->taskable_id);
         $task2 = deep_copy($task);
-        $task->title = $request->title;
+        $meeting->customer_id = $request->title;
+        $meeting1 = deep_copy($meeting);
         $task->description = $request->desc;
         $task->user_id = $request->manage;
         $task->status_id = $request->status;
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
-        if($task == $task2){
+        if($task == $task2 and $meeting==$meeting1){
             return response()->json([
                 'status' => "error",
             ]);
         }
+        $task->active=1;
         $task->save();
         $date1 = Carbon::parse($task->deadline_date)->format('d M');
         $date2 = Carbon::parse($task->deadline_date)->format('H:i');
@@ -217,7 +221,7 @@ class AdminController extends Controller
             return response()->json([
                 'status' => "success",
                 'meet' => $task,
-                'user' => User::find($task->user_id)->name,
+                'user' => User::find($task->user_id)['name'],
                 'customer'=>$task->taskable->customer,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
@@ -342,6 +346,7 @@ class AdminController extends Controller
                 'status' => "error",
             ]);
         }
+        $task->active=1;
         $customer->save();
         $task->save();
         if ($task->description != $task2->description or $task->status != $task2->status){

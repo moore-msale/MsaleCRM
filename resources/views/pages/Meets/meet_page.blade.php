@@ -125,7 +125,7 @@
                         {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                     </div>
                     <div class="col-2 meet-status">
-                        @if(!$customer->active)
+                        @if(!$task->active)
                             <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                                 Просроченно
                             </button>
@@ -304,7 +304,16 @@
             let desc = $('#meet_desc-' + id);
             let date = $('#meet_date-' + id);
             let status = $('#meet_status-' + id);
-            if(desc.val().length < 20)
+            if(date.val()==''){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Дата просрочена выберите дату',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else if(desc.val().length < 20)
             {
                 Swal.fire({
                     position: 'top-end',
@@ -336,10 +345,10 @@
                                 timer: 700
                             });
                             console.log(data);
+                            $('#EditMeet-'+id).modal('hide');
                             $('#meet-' + id).find('.meet-name').html(data.customer.name);
-                            $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
+                            $('#meet-' + id).find('.meet-deadline').html(data.deadline);
                             $('#meet-' + id).find('.meet-manager').html(data.user);
-                            $('#EditMeet-' + id).find('.modal-title').html(data.meet.title);
                             if (data.meet.description.length > 25)
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
                             else

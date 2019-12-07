@@ -188,6 +188,7 @@ class TaskController extends Controller
                 'task'=>$task,
             ]);
         }
+        $task->active=1;
         $task->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();

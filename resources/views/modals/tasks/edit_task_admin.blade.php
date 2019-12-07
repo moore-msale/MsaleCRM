@@ -18,7 +18,7 @@
     <div class="modal-dialog modal-full-height modal-right" role="document">
         <div class="modal-content px-2 w-100">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+{{ $task->title }}</h4>
+                <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+ задача</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
@@ -27,7 +27,11 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="name" id="task_name_admin-{{ $task->id }}" class="form-control sf-light border-0" style="border-radius:0px; background: rgba(151,151,151,0.1);" value="{{$task->title}}" placeholder="Название">
-                    <input type="text" name="deadline_date" id="task_date_admin-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
+                   @if(!$task->active)
+                        <input type="text" name="deadline_date" id="task_date_admin-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Дата просрочена выберите новую">
+                   @else
+                        <input type="text" name="deadline_date" id="task_date_admin-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
+                    @endif
                     <select class="browser-default custom-select border-0 mt-2" id="task_manager_admin-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{ \App\User::find($task->user_id)->id }}">{{ \App\User::find($task->user_id)->name }}</option>
                         @foreach(\App\User::all() as $user)
@@ -38,7 +42,9 @@
                         @endforeach
                     </select>
                     <select class="browser-default custom-select border-0 mt-2" id="task_status_admin-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        @if($task->status_id == 0)
+                        @if(!$task->active)
+                            <option value="0">Просроченно</option>
+                        @elseif($task->status_id == 0)
                             <option value="0">В работе</option>
                         @endif
                         @if(isset($task->status))

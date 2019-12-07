@@ -21,7 +21,7 @@ $agent = New \Jenssegers\Agent\Agent();
         @if(!$agent->isPhone())
         <div class="modal-content px-2 w-50">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light " style="color:rgba(0,0,0,0.31);" id="myModalLabel">+История</h4>
+                <h4 class="modal-title w-100 sf-light " style="color:rgba(0,0,0,0.31);" id="myModalLabel">+ история</h4>
             </div>
             <div class="modal-body" style="height: 80vh; overflow-y: auto">
                 <div id="history_block-{{ $customer->id }}">
@@ -39,7 +39,7 @@ $agent = New \Jenssegers\Agent\Agent();
             <div class="modal-content px-2 w-50 mr-0" style="min-height: 550px; height: 100vh;">
         @endif
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+<span class="cust-title">{{ $customer->title }}</span></h4>
+                <h4 class="modal-title w-100 sf-light overflow-hidden" id="myModalLabel">+ клиент</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>

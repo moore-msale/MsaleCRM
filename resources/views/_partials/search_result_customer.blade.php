@@ -25,8 +25,12 @@
                         @if($value->task->user_id==auth()->id() or auth()->user()->role=='admin')
                         {{--@dd($value->task)--}}
                         @if(isset($value->task))
-                        <div class="nav-link products px-2 rows-hover" data-toggle="modal" data-target="#EditCustomerAdmin-{{$value->task->id}}">
-                            <div class="d-flex align-items-center justify-content-between border-bottom pb-2" style="cursor: pointer;">
+                            @if(auth()->user()->role=='admin')
+                                <div class="nav-link products px-2 rows-hover" data-toggle="modal" data-target="#EditCustomerAdmin-{{$value->task->id}}">
+                            @else
+                                 <div class="nav-link products px-2 rows-hover" data-toggle="modal" data-target="#EditCustomer-{{$value->task->id}}">
+                            @endif
+                                <div class="d-flex align-items-center justify-content-between border-bottom pb-2" style="cursor: pointer;">
                                 <div  class="col-4">
                                     {{ $value->task->title }}
                                 </div>

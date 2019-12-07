@@ -196,7 +196,7 @@ class MeetingController extends Controller
         $request->merge(['date' => $deadline_date]);
         $meeting = Meeting::find($task->taskable_id);
         $meeting1 = deep_copy($meeting);
-        $meeting->customer_id= $request->customer;
+        $meeting->customer_id= $request->title;
         $task->deadline_date = $request->date;
         $task->status_id = $request->status;
         $task->description = $request->desc;
@@ -205,6 +205,7 @@ class MeetingController extends Controller
                 'status'=>'error'
             ]);
         }
+        $task->active = 1;
         $task->save();
         $meeting->save();
         if(Carbon::now() < $endday) {
@@ -242,7 +243,8 @@ class MeetingController extends Controller
             return response()->json([
                 'status' => "success",
                 'meet' => $task,
-                'customer'=>\App\Customer::where('id',$meeting->customer_id)->get(),
+                'customer'=>\App\Customer::where('id',$meeting->customer_id)->first(),
+                'deadline'=>\Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i'),
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),
                 'date2'=>Carbon::parse($deadline_date)->format('H:i'),
                 'status_id'=>$task->status,

@@ -148,6 +148,9 @@
                             $('#meet-' + id).find('.meet-manager').html(data.user);
                             $('#meet-' + id).find('.meet-date1').html(data.date1);
                             $('#meet-' + id).find('.meet-date2').html(data.date2);
+                            if(data.customer){
+                                $('#meet-' + id).find('.meet-name').html(data.customer.name);
+                            }
                             if (data.meet.description.length > 25)
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
                             else
@@ -1608,7 +1611,7 @@
                 let id = $('#customer_name');
                 let desc = $('#customer_desc');
                 let date = $('#customer_date');
-                if(desc.val() == '')
+                if(desc.val().length < 20)
                 {
                     Swal.fire({
                         position: 'top-end',

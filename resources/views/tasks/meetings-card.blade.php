@@ -3,7 +3,7 @@
     {{--style="top:0%; left:0%; width:10px; height:10px; border-top-left-radius: 4px; border-bottom-right-radius: 4px;"></div>--}}
     <div class="pb-1 position-relative" style="border-bottom:1px solid rgba(0,0,0,0.2);">
         <div class="font-weight-bold meet-company sf-medium"> {{ $task->taskable->customer['company'] }} </div>
-        <p class="sf-light mb-0 meet-desc">{{$task->description}}</p>
+        <p class="sf-light mb-0 meet-desc">{{str_limit($task->description, $limit = 25, $end = '...')}}</p>
         <div class="btn-group dropleft col-1 position-absolute" style="top:0%; right:-4%;">
             <i class="fas fa-ellipsis-v" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
             <div class="dropdown-menu pl-2 shadow" style="border-radius: 0px; border:none;">

@@ -1,6 +1,5 @@
 <?php
 $meeting = App\Meeting::where('id',$task->taskable_id)->first();
-
 ?>
 @push('styles')
     <style>
@@ -30,7 +29,7 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                     @csrf
                     <select class="browser-default custom-select border-0 mt-2" name="name" id="meet_name-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         @foreach(\App\Customer::all() as $customer)
-                            @if($meeting->customer_id == $customer->id)
+                            @if($meeting['customer_id'] == $customer->id)
                                 <option class="customerid-{{$customer->id }}" value="{{ $customer->id }}" selected>{{ $customer->name }}</option>
                                 @continue
                             @endif
@@ -39,15 +38,26 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                             @endif
                         @endforeach
                     </select>
-                    <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
-                    <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        @foreach(\App\Status::where('type','meet')->get() as $stat)
-                            @if($task->status_id == $stat->id)
-                                <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
-                                @continue
-                            @endif
-                            <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
-                        @endforeach
+                    @if(!$task->active)
+                        <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Дата просрочена выберите новую">
+                    @else
+                        <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
+                    @endif
+                        <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                        @if(!$task->active)
+                                <option value="0">Просроченно</option>
+                        @else
+                            @foreach(\App\Status::where('type','meet')->get() as $stat)
+                                @if($task->status_id==0)
+                                        <option value="0" selected>в ожидании</option>
+                                @endif
+                                @if($task->status_id == $stat->id)
+                                    <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
+                                    @continue
+                                @endif
+                                <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
                     <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>
