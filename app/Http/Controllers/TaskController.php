@@ -84,6 +84,7 @@ class TaskController extends Controller
         $task = Task::create($request->all());
         $task->status_id = 0;
         $task->user_id = Auth::id();
+        $task->active = 1;
         $task->save();
 
         if(Carbon::now() < $endday) {

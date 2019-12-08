@@ -78,6 +78,23 @@
         {{--});--}}
     {{--</script>--}}
     <script>
+        $(document).on('click','.home-search',function (e) {
+            let btn = $(e.currentTarget);
+            let id = btn.data('id');
+            $.ajax({
+                url: '/findCustomer/'+id,
+                method:'GET',
+                success: (data) => {
+                    $('body').append(data.view);
+                    $(''+data.modal+id).modal('show');
+                },
+                error: () => {
+                    console.log('error');
+                }
+            });
+        })
+    </script>
+    <script>
         $(document).on('click','.deleteCallDesktop',e => {
             e.preventDefault();
             let btn = $(e.currentTarget);
@@ -157,8 +174,12 @@
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description);
                             if(data.status_id){
                                 $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                                $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);
+                                $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                             }else{
                                 $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
+                                $('#meet-' + id).find('.status-meet').css("background-color",'#C4C4C4');
+                                $('#meet-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');
                             }
                         } else{
                             Swal.fire({
@@ -507,8 +528,16 @@
             let manager = $('#client_manager-' + id);
             let status = $('#client_status-' + id);
             let desc = $('#client_desc-' + id);
-
-            if(desc.val().length < 20)
+            if(!date.val()){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Дата просрочена выберите новую!',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else if(desc.val().length < 20)
             {
                 Swal.fire({
                     position: 'top-end',

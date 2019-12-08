@@ -47,10 +47,11 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                         @if(!$task->active)
                                 <option value="0">Просроченно</option>
                         @else
+                            @if($task->status_id==0)
+                                <option value="0" selected>в ожидании</option>
+                            @endif
                             @foreach(\App\Status::where('type','meet')->get() as $stat)
-                                @if($task->status_id==0)
-                                        <option value="0" selected>в ожидании</option>
-                                @endif
+
                                 @if($task->status_id == $stat->id)
                                     <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
                                     @continue

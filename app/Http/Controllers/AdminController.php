@@ -30,6 +30,7 @@ class AdminController extends Controller
         $task->deadline_date = $request->deadline_date;
         $task->user_id = $request->user_id;
         $task->status_id = 0;
+        $task->active = 1;
         $task->save();
         if ($request->ajax()){
             return response()->json([
@@ -131,6 +132,7 @@ class AdminController extends Controller
         $task->user_id = auth()->id();
         $task->status_id = 0;
         $task->taskable_id = $request->manager_id;
+        $task->active = 1;
         $task->save();
         $meeting->task()->save($task);
 
@@ -252,6 +254,7 @@ class AdminController extends Controller
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
+        $task->active = 1;
         $task->save();
         $customer->task()->save($task);
 

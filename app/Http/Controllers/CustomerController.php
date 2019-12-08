@@ -123,6 +123,7 @@ class   CustomerController extends Controller
                 $task->status_id = 1;
             }
         }
+        $task->active = 1;
         $task->save();
         $customer->task()->save($task);
 
@@ -549,6 +550,7 @@ class   CustomerController extends Controller
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
         $task->status_id = 1;
+        $task->active = 1;
         $task->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();

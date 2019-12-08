@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     @foreach($items as $value)
-                        @if($value->task->user_id==auth()->id() or auth()->user()->role=='admin')
+                        @if($value->task['user_id']==auth()->id() or auth()->user()->role=='admin')
                         {{--@dd($value->task)--}}
                         @if(isset($value->task))
                             @if(auth()->user()->role=='admin')

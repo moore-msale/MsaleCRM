@@ -570,6 +570,7 @@ $agent = New \Jenssegers\Agent\Agent();
                     $('#meet_date').val('');
                     $('#meet_desc').val('');
                     $('#meet_customer').val('');
+                    $('#meet_name').val('');
                     $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
                     btn.show();
                 },
