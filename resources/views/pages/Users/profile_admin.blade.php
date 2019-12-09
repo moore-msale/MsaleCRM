@@ -172,10 +172,10 @@
                                 </label>
                                 <div class="user-passport" style="width: 150px;">
                                     @if($manager->scan_pas)
-                                    <button type="button" class="btn btn-primary btn-sm px-1 ml-0 scan_pas" style="font-size:9px;" data-toggle="modal" data-target="#scan_pas_fd" data-parent="{{$manager->scan_pas}}">Фото паспорта(передняя часть)</button>
+                                    <button type="button" class="btn btn-primary btn-sm px-1 mx-0 scan_pas" style="font-size:9px;" data-toggle="modal" data-target="#scan_pas_fd" data-parent="{{$manager->scan_pas}}">Фото паспорта (передняя часть)</button>
                                     @endif
                                     @if($manager->scan2_pas)
-                                    <button type="button" class="btn btn-primary btn-sm px-1 ml-0 scan_pas " style="font-size:9px;" data-toggle="modal" data-target="#scan_pas_fd" data-parent="{{$manager->scan2_pas}}">Фото паспорта(задняя часть)</button>
+                                    <button type="button" class="btn btn-primary btn-sm px-1 mx-0 scan_pas " style="font-size:9px;" data-toggle="modal" data-target="#scan_pas_fd" data-parent="{{$manager->scan2_pas}}">Фото паспорта (задняя часть)</button>
                                     @endif
                                 </div>
                             </div>
