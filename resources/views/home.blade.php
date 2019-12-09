@@ -129,6 +129,7 @@
             let desc = $('#meet_desc-' + id);
             let date = $('#meet_date-' + id);
             let status = $('#meet_status-' + id);
+
             if(desc.val().length < 20)
             {
                 Swal.fire({

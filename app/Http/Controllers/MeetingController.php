@@ -244,6 +244,7 @@ class MeetingController extends Controller
             return response()->json([
                 'status' => "success",
                 'meet' => $task,
+                'meeting_id'=>$meeting,
                 'customer'=>\App\Customer::where('id',$meeting->customer_id)->first(),
                 'deadline'=>\Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i'),
                 'date1'=>Carbon::parse($deadline_date)->format('d M'),

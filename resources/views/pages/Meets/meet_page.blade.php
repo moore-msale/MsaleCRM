@@ -300,7 +300,7 @@
             let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
-            let title = $('#meet_name-' + id);
+            let customer = $('#meet_name-' + id);
             let desc = $('#meet_desc-' + id);
             let date = $('#meet_date-' + id);
             let status = $('#meet_status-' + id);
@@ -329,7 +329,7 @@
                     method: 'PUT',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        "title": title.val(),
+                        "customer": customer.val(),
                         "desc": desc.val(),
                         "date": date.val(),
                         "status": status.val(),
