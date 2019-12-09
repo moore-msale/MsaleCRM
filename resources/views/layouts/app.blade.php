@@ -95,12 +95,12 @@ $agent = New \Jenssegers\Agent\Agent();
 @endif
 
     <script src="{{ asset('js/app.js') }}"></script>
-{{--<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>--}}
-<script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
     {{--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>--}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 {{--<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>--}}
 <script>
     function preloader() {
