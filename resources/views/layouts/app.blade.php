@@ -95,7 +95,7 @@ $agent = New \Jenssegers\Agent\Agent();
 @endif
 
     <script src="{{ asset('js/app.js') }}"></script>
-<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+{{--<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>--}}
     <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
     {{--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>--}}
