@@ -73,9 +73,9 @@
                     <input type="text" name="deadline_date" id="meet_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
                     <select class="browser-default custom-select border-0 mt-2 sf-light" id="meet_name" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{null}}">Выберите клиента...</option>
-                        @foreach(\App\Customer::all() as $customer)
-                            @if(empty(\App\Meeting::where('customer_id',$customer->id)->first()))
-                                <option class="customerid-{{$customer->id }}" value="{{ $customer->id }}">{{ $customer->name }} - {{$customer->company}}</option>
+                        @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $tasks)
+                            @if(empty(\App\Meeting::where('customer_id',$tasks->taskable_id)->first()))
+                                <option class="customerid-{{$tasks->taskable['id']}}" value="{{ $tasks->taskable['id'] }}">{{ $tasks->taskable['name'] }} - {{$tasks->taskable['company']}}</option>
                             @endif
                         @endforeach
                     </select>
