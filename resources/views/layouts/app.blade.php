@@ -574,7 +574,7 @@ $agent = New \Jenssegers\Agent\Agent();
                     btn.show();
                     console.log(data);
                     $('#meets-content').after(data.view2).show('slide', {direction: 'left'}, 400);
-                    $('.customerid-'+data.id).remove();
+                    $('.customerid-'+data.data.taskable.customer_id).remove();
                     $('#CreateMeet').modal('hide');
                     $('#meet_date').val('');
                     $('#meet_desc').val('');
