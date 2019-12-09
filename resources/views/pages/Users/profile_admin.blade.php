@@ -263,7 +263,7 @@
                   </thead>
                   <tbody>
                     @foreach(\App\User::where('role', '!=', 'admin')->where('company','=',$user->company)->where('status', '!=', 'active')->get() as $manager)
-                    <tr>
+                    <tr class="rows-hover">
                         <th scope="row">{{$manager->id}}</th>
                         <td class="overflow-hidden">
                             @if(isset($manager->name))
