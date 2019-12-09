@@ -1,3 +1,21 @@
+<?php
+$calls_all = 0;
+$meets_all = 0;
+$calls_score = 0;
+$meets_score = 0;
+
+foreach (\App\User::where('role', '!=', 'admin')->get() as $user)
+{
+    $planer = \App\Plan::where('user_id',$user->id)->where('created_at','>=',\Carbon\Carbon::now()->setTime('00','00','00'))->first();
+    if($planer){
+        $calls_all = $calls_all + $planer->calls_goal;
+        $meets_all = $meets_all + $planer->meets_goal;
+        $calls_score = $calls_score + $planer->calls_score;
+        $meets_score = $meets_score + $planer->meets_score;
+    }
+}
+?>
+
 @extends('layouts.app')
 @push('styles')
     <style>
@@ -109,12 +127,12 @@
                 <div class="col-9 mt-2">
                     <h6 class="statistic-links text-uppercase display-6">Общий план</h6>
                     <p class="purple-text mb-0">Звонки</p>
-                    <p class="display-5"><span class="purple-text count">120</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="statistic-links count">117</span> </p>
+                    <p class="display-5"><span class="purple-text count">{{$calls_all }}</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="statistic-links count">{{$calls_score}}</span> </p>
                 </div>
                 <div class="col-6 pl-0 text-center h-100 d-flex align-items-center justify-content-center" style="background: rgba(196, 195, 195, 0.15);">
                     <div class="mt-4">
                         <p class="purple-text black-and-bold mb-0">Встречи</p>
-                        <p class="display-5"><span class="statistic-links count">6</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="count purple-text">1</span></p>
+                        <p class="display-5"><span class="statistic-links count">{{ $meets_all }}</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="count purple-text">{{$meets_score}}</span></p>
                     </div>
                 </div>
             </div>
@@ -126,7 +144,7 @@
             <div class="col-4 shadow mr-3">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">Звонков успешных \ неуспешныx</h6>
                 <p class="display-3 mb-0"><span class="count purple-text">112</span><span class="sf-light font-weight-light mx-3 statistic-links">/</span><span class="statistic-links count">592</span></p>
-                <a class="statistic-links underline" href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/calls_admin' : '/calls' }}">перейти в звонки</a>
+                <a class="statistic-links underline" href="{{ \Illuminate\Support\Facades\Auth::user()->role == 'admin' ? '/home' : '/calls' }}">перейти в звонки</a>
             </div>
             <div class="col-4 shadow">
                 <h6 class="statistic-links text-uppercase mt-2 display-6">+ клиентов / потенциальных</h6>

@@ -197,7 +197,7 @@ class MeetingController extends Controller
         $request->merge(['date' => $deadline_date]);
         $meeting = Meeting::find($task->taskable_id);
         $meeting1 = deep_copy($meeting);
-        $meeting->customer_id = $request->title;
+        $meeting->customer_id = $request->customer;
         $task->deadline_date = $request->date;
         $task->status_id = $request->status;
         $task->description = $request->desc;

@@ -202,9 +202,9 @@ class AdminController extends Controller
     {
         $task = Task::find($request->id);
         $meeting = Meeting::find($task->taskable_id);
+        $meeting1 = deep_copy($meeting);
         $task2 = deep_copy($task);
         $meeting->customer_id = $request->title;
-        $meeting1 = deep_copy($meeting);
         $task->description = $request->desc;
         $task->user_id = $request->manage;
         $task->status_id = $request->status;
