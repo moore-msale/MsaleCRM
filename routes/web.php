@@ -61,6 +61,10 @@ Route::group(['middleware' => ['auth']], function () {
         return view('pages.notCall', ['calls' => \App\Call::where('user_id', auth()->id())->where('active',2)->get()->reverse()]);
     });
     Route::get('/tasks_admin', function () {
+        $agent = New \Jenssegers\Agent\Agent();
+        if($agent->isPhone()){
+            return view('pages.Tasks.task_phone_page', ['tasks' => \App\Task::where('taskable_type', null)->get()->reverse()]);
+        }
         return view('pages.Tasks.task_page_admin', ['tasks' => \App\Task::where('taskable_type', null)->get()->reverse()]);
     });
     Route::get('/tasks', function () {
@@ -71,6 +75,10 @@ Route::group(['middleware' => ['auth']], function () {
         return view('pages.Tasks.task_page', ['tasks' => \App\Task::where('taskable_type', null)->where('user_id',auth()->id())->get()->reverse()]);
     });
     Route::get('/meets_admin', function () {
+        $agent = New \Jenssegers\Agent\Agent();
+        if($agent->isPhone()){
+            return view('pages.Meets.meet_phone_page', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->get()->reverse()]);
+        }
         return view('pages.Meets.meet_page_admin', ['tasks' => \App\Task::where('taskable_type','App\Meeting')->get()->reverse() ]);
     });
     Route::get('/meets', function () {

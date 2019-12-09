@@ -259,88 +259,87 @@
             })
         })
     </script>
-    <script>
-        $(document).on("click", '.editMeetAdmin',function( event ) {
-            event.preventDefault();
-            let btn = $(event.currentTarget);
-            let id = btn.data('id');
-            let user = btn.data('parent');
-            let title = $('#meet_name_admin-' + id);
-            let desc = $('#meet_desc_admin-' + id);
-            let date = $('#meet_date_admin-' + id);
-            let manage = $('#meet_manager_admin-' + id);
-            let status = $('#meet_status_admin-' + id);
-            if(desc.val() == '')
-            {
-                swal("Заполните описание!","Поле описание стало обязательным","error");
-            }
-            else {
-                $.ajax({
-                    url: 'EditMeetAdmin',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "customer": title.val(),
-                        "desc": desc.val(),
-                        "date": date.val(),
-                        "manage": manage.val(),
-                        "status": status.val(),
-                        "id": id,
-                    },
-                    success: data => {
-                        if(data.status == "success"){
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Данные изменены!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                            console.log(data);
-                            $('#meet-' + id).find('.meet-name').html(data.meet.title);
-                            $('#meet-' + id).find('.meet-manager').html(data.user);
-                            $('#meet-' + id).find('.meet-desc').html(data.meet.description);
-                            $('#meet-' + id).find('.meet-date1').html(data.date1);
-                            $('#meet-' + id).find('.meet-date2').html(data.date2);
-
-                            if(data.meet.active==2){
-                                $('#meet-' + id).find('.meet-status button').html('Завершено').css("background-color",'#26DB38');
-                                $('#meet-' + id).find('.status-meet').css("background-color",'#26DB38');
-                                $('#meet-' + id).find('.change-color').attr('fill','#26DB38').css("color",'#26DB38');
-                            }else if(data.status_id && data.meet.active == 1){
-                                $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
-                                $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);
-                                $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
-                            }else{
-                                $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');
-                                $('#meet-' + id).find('.status-meet').css("background-color",'#C4C4C4');
-                                $('#meet-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');
-                            }
-                        } else{
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'info',
-                                title: 'Изменение не найдены!',
-                                showConfirmButton: false,
-                                timer: 700
-                            });
-                            console.log(data);
-                        }
-                    },
-                    error: () => {
-                        console.log(0);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: 'Что-то пошло не так!',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                    }
-                })
-            }
-        })
-    </script>
+{{--    <script>--}}
+{{--        $(document).on("click", '.editMeetAdmin',function( event ) {--}}
+{{--            event.preventDefault();--}}
+{{--            let btn = $(event.currentTarget);--}}
+{{--            let id = btn.data('id');--}}
+{{--            let user = btn.data('parent');--}}
+{{--            let title = $('#meet_name_admin-' + id);--}}
+{{--            let desc = $('#meet_desc_admin-' + id);--}}
+{{--            let date = $('#meet_date_admin-' + id);--}}
+{{--            let manage = $('#meet_manager_admin-' + id);--}}
+{{--            let status = $('#meet_status_admin-' + id);--}}
+{{--            if(desc.val() == '')--}}
+{{--            {--}}
+{{--                swal("Заполните описание!","Поле описание стало обязательным","error");--}}
+{{--            }--}}
+{{--            else {--}}
+{{--                $.ajax({--}}
+{{--                    url: 'EditMeetAdmin',--}}
+{{--                    method: 'POST',--}}
+{{--                    data: {--}}
+{{--                        "_token": "{{ csrf_token() }}",--}}
+{{--                        "customer": title.val(),--}}
+{{--                        "desc": desc.val(),--}}
+{{--                        "date": date.val(),--}}
+{{--                        "manage": manage.val(),--}}
+{{--                        "status": status.val(),--}}
+{{--                        "id": id,--}}
+{{--                    },--}}
+{{--                    success: data => {--}}
+{{--                        if(data.status == "success"){--}}
+{{--                            Swal.fire({--}}
+{{--                                position: 'top-end',--}}
+{{--                                icon: 'success',--}}
+{{--                                title: 'Данные изменены!',--}}
+{{--                                showConfirmButton: false,--}}
+{{--                                timer: 700--}}
+{{--                            });--}}
+{{--                            console.log(data);--}}
+{{--                            $('#meet-' + id).find('.meet-name').html(data.meet.title);--}}
+{{--                            $('#meet-' + id).find('.meet-manager').html(data.user);--}}
+{{--                            $('#meet-' + id).find('.meet-desc').html(data.meet.description);--}}
+{{--                            $('#meet-' + id).find('.meet-date1').html(data.date1);--}}
+{{--                            $('#meet-' + id).find('.meet-date2').html(data.date2);--}}
+{{--                            if(data.meet.active == 2){--}}
+{{--                                $('#meet-' + id).find('.meet-status button').html('Завершено').css("background-color",'#26DB38');--}}
+{{--                                $('#meet-' + id).find('.status-meet').css("background-color",'#26DB38');--}}
+{{--                                $('#meet-' + id).find('.change-color').attr('fill','#26DB38').css("color",'#26DB38');--}}
+{{--                            }else if(data.status_id && data.meet.active == 1){--}}
+{{--                                $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);--}}
+{{--                                $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);--}}
+{{--                                $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);--}}
+{{--                            }else{--}}
+{{--                                $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');--}}
+{{--                                $('#meet-' + id).find('.status-meet').css("background-color",'#C4C4C4');--}}
+{{--                                $('#meet-' + id).find('.change-color').attr('fill','#C4C4C4').css("color",'#C4C4C4');--}}
+{{--                            }--}}
+{{--                        } else{--}}
+{{--                            Swal.fire({--}}
+{{--                                position: 'top-end',--}}
+{{--                                icon: 'info',--}}
+{{--                                title: 'Изменение не найдены!',--}}
+{{--                                showConfirmButton: false,--}}
+{{--                                timer: 700--}}
+{{--                            });--}}
+{{--                            console.log(data);--}}
+{{--                        }--}}
+{{--                    },--}}
+{{--                    error: () => {--}}
+{{--                        console.log(0);--}}
+{{--                        Swal.fire({--}}
+{{--                            position: 'top-end',--}}
+{{--                            icon: 'error',--}}
+{{--                            title: 'Что-то пошло не так!',--}}
+{{--                            showConfirmButton: false,--}}
+{{--                            timer: 700--}}
+{{--                        });--}}
+{{--                    }--}}
+{{--                })--}}
+{{--            }--}}
+{{--        })--}}
+{{--    </script>--}}
     <script>
         $(document).on("click", '.doneTaskAdmin',function( event ) {
             event.preventDefault();
@@ -1380,7 +1379,11 @@
                                 $('#meet-' + id).find('.meet-date2').html(data.date2);
                                 $('#EditMeet-' + id).find('.modal-title').html(data.meet.title);
 
-                                if(data.status_id){
+                                if(data.meet.active == 2){
+                                    $('#meet-' + id).find('.meet-status button').html('Завершено').css("background-color",'#26DB38');
+                                    $('#meet-' + id).find('.status-meet').css("background-color",'#26DB38');
+                                    $('#meet-' + id).find('.change-color').attr('fill','#26DB38').css("color",'#26DB38');
+                                }else if(data.status_id && data.meet.active == 1){
                                     $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
                                     $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);
                                     $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
