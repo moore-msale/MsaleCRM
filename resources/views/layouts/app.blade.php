@@ -108,6 +108,13 @@ $agent = New \Jenssegers\Agent\Agent();
 </script>
 @push('scripts')
     <script>
+        $(document).ready(function () {
+            if("{{auth()->user()->agreement}}" == 0 && window.location.pathname != '/profile' ){
+                window.location.replace('/profile');
+            };
+        });
+    </script>
+    <script>
         $('.menu-burger').click( function () {
             if($('.menu-burger').hasClass('active'))
             {

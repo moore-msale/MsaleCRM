@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/blockuser/{id}','UserController@blockUser')->name('blockuser');
     Route::get('/activateuser/{id}','UserController@activateUser')->name('activateuser');
     Route::get('/deleteuser/{id}','UserController@deleteUser')->name('deleteuser');
-
+    Route::post('/agreement/{id}','UserController@agreement')->name('agreement');
 
     //admin routes
     Route::post('/CreateTaskAdmin', 'AdminController@create_task')->name('CreateTaskAdmin');

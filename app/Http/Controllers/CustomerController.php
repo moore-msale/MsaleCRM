@@ -348,6 +348,8 @@ class   CustomerController extends Controller
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
         $task->status_id =  $request->status;
+        if($request->status==3)
+            $task->active = 2;
         if (isset($request->desc))
         {
             $task->description = $request->desc;

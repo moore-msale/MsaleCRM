@@ -167,6 +167,11 @@ class UserController extends Controller
         }
         return redirect()->back();
     }
+    public function agreement(Request $request){
+        $user = User::find($request->id);
+        $user->agreement = $request->checked;
+        $user->save();
+    }
     public function blockUser($id){
         $user = User::find($id);
         $user->status = 'blocked';

@@ -298,6 +298,7 @@ class TaskController extends Controller
         $task = Task::find($request->id);
         $task2=deep_copy($task);
         $task->status_id = 1;
+        $task->active = 2;
         $task->save();
         if($task==$task2){
             return response()->json([
