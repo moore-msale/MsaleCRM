@@ -125,7 +125,11 @@
                         {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                     </div>
                     <div class="col-2 meet-status">
-                        @if(!$task->active)
+                        @if($task->active==2)
+                            <button style="width:100%; height:100%; color:white; background: #26DB38; border-radius: 20px; border:0px;" disabled>
+                                Завершено
+                            </button>
+                        @elseif(!$task->active)
                             <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                                 Просроченно
                             </button>
@@ -353,7 +357,9 @@
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
                             else
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description);
-                            if(data.status_id){
+                            if(data.meet.active==2){
+                                $('#meet-' + id).find('.meet-status button').html('Завершено').css("background-color",'#26DB38');
+                            }else if(data.status_id && data.meet.active == 1){
                                 $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
                             }else{
                                 $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');

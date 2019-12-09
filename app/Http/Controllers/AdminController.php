@@ -89,7 +89,14 @@ class AdminController extends Controller
         $task->title = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
-        $task->status_id = $request->status;
+
+        if($request->status=='done'){
+            $task->active = 2;
+        }else{
+            $task->status_id = $request->status;
+            $task->active = 1;
+        }
+
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
         if($task == $task2){
@@ -99,7 +106,6 @@ class AdminController extends Controller
                 'task2'=>$task2,
             ]);
         }
-        $task->active=1;
         $task->save();
         if ($request->ajax()){
             return response()->json([
@@ -207,7 +213,12 @@ class AdminController extends Controller
         $meeting->customer_id = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
-        $task->status_id = $request->status;
+        if($request->status=='done'){
+            $task->active = 2;
+        }else{
+            $task->status_id = $request->status;
+            $task->active = 1;
+        }
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
         if($task == $task2 and $meeting==$meeting1){
@@ -215,7 +226,7 @@ class AdminController extends Controller
                 'status' => "error",
             ]);
         }
-        $task->active=1;
+
         $task->save();
         $date1 = Carbon::parse($task->deadline_date)->format('d M');
         $date2 = Carbon::parse($task->deadline_date)->format('H:i');
@@ -343,13 +354,17 @@ class AdminController extends Controller
         $task->deadline_date = $deadline_date;
         $task->description = $request->desc;
         $task->user_id = $request->manager;
-        $task->status_id = $request->status;
+        if($request->status=="done"){
+            $task->active = 2;
+        }else{
+            $task->status_id =  $request->status;
+            $task->active = 1;
+        }
         if ($customer == $customer2 and $task == $task2) {
             return response()->json([
                 'status' => "error",
             ]);
         }
-        $task->active=1;
         $customer->save();
         $task->save();
         if ($task->description != $task2->description or $task->status != $task2->status){

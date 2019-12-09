@@ -44,8 +44,10 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                         <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
                     @endif
                         <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        @if(!$task->active)
-                                <option value="0">Просроченно</option>
+                        @if($task->active==2)
+                             <option value="done">Завершено</option>
+                        @elseif(!$task->active)
+                             <option value="0">Просроченно</option>
                         @else
                             @if($task->status_id==0)
                                 <option value="0" selected>в ожидании</option>
@@ -58,6 +60,7 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                                 @endif
                                 <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
                             @endforeach
+                                <option value="done">Завершено</option>
                         @endif
                     </select>
                     <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>

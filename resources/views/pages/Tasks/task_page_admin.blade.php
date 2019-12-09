@@ -123,7 +123,11 @@
                     {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                 </div>
                 <div class="col-2 task-status">
-                    @if(!$task->active)
+                    @if($task->active==2)
+                        <button style="width:100%; height:100%; color:white; background: #26DB38; border-radius: 20px; border:0px;" disabled>
+                            Завершено
+                        </button>
+                    @elseif(!$task->active)
                         <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                             Просроченно
                         </button>
@@ -317,11 +321,14 @@
                             else
                                 $('#task-' + id).find('.task-desc').html(data.task.description);
 
-                            if(data.status_id){
+                            if(data.task.active==2){
+                                $('#task-' + id).find('.task-status button').html('Завершено').css("background-color",'#26DB38');
+                            }else if(data.status_id && data.task.active==1){
                                 $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color",data.status_id.color);
                             }else{
                                 $('#task-' + id).find('.task-status button').html('В работе').css("background-color",'#3B79D6');
                             }
+
                         }else{
                             Swal.fire({
                                 position: 'top-end',

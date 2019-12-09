@@ -123,7 +123,11 @@
                          {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                      </div>
                      <div class="col-2 meet-status-admin">
-                         @if(!$task->active)
+                         @if($task->active==2)
+                             <button style="width:100%; height:100%; color:white; background: #26DB38; border-radius: 20px; border:0px;" disabled>
+                                 Завершено
+                             </button>
+                         @elseif(!$task->active)
                              <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                                  Просроченно
                              </button>
@@ -272,7 +276,7 @@
                             "id": id,
                         },
                         success: data => {
-                            if(data.status == "success"){
+                            if(data.status == "success") {
                                 Swal.fire({
                                     position: 'top-end',
                                     icon: 'success',
@@ -281,15 +285,17 @@
                                     timer: 700
                                 });
                                 console.log(data);
-                                $('#EditMeetAdmin-'+id).modal('hide');
+                                $('#EditMeetAdmin-' + id).modal('hide');
                                 $('#meet-' + id).find('.meet-name-admin').html(data.meet.title);
                                 $('#meet-' + id).find('.meet-deadline-admin').html(data.deadline_date);
                                 $('#meet-' + id).find('.meet-manager-admin').html(data.user);
                                 if (data.meet.description.length > 25)
-                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description.substring(0,25) + '...');
+                                    $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description.substring(0, 25) + '...');
                                 else
                                     $('#meet-' + id).find('.meet-desc-admin').html(data.meet.description);
-                                if(data.status_id){
+                                if(data.meet.active==2){
+                                    $('#meet-' + id).find('.meet-status-admin button').html('Завершено').css("background-color",'#26DB38');
+                                }else if(data.status_id && data.meet.active == 1){
                                     $('#meet-' + id).find('.meet-status-admin button').html(data.status_id.name).css("background-color",data.status_id.color);
                                 }else{
                                     $('#meet-' + id).find('.meet-status-admin button').html('В ожидании').css("background-color",'#EBDC60');

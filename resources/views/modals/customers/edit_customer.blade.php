@@ -61,6 +61,8 @@ $agent = New \Jenssegers\Agent\Agent();
                     <select class="browser-default custom-select border-0 mt-2" id="client_status-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         @if(!$customer->active)
                             <option value="0">Просроченно</option>
+                        @elseif($customer->active==2)
+                            <option value="done">Завершен</option>
                         @else
                             @if($customer->status_id == 0)
                                 <option value="0">В работе</option>
@@ -75,6 +77,7 @@ $agent = New \Jenssegers\Agent\Agent();
                                 @endif
                                 <option value="{{ $stat->id }}">{{ $stat->name }}</option>
                             @endforeach
+                                <option value="done">Завершен</option>
                          @endif
                     </select>
                     <textarea id="client_desc-{{ $customer->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$customer->description}}</textarea>

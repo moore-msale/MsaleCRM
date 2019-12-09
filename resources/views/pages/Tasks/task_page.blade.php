@@ -127,7 +127,11 @@
                                     {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                                 </div>
                                 <div class="col-2 task-status">
-                                    @if(!$task->active)
+                                    @if($task->active==2)
+                                        <button style="width:100%; height:100%; color:white; background: #26DB38; border-radius: 20px; border:0px;" disabled>
+                                            Завершено
+                                        </button>
+                                    @elseif(!$task->active)
                                         <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                                             Просроченно
                                         </button>
@@ -144,11 +148,14 @@
                                 <div class="col-2 task-date">
                                     {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
                                 </div>
+
                                 <div class="btn-group dropleft col-1">
+                                    @if($task->active != 0)
                                     <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
                                     <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTask-{{$task->id}}" style="cursor:pointer;">изменить</p>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             @endforeach
@@ -229,7 +236,7 @@
                         $('#EditTask-' + id).modal('hide');
                         $('#task-' + id).find('.status-task').css("background-color", "#26DB38");
                         $('#task-' + id).find('.change-color').attr('fill',"rgb(38, 219, 56)").css("color","#26DB38");
-                        $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color","#26DB38");
+                        $('#task-' + id).find('.task-status button').html('Завершено').css("background-color","#26DB38");
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',

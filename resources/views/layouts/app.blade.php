@@ -107,6 +107,7 @@ $agent = New \Jenssegers\Agent\Agent();
     };
 </script>
 @push('scripts')
+    @if(!$agent->isPhone())
     <script>
         $(document).ready(function () {
             if("{{auth()->user()->agreement}}" == 0 && window.location.pathname != '/profile' ){
@@ -114,6 +115,7 @@ $agent = New \Jenssegers\Agent\Agent();
             };
         });
     </script>
+    @endif
     <script>
         $('.menu-burger').click( function () {
             if($('.menu-burger').hasClass('active'))

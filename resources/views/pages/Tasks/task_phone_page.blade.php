@@ -278,7 +278,10 @@
                             else
                                 $('#task-' + id).find('.task-desc').html(data.task.description);
 
-                            if(data.status_id){
+                            if(data.task.active==2){
+                                $('#task-' + id).find('.status-task').css("background-color",'#6FC268');
+                                $('#task-' + id).find('.change-color').attr('fill','#6FC268').css("color","#6FC268");
+                            }else if(data.status_id && data.task.active==1){
                                 $('#task-' + id).find('.status-task').css("background-color",data.status_id.color);
                                 $('#task-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                             }else{

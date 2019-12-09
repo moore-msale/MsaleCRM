@@ -55,14 +55,20 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                         @endforeach
                     </select>
                     <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        <option value="0">В ожидании</option>
-                        @foreach(\App\Status::where('type','meet')->get() as $stat)
-                            @if($task->status_id == $stat->id)
-                                <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
-                                @continue
-                            @endif
-                                <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
-                        @endforeach
+                        @if($task->active==2)
+                            <option value="done">Завершен</option>
+                        @else
+                            <option value="0">В ожидании</option>
+                            @foreach(\App\Status::where('type','meet')->get() as $stat)
+                                @if($task->status_id == $stat->id)
+                                    <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
+                                    @continue
+                                @endif
+                                    <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
+                            @endforeach
+                            <option value="done">Завершен</option>
+                         @endif
+
                     </select>
                     <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>

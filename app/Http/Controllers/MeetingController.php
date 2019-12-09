@@ -199,14 +199,18 @@ class MeetingController extends Controller
         $meeting1 = deep_copy($meeting);
         $meeting->customer_id = $request->customer;
         $task->deadline_date = $request->date;
-        $task->status_id = $request->status;
         $task->description = $request->desc;
+        if($request->status=='done'){
+            $task->active = 2;
+        }else{
+            $task->status_id = $request->status;
+            $task->active = 1;
+        }
         if($task == $task2 and $meeting==$meeting1){
             return response()->json([
                 'status'=>'error'
             ]);
         }
-        $task->active = 1;
         $task->save();
         $meeting->save();
         if(Carbon::now() < $endday) {
