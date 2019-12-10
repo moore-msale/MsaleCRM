@@ -131,8 +131,14 @@
                             $('#customer-' + id).find('.cust-desc').html(data.task.description.substring(0,25) + '...');
                         else
                             $('#customer-' + id).find('.cust-desc').html(data.task.description);
-                        if(data.status_id){
+
+                        if(data.task.active==2){
+                            $('#customer-' + id).find('.status-customer').css("background-color","#26DB38");
+                            $('#customer-' + id).find('.change-color').attr('fill','#26DB38').css("color","#26DB38");
+                        }else if(data.status_id && data.task.active == 1){
                             $('#customer-' + id).find('.cust-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                            $('#customer-' + id).find('.status-customer').css("background-color","#26DB38");
+                            $('#customer-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                         }else{
                             $('#customer-' + id).find('.cust-status button').html('В работе').css("background-color",'#3B79D6');
                         }
@@ -260,10 +266,19 @@
                             $('#customer-' + id).find('.cust-desc').html(data.task.description.substring(0,25) + '...');
                         else
                             $('#customer-' + id).find('.cust-desc').html(data.task.description);
-                        if(data.status_id){
+
+
+                        if(data.task.active==2){
+                            $('#customer-' + id).find('.status-customer').css("background-color","#26DB38");
+                            $('#customer-' + id).find('.change-color').attr('fill','#26DB38').css("color","#26DB38");
+                        }else if(data.status_id && data.task.active == 1){
                             $('#customer-' + id).find('.cust-status button').html(data.status_id.name).css("background-color",data.status_id.color);
+                            $('#customer-' + id).find('.status-customer').css("background-color",data.status_id.color);
+                            $('#customer-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                         }else{
                             $('#customer-' + id).find('.cust-status button').html('В работе').css("background-color",'#3B79D6');
+                            $('#customer-' + id).find('.status-customer').css("background-color","#3B79D6");
+                            $('#customer-' + id).find('.change-color').attr('fill','#3B79D6').css("color","#3B79D6");
                         }
                         console.log(data);
                     }else{

@@ -127,7 +127,11 @@
                                     {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                                 </div>
                                 <div class="col-2 task-status">
-                                    @if(!$task->active)
+                                    @if($task->active==2)
+                                        <button style="width:100%; height:100%; color:white; background: #26DB38; border-radius: 20px; border:0px;" disabled>
+                                            Завершено
+                                        </button>
+                                    @elseif(!$task->active)
                                         <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                                             Просроченно
                                         </button>
@@ -144,11 +148,14 @@
                                 <div class="col-2 task-date">
                                     {{ \Carbon\Carbon::parse($task->created_at)->format('M d - H:i') }}
                                 </div>
+
                                 <div class="btn-group dropleft col-1">
+                                    @if($task->active != 0)
                                     <i class="fas fa-ellipsis-v w-100" data-toggle="dropdown" style="color:#C4C4C4; cursor: pointer;"></i>
                                     <div class="dropdown-menu pl-2" style="border-radius: 0px; border:none;">
                                         <p class="mb-0 drop-point sf-medium pl-2" data-toggle="modal" data-target="#EditTask-{{$task->id}}" style="cursor:pointer;">изменить</p>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                             @endforeach
@@ -229,7 +236,7 @@
                         $('#EditTask-' + id).modal('hide');
                         $('#task-' + id).find('.status-task').css("background-color", "#26DB38");
                         $('#task-' + id).find('.change-color').attr('fill',"rgb(38, 219, 56)").css("color","#26DB38");
-                        $('#task-' + id).find('.task-status button').html(data.status_id.name).css("background-color","#26DB38");
+                        $('#task-' + id).find('.task-status button').html('Завершено').css("background-color","#26DB38");
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -254,64 +261,63 @@
             })
         })
     </script>
-    <script>
-        $('.createMeet').click(e => {
-            e.preventDefault();
-            let btn = $(e.currentTarget);
-            let id = $('#meet_name');
-            let desc = $('#meet_desc');
-            let date = $('#meet_date');
-            let user = $('#meet_user');
-            if(desc.val() == '')
-            {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'info',
-                    title: 'Заполните описание, описание должно быть больше 20 символов!',
-                    showConfirmButton: true,
-                    // timer: 700
-                });
-            }
-            else {
-                $.ajax({
-                    url: '{{ route('meeting.store') }}',
-                    method: 'POST',
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id.val(),
-                        "description": desc.val(),
-                        "deadline_date": date.val(),
-                        "user_id": user.val(),
-                    },
-                    success: data => {
-                        $('#CreateMeet').modal('hide');
-                        // console.log(data);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Встреча создана!',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                        let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);
-                        $('#meet_name').val('');
-                        $('#meet_desc').val('');
-                        $('#meet_date').val('');
-                    },
-                    error: () => {
-                        console.log(0);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: 'Произошла ошибка!',
-                            showConfirmButton: false,
-                            timer: 700
-                        });
-                    }
-                })
-            }
-        })
-    </script>
+{{--    <script>--}}
+{{--        $('.createMeet').click(e => {--}}
+{{--            e.preventDefault();--}}
+{{--            let btn = $(e.currentTarget);--}}
+{{--            let id = $('#meet_name');--}}
+{{--            let desc = $('#meet_desc');--}}
+{{--            let date = $('#meet_date');--}}
+{{--            let user = $('#meet_user');--}}
+{{--            if(desc.val().length < 20)--}}
+{{--            {--}}
+{{--                Swal.fire({--}}
+{{--                    position: 'top-end',--}}
+{{--                    icon: 'info',--}}
+{{--                    title: 'Заполните описание, описание должно быть больше 20 символов!',--}}
+{{--                    showConfirmButton: true,--}}
+{{--                    // timer: 700--}}
+{{--                });--}}
+{{--            }else {--}}
+{{--                $.ajax({--}}
+{{--                    url: '{{ route('meeting.store') }}',--}}
+{{--                    method: 'POST',--}}
+{{--                    data: {--}}
+{{--                        "_token": "{{ csrf_token() }}",--}}
+{{--                        "id": id.val(),--}}
+{{--                        "description": desc.val(),--}}
+{{--                        "deadline_date": date.val(),--}}
+{{--                        "user_id": user.val(),--}}
+{{--                    },--}}
+{{--                    success: data => {--}}
+{{--                        $('#CreateMeet').modal('hide');--}}
+{{--                        // console.log(data);--}}
+{{--                        Swal.fire({--}}
+{{--                            position: 'top-end',--}}
+{{--                            icon: 'success',--}}
+{{--                            title: 'Встреча создана!',--}}
+{{--                            showConfirmButton: false,--}}
+{{--                            timer: 700--}}
+{{--                        });--}}
+{{--                        let result = $('#meetings-scroll').append(data.view).show('slide', {direction: 'left'}, 400);--}}
+{{--                        $('#meet_name').val('');--}}
+{{--                        $('#meet_desc').val('');--}}
+{{--                        $('#meet_date').val('');--}}
+{{--                    },--}}
+{{--                    error: () => {--}}
+{{--                        console.log(0);--}}
+{{--                        Swal.fire({--}}
+{{--                            position: 'top-end',--}}
+{{--                            icon: 'error',--}}
+{{--                            title: 'Произошла ошибка!',--}}
+{{--                            showConfirmButton: false,--}}
+{{--                            timer: 700--}}
+{{--                        });--}}
+{{--                    }--}}
+{{--                })--}}
+{{--            }--}}
+{{--        })--}}
+{{--    </script>--}}
     <script>
         {{--$('.createTask').click(e => {--}}
         {{--    e.preventDefault();--}}

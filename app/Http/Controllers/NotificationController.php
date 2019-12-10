@@ -46,7 +46,7 @@ class NotificationController extends Controller
                 $task->save();
                 }
                 }
-            }elseif($task->deadline_date > $next){
+            }elseif($task->deadline_date > $next and $task->active != 2){
                  $task->active = 0;
             }
             if($task->taskable_type == null){

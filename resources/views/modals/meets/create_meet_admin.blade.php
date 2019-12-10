@@ -20,7 +20,7 @@
     <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="max-width:400px!important; width:100%!important;">
         <div class="modal-content px-2" style="min-height: 550px;height: 100vh;">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+Добавить встречу</h4>
+                <h4 class="modal-title w-100 sf-light" id="myModalLabel">+ добавить встречу</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>

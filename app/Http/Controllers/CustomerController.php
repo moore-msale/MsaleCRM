@@ -76,7 +76,7 @@ class   CustomerController extends Controller
         if(auth()->user()->role=='admin'){
             return view('pages.Customers.customer_page_admin', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
         }
-        return view('pages.Customers.customer_page', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
+        return view('pages.Customers.customer', ['customers' => $customers, 'manager' => $request->manager, 'status' => $request->status]);
     }
 
     /**
@@ -123,6 +123,7 @@ class   CustomerController extends Controller
                 $task->status_id = 1;
             }
         }
+        $task->active = 1;
         $task->save();
         $customer->task()->save($task);
 
@@ -346,7 +347,12 @@ class   CustomerController extends Controller
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
-        $task->status_id =  $request->status;
+        if($request->status=="done"){
+            $task->active = 2;
+        }else{
+            $task->status_id =  $request->status;
+            $task->active = 1;
+        }
         if (isset($request->desc))
         {
             $task->description = $request->desc;
@@ -548,6 +554,7 @@ class   CustomerController extends Controller
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
         $task->status_id = 1;
+        $task->active = 1;
         $task->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();

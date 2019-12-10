@@ -94,7 +94,7 @@
                      method: 'POST',
                      data: {
                          "_token": "{{ csrf_token() }}",
-                         "title": title.val(),
+                         "customer": title.val(),
                          "desc": desc.val(),
                          "date": date.val(),
                          "manage": manage.val(),
@@ -111,15 +111,17 @@
                                  timer: 700
                              });
                              console.log(data);
-                             $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                             $('#meet-' + id).find('.meet-name').html(data.customer.company);
                              $('#meet-' + id).find('.meet-company').html(data.customer.company);
                              $('#meet-' + id).find('.meet-manager').html(data.user);
                              $('#meet-' + id).find('.meet-desc').html(data.meet.description);
                              $('#meet-' + id).find('.meet-date1').html(data.date1);
                              $('#meet-' + id).find('.meet-date2').html(data.date2);
-                             $('#EditMeet-' + id).find('.modal-title').html(data.meet.title);
 
-                             if(data.status_id){
+                              if(data.meet.active==2){
+                                  $('#meet-' + id).find('.status-meet').css("background-color","#26DB38");
+                                  $('#meet-' + id).find('.change-color').attr('fill','#26DB38').css("color","#26DB38");
+                              }else if(data.status_id && data.meet.active == 1){
                                  $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);
                                  $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                              }else{
@@ -210,7 +212,7 @@
                  method: 'PUT',
                  data: {
                      "_token": "{{ csrf_token() }}",
-                     "title": title.val(),
+                     "customer": title.val(),
                      "desc": desc.val(),
                      "date": date.val(),
                      "status": status.val(),
@@ -226,15 +228,21 @@
                              timer: 700
                          });
                          console.log(data);
-                         $('#meet-' + id).find('.meet-name').html(data.meet.title);
+                         $('#meet-' + id).find('.meet-name').html(data.customer.name);
                          $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
                          $('#meet-' + id).find('.meet-manager').html(data.user);
-                         $('#EditMeet-' + id).find('.modal-title').html(data.meet.title);
+                         $('#meet-' + id).find('.meet-date1').html(data.date1);
+                         $('#meet-' + id).find('.meet-date2').html(data.date2);
+
                          if (data.meet.description.length > 25)
                              $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
                          else
                              $('#meet-' + id).find('.meet-desc').html(data.meet.description);
-                         if(data.status_id){
+
+                         if(data.meet.active==2){
+                             $('#meet-' + id).find('.status-meet').css("background-color","#26DB38");
+                             $('#meet-' + id).find('.change-color').attr('fill','#26DB38').css("color","#26DB38");
+                         }else if(data.status_id && data.meet.active == 1){
                              $('#meet-' + id).find('.status-meet').css("background-color",data.status_id.color);
                              $('#meet-' + id).find('.change-color').attr('fill',data.status_id.color).css("color",data.status_id.color);
                          }else{

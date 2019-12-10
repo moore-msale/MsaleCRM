@@ -30,6 +30,7 @@ class AdminController extends Controller
         $task->deadline_date = $request->deadline_date;
         $task->user_id = $request->user_id;
         $task->status_id = 0;
+        $task->active = 1;
         $task->save();
         if ($request->ajax()){
             return response()->json([
@@ -88,7 +89,14 @@ class AdminController extends Controller
         $task->title = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
-        $task->status_id = $request->status;
+
+        if($request->status=='done'){
+            $task->active = 2;
+        }else{
+            $task->status_id = $request->status;
+            $task->active = 1;
+        }
+
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
         if($task == $task2){
@@ -130,6 +138,7 @@ class AdminController extends Controller
         $task->user_id = auth()->id();
         $task->status_id = 0;
         $task->taskable_id = $request->manager_id;
+        $task->active = 1;
         $task->save();
         $meeting->task()->save($task);
 
@@ -198,18 +207,26 @@ class AdminController extends Controller
     public function edit_meet(Request $request)
     {
         $task = Task::find($request->id);
+        $meeting = Meeting::find($task->taskable_id);
+        $meeting1 = deep_copy($meeting);
         $task2 = deep_copy($task);
-        $task->title = $request->title;
+        $meeting->customer_id = $request->title;
         $task->description = $request->desc;
         $task->user_id = $request->manage;
-        $task->status_id = $request->status;
+        if($request->status=='done'){
+            $task->active = 2;
+        }else{
+            $task->status_id = $request->status;
+            $task->active = 1;
+        }
         $deadline_date = Carbon::parseFromLocale($request->date, 'ru')->format('Y-m-d H:i:s');
         $task->deadline_date = $deadline_date;
-        if($task == $task2){
+        if($task == $task2 and $meeting==$meeting1){
             return response()->json([
                 'status' => "error",
             ]);
         }
+
         $task->save();
         $date1 = Carbon::parse($task->deadline_date)->format('d M');
         $date2 = Carbon::parse($task->deadline_date)->format('H:i');
@@ -217,7 +234,7 @@ class AdminController extends Controller
             return response()->json([
                 'status' => "success",
                 'meet' => $task,
-                'user' => User::find($task->user_id)->name,
+                'user' => User::find($task->user_id)['name'],
                 'customer'=>$task->taskable->customer,
                 'deadline_date'=>Carbon::parse($deadline_date)->format('M d - H:i'),
                 'status_id'=>$task->status,
@@ -248,6 +265,7 @@ class AdminController extends Controller
         $request->request->remove('date');
         $request->merge(['date' => $deadline_date]);
         $task->deadline_date = $request->date;
+        $task->active = 1;
         $task->save();
         $customer->task()->save($task);
 
@@ -336,7 +354,12 @@ class AdminController extends Controller
         $task->deadline_date = $deadline_date;
         $task->description = $request->desc;
         $task->user_id = $request->manager;
-        $task->status_id = $request->status;
+        if($request->status=="done"){
+            $task->active = 2;
+        }else{
+            $task->status_id =  $request->status;
+            $task->active = 1;
+        }
         if ($customer == $customer2 and $task == $task2) {
             return response()->json([
                 'status' => "error",

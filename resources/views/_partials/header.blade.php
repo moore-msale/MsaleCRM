@@ -158,18 +158,27 @@
             {{--<li class="nav-item active bt-li">--}}
                 {{--<a class="nav-link sf-medium text-white" href="{{route('customer.index')}}">КЛИЕНТЫ<span class="sr-only">(current)</span></a>--}}
             {{--</li>--}}
-            <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
-                <a class="nav-link sf-medium text-dark" href="/home">Звонки</a>
-            </li>
-            <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
-                <a class="nav-link sf-medium text-dark" href="/meets">Встречи</a>
-            </li>
-            <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
-                <a class="nav-link sf-medium text-dark" href="/tasks">Задачи</a>
-            </li>
-            <li class="nav-item bt-li mx-3" style="font-weight: 600;font-size: 18px;">
-                <a class="nav-link sf-medium text-dark"  href="/customer">Клиенты</a>
-            </li>
+                <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                    <a class="nav-link sf-medium text-dark" href="/home">Звонки</a>
+                </li>
+            @if(auth()->user()->role!='admin')
+                <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                    <a class="nav-link sf-medium text-dark" href="/meets">Встречи</a>
+                </li>
+                <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                    <a class="nav-link sf-medium text-dark" href="/tasks">Задачи</a>
+                </li>
+            @else
+                <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                    <a class="nav-link sf-medium text-dark" href="/meets_admin">Встречи</a>
+                </li>
+                <li class="nav-item bt-li mx-3" style="border-bottom: 0.3px solid rgba(0, 0, 0, .2);font-weight: 600;font-size: 18px;">
+                    <a class="nav-link sf-medium text-dark" href="/tasks_admin">Задачи</a>
+                </li>
+            @endif
+                <li class="nav-item bt-li mx-3" style="font-weight: 600;font-size: 18px;">
+                    <a class="nav-link sf-medium text-dark"  href="/customer">Клиенты</a>
+                </li>
         </ul>
         <ul class="navbar-nav  d-none">
             <li class="nav-item dropdown ml-auto">

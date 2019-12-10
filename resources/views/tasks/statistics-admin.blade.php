@@ -103,23 +103,7 @@
     </div>
 </div>
 @push('scripts')
-<script>
-    $(document).on('click','.home-search',function (e) {
-        let btn = $(e.currentTarget);
-        let id = btn.data('id');
-        $.ajax({
-            url: '/findCustomer/'+id,
-            method:'GET',
-            success: (data) => {
-                $('body').append(data.view);
-                $(''+data.modal+id).modal('show');
-            },
-            error: () => {
-                console.log('error');
-            }
-        });
-    })
-</script>
+
 <script>
     let result = $('#search-result');
 

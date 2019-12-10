@@ -48,9 +48,9 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'phone'=>['required','string','unique:users'],
-            'avatar'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
-            'scan_pas'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
-            'scan2_pas'=>['image','mimes:jpeg,png,jpg,gif,svg','max:2048'],
+            'avatar'=>['image','mimes:jpeg,png,jpg','max:2048'],
+            'scan_pas'=>['image','mimes:jpeg,png,jpg','max:2048'],
+            'scan2_pas'=>['image','mimes:jpeg,png,jpg','max:2048'],
         ],$messages);
 
         if (!$validator->passes()) {
@@ -67,6 +67,7 @@ class UserController extends Controller
 
         $user = new User;
         $user->name = $request['name'];
+        $user->lastname = $request['lastname'];
         $user->email = $request['email'];
         $user->password = Hash::make($request['password']);
         $user->company = $request['company'];
@@ -101,7 +102,7 @@ class UserController extends Controller
             }
         }
         $user->save();
-        if( $user->company = $request['company']!='msalecrm'){
+        if( $user->company = $request['company'] != config('database.connections.mysql.database')){
             $this->chandeDB($request['company']);
             $newuser = $user->replicate();
             $newuser->id = $user->id;
@@ -158,7 +159,7 @@ class UserController extends Controller
         }
 
         $user->save();
-        if( $user->company !='msalecrm') {
+        if( $user->company != config('database.connections.mysql.database')) {
             $this->chandeDB($request['company']);
             $newuser = User::find($request->id);
             $newuser = $user->replicate();
@@ -166,14 +167,22 @@ class UserController extends Controller
         }
         return redirect()->back();
     }
+    public function agreement(Request $request){
+        $user = User::find($request->id);
+        $user->agreement = $request->checked;
+        $user->save();
+    }
     public function blockUser($id){
         $user = User::find($id);
         $user->status = 'blocked';
         $user->save();
-        $this->chandeDB($user['company']);
-        $newuser = User::find($id);
-        $newuser->status = 'blocked';
-        $newuser->save();
+        if($user->company != config('database.connections.mysql.database')){
+            $this->chandeDB($user['company']);
+            $newuser = User::find($id);
+            $newuser->status = 'blocked';
+            $newuser->save();
+        }
+
         return back();
     }
 
@@ -182,10 +191,12 @@ class UserController extends Controller
         $user = User::find($id);
         $user->status = 'active';
         $user->save();
-        $this->chandeDB($user['company']);
-        $newuser = User::find($id);
-        $newuser->status = 'active';
-        $newuser->save();
+        if($user->company != config('database.connections.mysql.database')) {
+            $this->chandeDB($user['company']);
+            $newuser = User::find($id);
+            $newuser->status = 'active';
+            $newuser->save();
+        }
         return back();
     }
 
@@ -193,7 +204,7 @@ class UserController extends Controller
         $user = User::find($id);
         $company = $user['company'];
         $user->delete();
-        if($company!='msalecrm'){
+        if($company != config('database.connections.mysql.database')){
             $this->chandeDB($company);
             $newuser = User::find($id);
             $newuser->delete();

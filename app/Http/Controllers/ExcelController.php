@@ -43,7 +43,7 @@ class ExcelController extends Controller
                 'status' => 'success',
                 'data' => $calls,
                 'view' => view('tasks.list', [
-                    'calls3' => Call::where('user_id', auth()->id())->get(),
+                    'calls3' => Call::where('user_id', auth()->id())->where('active',0)->get()->reverse(),
                 ])->render(),
             ]);
         }

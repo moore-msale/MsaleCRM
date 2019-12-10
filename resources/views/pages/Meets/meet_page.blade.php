@@ -125,7 +125,11 @@
                         {{ \Carbon\Carbon::parse($task->deadline_date)->format('M d - H:i') }}
                     </div>
                     <div class="col-2 meet-status">
-                        @if(!$customer->active)
+                        @if($task->active==2)
+                            <button style="width:100%; height:100%; color:white; background: #26DB38; border-radius: 20px; border:0px;" disabled>
+                                Завершено
+                            </button>
+                        @elseif(!$task->active)
                             <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                                 Просроченно
                             </button>
@@ -300,11 +304,20 @@
             let btn = $(event.currentTarget);
             let id = btn.data('id');
             let user = btn.data('parent');
-            let title = $('#meet_name-' + id);
+            let customer = $('#meet_name-' + id);
             let desc = $('#meet_desc-' + id);
             let date = $('#meet_date-' + id);
             let status = $('#meet_status-' + id);
-            if(desc.val().length < 20)
+            if(date.val()==''){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Дата просрочена выберите дату',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else if(desc.val().length < 20)
             {
                 Swal.fire({
                     position: 'top-end',
@@ -320,7 +333,7 @@
                     method: 'PUT',
                     data: {
                         "_token": "{{ csrf_token() }}",
-                        "title": title.val(),
+                        "customer": customer.val(),
                         "desc": desc.val(),
                         "date": date.val(),
                         "status": status.val(),
@@ -336,15 +349,17 @@
                                 timer: 700
                             });
                             console.log(data);
-                            $('#meet-' + id).find('.meet-name').html(data.meet.title);
-                            $('#meet-' + id).find('.meet-deadline').html(data.deadline_date);
+                            $('#EditMeet-'+id).modal('hide');
+                            $('#meet-' + id).find('.meet-name').html(data.customer.name);
+                            $('#meet-' + id).find('.meet-deadline').html(data.deadline);
                             $('#meet-' + id).find('.meet-manager').html(data.user);
-                            $('#EditMeet-' + id).find('.modal-title').html(data.meet.title);
                             if (data.meet.description.length > 25)
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description.substring(0,25) + '...');
                             else
                                 $('#meet-' + id).find('.meet-desc').html(data.meet.description);
-                            if(data.status_id){
+                            if(data.meet.active==2){
+                                $('#meet-' + id).find('.meet-status button').html('Завершено').css("background-color",'#26DB38');
+                            }else if(data.status_id && data.meet.active == 1){
                                 $('#meet-' + id).find('.meet-status button').html(data.status_id.name).css("background-color",data.status_id.color);
                             }else{
                                 $('#meet-' + id).find('.meet-status button').html('В ожидании').css("background-color",'#EBDC60');

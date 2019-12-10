@@ -84,6 +84,7 @@ class TaskController extends Controller
         $task = Task::create($request->all());
         $task->status_id = 0;
         $task->user_id = Auth::id();
+        $task->active = 1;
         $task->save();
 
         if(Carbon::now() < $endday) {
@@ -188,6 +189,7 @@ class TaskController extends Controller
                 'task'=>$task,
             ]);
         }
+        $task->active=1;
         $task->save();
         if(Carbon::now() < $endday) {
             $report = Report::where('created_at', '>=', $today)->where('user_id', \auth()->id())->first();
@@ -295,7 +297,7 @@ class TaskController extends Controller
 
         $task = Task::find($request->id);
         $task2=deep_copy($task);
-        $task->status_id = 1;
+        $task->active = 2;
         $task->save();
         if($task==$task2){
             return response()->json([

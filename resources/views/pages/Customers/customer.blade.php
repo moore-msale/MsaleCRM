@@ -40,10 +40,6 @@
                             <option value="{{isset($status) ? $status : null }}">{{ isset($status) ? \App\Status::find($status)->name : 'Все клиенты'}}</option>
                             <option value="0">Без статуса</option>
                         @endif
-                        @if(isset($status) )
-                            <option value="{{ null }}">Все клиенты</option>
-                        @endif
-
                         @foreach(\App\Status::where('type','customer')->get() as $status1)
                             @if(isset($status) && $status1->id == $status)
 
@@ -127,13 +123,17 @@
                         {{ str_limit($customer->description, $limit = 25, $end = '...') }}
                     </div>
                     <div class="col-1 cust-manager  overflow-hidden" style="border-right:1px solid #dedede;">
-                        {{ \App\User::find($customer->user_id)->name }}
+                        {{ \App\User::find($customer->user_id)['name'] }}
                     </div>
                     <div class="col-2 cust-date">
                         {{ \Carbon\Carbon::parse($customer->deadline_date)->format('M d - H:i') }}
                     </div>
                     <div class="col-2 cust-status">
-                        @if(!$customer->active)
+                        @if($customer->active==2)
+                            <button style="width:100%; height:100%; color:white; background: #772FD2; border-radius: 20px; border:0px;" disabled>
+                                Завершен
+                            </button>
+                        @elseif(!$customer->active)
                             <button style="width:100%; height:100%; color:white; background: #DA2121; border-radius: 20px; border:0px;" disabled>
                                 Просроченно
                             </button>
@@ -293,8 +293,16 @@
             let status = $('#client_status-' + id);
             let desc = $('#client_desc-' + id);
 
-
-            if(desc.val().length < 20)
+            if(date.val()==''){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'info',
+                    title: 'Дата просрочена выберите дату',
+                    showConfirmButton: true,
+                    // timer: 700
+                });
+            }
+            else if(desc.val().length < 20)
             {
                 Swal.fire({
                     position: 'top-end',
@@ -329,6 +337,7 @@
                                 showConfirmButton: false,
                                 timer: 700
                             });
+                            console.log(data.task.active);
                             $('#EditCustomer-' + id).find('.cust-title').html(data.customer.name);
                             $('#customer-' + id).find('.cust-name').html(data.customer.name);
                             $('#customer-' + id).find('.cust-company').html(data.customer.company);
@@ -339,9 +348,12 @@
                                 $('#customer-' + id).find('.cust-desc').html(data.task.description.substring(0,25) + '...');
                             else
                                 $('#customer-' + id).find('.cust-desc').html(data.task.description);
-                            if(data.status_id){
+                            if(data.status_id && data.task.active == 1){
                                 $('#customer-' + id).find('.cust-status button').html(data.status_id.name).css("background-color",data.status_id.color);
-                            }else{
+                            }else if(data.task.active == 2){
+                                $('#customer-' + id).find('.cust-status button').html('Завершен').css("background-color",'#772FD2')
+                            }
+                            else{
                                 $('#customer-' + id).find('.cust-status button').html('В работе').css("background-color",'#3B79D6');
                             }
                         }else{

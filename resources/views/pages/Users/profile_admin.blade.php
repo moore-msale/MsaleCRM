@@ -156,19 +156,28 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="mt-4 p-5">
                         <form action="{{route('editUser')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{$manager->id}}">
                             <input type="hidden" name="company" value="{{$manager->company}}">
-                            <div class="position-absolute mt-2" style="top:22%;right:-21.5%; width: 150px;height: 150px; cursor: pointer;">
+                            <div class="position-absolute mt-2" style="top:22%;right:-20.5%;cursor: pointer;">
                                 <label for="upload-avatar" class="upload-avatar">
                                     @if($manager->avatar)
-                                        <img src="{{asset('users/'.$manager->avatar)}}" width="150" height="150">
+                                        <img src="{{asset('users/'.$manager->avatar)}}" style="width: 150px;height: 150px;">
                                     @else
-                                        <img src="{{asset('images/defaultAvatar.png')}}">
+                                        <img src="{{asset('images/defaultAvatar.png')}}" style="width: 150px;height: 150px;">
                                     @endif
                                 </label>
+                                <div class="user-passport" style="width: 150px;">
+                                    @if($manager->scan_pas)
+                                    <button type="button" class="btn btn-primary btn-sm px-1 mx-0 scan_pas" style="font-size:9px;" data-toggle="modal" data-target="#scan_pas_fd" data-parent="{{$manager->scan_pas}}">Фото паспорта (передняя часть)</button>
+                                    @endif
+                                    @if($manager->scan2_pas)
+                                    <button type="button" class="btn btn-primary btn-sm px-1 mx-0 scan_pas " style="font-size:9px;" data-toggle="modal" data-target="#scan_pas_fd" data-parent="{{$manager->scan2_pas}}">Фото паспорта (задняя часть)</button>
+                                    @endif
+                                </div>
                             </div>
                             <div class="form-group mb-2">
                                 <input type="text" name="name" id="name-{{$manager->id}}" class="form-control rounded-0 border-0 bg-grey sf-medium display-6" value="{{ $manager->name }}" placeholder="Имя">
@@ -254,7 +263,7 @@
                   </thead>
                   <tbody>
                     @foreach(\App\User::where('role', '!=', 'admin')->where('company','=',$user->company)->where('status', '!=', 'active')->get() as $manager)
-                    <tr>
+                    <tr class="rows-hover">
                         <th scope="row">{{$manager->id}}</th>
                         <td class="overflow-hidden">
                             @if(isset($manager->name))
@@ -294,13 +303,45 @@
             </div>
         </div>
     </div>
+<div class="modal fade" id="scan_pas_fd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">+ паспорт</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-content d-flex align-items-center">
+                <img src="" alt="" style="width: 300px; height:300px;">
+            </div>
+        </div>
+    </div>
+</div>
 
-
-    @foreach(\App\User::all() as $user)
+@foreach(\App\User::all() as $user)
         @include('modals.users.profile_edit')
     @endforeach
 @endsection
 @push('scripts')
+    <script>
+        $('.scan_pas').on('click',function (e) {
+            let btn = $(e.currentTarget).attr("data-parent");
+            if(btn){
+                console.log('something');
+                $('#scan_pas_fd img').attr('src','passport/'+btn);
+            }else{
+                $('#scan_pas_fd').modal('hide');
+                Swal.fire({
+                    position: 'center',
+                    icon: 'info',
+                    title: 'Не найден скан паспорта!',
+                    showConfirmButton: false,
+                    timer: 700
+                });
+            }
+        });
+    </script>
     <script>
         $('.nav-link').on('click', function() {
           $('.nav-link').removeClass('active');
@@ -375,7 +416,7 @@
                         $('#newuser input').not('.hdn').removeClass("alertBorder").val('');
                         $('#collapseExample .card-body').append('<a class="nav-link sf-medium" data-toggle="tab" href="#user-'+data.user.id+'" role="tab">'+data.user.name+'</a>');
                         $('.manager').last().after(data.view);
-                        console.log(data.user.id);
+                        console.log(data);
                         Swal.fire({
                             position: 'center',
                             icon: 'success',

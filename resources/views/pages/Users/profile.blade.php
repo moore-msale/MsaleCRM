@@ -98,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="mb-5">
-                                <span class="confirmation sf-medium mr-2">С условиями ознакомлен и согласен</span><img src="{{asset('images/check-circle.png')}}" alt="">
+                                <span class="confirmation sf-medium mr-2">С условиями ознакомлен и согласен <img src="{{asset('images/check-circle.png')}}" alt=""> </span>
                             </div>
                             <button class="btn btn-outline-secondary btn-block sf-medium" type="submit">
                                 Изменить
@@ -108,4 +108,47 @@
                 </div>
         </div>
 </div>
+<div class="modal fade" id="agreement" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="min-width: 1200px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">+ пользовательское соглашение</h5>
+            </div>
+            <div class="modal-content d-flex align-items-center px-3">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium ad architecto, consequatur earum fuga id illum maiores mollitia nesciunt, odio omnis quis ratione reprehenderit repudiandae sunt temporibus unde vitae.</p>
+                <input type="button" name="agreement" data-id="{{$user->id}}" class="btn btn-success btn-sm agreement" value="согласен">
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+
+            if("{{$user->agreement}}"==0){
+                $('#agreement').modal('show');
+            }
+        });
+    </script>
+    <script>
+        $('.agreement').on('click',function (e) {
+            let btn = $(e.currentTarget).data('id');
+            $.ajax({
+                url:'agreement/'+btn,
+                method:'POST',
+                data:{
+                    "_token": "{{ csrf_token() }}",
+                    'id':btn,
+                    'checked':1,
+                },
+                success:(data)=>{
+                    $('#agreement').modal('hide');
+                    console.log('success',data);
+                },error:(data)=>{
+                    console.log('error',data);
+                }
+            })
+        })
+    </script>
+@endpush

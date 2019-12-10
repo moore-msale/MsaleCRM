@@ -22,7 +22,11 @@
                         </div>
                     </div>
                     @foreach($items as $value)
-                        <div class="nav-link products px-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$value->id}}">
+                        @if(auth()->user()->role=='admin')
+                            <div class="nav-link products px-2" data-toggle="modal" data-target="#EditMeetAdmin-{{$value->id}}">
+                         @else
+                            <div class="nav-link products px-2" data-toggle="modal" data-target="#EditMeet-{{$value->id}}">
+                         @endif
                             <div class="d-flex align-items-center justify-content-between border-bottom pb-2" style="cursor: pointer;">
                                 <div class="col-4">
                                     {{str_limit($value->title,15) }}

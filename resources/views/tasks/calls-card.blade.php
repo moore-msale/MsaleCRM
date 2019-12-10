@@ -1,6 +1,15 @@
 <?php
 $agent = New \Jenssegers\Agent\Agent();
 ?>
+@push('styles')
+    <style>
+        .call-desktop:before{
+            width: 30%;
+            height: 30%;
+        }
+    </style>
+@endpush
+
 <div class="mt-lg-2 mt-1 mx-lg-3 mx-0 px-3 py-lg-0 py-0 work-desk position-relative mainer"
      style="text-transform: uppercase;" id="call-{{ $call->id }}">
     {{--<div class="position-absolute bg-danger"--}}
@@ -26,19 +35,24 @@ $agent = New \Jenssegers\Agent\Agent();
                 </div>
             </div>
         @else
-        <div class="row position-relative">
-            <div class="col-lg-11 col-11 py-lg-2 py-1 d-flex">
-                 <div class="deal-text sf-bold d-flex align-items-center p-1 mb-0 row">
-                     <span class="ml-2">{{ $call->company ?? "No company" }}</span>
-                 </div>
-                 <div class="deal-text sf-bold d-flex align-items-center p-1 mb-0 row">
-                     <span class="ml-2">{{ $call->phone ?? "No phone" }}</span>
-                 </div>
-            </div>
-            <div class="col-lg-4 col-4 d-lg-none d-flex align-items-center">
-                <a href="tel:{{ $call->phone }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" class="call-btn mx-auto">
-                <i class="fas fa-phone fa-2x w-100 h-100"></i>
-                </a>
+            <div class="row mb-2">
+                <div class="col-11" style="height: 35px;">
+                    <div class="pl-2 overflow-hidden h-100 d-flex align-items-center" >
+                        <span class="">{{ $call->company ?? "No company" }}</span>
+                        <span class="mx-2"> - </span>
+                        <span class="">{{ $call->phone ?? "No phone" }}</span>
+                    </div>
+                </div>
+                <div class="col pr-0 d-flex justify-content-end">
+                    <a class="w-auto h-100 deleteCallDesktop" data-id="{{$call->id}}">
+                        {{--                    <img src="{{asset('images/active-phone.png')}}" alt="">--}}
+                        <img src="{{asset('images/close-desktop.svg')}}" alt="">
+                    </a>
+                    <a href="tel:{{ $call->phone ?? "No phone" }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" data-parent3="{{ $call->active }}" class="w-auto h-100 call-btn">
+                        {{--                    <img src="{{asset('images/active-phone.png')}}" alt="">--}}
+                        <img src="{{asset('images/call-desktop.svg')}}" alt="">
+                    </a>
+                </div>
             </div>
             {{--<div class="col-2 d-flex d-lg-block d-none bg-danger align-items-center justify-content-center px-0">--}}
                 {{--<a href="tel:{{ $call->phone }}" data-id="{{ $call->id }}" data-parent="{{ $call->company }}" data-parent2="{{ $call->phone }}" class="call-btn">--}}
@@ -50,8 +64,8 @@ $agent = New \Jenssegers\Agent\Agent();
                     {{--<i class="fas fa-phone fa-2x text-white"></i>--}}
                 {{--</a>--}}
             {{--</div>--}}
-        </div>
+
         @endif
-    </div>
+</div>
 </div>
 

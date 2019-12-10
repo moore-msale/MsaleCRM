@@ -60,7 +60,7 @@
     <div class="modal-dialog modal-full-height modal-right mx-0 mt-0" role="document" style="max-width:400px; width:100%;">
         <div class="modal-content px-2" style="min-height:550px;height: 100vh;">
             <div class="modal-header border-0">
-                <h4 class="modal-title w-50 sf-light" id="myModalLabel">+Создать встречу</h4>
+                <h4 class="modal-title w-50 sf-light" id="myModalLabel">+ создать встречу</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"><img src="{{asset('images/inputnewclose.svg')}}" alt=""></span>
                 </button>
@@ -73,9 +73,9 @@
                     <input type="text" name="deadline_date" id="meet_date" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Выберите дату">
                     <select class="browser-default custom-select border-0 mt-2 sf-light" id="meet_name" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
                         <option value="{{null}}">Выберите клиента...</option>
-                        @foreach(\App\Customer::all() as $customer)
-                            @if(empty(\App\Meeting::where('customer_id',$customer->id)->first()))
-                                <option class="customerid-{{$customer->id }}" value="{{ $customer->id }}">{{ $customer->name }} - {{$customer->company}}</option>
+                        @foreach(\App\Task::where('user_id',auth()->id())->where('taskable_type','App\Customer')->get() as $tasks)
+                            @if(empty(\App\Meeting::where('customer_id',$tasks->taskable_id)->first()))
+                                <option class="customerid-{{$tasks->taskable['id']}}" value="{{ $tasks->taskable['id'] }}">{{ $tasks->taskable['name'] }} - {{$tasks->taskable['company']}}</option>
                             @endif
                         @endforeach
                     </select>
