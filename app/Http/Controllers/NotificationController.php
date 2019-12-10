@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Mail;
 
 class NotificationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('changeDB');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('changeDB');
+//    }
 
     public function notification()
     {
@@ -46,8 +46,9 @@ class NotificationController extends Controller
                 $task->save();
                 }
                 }
-            }elseif($task->deadline_date > $next and $task->active != 2){
+            }elseif($task->deadline_date < $now and $task->active != 2){
                  $task->active = 0;
+                 $task->save();
             }
             if($task->taskable_type == null){
                 if($task->status_id != 1 && $task->status_id != 2 && User::find($task->user_id)->role != 'admin' && $task->deadline_date < $now && $task->chief == 1)
@@ -59,7 +60,7 @@ class NotificationController extends Controller
                     $user->save();
                     $task->save();
                     Mail::to($user->email)->send(new TaskPenaltyByChief($task));
-                    Mail::to('buvladi@gmail.com')->send(new PenaltyNotificationToChief($task));
+//                    Mail::to('buvladi@gmail.com')->send(new PenaltyNotificationToChief($task));
                 }
                 elseif($task->status_id != 1 && $task->status_id !=2 && User::find($task->user_id)->role != 'admin' && $task->deadline_date < $now)
                 {
@@ -68,7 +69,7 @@ class NotificationController extends Controller
                     $task->save();
                     $user->save();
                     Mail::to($user->email)->send(new TaskPenaltyByChief($task));
-                    Mail::to('buvladi@gmail.com')->send(new PenaltyNotificationToChief($task));
+//                    Mail::to('buvladi@gmail.com')->send(new Penal tyNotificationToChief($task));
                 }
             }
 
