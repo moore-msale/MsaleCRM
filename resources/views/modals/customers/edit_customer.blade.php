@@ -58,28 +58,31 @@ $agent = New \Jenssegers\Agent\Agent();
                     @endif
                     <input type="text" id="client_company-{{ $customer->id }}" name="company" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->company }}" placeholder="Введите компанию">
                     <input type="text" id="client_social-{{ $customer->id }}" name="social" class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $customer->taskable->socials }}" placeholder="Введите соц.сеть или сайт">
-                    <select class="browser-default custom-select border-0 mt-2" id="client_status-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        @if(!$customer->active)
-                            <option value="0">Просроченно</option>
-                        @elseif($customer->active==2)
-                            <option value="done">Завершен</option>
-                        @else
-                            @if($customer->status_id == 0)
-                                <option value="0">В работе</option>
-                            @endif
-                            @if(isset($customer->status))
-                                <option value="{{ \App\Status::find($customer->status_id)->id }}">{{ \App\Status::find($customer->status_id)->name }}</option>
-                                <option value="0">В работе</option>
-                            @endif
-                            @foreach(\App\Status::where('type','customer')->get() as $stat)
-                                @if(isset($customer->status) && $stat->id == \App\Status::find($customer->status_id)->id)
-                                    @continue
+                    @if(($customer->active==2))
+                        <input type="hidden" id="client_status-{{ $customer->id }}"  value="done">
+                        <input type="text" name="status"   class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Завершен" disabled>
+                    @else
+                        <select class="browser-default custom-select border-0 mt-2" id="client_status-{{ $customer->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                            @if(!$customer->active)
+                                <option value="0">Просроченно</option>
+                            @else
+                                @if($customer->status_id == 0)
+                                    <option value="0">В работе</option>
                                 @endif
-                                <option value="{{ $stat->id }}">{{ $stat->name }}</option>
-                            @endforeach
-                                <option value="done">Завершен</option>
-                         @endif
-                    </select>
+                                @if(isset($customer->status))
+                                    <option value="{{ \App\Status::find($customer->status_id)->id }}">{{ \App\Status::find($customer->status_id)->name }}</option>
+                                    <option value="0">В работе</option>
+                                @endif
+                                @foreach(\App\Status::where('type','customer')->get() as $stat)
+                                    @if(isset($customer->status) && $stat->id == \App\Status::find($customer->status_id)->id)
+                                        @continue
+                                    @endif
+                                    <option value="{{ $stat->id }}">{{ $stat->name }}</option>
+                                @endforeach
+                                    <option value="done">Завершен</option>
+                             @endif
+                        </select>
+                    @endif
                     <textarea id="client_desc-{{ $customer->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$customer->description}}</textarea>
                 </form>
                 <button type="button" class="w-100 sf-light editCustomer mt-5 space-button" data-id="{{$customer->id}}">Изменить</button>

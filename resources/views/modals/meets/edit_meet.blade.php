@@ -43,10 +43,12 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                     @else
                         <input type="text" name="deadline_date" id="meet_date-{{ $task->id }}" class="form-control date-format sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" value="{{ $task->deadline_date }}" placeholder="Дата выполнения">
                     @endif
+                    @if($task->active==2)
+                        <input type="hidden" id="meet_status-{{ $customer->id }}"  value="done">
+                        <input type="text"  class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Завершен" disabled>
+                    @else
                         <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        @if($task->active==2)
-                             <option value="done">Завершено</option>
-                        @elseif(!$task->active)
+                        @if(!$task->active)
                              <option value="0">Просроченно</option>
                         @else
                             @if($task->status_id==0)
@@ -62,7 +64,8 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                             @endforeach
                                 <option value="done">Завершено</option>
                         @endif
-                    </select>
+                        </select>
+                    @endif
                     <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>
                 <button type="button" class="w-100 sf-light editMeet mt-5 space-button" data-id="{{$task->id}}">Изменить</button>

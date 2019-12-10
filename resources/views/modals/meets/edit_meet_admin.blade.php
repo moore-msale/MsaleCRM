@@ -5,13 +5,12 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
     <style>
         @media screen and (min-width: 992px)
         {
-        .modal .modal-full-height
-        {
-            width:360px;!important;
-            max-width: 350px;!important;
+            .modal .modal-full-height
+            {
+                width:360px;!important;
+                max-width: 350px;!important;
+            }
         }
-        }
-
     </style>
 @endpush
 <div class="modal fade right" id="EditMeetAdmin-{{ $task->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -54,22 +53,26 @@ $meeting = App\Meeting::where('id',$task->taskable_id)->first();
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>
-                    <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
-                        @if($task->active==2)
-                            <option value="done">Завершен</option>
-                        @else
-                            <option value="0">В ожидании</option>
-                            @foreach(\App\Status::where('type','meet')->get() as $stat)
-                                @if($task->status_id == $stat->id)
-                                    <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
-                                    @continue
-                                @endif
-                                    <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
-                            @endforeach
-                            <option value="done">Завершен</option>
-                         @endif
-
-                    </select>
+                    @if($task->active==2)
+                        <input type="hidden" id="meet_status-{{ $customer->id }}"  value="done">
+                        <input type="text"  class="form-control sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" placeholder="Завершен" disabled>
+                    @else
+                        <select class="browser-default custom-select border-0 mt-2" id="meet_status-{{ $task->id }}" style="border-radius: 0px; background: rgba(151,151,151,0.1);">
+                            @if($task->active==0)
+                                <option value="0">Просроченно</option>
+                            @else
+                                <option value="0">В ожидании</option>
+                                @foreach(\App\Status::where('type','meet')->get() as $stat)
+                                    @if($task->status_id == $stat->id)
+                                        <option value="{{ $stat->id }}" selected>{{ $stat->name }}</option>
+                                        @continue
+                                    @endif
+                                        <option value="{{ $stat->id }}" >{{ $stat->name }}</option>
+                                @endforeach
+                                <option value="done">Завершен</option>
+                            @endif
+                        </select>
+                    @endif
                     <textarea id="meet_desc-{{ $task->id }}" name="description" class="form-control md-textarea sf-light border-0 mt-2" style="border-radius: 0px; background: rgba(151,151,151,0.1);" rows="3" placeholder="Введите описание">{{$task->description}}</textarea>
                 </form>
                 <button type="button" class="w-100 sf-light editMeetAdmin mt-5 space-button" data-id="{{$task->id}}">Изменить</button>
