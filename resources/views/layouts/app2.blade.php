@@ -53,6 +53,6 @@
 <script src="{{ asset('js/Chart.bundle.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap-material-datetimepicker.js') }}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+@stack('scripts')
 </body>
 </html>
