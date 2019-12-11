@@ -135,7 +135,8 @@ class AdminController extends Controller
         $request->merge(['deadline_date' => $deadline_date]);
         $task->deadline_date = $request->deadline_date;
         $task->description = $request->description;
-        $task->user_id = auth()->id();
+        $manager = User::find($request->manager_id);
+        $task->user_id = $manager->id;
         $task->status_id = 0;
         $task->taskable_id = $request->manager_id;
         $task->active = 1;
