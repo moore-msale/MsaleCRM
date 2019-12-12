@@ -115,7 +115,8 @@ class   CustomerController extends Controller
         $task->title = $customer->name ? $customer->company : 'Empty';
         $task->user_id = auth()->check() ? auth()->id() : 0;
         $task->description = $request->desc;
-        $task->deadline_date =  Carbon::parseFromLocale($request->deadline_date, 'ru');
+        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
+        $task->deadline_date = $deadline_date;
         if (!(isset($request->id)))
         {
             if($request->status == "true")
