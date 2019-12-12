@@ -74,7 +74,7 @@ class NotificationController extends Controller
 //                    Mail::to('buvladi@gmail.com')->send(new Penal tyNotificationToChief($task));
                 }
             }
-            if($task->taskable_type == 'App\Customer' && $task->deadline_date < $now)
+            if($task->taskable_type == 'App\Customer' && $task->deadline_date < $now && $task->notification_status != 1)
             {
                 Mail::to(User::find($task->user_id)->email)->send(new ManagerCustomerNotification($task));
                 $task->notification_status = 1;
