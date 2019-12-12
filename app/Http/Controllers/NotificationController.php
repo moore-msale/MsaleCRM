@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ManagerCustomerNotification;
 use App\Mail\ManagerNotification;
 use App\Mail\ManagerTaskNotification;
 use App\Mail\PenaltyNotificationToChief;
@@ -43,6 +44,7 @@ class NotificationController extends Controller
                     Mail::to(User::find($task->user_id)->email)->send(new ManagerTaskNotification($task));
                     $task->notification_status = 1;
                 }
+
                 $task->save();
                 }
                 }
@@ -72,7 +74,11 @@ class NotificationController extends Controller
 //                    Mail::to('buvladi@gmail.com')->send(new Penal tyNotificationToChief($task));
                 }
             }
-
+            if($task->taskable_type == 'App\Customer' && $task->deadline_date < $now)
+            {
+                Mail::to(User::find($task->user_id)->email)->send(new ManagerCustomerNotification($task));
+                $task->notification_status = 1;
+            }
         }
     }
 }
