@@ -78,6 +78,7 @@ class NotificationController extends Controller
             {
                 Mail::to(User::find($task->user_id)->email)->send(new ManagerCustomerNotification($task));
                 $task->notification_status = 1;
+                $task->save();
             }
         }
     }
