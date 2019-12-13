@@ -262,10 +262,8 @@ class AdminController extends Controller
         $task->user_id = $request->user_id;
         $task->description = $request->description;
         $task->status_id =0;
-        $deadline_date = Carbon::parseFromLocale($request->date, 'ru');
-        $request->request->remove('date');
-        $request->merge(['date' => $deadline_date]);
-        $task->deadline_date = $request->date;
+        $deadline_date = Carbon::parseFromLocale($request->deadline_date, 'ru');
+        $task->deadline_date = $deadline_date;
         $task->active = 1;
         $task->save();
         $customer->task()->save($task);
