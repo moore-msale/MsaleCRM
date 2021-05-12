@@ -25,7 +25,7 @@
     },
     "dependencies": {
         "@jkryszto/mdb-for-laravel": "^1.0.0",
-        "chart.js": "^2.9.3",
+        "chart.js": "^2.9.4",
         "mdbootstrap": "^4.8.8"
     }
 }
